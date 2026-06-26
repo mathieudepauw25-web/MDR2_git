@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://cthcl45hkwv8"]
+
+[ext_resource type="Script" path="res://Interface/Scripts/input_visuel.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bn7mwsgv27kd" path="res://Interface/Sprites/tile_0604.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://dgspu27t0djae" path="res://Interface/Sprites/tile_0570.png" id="3"]
+
+[node name="InputVisuel" type="Node2D"]
+script = ExtResource("1")
+color_show = Color(1, 1, 1, 1)
+color_hide = Color(0.384314, 0.384314, 0.384314, 0.117647)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+offset_left = -16.0
+offset_top = -15.0
+offset_right = 17.0
+offset_bottom = 16.0
+
+[node name="dash_R" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(8, 0)
+rotation = 1.5708
+texture = ExtResource("2")
+
+[node name="dash_U" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -8)
+texture = ExtResource("2")
+
+[node name="dash_L" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-8, 0)
+rotation = 4.71239
+texture = ExtResource("2")
+
+[node name="dash_D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 8)
+rotation = 3.14159
+texture = ExtResource("2")
+
+[node name="move_R" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(5, 0)
+rotation = 1.5708
+texture = ExtResource("3")
+
+[node name="move_U" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -5)
+texture = ExtResource("3")
+
+[node name="move_L" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-5, 0)
+rotation = -1.5708
+texture = ExtResource("3")
+
+[node name="move_D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 5)
+rotation = 3.14159
+texture = ExtResource("3")

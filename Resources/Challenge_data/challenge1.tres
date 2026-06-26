@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ChallengeData" load_steps=3 format=3 uid="uid://cxrxaqgw2ekyo"]
+
+[ext_resource type="Texture2D" uid="uid://dqpbb66n1eph7" path="res://icon.svg" id="1"]
+[ext_resource type="Script" path="res://Resources/Challenge_data.gd" id="2"]
+
+[resource]
+script = ExtResource("2")
+chall_texture = ExtResource("1")
+chall_name = "5 min"
+chall_desc = "Finish in under 5 minutes"
+chall_done = false

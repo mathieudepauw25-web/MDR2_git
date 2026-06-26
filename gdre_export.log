@@ -1,0 +1,36 @@
+GDRE Tools v2.4.0
+Ubuntu 24.04.3 LTS 24.04, llvmpipe (LLVM 20.1.2, 256 bits), vulkan
+Opening file: ~/game/Move_Dash_Rush_v1.1/Move_Dash_Rush_v1.1.exe
+Loaded 191 imported files
+Detected Engine Version: 4.3.0
+Detected Bytecode Revision: 4.3.0-stable (77af6ca)
+Verified 388 files, no errors detected!
+Extracted 388 files, no errors detected!
+Found matching plugin in cache: godotsteam, version: v4.11-gde, download url: https://codeberg.org/godotsteam/godotsteam/releases/download/v4.11-gde/godotsteam-gdextension-plugin-4.11.zip
+Saved project config.
+
+
+********************************EXPORT REPORT********************************
+
+Totals:                                 
+Decompiled scripts:                     55
+Failed scripts:                         0
+Imported resources for export session:  191
+Successfully converted:                 191
+Lossy:                                  1
+Rewrote metadata:                       95
+Non-importable conversions:             0
+Not converted:                          0
+Failed conversions:                     0
+-------------
+
+
+
+------------------------------------------------------------------------------------
+
+Use Godot editor version 4.3.0 to edit the project.
+Note: the project may be using a custom version of Godot. Detection for this has not been implemented yet.
+If you find that you have many non-import errors upon opening the project 
+(i.e. scripts or shaders have many errors), use the original game's binary as the export template.
+
+*******************************************************************************

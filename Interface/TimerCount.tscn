@@ -1,0 +1,79 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccnucu8p0mpkl"]
+
+[ext_resource type="Script" path="res://Interface/Scripts/timerCount.gd" id="1"]
+[ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jokgb"]
+line_spacing = 0.0
+font = ExtResource("2")
+font_color = Color(0.907942, 0.907942, 0.907942, 1)
+outline_size = 4
+outline_color = Color(8.42288e-08, 4.21144e-08, 0.14266, 1)
+shadow_size = 0
+
+[node name="TimerCount" type="Control"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -160.0
+offset_right = -160.0
+grow_horizontal = 2
+script = ExtResource("1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -69.0
+offset_bottom = 17.0
+color = Color(0, 1, 0, 1)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+
+[node name="Label_min" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -62.0
+offset_right = -44.0
+offset_bottom = 14.0
+grow_horizontal = 2
+text = "0 :"
+label_settings = SubResource("LabelSettings_jokgb")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Label_sec" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.0
+offset_right = -22.0
+offset_bottom = 14.0
+grow_horizontal = 2
+text = "00 :"
+label_settings = SubResource("LabelSettings_jokgb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label_msec" type="Label" parent="Control"]
+unique_name_in_owner = true
+modulate = Color(0.839216, 0.894118, 1, 0.901961)
+layout_mode = 2
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -19.0
+offset_right = -1.0
+offset_bottom = 14.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+text = "000"
+label_settings = SubResource("LabelSettings_jokgb")
+vertical_alignment = 1
+text_overrun_behavior = 1

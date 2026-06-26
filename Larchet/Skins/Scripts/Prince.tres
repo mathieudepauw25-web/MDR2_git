@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SkinData" format=3 uid="uid://b4jpqxu3y00c"]
+
+[ext_resource type="Script" uid="uid://vp1s2nc5ud5f" path="res://Larchet/Skins/Scripts/SkinData.gd" id="1_h754x"]
+
+[resource]
+script = ExtResource("1_h754x")
+skin_id = "Prince"
+skin_name = "Prince"
+secret = true
+metadata/_custom_type_script = "uid://vp1s2nc5ud5f"

@@ -1,0 +1,120 @@
+[gd_scene load_steps=13 format=3 uid="uid://b860c85k408oa"]
+
+[ext_resource type="Script" path="res://World/AnimationOS.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://ccbbr3brf0x6m" path="res://World/Sprites/Splash/Water Effect and Bullet 16x16.png" id="2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0aye"]
+atlas = ExtResource("2")
+region = Rect2(384, 160, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_de7hi"]
+atlas = ExtResource("2")
+region = Rect2(400, 160, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_451h1"]
+atlas = ExtResource("2")
+region = Rect2(416, 160, 16, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7ceok"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f0aye")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_de7hi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_451h1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_de7hi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f0aye")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y5n3i"]
+atlas = ExtResource("2")
+region = Rect2(304, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jf41v"]
+atlas = ExtResource("2")
+region = Rect2(320, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ris5j"]
+atlas = ExtResource("2")
+region = Rect2(336, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxi2k"]
+atlas = ExtResource("2")
+region = Rect2(352, 192, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1d6bc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y5n3i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jf41v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ris5j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qxi2k")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dgsyk"]
+radius = 1.0
+
+[node name="Splash" type="Area2D"]
+collision_layer = 4
+collision_mask = 15
+script = ExtResource("1")
+
+[node name="Splash" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -6)
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_7ceok")
+autoplay = "default"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_1d6bc")
+autoplay = "default"
+frame = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dgsyk")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

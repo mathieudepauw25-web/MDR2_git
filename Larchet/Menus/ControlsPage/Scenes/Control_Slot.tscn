@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://b7gur1jq63i1t"]
+
+[ext_resource type="StyleBox" uid="uid://3rxb4yawp623" path="res://Larchet/Menus/ControlSlot.tres" id="1_r5q2s"]
+[ext_resource type="Script" uid="uid://4sxng8mmq6sq" path="res://Larchet/Menus/ControlsPage/Scenes/Control_Slot.gd" id="2_d4w1s"]
+[ext_resource type="StyleBox" uid="uid://d2wb0x7bmm82g" path="res://Larchet/Menus/Gold.tres" id="2_gu2qy"]
+[ext_resource type="LabelSettings" uid="uid://ct1olda2r36v8" path="res://Larchet/Menus/LabelFont.tres" id="2_irbyj"]
+[ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="3_d4w1s"]
+[ext_resource type="AudioStream" uid="uid://mveooa4f7pg4" path="res://Audio/SFX/ui_click_rollover_misc_05.mp3" id="6_tgvoy"]
+[ext_resource type="AudioStream" uid="uid://d3dxycfae6tnq" path="res://Audio/SFX/ui_click_rollover_misc_01.mp3" id="7_bhgec"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gu2qy"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jr8rq"]
+font = ExtResource("3_d4w1s")
+font_color = Color(0, 0, 0, 1)
+
+[node name="Control_Slot" type="Button" unique_id=38756702]
+custom_minimum_size = Vector2(140, 20)
+offset_right = 140.0
+offset_bottom = 20.0
+size_flags_horizontal = 0
+theme_override_styles/normal = ExtResource("1_r5q2s")
+theme_override_styles/pressed = ExtResource("2_gu2qy")
+theme_override_styles/hover = ExtResource("2_gu2qy")
+theme_override_styles/focus = ExtResource("2_gu2qy")
+script = ExtResource("2_d4w1s")
+
+[node name="Name" type="Label" parent="." unique_id=1150970566]
+custom_minimum_size = Vector2(30, 12)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 6.0
+offset_top = -7.0
+offset_right = 104.0
+offset_bottom = 16.0
+grow_vertical = 2
+text = "Action button"
+label_settings = ExtResource("2_irbyj")
+
+[node name="Button" type="Label" parent="." unique_id=13821194]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -8.0
+offset_right = -2.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_gu2qy")
+text = "test"
+label_settings = SubResource("LabelSettings_jr8rq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Node" type="Node" parent="." unique_id=861310145]
+
+[node name="Move" type="AudioStreamPlayer" parent="Node" unique_id=1735271433]
+unique_name_in_owner = true
+stream = ExtResource("6_tgvoy")
+volume_db = -8.0
+pitch_scale = 1.1
+
+[node name="Select" type="AudioStreamPlayer" parent="Node" unique_id=454825193]
+unique_name_in_owner = true
+stream = ExtResource("7_bhgec")
+pitch_scale = 1.1
+
+[connection signal="focus_entered" from="." to="." method="_on_hover"]
+[connection signal="mouse_entered" from="." to="." method="_on_hover"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -1,0 +1,104 @@
+[gd_scene load_steps=10 format=3 uid="uid://c4uw1sar467f8"]
+
+[ext_resource type="Script" path="res://Door/Door.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="2"]
+[ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xe8jc"]
+atlas = ExtResource("2")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qjtbi"]
+size = Vector2(10, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ovy8j"]
+size = Vector2(30, 30)
+
+[sub_resource type="MeshTexture" id="MeshTexture_gkkpt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3w0x"]
+atlas = ExtResource("2")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dl0pj"]
+font = ExtResource("3")
+font_color = Color(0.943525, 0.856988, 0.589854, 1)
+outline_size = 4
+outline_color = Color(0.270588, 0.239216, 0.298039, 1)
+
+[node name="Door" type="Area2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1")
+position_show = Vector2(-11, -17)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_xe8jc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qjtbi")
+metadata/_edit_lock_ = true
+
+[node name="DetectShow" type="Area2D" parent="."]
+
+[node name="range_show" type="CollisionShape2D" parent="DetectShow"]
+shape = SubResource("RectangleShape2D_ovy8j")
+
+[node name="Bulle" type="TextureRect" parent="DetectShow"]
+unique_name_in_owner = true
+offset_left = -18.0
+offset_top = -17.0
+offset_right = 20.0
+offset_bottom = -4.0
+pivot_offset = Vector2(13, 6)
+texture = SubResource("MeshTexture_gkkpt")
+
+[node name="IconKey" type="TextureRect" parent="DetectShow/Bulle"]
+layout_mode = 2
+offset_left = -1.0
+offset_top = 3.0
+offset_right = 15.0
+offset_bottom = 19.0
+texture = SubResource("AtlasTexture_f3w0x")
+metadata/_edit_lock_ = true
+
+[node name="on" type="Label" parent="DetectShow/Bulle"]
+modulate = Color(0.847059, 0.682353, 0.00784314, 1)
+layout_mode = 2
+offset_left = 21.0
+offset_top = -1.0
+offset_right = 27.0
+offset_bottom = 13.0
+text = "/
+"
+label_settings = SubResource("LabelSettings_dl0pj")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="DetectShow/Bulle"]
+unique_name_in_owner = true
+modulate = Color(0.847059, 0.682353, 0.00784314, 1)
+layout_mode = 2
+offset_left = 22.0
+offset_top = -1.0
+offset_right = 38.0
+offset_bottom = 13.0
+text = "2
+"
+label_settings = SubResource("LabelSettings_dl0pj")
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="DetectShow/Bulle"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 21.0
+offset_bottom = 13.0
+text = "0
+"
+label_settings = SubResource("LabelSettings_dl0pj")
+horizontal_alignment = 1
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_entered" from="DetectShow" to="." method="_on_detect_show_area_entered"]
+[connection signal="area_exited" from="DetectShow" to="." method="_on_detect_show_area_exited"]

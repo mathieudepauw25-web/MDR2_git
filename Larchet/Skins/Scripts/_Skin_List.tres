@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="SkinDataBase" format=3 uid="uid://bggffkxyubiwa"]
+
+[ext_resource type="Script" uid="uid://vp1s2nc5ud5f" path="res://Larchet/Skins/Scripts/SkinData.gd" id="1_qfdjk"]
+[ext_resource type="Script" uid="uid://djd8lc4832cbb" path="res://Larchet/Skins/Scripts/SkinDataBase.gd" id="2_4c1ul"]
+[ext_resource type="Resource" uid="uid://da47llkq6v7jp" path="res://Larchet/Skins/Scripts/Original.tres" id="2_oio0q"]
+[ext_resource type="Resource" uid="uid://putq4k346v7c" path="res://Larchet/Skins/Scripts/Inverted.tres" id="3_lypd4"]
+[ext_resource type="Resource" uid="uid://dfwcptliy452l" path="res://Larchet/Skins/Scripts/BG.tres" id="4_uj35g"]
+[ext_resource type="Resource" uid="uid://b4jpqxu3y00c" path="res://Larchet/Skins/Scripts/Prince.tres" id="4_xfdcp"]
+[ext_resource type="Resource" uid="uid://crscbav82ywtn" path="res://Larchet/Skins/Scripts/Astro.tres" id="5_qwcbe"]
+[ext_resource type="Resource" uid="uid://o8bxjco67y2s" path="res://Larchet/Skins/Scripts/Clown.tres" id="6_bvwwg"]
+[ext_resource type="Resource" uid="uid://clw5i3dlq2osq" path="res://Larchet/Skins/Scripts/Cowboy.tres" id="7_2eut8"]
+[ext_resource type="Resource" uid="uid://d0kbpw7ic7x33" path="res://Larchet/Skins/Scripts/Cinema.tres" id="7_s4ngt"]
+[ext_resource type="Resource" uid="uid://bkdvc4wfhfykt" path="res://Larchet/Skins/Scripts/HK.tres" id="8_eh466"]
+[ext_resource type="Resource" uid="uid://cqgje1autg03a" path="res://Larchet/Skins/Scripts/Animal_Well.tres" id="9_nxi85"]
+[ext_resource type="Resource" uid="uid://cqdf64toy4qg2" path="res://Larchet/Skins/Scripts/Pikmin.tres" id="10_s2dln"]
+
+[resource]
+script = ExtResource("2_4c1ul")
+all_skins = Array[ExtResource("1_qfdjk")]([ExtResource("2_oio0q"), ExtResource("3_lypd4"), ExtResource("5_qwcbe"), ExtResource("6_bvwwg"), ExtResource("7_s4ngt"), ExtResource("7_2eut8"), ExtResource("4_uj35g"), ExtResource("4_xfdcp"), ExtResource("10_s2dln"), ExtResource("8_eh466"), ExtResource("9_nxi85")])
+metadata/_custom_type_script = "uid://djd8lc4832cbb"

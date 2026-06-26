@@ -1,0 +1,127 @@
+[gd_scene load_steps=6 format=3 uid="uid://2o1wufyf0h2i"]
+
+[ext_resource type="Script" path="res://Interface/Scripts/timerArrival.gd" id="1"]
+[ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="2"]
+[ext_resource type="AudioStream" uid="uid://ceres186buchc" path="res://Audio/SFX/Puntuation Sound 2.mp3" id="3"]
+[ext_resource type="AudioStream" uid="uid://nhthqrjvdeqk" path="res://Audio/SFX/Hard kick drum 01.mp3" id="4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jokgb"]
+line_spacing = 0.0
+font = ExtResource("2")
+font_color = Color(0.907942, 0.907942, 0.907942, 1)
+outline_size = 4
+outline_color = Color(8.42288e-08, 4.21144e-08, 0.14266, 1)
+shadow_size = 0
+
+[node name="TimerArrival" type="Control"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -160.0
+offset_right = -160.0
+grow_horizontal = 2
+script = ExtResource("1")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 27.0
+offset_top = 5.0
+offset_right = 27.0
+offset_bottom = 5.0
+pivot_offset = Vector2(-27, 6)
+
+[node name="Label_min" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -62.0
+offset_right = -44.0
+offset_bottom = 14.0
+grow_horizontal = 2
+pivot_offset = Vector2(8, 8)
+text = "0 :"
+label_settings = SubResource("LabelSettings_jokgb")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Label_sec" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.0
+offset_right = -22.0
+offset_bottom = 14.0
+grow_horizontal = 2
+pivot_offset = Vector2(5, 8)
+text = "00 :"
+label_settings = SubResource("LabelSettings_jokgb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label_msec" type="Label" parent="Control"]
+unique_name_in_owner = true
+modulate = Color(0.839216, 0.894118, 1, 0.901961)
+layout_mode = 2
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -19.0
+offset_right = -1.0
+offset_bottom = 14.0
+grow_horizontal = 2
+pivot_offset = Vector2(8, 7)
+size_flags_horizontal = 4
+text = "000"
+label_settings = SubResource("LabelSettings_jokgb")
+vertical_alignment = 1
+text_overrun_behavior = 1
+
+[node name="Timer_min" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+autostart = true
+
+[node name="Timer_sec" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="Timer_msec" type="Timer" parent="."]
+wait_time = 3.5
+one_shot = true
+autostart = true
+
+[node name="Score_scroll" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3")
+volume_db = -4.0
+autoplay = true
+bus = &"SFX"
+
+[node name="Score_scroll2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3")
+volume_db = -6.0
+pitch_scale = 0.9
+autoplay = true
+bus = &"SFX"
+
+[node name="Score_scroll3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3")
+volume_db = -8.0
+pitch_scale = 0.95
+autoplay = true
+bus = &"SFX"
+
+[node name="Drum" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4")
+volume_db = -3.0
+pitch_scale = 1.25
+bus = &"SFX"
+
+[connection signal="timeout" from="Timer_min" to="." method="_on_timer_min_timeout"]
+[connection signal="timeout" from="Timer_sec" to="." method="_on_timer_sec_timeout"]
+[connection signal="timeout" from="Timer_msec" to="." method="_on_timer_msec_timeout"]

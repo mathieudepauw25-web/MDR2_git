@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://ct1olda2r36v8"]
+
+[ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="1_4f78u"]
+
+[resource]
+font = ExtResource("1_4f78u")
+font_size = 14

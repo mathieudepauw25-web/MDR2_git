@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://bxo3iwjb2256m"]
+
+[ext_resource type="StyleBox" uid="uid://soytbs84k3ta" path="res://Larchet/Menus/Green.tres" id="1_b428j"]
+[ext_resource type="StyleBox" uid="uid://bxsdagltmhsaa" path="res://Larchet/Menus/SkinsGold.tres" id="2_4hds5"]
+[ext_resource type="Script" uid="uid://c8u1wttxilcel" path="res://Larchet/Menus/SkinsPage/Skin_Slot.gd" id="3_npdc8"]
+[ext_resource type="LabelSettings" uid="uid://ct1olda2r36v8" path="res://Larchet/Menus/LabelFont.tres" id="4_cly5v"]
+[ext_resource type="StyleBox" uid="uid://d2wb0x7bmm82g" path="res://Larchet/Menus/Gold.tres" id="5_npdc8"]
+[ext_resource type="SpriteFrames" uid="uid://xkd8aoa58mvt" path="res://Larchet/Skins/Animations/AnimationSkins.tres" id="6_4hds5"]
+[ext_resource type="Texture2D" uid="uid://b2tfup7bafrra" path="res://Interface/Sprites/icon074.png" id="6_lrlhu"]
+[ext_resource type="AudioStream" uid="uid://mveooa4f7pg4" path="res://Audio/SFX/ui_click_rollover_misc_05.mp3" id="8_htci2"]
+[ext_resource type="AudioStream" uid="uid://d3dxycfae6tnq" path="res://Audio/SFX/ui_click_rollover_misc_01.mp3" id="9_cly5v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4hds5"]
+bg_color = Color(0, 0, 0, 0.39215687)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 11
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_detail = 1
+
+[node name="SkinSlot" type="Button" unique_id=1142941699]
+custom_minimum_size = Vector2(70, 70)
+offset_left = -35.0
+offset_top = -35.0
+offset_right = 35.0
+offset_bottom = 35.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_styles/normal = ExtResource("1_b428j")
+theme_override_styles/pressed = ExtResource("2_4hds5")
+theme_override_styles/hover = ExtResource("2_4hds5")
+theme_override_styles/focus = ExtResource("2_4hds5")
+script = ExtResource("3_npdc8")
+metadata/_custom_type_script = "uid://ej50tywcc4ki"
+
+[node name="NameOrLocked" type="Label" parent="." unique_id=1962033398]
+custom_minimum_size = Vector2(15, 5)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -22.5
+offset_top = -15.0
+offset_right = 22.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Locked"
+label_settings = ExtResource("4_cly5v")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="FiltreSombre" type="Panel" parent="." unique_id=2105059681]
+z_index = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4hds5")
+
+[node name="Panel" type="Panel" parent="." unique_id=1914993701]
+z_index = 1
+custom_minimum_size = Vector2(6, 6)
+layout_mode = 0
+offset_left = 56.0
+offset_top = 8.0
+offset_right = 62.0
+offset_bottom = 14.0
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("5_npdc8")
+
+[node name="Croix" type="Sprite2D" parent="." unique_id=766014003]
+position = Vector2(58, 11)
+texture = ExtResource("6_lrlhu")
+
+[node name="SpriteAnchor" type="Control" parent="." unique_id=1460318345]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.5
+offset_top = -19.5
+offset_right = 19.5
+offset_bottom = 20.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteAnchor" unique_id=1591463556]
+z_index = 1
+position = Vector2(20, 20)
+scale = Vector2(3, 3)
+sprite_frames = ExtResource("6_4hds5")
+animation = &"Original"
+
+[node name="Node" type="Node" parent="." unique_id=818327849]
+
+[node name="Move" type="AudioStreamPlayer" parent="Node" unique_id=1421861121]
+unique_name_in_owner = true
+stream = ExtResource("8_htci2")
+volume_db = -3.9
+pitch_scale = 1.1
+
+[node name="Select" type="AudioStreamPlayer" parent="Node" unique_id=1663444842]
+unique_name_in_owner = true
+stream = ExtResource("9_cly5v")
+pitch_scale = 1.1
+
+[connection signal="focus_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

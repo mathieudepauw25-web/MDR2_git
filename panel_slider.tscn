@@ -1,0 +1,208 @@
+[gd_scene format=3 uid="uid://bvrjl8tgtm4jg"]
+
+[ext_resource type="Script" uid="uid://bxn7bbh27jy6l" path="res://panel_options.gd" id="1"]
+[ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="2"]
+[ext_resource type="Script" uid="uid://bfio7bahqu8ax" path="res://System/TextManageLabel.gd" id="3"]
+[ext_resource type="Texture2D" uid="uid://bf3g65sygf4tg" path="res://System/icon_flag_EN.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://c0vm5dlglt050" path="res://System/icon_flag_FR.png" id="5"]
+[ext_resource type="AudioStream" uid="uid://dq4ppusluxce4" path="res://Audio/SFX/popup_01.wav" id="6"]
+[ext_resource type="AudioStream" uid="uid://mveooa4f7pg4" path="res://Audio/SFX/ui_click_rollover_misc_05.mp3" id="7"]
+[ext_resource type="AudioStream" uid="uid://d3dxycfae6tnq" path="res://Audio/SFX/ui_click_rollover_misc_01.mp3" id="8"]
+[ext_resource type="AudioStream" uid="uid://8hsofowytkgk" path="res://Audio/SFX/switch_001.ogg" id="9"]
+[ext_resource type="AudioStream" uid="uid://cjlhw05gtgyl5" path="res://Audio/SFX/select_005.ogg" id="10"]
+[ext_resource type="AudioStream" uid="uid://c2fr4gk3k7kxo" path="res://Audio/SFX/error_004.ogg" id="11"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ajak4"]
+bg_color = Color(1, 0.984314, 0.968627, 0.705882)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16t0c"]
+bg_color = Color(1, 0.74902, 0.211765, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_soare"]
+bg_color = Color(1, 1, 1, 0.705882)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8g7lm"]
+bg_color = Color(1, 0.74902, 0.211765, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_umu63"]
+bg_color = Color(1, 0.74902, 0.211765, 0.588235)
+border_color = Color(0.631373, 0.431373, 0.192157, 1)
+shadow_color = Color(0.532531, 0.359746, 0.15196, 0.392157)
+shadow_size = 2
+anti_aliasing = false
+
+[sub_resource type="Theme" id="Theme_xh350"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kmm0w"]
+bg_color = Color(1, 0.74902, 0.211765, 0.588235)
+border_color = Color(0.631373, 0.431373, 0.192157, 1)
+shadow_color = Color(0.532531, 0.359746, 0.15196, 0.392157)
+shadow_size = 2
+anti_aliasing = false
+
+[node name="Panel_slider" type="Control" unique_id=1402151509]
+layout_mode = 3
+anchor_right = 0.275
+anchor_bottom = 0.239
+offset_bottom = -1.02
+script = ExtResource("1")
+
+[node name="Panel" type="Panel" parent="." unique_id=941348547]
+layout_mode = 0
+offset_right = 89.0
+offset_bottom = 42.0
+
+[node name="Music" type="Label" parent="Panel" unique_id=70976587]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 33.0
+offset_bottom = 13.0
+theme_override_fonts/font = ExtResource("2")
+theme_override_font_sizes/font_size = 12
+text = "Music"
+script = ExtResource("3")
+TextEN = "Music"
+TextFR = "Musique"
+
+[node name="Sound" type="Label" parent="Panel" unique_id=900691712]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 14.0
+offset_right = 33.0
+offset_bottom = 26.0
+theme_override_fonts/font = ExtResource("2")
+theme_override_font_sizes/font_size = 12
+text = "Sound"
+script = ExtResource("3")
+TextEN = "Sound"
+TextFR = "Son"
+
+[node name="Fullscreen" type="Label" parent="Panel" unique_id=909892504]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 28.0
+offset_right = 44.0
+offset_bottom = 40.0
+focus_neighbor_right = NodePath("../OptionButton_lang")
+theme_override_fonts/font = ExtResource("2")
+theme_override_font_sizes/font_size = 12
+text = "Fullscreen"
+script = ExtResource("3")
+TextEN = "Fullscreen"
+TextFR = "Plein écran"
+
+[node name="HSlider_music" type="HSlider" parent="Panel" unique_id=1268009031]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 4.0
+offset_right = 165.0
+offset_bottom = 20.0
+scale = Vector2(0.4, 0.4)
+focus_neighbor_right = NodePath("../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+focus_neighbor_bottom = NodePath("../HSlider_sound")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_ajak4")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_16t0c")
+min_value = -21.0
+max_value = 6.0
+step = 3.0
+rounded = true
+allow_greater = true
+
+[node name="HSlider_sound" type="HSlider" parent="Panel" unique_id=244265667]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 18.0
+offset_right = 165.0
+offset_bottom = 34.0
+scale = Vector2(0.4, 0.4)
+focus_neighbor_top = NodePath("../HSlider_music")
+focus_neighbor_right = NodePath("../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+focus_neighbor_bottom = NodePath("../CheckButton")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_soare")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_8g7lm")
+min_value = -21.0
+max_value = 6.0
+step = 3.0
+rounded = true
+
+[node name="CheckButton" type="CheckButton" parent="Panel" unique_id=592714715]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 27.0
+offset_right = 84.0
+offset_bottom = 58.0
+scale = Vector2(0.5, 0.5)
+focus_neighbor_top = NodePath("../HSlider_sound")
+focus_neighbor_right = NodePath("../OptionButton_lang")
+theme_override_fonts/font = ExtResource("2")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxFlat_umu63")
+button_mask = 0
+alignment = 1
+
+[node name="OptionButton_lang" type="OptionButton" parent="Panel" unique_id=1287607352]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 28.0
+offset_right = 112.0
+offset_bottom = 56.0
+scale = Vector2(0.5, 0.5)
+focus_neighbor_left = NodePath("../CheckButton")
+focus_neighbor_top = NodePath("../HSlider_sound")
+theme = SubResource("Theme_xh350")
+theme_override_constants/h_separation = 0
+theme_override_styles/focus = SubResource("StyleBoxFlat_kmm0w")
+button_mask = 0
+flat = true
+selected = 0
+item_count = 2
+popup/item_0/icon = ExtResource("4")
+popup/item_0/id = 0
+popup/item_1/icon = ExtResource("5")
+popup/item_1/id = 1
+
+[node name="Audio_test_sound" type="AudioStreamPlayer" parent="." unique_id=1215346375]
+stream = ExtResource("6")
+pitch_scale = 1.8
+bus = &"SFX"
+
+[node name="SFX" type="Node" parent="." unique_id=120029925]
+
+[node name="UI_menu_up_down" type="AudioStreamPlayer" parent="SFX" unique_id=1599616231]
+unique_name_in_owner = true
+stream = ExtResource("7")
+pitch_scale = 1.1
+bus = &"SFX"
+
+[node name="UI_menu_click" type="AudioStreamPlayer" parent="SFX" unique_id=534731619]
+unique_name_in_owner = true
+stream = ExtResource("8")
+pitch_scale = 2.0
+bus = &"SFX"
+
+[node name="UI_toggle" type="AudioStreamPlayer" parent="SFX" unique_id=1299628111]
+unique_name_in_owner = true
+stream = ExtResource("9")
+pitch_scale = 1.2
+bus = &"SFX"
+
+[node name="UI_paused" type="AudioStreamPlayer" parent="SFX" unique_id=832321484]
+unique_name_in_owner = true
+stream = ExtResource("10")
+volume_db = -6.0
+pitch_scale = 0.8
+bus = &"SFX"
+
+[node name="UI_cancel" type="AudioStreamPlayer" parent="SFX" unique_id=784646756]
+unique_name_in_owner = true
+stream = ExtResource("11")
+volume_db = -9.0
+pitch_scale = 0.85
+bus = &"SFX"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="value_changed" from="Panel/HSlider_music" to="." method="_on_h_slider_music_value_changed"]
+[connection signal="value_changed" from="Panel/HSlider_sound" to="." method="_on_h_slider_sound_value_changed"]
+[connection signal="toggled" from="Panel/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="item_selected" from="Panel/OptionButton_lang" to="." method="_on_option_button_lang_item_selected"]

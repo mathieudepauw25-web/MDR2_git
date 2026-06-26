@@ -1,0 +1,544 @@
+[gd_scene load_steps=32 format=3 uid="uid://dgcifnk6smlrl"]
+
+[ext_resource type="Script" path="res://Interface/Scripts/PauseMenu.gd" id="1"]
+[ext_resource type="Shader" path="res://Interface/Shader/PauseBlur.gdshader" id="2"]
+[ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="3"]
+[ext_resource type="StyleBox" uid="uid://cvb0ef4cnwbsy" path="res://Interface/Themes/ButtonHover.tres" id="4"]
+[ext_resource type="StyleBox" uid="uid://cgd7kvdxm5jsn" path="res://Interface/Themes/ButtonNormal.tres" id="5"]
+[ext_resource type="Script" path="res://System/TextManage.gd" id="6"]
+[ext_resource type="Texture2D" uid="uid://dro2fw1um2d6a" path="res://Interface/Sprites/icon_time.png" id="7"]
+[ext_resource type="Script" path="res://System/TextManageCheckbox.gd" id="8"]
+[ext_resource type="Texture2D" uid="uid://ccnu3p7xf38jn" path="res://Interface/Sprites/tile_0034.png" id="9"]
+[ext_resource type="Texture2D" uid="uid://cmfbm6disftm1" path="res://Interface/Sprites/icon_wall.png" id="10"]
+[ext_resource type="Texture2D" uid="uid://f13b0t4ate3j" path="res://Interface/Sprites/icon_fall.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://bn7mwsgv27kd" path="res://Interface/Sprites/tile_0604.png" id="12"]
+[ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="13"]
+[ext_resource type="Script" path="res://System/TextManageLabel.gd" id="14"]
+[ext_resource type="Script" path="res://Interface/label_version_on_pause.gd" id="15"]
+[ext_resource type="AudioStream" uid="uid://dq4ppusluxce4" path="res://Audio/SFX/popup_01.wav" id="16"]
+[ext_resource type="AudioStream" uid="uid://mveooa4f7pg4" path="res://Audio/SFX/ui_click_rollover_misc_05.mp3" id="17"]
+[ext_resource type="AudioStream" uid="uid://d3dxycfae6tnq" path="res://Audio/SFX/ui_click_rollover_misc_01.mp3" id="18"]
+[ext_resource type="AudioStream" uid="uid://8hsofowytkgk" path="res://Audio/SFX/switch_001.ogg" id="19"]
+[ext_resource type="AudioStream" uid="uid://cjlhw05gtgyl5" path="res://Audio/SFX/select_005.ogg" id="20"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_080vl"]
+shader = ExtResource("2")
+shader_parameter/amount = 1.5
+
+[sub_resource type="Theme" id="Theme_pl0fo"]
+default_font = ExtResource("3")
+default_font_size = 12
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 12
+Button/fonts/font = ExtResource("3")
+Button/styles/focus = ExtResource("4")
+Button/styles/normal = ExtResource("5")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c7owd"]
+bg_color = Color(1, 0.256442, 0.331, 1)
+
+[sub_resource type="Theme" id="Theme_wsjbd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bp5xg"]
+bg_color = Color(1, 0.74902, 0.211765, 0.588235)
+border_color = Color(0.631373, 0.431373, 0.192157, 1)
+shadow_color = Color(0.532531, 0.359746, 0.15196, 0.392157)
+shadow_size = 2
+anti_aliasing = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aqh63"]
+atlas = ExtResource("13")
+region = Rect2(49.1648, -0.255412, 15.8276, 8.63322)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ku8nr"]
+bg_color = Color(1, 0.984314, 0.968627, 0.705882)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p6l11"]
+bg_color = Color(1, 0.74902, 0.211765, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ry8si"]
+bg_color = Color(1, 1, 1, 0.705882)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6nlij"]
+bg_color = Color(1, 0.74902, 0.211765, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5aepb"]
+font = ExtResource("3")
+font_size = 8
+outline_size = 2
+outline_color = Color(0.132981, 1.01797e-05, 0.127194, 1)
+
+[node name="PauseMenu" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+metadata/_edit_lock_ = true
+
+[node name="Blur" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_080vl")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -96.0
+offset_right = 200.0
+offset_bottom = 101.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.129412)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBlackBar" type="ColorRect" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -90.0
+offset_right = 160.0
+offset_bottom = -65.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BotomBlackBar" type="ColorRect" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = 65.0
+offset_right = 160.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="LeftBlackBar" type="ColorRect" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 69.0
+offset_top = -181.0
+offset_right = 248.0
+offset_bottom = -79.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.568977
+color = Color(0, 0, 0, 1)
+
+[node name="Panel_buttons" type="Panel" parent="."]
+layout_mode = 2
+offset_left = 16.0
+offset_top = 39.0
+offset_right = 122.0
+offset_bottom = 102.0
+
+[node name="VBoxContainer_Buttons" type="VBoxContainer" parent="Panel_buttons"]
+layout_mode = 2
+offset_left = 8.0
+offset_top = 6.0
+offset_right = 98.0
+offset_bottom = 99.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/separation = 6
+
+[node name="Restart" type="Button" parent="Panel_buttons/VBoxContainer_Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../Panel_fullscreen/CheckButton")
+focus_neighbor_top = NodePath("../../../Panel_slider/HSlider_sound")
+focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+theme = SubResource("Theme_pl0fo")
+button_mask = 0
+text = "Restart"
+script = ExtResource("6")
+TextEN = "Restart"
+TextFR = "Recommencer"
+
+[node name="Espacement" type="Control" parent="Panel_buttons/VBoxContainer_Buttons"]
+visible = false
+layout_mode = 2
+
+[node name="Espacement2" type="Control" parent="Panel_buttons/VBoxContainer_Buttons"]
+visible = false
+layout_mode = 2
+
+[node name="Resume" type="Button" parent="Panel_buttons/VBoxContainer_Buttons"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../Panel_fullscreen/CheckButton")
+focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+theme = SubResource("Theme_pl0fo")
+button_mask = 0
+text = "Resume"
+script = ExtResource("6")
+TextEN = "Resume"
+TextFR = "Retour"
+
+[node name="Control" type="Button" parent="Panel_buttons/VBoxContainer_Buttons"]
+visible = false
+layout_mode = 2
+focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+theme = SubResource("Theme_pl0fo")
+button_mask = 0
+text = "CONTROL
+"
+
+[node name="Title screen" type="Button" parent="Panel_buttons/VBoxContainer_Buttons"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../Panel_fullscreen/CheckButton")
+focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+focus_neighbor_bottom = NodePath("../../../Panel_slider/HSlider_music")
+theme = SubResource("Theme_pl0fo")
+button_mask = 0
+text = "Title screen"
+script = ExtResource("6")
+TextEN = "Title screen"
+TextFR = "Ecran titre"
+
+[node name="Quit" type="Button" parent="Panel_buttons/VBoxContainer_Buttons"]
+visible = false
+layout_mode = 2
+focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+focus_neighbor_bottom = NodePath("../Restart")
+theme = SubResource("Theme_pl0fo")
+theme_override_styles/focus = SubResource("StyleBoxFlat_c7owd")
+button_mask = 0
+text = "QUIT"
+
+[node name="Panel_options" type="Panel" parent="."]
+layout_mode = 2
+offset_left = 126.0
+offset_top = 39.0
+offset_right = 189.0
+offset_bottom = 147.0
+
+[node name="VBoxContainer_CheckBoxs" type="VBoxContainer" parent="Panel_options"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_top = -1.0
+offset_right = 90.0
+offset_bottom = 155.0
+scale = Vector2(0.7, 0.7)
+theme_override_constants/separation = -2
+alignment = 1
+
+[node name="CheckBox_Timer" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
+focus_neighbor_top = NodePath("../CheckBox_Stars")
+focus_neighbor_bottom = NodePath("../CheckBox_BestTimer")
+theme = SubResource("Theme_wsjbd")
+theme_override_fonts/font = ExtResource("3")
+theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
+button_pressed = true
+action_mode = 0
+button_mask = 0
+text = "Timer"
+icon = ExtResource("7")
+script = ExtResource("8")
+TextEN = "Timer"
+TextFR = "Temps"
+
+[node name="CheckBox_BestTimer" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
+focus_neighbor_top = NodePath("../CheckBox_Timer")
+focus_neighbor_bottom = NodePath("../CheckBox_NbActions")
+theme_override_fonts/font = ExtResource("3")
+theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
+button_pressed = true
+action_mode = 0
+button_mask = 0
+text = "Record"
+icon = ExtResource("7")
+
+[node name="CheckBox_NbActions" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
+focus_neighbor_top = NodePath("../CheckBox_BestTimer")
+focus_neighbor_bottom = NodePath("../CheckBox_NbPok")
+theme_override_fonts/font = ExtResource("3")
+theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
+action_mode = 0
+button_mask = 0
+text = "Actions"
+icon = ExtResource("9")
+
+[node name="CheckBox_NbPok" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
+focus_neighbor_top = NodePath("../CheckBox_NbActions")
+focus_neighbor_bottom = NodePath("../CheckBox_NbFall")
+theme_override_fonts/font = ExtResource("3")
+theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
+action_mode = 0
+button_mask = 0
+text = "Walls"
+icon = ExtResource("10")
+script = ExtResource("8")
+TextEN = "Walls"
+TextFR = "Murs"
+
+[node name="CheckBox_NbFall" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
+focus_neighbor_top = NodePath("../CheckBox_NbPok")
+focus_neighbor_bottom = NodePath("../CheckBox_Inputs")
+theme_override_fonts/font = ExtResource("3")
+theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
+action_mode = 0
+button_mask = 0
+text = "Falls"
+icon = ExtResource("11")
+script = ExtResource("8")
+TextEN = "Falls"
+TextFR = "Chutes"
+
+[node name="CheckBox_Inputs" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
+focus_neighbor_top = NodePath("../CheckBox_NbFall")
+focus_neighbor_bottom = NodePath("../CheckBox_Stars")
+theme_override_fonts/font = ExtResource("3")
+theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
+action_mode = 0
+button_mask = 0
+text = "Inputs"
+icon = ExtResource("12")
+
+[node name="CheckBox_Stars" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
+focus_neighbor_top = NodePath("../CheckBox_Inputs")
+focus_neighbor_bottom = NodePath("../CheckBox_Timer")
+theme_override_fonts/font = ExtResource("3")
+theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
+action_mode = 0
+button_mask = 0
+text = "Stars"
+icon = SubResource("AtlasTexture_aqh63")
+script = ExtResource("8")
+TextEN = "Stars"
+TextFR = "Etoiles"
+
+[node name="Panel_slider" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 107.0
+offset_right = 122.0
+offset_bottom = 147.0
+
+[node name="Music" type="Label" parent="Panel_slider"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -1.0
+offset_right = 106.0
+offset_bottom = 22.0
+theme_override_fonts/font = ExtResource("3")
+theme_override_font_sizes/font_size = 12
+text = "Music"
+horizontal_alignment = 1
+script = ExtResource("14")
+TextEN = "Music"
+TextFR = "Musique"
+
+[node name="Sound" type="Label" parent="Panel_slider"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 19.0
+offset_right = 106.0
+offset_bottom = 42.0
+theme_override_fonts/font = ExtResource("3")
+theme_override_font_sizes/font_size = 12
+text = "Sound"
+horizontal_alignment = 1
+script = ExtResource("14")
+TextEN = "Sound"
+TextFR = "Son"
+
+[node name="HSlider_music" type="HSlider" parent="Panel_slider"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 9.0
+offset_right = 168.0
+offset_bottom = 25.0
+scale = Vector2(0.6, 0.6)
+focus_neighbor_top = NodePath("../../Panel_buttons/VBoxContainer_Buttons/Title screen")
+focus_neighbor_right = NodePath("../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+focus_neighbor_bottom = NodePath("../HSlider_sound")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_ku8nr")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_p6l11")
+min_value = -21.0
+max_value = 6.0
+step = 3.0
+rounded = true
+allow_greater = true
+
+[node name="HSlider_sound" type="HSlider" parent="Panel_slider"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 29.0
+offset_right = 167.0
+offset_bottom = 45.0
+scale = Vector2(0.6, 0.6)
+focus_neighbor_top = NodePath("../HSlider_music")
+focus_neighbor_right = NodePath("../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+focus_neighbor_bottom = NodePath("../../Panel_buttons/VBoxContainer_Buttons/Restart")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_ry8si")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_6nlij")
+min_value = -21.0
+max_value = 6.0
+step = 3.0
+rounded = true
+
+[node name="Panel_fullscreen" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 193.0
+offset_top = 131.0
+offset_right = 251.0
+offset_bottom = 147.0
+
+[node name="CheckButton" type="CheckButton" parent="Panel_fullscreen"]
+layout_mode = 0
+offset_right = 116.0
+offset_bottom = 32.0
+scale = Vector2(0.5, 0.5)
+focus_neighbor_left = NodePath("../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+focus_neighbor_right = NodePath("../../Panel_buttons/VBoxContainer_Buttons/Resume")
+theme_override_fonts/font = ExtResource("3")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
+button_mask = 0
+text = "Fullscreen"
+alignment = 1
+script = ExtResource("8")
+TextEN = "Fullscreen"
+TextFR = "Plein écran"
+metadata/_edit_lock_ = true
+
+[node name="Panel_superdash" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 193.0
+offset_top = 112.0
+offset_right = 251.0
+offset_bottom = 128.0
+
+[node name="CheckButton" type="CheckButton" parent="Panel_superdash"]
+layout_mode = 0
+offset_right = 116.0
+offset_bottom = 32.0
+scale = Vector2(0.5, 0.5)
+focus_neighbor_left = NodePath("../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+focus_neighbor_top = NodePath("../../Panel_fullscreen/CheckButton")
+focus_neighbor_right = NodePath("../../Panel_buttons/VBoxContainer_Buttons/Resume")
+focus_neighbor_bottom = NodePath("../../Panel_fullscreen/CheckButton")
+theme_override_fonts/font = ExtResource("3")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
+button_pressed = true
+button_mask = 0
+text = "SuperDash"
+alignment = 2
+metadata/_edit_lock_ = true
+
+[node name="Label_version" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0.792157)
+layout_mode = 0
+offset_left = 277.0
+offset_top = 172.0
+offset_right = 319.0
+offset_bottom = 180.0
+text = "X.XX"
+label_settings = SubResource("LabelSettings_5aepb")
+horizontal_alignment = 2
+script = ExtResource("15")
+
+[node name="Audio_test_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16")
+pitch_scale = 1.8
+bus = &"SFX"
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="UI_menu_up_down" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("17")
+pitch_scale = 1.1
+bus = &"SFX"
+
+[node name="UI_menu_click" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("18")
+pitch_scale = 2.0
+bus = &"SFX"
+
+[node name="UI_toggle" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("19")
+pitch_scale = 1.2
+bus = &"SFX"
+
+[node name="UI_paused" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("20")
+volume_db = -6.0
+pitch_scale = 0.8
+bus = &"SFX"
+
+[connection signal="pressed" from="Panel_buttons/VBoxContainer_Buttons/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Panel_buttons/VBoxContainer_Buttons/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Panel_buttons/VBoxContainer_Buttons/Control" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Panel_buttons/VBoxContainer_Buttons/Title screen" to="." method="_on_title_screen_pressed"]
+[connection signal="pressed" from="Panel_buttons/VBoxContainer_Buttons/Quit" to="." method="_on_quit_pressed"]
+[connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer" to="." method="_on_check_box_timer_toggled"]
+[connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_BestTimer" to="." method="_on_check_box_best_timer_toggled"]
+[connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions" to="." method="_on_check_box_nb_actions_toggled"]
+[connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok" to="." method="_on_check_box_nb_pok_toggled"]
+[connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbFall" to="." method="_on_check_box_nb_fall_toggled"]
+[connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Inputs" to="." method="_on_check_box_inputs_toggled"]
+[connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Stars" to="." method="_on_check_box_stars_toggled"]
+[connection signal="value_changed" from="Panel_slider/HSlider_music" to="." method="_on_slider_music_value_changed"]
+[connection signal="value_changed" from="Panel_slider/HSlider_sound" to="." method="_on_slider_sound_value_changed"]
+[connection signal="toggled" from="Panel_fullscreen/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="toggled" from="Panel_superdash/CheckButton" to="." method="_on_check_buttonSD_toggled"]

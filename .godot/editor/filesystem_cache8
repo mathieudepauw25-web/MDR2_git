@@ -1,0 +1,238 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1781188752
+default_bus_layout.tres::AudioBusLayout::2806860750026712788::1769296171::0::1::::<><>::
+gdre_export.log::TextFile::-1::1769292393::0::1::::<><>::
+icon.svg::CompressedTexture2D::8313313395123760746::1769292388::1769292388::1::::<><>::
+Logo de la bibliotheque (0-00-00-00).png::CompressedTexture2D::9155985766251718714::1769292388::1769292388::1::::<><>::
+panel_options.gd::GDScript::-1::1769292388::0::1::::panelOptions<>Control<>::
+panel_slider.tscn::PackedScene::3896048681498996412::1769292388::0::1::::<><>::res://panel_options.gd<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf<>res://System/TextManageLabel.gd<>uid://bf3g65sygf4tg::::res://System/icon_flag_EN.png<>uid://c0vm5dlglt050::::res://System/icon_flag_FR.png<>uid://dq4ppusluxce4::::res://Audio/SFX/popup_01.wav<>uid://mveooa4f7pg4::::res://Audio/SFX/ui_click_rollover_misc_05.mp3<>uid://d3dxycfae6tnq::::res://Audio/SFX/ui_click_rollover_misc_01.mp3<>uid://8hsofowytkgk::::res://Audio/SFX/switch_001.ogg<>uid://cjlhw05gtgyl5::::res://Audio/SFX/select_005.ogg<>uid://c2fr4gk3k7kxo::::res://Audio/SFX/error_004.ogg
+::res://addons/::1781188714
+::res://addons/godotsteam/::1781188715
+godotsteam.gdextension::GDExtension::-1::1769292392::0::1::::<><>::
+LICENSE.txt::TextFile::-1::1769292392::0::1::::<><>::
+README.md::TextFile::-1::1769292392::0::1::::<><>::
+::res://addons/godotsteam/linux32/::1781188714
+::res://addons/godotsteam/linux64/::1781188715
+::res://addons/godotsteam/osx/::1781188714
+::res://addons/godotsteam/osx/libgodotsteam.macos.template_debug.framework/::1781188714
+::res://addons/godotsteam/osx/libgodotsteam.macos.template_debug.framework/Resources/::1781188714
+::res://addons/godotsteam/osx/libgodotsteam.macos.template_release.framework/::1781188715
+::res://addons/godotsteam/osx/libgodotsteam.macos.template_release.framework/Resources/::1781188715
+::res://addons/godotsteam/win32/::1781188715
+::res://addons/godotsteam/win64/::1781188714
+::res://Arrival/::1781188714
+Arrival.gd::GDScript::-1::1769292388::0::1::::Arrival<>Area2D<>::
+Arrival.tscn::PackedScene::6849809208201474850::1769292388::0::1::::<><>::res://Arrival/Arrival.gd<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png
+::res://Audio/::1781188712
+::res://Audio/Music/::1781188712
+Sketchbook 2024-08-07.ogg::AudioStreamOggVorbis::2529087552755378134::1769292388::1769292388::1::::<><>::
+Sketchbook 2024-10-14.ogg::AudioStreamOggVorbis::2876623051624993574::1769292388::1769292388::1::::<><>::
+Sketchbook 2024-10-23.ogg::AudioStreamOggVorbis::4692982554672142960::1769292388::1769292388::1::::<><>::
+::res://Audio/SFX/::1781188712
+Attack_Enemy_Impact_1.wav::AudioStreamWAV::5770843216668876472::1769292392::1769292392::1::::<><>::
+Collect_key.mp3::AudioStreamMP3::6769645205795519398::1769292388::1769292388::1::::<><>::
+collision_wood_soft_01.mp3::AudioStreamMP3::5081389607340875673::1769292388::1769292388::1::::<><>::
+Cracking 1.mp3::AudioStreamMP3::7862784360540929747::1769292388::1769292388::1::::<><>::
+Cracking 2.mp3::AudioStreamMP3::991857050994223527::1769292388::1769292388::1::::<><>::
+drop_004.ogg::AudioStreamOggVorbis::6139107103576840572::1769292388::1769292388::1::::<><>::
+error_004.ogg::AudioStreamOggVorbis::6679346343158617572::1769292388::1769292388::1::::<><>::
+Fanfare_neutre.mp3::AudioStreamMP3::2592255788960981599::1769292388::1769292388::1::::<><>::
+Fanfare_trophy.mp3::AudioStreamMP3::7175111664385285803::1769292388::1769292388::1::::<><>::
+Fantasy_UI (50).wav::AudioStreamWAV::1543897625723933308::1769292392::1769292392::1::::<><>::
+Hard kick drum 01.mp3::AudioStreamMP3::928072602065118850::1769292388::1769292388::1::::<><>::
+Natural_Whoosh_1.wav::AudioStreamWAV::5854301164705852584::1769292392::1769292392::1::::<><>::
+Page turned.mp3::AudioStreamMP3::7649667820128632751::1769292388::1769292388::1::::<><>::
+popup_01.wav::AudioStreamWAV::8343089124756530437::1769292392::1769292392::1::::<><>::
+Puntuation Sound 2.mp3::AudioStreamMP3::5088967594014974408::1769292388::1769292388::1::::<><>::
+S2_Shimmer_Loop_1.wav::AudioStreamWAV::7897613132667932098::1769292392::1769292392::1::::<><>::
+scoretick_01.mp3::AudioStreamMP3::187762136680390482::1769292388::1769292388::1::::<><>::
+select_005.ogg::AudioStreamOggVorbis::5427714781564577044::1769292388::1769292388::1::::<><>::
+Sliding.wav::AudioStreamWAV::5709449408359968446::1769292392::1769292392::1::::<><>::
+Snare build up 10.mp3::AudioStreamMP3::7662384883133958120::1769292388::1769292388::1::::<><>::
+Snare.mp3::AudioStreamMP3::178347548619810603::1769292388::1769292388::1::::<><>::
+Subtle_Slash_3.wav::AudioStreamWAV::6460669672123732911::1769292392::1769292392::1::::<><>::
+Suspence.mp3::AudioStreamMP3::4638491915682058817::1769292388::1769292388::1::::<><>::
+switch_001.ogg::AudioStreamOggVorbis::2331800676594374486::1769292388::1769292388::1::::<><>::
+ui_click_rollover_misc_01.mp3::AudioStreamMP3::9132182268871043982::1769292388::1769292388::1::::<><>::
+ui_click_rollover_misc_02.mp3::AudioStreamMP3::1479606458330396910::1769292388::1769292388::1::::<><>::
+ui_click_rollover_misc_03.mp3::AudioStreamMP3::1413794154990790360::1769292388::1769292388::1::::<><>::
+ui_click_rollover_misc_04.mp3::AudioStreamMP3::6457327954054506690::1769292388::1769292388::1::::<><>::
+ui_click_rollover_misc_05.mp3::AudioStreamMP3::885886662229864597::1769292388::1769292388::1::::<><>::
+ui_click_rollover_misc_10.mp3::AudioStreamMP3::2555392623291213079::1769292388::1769292388::1::::<><>::
+ui_click_rollover_misc_11.mp3::AudioStreamMP3::236428853567757852::1769292388::1769292388::1::::<><>::
+ui_click_rollover_misc_12.mp3::AudioStreamMP3::7570810874379604102::1769292388::1769292388::1::::<><>::
+Water_Impact_Light_v2.wav::AudioStreamWAV::4863755164941554602::1769292392::1769292392::1::::<><>::
+Water_Impact_Light_v3.wav::AudioStreamWAV::175483650429561751::1769292392::1769292392::1::::<><>::
+::res://Door/::1781188719
+Door.gd::GDScript::-1::1769292388::0::1::::Door<>Area2D<>::
+Door.tscn::PackedScene::6850988538685440435::1769292388::0::1::::<><>::res://Door/Door.gd<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf
+::res://Fragile/::1781188715
+Fragile2.tscn::PackedScene::1081348774243293033::1769292388::0::1::::<><>::res://Fragile/Fragile.gd<>uid://b3csi3ttrhear::::res://World/Sprites/Tileset_FLOOR.png<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>uid://dka156s6ka28f::::res://Audio/SFX/Cracking 1.mp3<>uid://oep0gjf14iex::::res://Audio/SFX/Cracking 2.mp3<>uid://ctp3gx2j5ltma::::res://Audio/SFX/drop_004.ogg
+Fragile.gd::GDScript::-1::1769292388::0::1::::Fragile<>Area2D<>::
+Fragile.tscn::PackedScene::668918801555403663::1769292388::0::1::::<><>::res://Fragile/Fragile.gd<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>uid://dka156s6ka28f::::res://Audio/SFX/Cracking 1.mp3<>uid://oep0gjf14iex::::res://Audio/SFX/Cracking 2.mp3<>uid://ctp3gx2j5ltma::::res://Audio/SFX/drop_004.ogg
+::res://Hidden/::1781188714
+Hidden.gd::GDScript::-1::1769292388::0::1::::Hidden<>Area2D<>::
+Hidden.tscn::PackedScene::8538233648259266661::1769292388::0::1::::<><>::res://Hidden/Hidden.gd<>uid://b3csi3ttrhear::::res://World/Sprites/Tileset_FLOOR.png
+::res://Interface/::1781188720
+ArrivalScreen.tscn::PackedScene::8531074084865258443::1769292388::0::1::::<><>::res://Interface/Scripts/ArrivalScreen.gd<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf<>uid://dgspu27t0djae::::res://Interface/Sprites/tile_0570.png<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>uid://2o1wufyf0h2i::::res://Interface/TimerArrival.tscn<>uid://op00a3qvecoo::::res://Interface/TimerBest.tscn<>uid://cvb0ef4cnwbsy::::res://Interface/Themes/ButtonHover.tres<>uid://cgd7kvdxm5jsn::::res://Interface/Themes/ButtonNormal.tres<>res://System/TextManageCheckbox.gd<>uid://ccnu3p7xf38jn::::res://Interface/Sprites/tile_0034.png<>uid://dtcnghvh3viuw::::res://Interface/Sprites/icon_dash.png<>uid://cmfbm6disftm1::::res://Interface/Sprites/icon_wall.png<>uid://f13b0t4ate3j::::res://Interface/Sprites/icon_fall.png<>uid://b7c6jwqucx8kr::::res://Audio/SFX/Suspence.mp3<>uid://dhfymhvh615xc::::res://Audio/SFX/Snare build up 10.mp3<>uid://csnmf6skynep::::res://Audio/SFX/Snare.mp3<>uid://mveooa4f7pg4::::res://Audio/SFX/ui_click_rollover_misc_05.mp3<>uid://d3dxycfae6tnq::::res://Audio/SFX/ui_click_rollover_misc_01.mp3<>uid://dg8s58smu6m7h::::res://Audio/SFX/Page turned.mp3<>uid://c2fr4gk3k7kxo::::res://Audio/SFX/error_004.ogg
+DashSpot.tscn::PackedScene::8103680535701713523::1769292388::0::1::::<><>::res://Interface/dash_spot.gd<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png
+dash_spot.gd::GDScript::-1::1769292388::0::1::::Dashspot<>Node2D<>::
+FallCount.tscn::PackedScene::1407894534193956075::1769292388::0::1::::<><>::res://Interface/Scripts/fall_count.gd<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf<>uid://f13b0t4ate3j::::res://Interface/Sprites/icon_fall.png
+InputVisuel.tscn::PackedScene::180030079069391491::1769292388::0::1::::<><>::res://Interface/Scripts/input_visuel.gd<>uid://bn7mwsgv27kd::::res://Interface/Sprites/tile_0604.png<>uid://dgspu27t0djae::::res://Interface/Sprites/tile_0570.png
+label_version_on_pause.gd::GDScript::-1::1769292388::0::1::::label_version_on_pause<>Label<>::
+LaderboardLine.tscn::PackedScene::521208227049588214::1769292388::0::1::::<><>::res://Interface/laderboard_line.gd<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf
+laderboard_line.gd::GDScript::-1::1769292388::0::1::::LeaderboardUsersScore<>Panel<>::
+MovesCount.tscn::PackedScene::5219244527005076172::1769292388::0::1::::<><>::res://Interface/Scripts/moves_count.gd<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf<>uid://ccnu3p7xf38jn::::res://Interface/Sprites/tile_0034.png
+Pause.tscn::PackedScene::7585019233011906393::1769292388::0::1::::<><>::res://Interface/Scripts/PauseMenu.gd<>res://Interface/Shader/PauseBlur.gdshader<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf<>uid://cvb0ef4cnwbsy::::res://Interface/Themes/ButtonHover.tres<>uid://cgd7kvdxm5jsn::::res://Interface/Themes/ButtonNormal.tres<>res://System/TextManage.gd<>uid://dro2fw1um2d6a::::res://Interface/Sprites/icon_time.png<>res://System/TextManageCheckbox.gd<>uid://ccnu3p7xf38jn::::res://Interface/Sprites/tile_0034.png<>uid://cmfbm6disftm1::::res://Interface/Sprites/icon_wall.png<>uid://f13b0t4ate3j::::res://Interface/Sprites/icon_fall.png<>uid://bn7mwsgv27kd::::res://Interface/Sprites/tile_0604.png<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>res://System/TextManageLabel.gd<>res://Interface/label_version_on_pause.gd<>uid://dq4ppusluxce4::::res://Audio/SFX/popup_01.wav<>uid://mveooa4f7pg4::::res://Audio/SFX/ui_click_rollover_misc_05.mp3<>uid://d3dxycfae6tnq::::res://Audio/SFX/ui_click_rollover_misc_01.mp3<>uid://8hsofowytkgk::::res://Audio/SFX/switch_001.ogg<>uid://cjlhw05gtgyl5::::res://Audio/SFX/select_005.ogg
+PokCount.tscn::PackedScene::7832394324387982055::1769292388::0::1::::<><>::res://Interface/Scripts/pok_count.gd<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf<>uid://cmfbm6disftm1::::res://Interface/Sprites/icon_wall.png
+StarCount.tscn::PackedScene::5026898817235899022::1769292388::0::1::::<><>::res://Interface/star_count.gd<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>uid://bmur6sjbi38n::::res://VFX/Sprites/Buff n Debuff P1 06.png
+star_count.gd::GDScript::-1::1769292388::0::1::::StarCount<>Control<>::
+TimerArrival.tscn::PackedScene::1925619055350695442::1769292388::0::1::::<><>::res://Interface/Scripts/timerArrival.gd<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf<>uid://ceres186buchc::::res://Audio/SFX/Puntuation Sound 2.mp3<>uid://nhthqrjvdeqk::::res://Audio/SFX/Hard kick drum 01.mp3
+TimerBest.tscn::PackedScene::1015172090919847522::1769292388::0::1::::<><>::res://Interface/Scripts/timer_best.gd<>uid://dro2fw1um2d6a::::res://Interface/Sprites/icon_time.png<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf
+TimerCount.tscn::PackedScene::4941274979069160747::1769292388::0::1::::<><>::res://Interface/Scripts/timerCount.gd<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf
+trophy.gd::GDScript::-1::1769292388::0::1::::Trophy<>Control<>::
+Trophy.tscn::PackedScene::5187629005893805590::1769292388::0::1::::<><>::res://Interface/trophy.gd<>uid://d1os12wk4kb1m::::res://World/Sprites/Trophy.png<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf
+TrophyResume.tscn::PackedScene::6118679630745994541::1769292388::0::1::::<><>::res://Interface/trophy_resume.gd<>res://Interface/Shader/PauseBlur.gdshader<>uid://cf56qyr5ye807::::res://Interface/Trophy.tscn<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf<>uid://cvb0ef4cnwbsy::::res://Interface/Themes/ButtonHover.tres<>uid://cgd7kvdxm5jsn::::res://Interface/Themes/ButtonNormal.tres<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>uid://dahxbnghhgmhn::::res://Audio/SFX/Fanfare_trophy.mp3<>uid://dkrwsf2urgfx7::::res://Audio/SFX/S2_Shimmer_Loop_1.wav
+trophy_resume.gd::GDScript::-1::1769292388::0::1::::trophyResume<>Control<>::
+::res://Interface/Scripts/::1781188719
+ArrivalScreen.gd::GDScript::-1::1769292388::0::1::::ArrivalScreen<>Control<>::
+button.gd::GDScript::-1::1769292388::0::1::::button<>Button<>::
+fall_count.gd::GDScript::-1::1769292388::0::1::::FallCount<>Control<>::
+input_visuel.gd::GDScript::-1::1769292388::0::1::::InputVisuel<>Node2D<>::
+moves_count.gd::GDScript::-1::1769292388::0::1::::MovesCount<>Control<>::
+PauseMenu.gd::GDScript::-1::1769292388::0::1::::PauseMenu<>Control<>::
+pok_count.gd::GDScript::-1::1769292388::0::1::::PokCount<>Control<>::
+timerArrival.gd::GDScript::-1::1769292388::0::1::::TimerArrival<>Control<>::
+timerCount.gd::GDScript::-1::1769292388::0::1::::TimerCount<>Control<>::
+timer_best.gd::GDScript::-1::1769292388::0::1::::TimerBest<>Control<>::
+::res://Interface/Shader/::1781188720
+PauseBlur.gdshader::Shader::-1::1769292388::0::1::::<><>::
+::res://Interface/Sprites/::1781188720
+icon017.png::CompressedTexture2D::7241103490996030806::1769292388::1769292388::1::::<><>::
+icon021.png::CompressedTexture2D::3591649830760411827::1769292388::1769292388::1::::<><>::
+icon040.png::CompressedTexture2D::5004209450648005267::1769292388::1769292388::1::::<><>::
+icon074.png::CompressedTexture2D::4321082777418687054::1769292388::1769292388::1::::<><>::
+icon223.png::CompressedTexture2D::2885500425861390935::1769292388::1769292388::1::::<><>::
+icon790.png::CompressedTexture2D::1622042594198211531::1769292388::1769292388::1::::<><>::
+icon_audio.png::CompressedTexture2D::7041461048464686909::1769292388::1769292388::1::::<><>::
+icon_dash.png::CompressedTexture2D::8497779271840075878::1769292388::1769292388::1::::<><>::
+icon_fall.png::CompressedTexture2D::406321245140499145::1769292388::1769292388::1::::<><>::
+icon_time.png::CompressedTexture2D::8383023165861337794::1769292388::1769292388::1::::<><>::
+icon_wall.png::CompressedTexture2D::5625513159578538886::1769292388::1769292388::1::::<><>::
+tile_0017.png::CompressedTexture2D::7844908380720989548::1769292388::1769292388::1::::<><>::
+tile_0034.png::CompressedTexture2D::4941321145886539219::1769292388::1769292388::1::::<><>::
+tile_0085.png::CompressedTexture2D::8925712796445748170::1769292388::1769292388::1::::<><>::
+tile_0086.png::CompressedTexture2D::8960078658829526834::1769292388::1769292388::1::::<><>::
+tile_0120.png::CompressedTexture2D::266912902743760414::1769292388::1769292388::1::::<><>::
+tile_0121.png::CompressedTexture2D::7145705398721535228::1769292388::1769292388::1::::<><>::
+tile_0122.png::CompressedTexture2D::4766467518565554566::1769292388::1769292388::1::::<><>::
+tile_0155.png::CompressedTexture2D::5064283476276223345::1769292388::1769292388::1::::<><>::
+tile_0166.png::CompressedTexture2D::1560764010342399543::1769292388::1769292388::1::::<><>::
+tile_0167.png::CompressedTexture2D::8000482528249078993::1769292388::1769292388::1::::<><>::
+tile_0168.png::CompressedTexture2D::8733235349357345740::1769292388::1769292388::1::::<><>::
+tile_0169.png::CompressedTexture2D::2322743382022798402::1769292388::1769292388::1::::<><>::
+tile_0344.png::CompressedTexture2D::2343325420062840259::1769292388::1769292388::1::::<><>::
+tile_0345.png::CompressedTexture2D::5884769981366721590::1769292388::1769292388::1::::<><>::
+tile_0346.png::CompressedTexture2D::4815921113062456745::1769292388::1769292388::1::::<><>::
+tile_0347.png::CompressedTexture2D::8639721946999534479::1769292388::1769292388::1::::<><>::
+tile_0570.png::CompressedTexture2D::7618501851711173296::1769292388::1769292388::1::::<><>::
+tile_0604.png::CompressedTexture2D::98991311358151871::1769292388::1769292388::1::::<><>::
+::res://Interface/Themes/::1781188719
+ButtonHover.tres::StyleBoxFlat::6250396837058911616::1769292388::0::1::::<><>::
+ButtonNormal.tres::StyleBoxFlat::5202129472871158757::1769292388::0::1::::<><>::
+::res://Key/::1781188711
+Key.gd::GDScript::-1::1769292388::0::1::::Keys<>Area2D<>::
+Key.tscn::PackedScene::486292868475045604::1769292388::0::1::::<><>::res://Key/Key.gd<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>uid://c3pjckakrf6fi::::res://Audio/SFX/Collect_key.mp3
+::res://Platform/::1781188715
+Platform.gd::GDScript::-1::1769292388::0::1::::Platform<>Area2D<>::
+Platform.tscn::PackedScene::5896393527718270047::1769292388::0::1::::<><>::res://Platform/Platform.gd<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>uid://cybujyeuqm7y6::::res://Audio/SFX/Subtle_Slash_3.wav<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf<>uid://cw7odxskbt4e::::res://Audio/SFX/scoretick_01.mp3
+::res://Player/::1781188715
+Player.tscn::PackedScene::2802136591939568612::1769292388::0::1::::<><>::res://Player/Scripts/Player.gd<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>res://System/camera.gd<>res://System/StateMachine.gd<>res://System/StatePlayerIdle.gd<>res://System/StatePlayerMove.gd<>res://System/StatePlayerDash.gd<>res://System/StatePlayerPok.gd<>res://System/StatePlayerFall.gd<>res://Player/stateSlide.gd<>uid://up40ccqxds0x::::res://World/Sprites/SmokeNDust P03 VFX 2.png<>uid://di0qrk31ygqfe::::res://World/Sprites/SmokeNDust P03 VFX 4.png<>uid://cragp0chl2c6::::res://Audio/SFX/Water_Impact_Light_v3.wav<>uid://cpn4qqq5adyou::::res://Audio/SFX/Natural_Whoosh_1.wav<>uid://coho7eao35tlg::::res://Audio/SFX/Attack_Enemy_Impact_1.wav<>uid://dq4ppusluxce4::::res://Audio/SFX/popup_01.wav<>uid://cnlx2eawq7g4m::::res://Audio/SFX/Sliding.wav<>uid://cenp0ktgcoxfd::::res://Audio/SFX/collision_wood_soft_01.mp3<>uid://cybujyeuqm7y6::::res://Audio/SFX/Subtle_Slash_3.wav<>uid://v841egoinbcm::::res://Audio/SFX/Fantasy_UI (50).wav<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf<>uid://ccnu3p7xf38jn::::res://Interface/Sprites/tile_0034.png<>uid://wibs43mj6fet::::res://Interface/Sprites/tile_0166.png<>uid://8dfikh4timra::::res://Interface/Sprites/tile_0169.png<>uid://dwopd0p0owcn1::::res://Interface/Sprites/tile_0168.png<>uid://dl8q1p1p8v37j::::res://Interface/Sprites/tile_0167.png<>uid://cau4rt11n5hh6::::res://Interface/Sprites/tile_0346.png<>uid://cp3vki5vscen3::::res://Interface/Sprites/tile_0345.png<>uid://dvde7twu85lc6::::res://Interface/Sprites/tile_0347.png<>uid://8nehy076slkd::::res://Interface/Sprites/tile_0344.png<>uid://c82oyu32o52oe::::res://Interface/Sprites/tile_0121.png<>uid://b856a2lgr5qyw::::res://Interface/Sprites/tile_0122.png<>uid://d2katc8hkf2u::::res://Interface/Sprites/tile_0120.png<>res://TitleScreen/KeyboardInputManage.gd<>uid://d0fxgkwsiobeo::::res://Interface/Sprites/tile_0085.png<>uid://d0wlglrlf6tdy::::res://Interface/Sprites/tile_0086.png<>uid://cefgakl5qfc7b::::res://Interface/Sprites/tile_0155.png<>uid://bmur6sjbi38n::::res://VFX/Sprites/Buff n Debuff P1 06.png
+stateSlide.gd::GDScript::-1::1769292388::0::1::::PlayerStateSlide<>State<>::
+::res://Player/Scripts/::1781188715
+Player.gd::GDScript::-1::1769292388::0::1::::Player<>Area2D<>::
+::res://Player/Sprites/::1781188715
+(M)-main-character.png::CompressedTexture2D::1358283918944996758::1769292388::1769292388::1::::<><>::
+CAT 1.png::CompressedTexture2D::1349387463279024411::1769292388::1769292388::1::::<><>::
+dashFULL.png::CompressedTexture2D::297616892874035702::1769292388::1769292388::1::::<><>::
+Rook-Sheet.png::CompressedTexture2D::4542686964124746324::1769292388::1769292388::1::::<><>::
+::res://Resources/::1781188715
+Challenge_data.gd::GDScript::-1::1769292388::0::1::::ChallengeData<>Resource<>::
+game_data.gd::GDScript::-1::1769292388::0::1::::GameData<>Resource<>::
+Secret_data.gd::GDScript::-1::1769292388::0::1::::SecretData<>Resource<>::
+::res://Resources/Challenge_data/::1781188715
+challenge1.tres::Resource/ChallengeData::6423676534391850614::1769292388::0::1::::<><>::res://Resources/Challenge_data.gd<>uid://dqpbb66n1eph7::::res://icon.svg
+::res://Resources/Secret_data/::1781188715
+Secret1.tres::Resource/SecretData::4577294911828261387::1769292388::0::1::::<><>::res://Resources/Secret_data.gd
+Secret2.tres::Resource/SecretData::2218067971705775406::1769292388::0::1::::<><>::res://Resources/Secret_data.gd
+Secret3.tres::Resource/SecretData::6104954059024048134::1769292388::0::1::::<><>::res://Resources/Secret_data.gd
+Secret4.tres::Resource/SecretData::6883852191682860705::1769292388::0::1::::<><>::res://Resources/Secret_data.gd
+Secret5.tres::Resource/SecretData::135219883098611225::1769292388::0::1::::<><>::res://Resources/Secret_data.gd
+Secret6.tres::Resource/SecretData::6561830720177587587::1769292388::0::1::::<><>::res://Resources/Secret_data.gd
+::res://System/::1781188715
+camera.gd::GDScript::-1::1769292388::0::1::::Camera<>Camera2D<>::
+Icon 32x32.png::CompressedTexture2D::6765356496595486809::1769292388::1769292388::1::::<><>::
+icon_flag_EN.png::CompressedTexture2D::2795588745170269960::1769292388::1769292388::1::::<><>::
+icon_flag_FR.png::CompressedTexture2D::6571696743753599425::1769292388::1769292388::1::::<><>::
+State.gd::GDScript::-1::1769292388::0::1::::State<>Node<>::
+StateMachine.gd::GDScript::-1::1769292388::0::1::::StateMachine<>State<>::
+StatePlayerDash.gd::GDScript::-1::1769292388::0::1::::PlayerStateDash<>State<>::
+StatePlayerFall.gd::GDScript::-1::1769292388::0::1::::PlayerStateFall<>State<>::
+StatePlayerIdle.gd::GDScript::-1::1769292388::0::1::::PlayerStateIdle<>State<>::
+StatePlayerMove.gd::GDScript::-1::1769292388::0::1::::PlayerStateMove<>State<>::
+StatePlayerPok.gd::GDScript::-1::1769292388::0::1::::PlayerStatePoke<>State<>::
+TextManage.gd::GDScript::-1::1769292388::0::1::::<>Button<>::
+TextManageCheckbox.gd::GDScript::-1::1769292388::0::1::::<>Button<>::
+TextManageLabel.gd::GDScript::-1::1769292388::0::1::::<>Label<>::
+::res://System/Autoload/::1781188715
+AudioManager.tscn::PackedScene::8329120997552666582::1769292388::0::1::::<><>::res://System/Autoload/audio_manager.gd
+audio_manager.gd::GDScript::-1::1769292388::0::1::::AudioManager<>Node2D<>::
+EVENTS.gd::GDScript::-1::1769292388::0::1::::<>Node<>::
+GAMES.gd::GDScript::-1::1769292388::0::1::::Game<>Node<>::
+::res://System/Font/::1781188715
+BabaMediumPixels.ttf::FontFile::175295179165129353::1769292388::1769292388::1::::<><>::
+bitcell_memesbruh03.ttf::FontFile::9068599333247685207::1769292388::1769292388::1::::<><>::
+::res://TitleScreen/::1781188714
+camera_mapfree.gd::GDScript::-1::1769292388::0::1::::Mapfree<>Camera2D<>::
+KeyboardInputManage.gd::GDScript::-1::1769292388::0::1::::<>TextureRect<>::
+TitleScreen.tscn::PackedScene::3118208727646678584::1769296188::0::1::::<><>::res://TitleScreen/title_screen.gd<>res://Interface/Shader/PauseBlur.gdshader<>uid://d3ph0osbptnvu::::res://Logo de la bibliotheque (0-00-00-00).png<>uid://cdvcj3gbbg0nq::::res://Interface/StarCount.tscn<>res://Resources/Secret_data.gd<>uid://6upixjot18ms::::res://Resources/Secret_data/Secret2.tres<>uid://cs8jx33dwn5v3::::res://Resources/Secret_data/Secret3.tres<>uid://c5cubmcn3lk3j::::res://Resources/Secret_data/Secret4.tres<>uid://b6rb010v44rl::::res://Resources/Secret_data/Secret5.tres<>uid://c0qunmu6la8ot::::res://Resources/Secret_data/Secret6.tres<>uid://op00a3qvecoo::::res://Interface/TimerBest.tscn<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf<>uid://cvb0ef4cnwbsy::::res://Interface/Themes/ButtonHover.tres<>uid://cgd7kvdxm5jsn::::res://Interface/Themes/ButtonNormal.tres<>res://System/TextManage.gd<>uid://dgspu27t0djae::::res://Interface/Sprites/tile_0570.png<>uid://bvrjl8tgtm4jg::::res://panel_slider.tscn<>uid://cf56qyr5ye807::::res://Interface/Trophy.tscn<>res://System/TextManageLabel.gd<>uid://8nehy076slkd::::res://Interface/Sprites/tile_0344.png<>uid://ccnu3p7xf38jn::::res://Interface/Sprites/tile_0034.png<>uid://cau4rt11n5hh6::::res://Interface/Sprites/tile_0346.png<>uid://dvde7twu85lc6::::res://Interface/Sprites/tile_0347.png<>uid://cp3vki5vscen3::::res://Interface/Sprites/tile_0345.png<>uid://wibs43mj6fet::::res://Interface/Sprites/tile_0166.png<>uid://8dfikh4timra::::res://Interface/Sprites/tile_0169.png<>uid://dwopd0p0owcn1::::res://Interface/Sprites/tile_0168.png<>uid://dl8q1p1p8v37j::::res://Interface/Sprites/tile_0167.png<>uid://d0wlglrlf6tdy::::res://Interface/Sprites/tile_0086.png<>res://TitleScreen/KeyboardInputManage.gd<>uid://cefgakl5qfc7b::::res://Interface/Sprites/tile_0155.png<>uid://c82oyu32o52oe::::res://Interface/Sprites/tile_0121.png<>uid://d2katc8hkf2u::::res://Interface/Sprites/tile_0120.png<>uid://d0fxgkwsiobeo::::res://Interface/Sprites/tile_0085.png<>uid://dj1eq3ctkgj53::::res://Interface/Sprites/tile_0017.png<>uid://dkx4suiau4420::::res://World/Sprites/tileset_DECO-export.png<>uid://bo1qmbojsy05h::::res://World/Sprites/tileset_PERSPECTIV.png<>uid://dit87l100xwoa::::res://World/Sprites/grid tileset.png<>uid://b3csi3ttrhear::::res://World/Sprites/Tileset_FLOOR.png<>res://World/Map.gd<>uid://crtlqu7gvve6x::::res://World/Sprites/tileset_WALL.png<>uid://b7vn244bxiavw::::res://World/Sprites/tileset_ICE.png<>uid://c3ltsogceht5k::::res://World/Sprites/tileset_PLATFORMWAY.png<>uid://jsa83e1ucxbb::::res://Fragile/Fragile.tscn<>uid://pn2wkygnqf3n::::res://Fragile/Fragile2.tscn<>uid://dtv8pwu0e5vjp::::res://Hidden/Hidden.tscn<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>uid://djfkt322s75xs::::res://World/Sprites/tileset_DECO.png<>uid://g6tf4n07qtfo::::res://Key/Key.tscn<>uid://c4uw1sar467f8::::res://Door/Door.tscn<>uid://cqai0fmd7ihml::::res://Platform/Platform.tscn<>uid://bh5b0v63jq44d::::res://World/Secret.tscn<>uid://dnpqo1ibfm3qt::::res://Interface/DashSpot.tscn<>uid://c4udmetggq6f3::::res://Arrival/Arrival.tscn<>res://TitleScreen/camera_mapfree.gd<>uid://mveooa4f7pg4::::res://Audio/SFX/ui_click_rollover_misc_05.mp3<>uid://d3dxycfae6tnq::::res://Audio/SFX/ui_click_rollover_misc_01.mp3<>uid://dg8s58smu6m7h::::res://Audio/SFX/Page turned.mp3<>uid://c2fr4gk3k7kxo::::res://Audio/SFX/error_004.ogg<>uid://bg8ptc7q2n5py::::res://Audio/Music/Sketchbook 2024-10-14.ogg
+title_screen.gd::GDScript::-1::1769292388::0::1::::TitleScreen<>Node2D<>::
+::res://VFX/::1781188713
+::res://VFX/Sprites/::1781188713
+Buff n Debuff P1 06.png::CompressedTexture2D::96207731479399247::1769292388::1769292388::1::::<><>::
+::res://World/::1781188713
+AnimationOS.gd::GDScript::-1::1769292388::0::1::::AnimationOS<>Area2D<>::
+bgm.gd::GDScript::-1::1769292388::0::1::::BGM<>AudioStreamPlayer<>::
+Challenge.gd::GDScript::-1::1769292388::0::1::::Challenge<>Node2D<>::
+Challenge.tscn::PackedScene::7653944606986801453::1769292388::0::1::::<><>::res://World/Challenge.gd
+Container_stars_count.gd::GDScript::-1::1769292388::0::1::::Container_start_count<>HBoxContainer<>::
+labelsuperdash.gd::GDScript::-1::1769292388::0::1::::label_superdash<>Label<>::
+Map.gd::GDScript::-1::1769292388::0::1::::Map<>TileMapLayer<>::
+secret.gd::GDScript::-1::1769292388::0::1::::Secret<>Node2D<>::
+Secret.tscn::PackedScene::2939780435785682081::1769292388::0::1::::<><>::res://World/secret.gd<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>uid://dkrwsf2urgfx7::::res://Audio/SFX/S2_Shimmer_Loop_1.wav<>uid://bmur6sjbi38n::::res://VFX/Sprites/Buff n Debuff P1 06.png<>uid://v841egoinbcm::::res://Audio/SFX/Fantasy_UI (50).wav
+Splash.tscn::PackedScene::4768171510639810616::1769292388::0::1::::<><>::res://World/AnimationOS.gd<>uid://ccbbr3brf0x6m::::res://World/Sprites/Splash/Water Effect and Bullet 16x16.png
+SplashFactory.gd::GDScript::-1::1769292388::0::1::::SplashFactory<>Node<>::
+water_dash_factory.gd::GDScript::-1::1769292388::0::1::::WaterDashFactory<>Node<>::
+World.tscn::PackedScene::8821190570605129523::1769292388::0::1::::<><>::uid://bo1qmbojsy05h::::res://World/Sprites/tileset_PERSPECTIV.png<>uid://dit87l100xwoa::::res://World/Sprites/grid tileset.png<>uid://b3csi3ttrhear::::res://World/Sprites/Tileset_FLOOR.png<>res://World/Map.gd<>uid://crtlqu7gvve6x::::res://World/Sprites/tileset_WALL.png<>uid://b7vn244bxiavw::::res://World/Sprites/tileset_ICE.png<>uid://c3ltsogceht5k::::res://World/Sprites/tileset_PLATFORMWAY.png<>uid://jsa83e1ucxbb::::res://Fragile/Fragile.tscn<>uid://pn2wkygnqf3n::::res://Fragile/Fragile2.tscn<>uid://dtv8pwu0e5vjp::::res://Hidden/Hidden.tscn<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>uid://djfkt322s75xs::::res://World/Sprites/tileset_DECO.png<>uid://g6tf4n07qtfo::::res://Key/Key.tscn<>uid://c4uw1sar467f8::::res://Door/Door.tscn<>uid://cqai0fmd7ihml::::res://Platform/Platform.tscn<>uid://bh5b0v63jq44d::::res://World/Secret.tscn<>res://Resources/Secret_data.gd<>uid://6upixjot18ms::::res://Resources/Secret_data/Secret2.tres<>uid://cs8jx33dwn5v3::::res://Resources/Secret_data/Secret3.tres<>uid://c5cubmcn3lk3j::::res://Resources/Secret_data/Secret4.tres<>uid://b6rb010v44rl::::res://Resources/Secret_data/Secret5.tres<>uid://c0qunmu6la8ot::::res://Resources/Secret_data/Secret6.tres<>uid://dnpqo1ibfm3qt::::res://Interface/DashSpot.tscn<>uid://dgcifnk6smlrl::::res://Interface/Pause.tscn<>uid://d2g5rha7piycd::::res://System/Font/bitcell_memesbruh03.ttf<>res://World/labelsuperdash.gd<>res://World/Container_stars_count.gd<>uid://cdvcj3gbbg0nq::::res://Interface/StarCount.tscn<>uid://ccnucu8p0mpkl::::res://Interface/TimerCount.tscn<>uid://op00a3qvecoo::::res://Interface/TimerBest.tscn<>uid://cgmigvhfd6leq::::res://Interface/MovesCount.tscn<>uid://djucnjcilyhvr::::res://Interface/PokCount.tscn<>uid://ub8211pvxfk2::::res://Interface/FallCount.tscn<>uid://cthcl45hkwv8::::res://Interface/InputVisuel.tscn<>uid://bf6m1r82rthpc::::res://Player/Player.tscn<>uid://c4udmetggq6f3::::res://Arrival/Arrival.tscn<>res://World/SplashFactory.gd<>res://World/water_dash_factory.gd<>uid://bcbdx5cwdivj7::::res://Audio/Music/Sketchbook 2024-08-07.ogg<>res://World/bgm.gd<>uid://b74k0b86gotye::::res://Audio/Music/Sketchbook 2024-10-23.ogg
+::res://World/Sprites/::1781188713
+grid tileset.png::CompressedTexture2D::7762057402768938268::1769292388::1769292388::1::::<><>::
+SmokeNDust P03 VFX 2.png::CompressedTexture2D::1436548085603545401::1769292388::1769292388::1::::<><>::
+SmokeNDust P03 VFX 4.png::CompressedTexture2D::7773384644117375966::1769292388::1769292388::1::::<><>::
+tileset_ASSETS-export.png::CompressedTexture2D::6467728501349136002::1769292388::1769292388::1::::<><>::
+tileset_ASSETS.png::CompressedTexture2D::2374036321584613202::1769292388::1769292388::1::::<><>::
+tileset_DECO-export.png::CompressedTexture2D::7910425175736856651::1769292388::1769292388::1::::<><>::
+tileset_DECO.png::CompressedTexture2D::7801926146219378136::1769292388::1769292388::1::::<><>::
+Tileset_FLOOR-export-export.png::CompressedTexture2D::3457115484715783478::1769292388::1769292388::1::::<><>::
+Tileset_FLOOR-export.png::CompressedTexture2D::6157853576580128521::1769292388::1769292388::1::::<><>::
+Tileset_FLOOR.png::CompressedTexture2D::4356945754178521353::1769292388::1769292388::1::::<><>::
+tileset_ICE.png::CompressedTexture2D::4676654718339757424::1769292388::1769292388::1::::<><>::
+tileset_PERSPECTIV.png::CompressedTexture2D::3423731292226788839::1769292388::1769292388::1::::<><>::
+tileset_PLATFORMWAY.png::CompressedTexture2D::6762023656390860170::1769292388::1769292388::1::::<><>::
+tileset_WALL.png::CompressedTexture2D::6005972446385048701::1769292388::1769292388::1::::<><>::
+Trophy.png::CompressedTexture2D::9014214063345959780::1769292388::1769292388::1::::<><>::
+::res://World/Sprites/Splash/::1781188713
+All_Fire_Bullet_Pixel_16x16_02.png::CompressedTexture2D::6188443783888964785::1769292388::1769292388::1::::<><>::
+Water Effect and Bullet 16x16.png::CompressedTexture2D::4915375980884178942::1769292388::1769292388::1::::<><>::
+::res://World/WaterDash/::1781188713
+WaterDash.gd::GDScript::-1::1769292388::0::1::::Anim_WaterDash<>AnimationOS<>::
+WaterDash.tscn::PackedScene::2466196090159808226::1769292388::0::1::::<><>::res://World/WaterDash/WaterDash.gd<>uid://cufy1akxidwvx::::res://World/Sprites/Splash/All_Fire_Bullet_Pixel_16x16_02.png<>uid://cbkblpr84yhty::::res://Audio/SFX/Water_Impact_Light_v2.wav

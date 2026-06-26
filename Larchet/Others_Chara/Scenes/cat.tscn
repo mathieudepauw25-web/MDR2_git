@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://clm1pajbtns8x"]
+
+[ext_resource type="SpriteFrames" uid="uid://cwc8nldjr73dv" path="res://Larchet/Others_Chara/Animation/Cat.tres" id="1_yghht"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ugklx"]
+
+[node name="Cat" type="Area2D" unique_id=1456818952]
+
+[node name="Cat" type="AnimatedSprite2D" parent="." unique_id=1164369932]
+sprite_frames = ExtResource("1_yghht")
+animation = &"Idle"
+autoplay = "Idle"
+frame_progress = 0.9488454
+
+[node name="Cat_Interact" type="CollisionShape2D" parent="." unique_id=844884888]
+position = Vector2(-2, 5)
+shape = SubResource("RectangleShape2D_ugklx")

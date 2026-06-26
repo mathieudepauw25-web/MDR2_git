@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ceres186buchc"
+path="res://.godot/imported/Puntuation Sound 2.mp3-91f485520bf12836a6a6106e29eb601e.mp3str"
+
+[deps]
+
+source_file="res://Audio/SFX/Puntuation Sound 2.mp3"
+dest_files=["res://.godot/imported/Puntuation Sound 2.mp3-91f485520bf12836a6a6106e29eb601e.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.04
+bpm=0.0
+beat_count=0
+bar_beats=4

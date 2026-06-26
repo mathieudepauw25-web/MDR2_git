@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://cf56qyr5ye807"]
+
+[ext_resource type="Script" path="res://Interface/trophy.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://d1os12wk4kb1m" path="res://World/Sprites/Trophy.png" id="2"]
+[ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0lqu1"]
+font = ExtResource("3")
+font_size = 8
+outline_size = 2
+outline_color = Color(0.132981, 1.01797e-05, 0.127194, 1)
+
+[node name="Trophy" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1")
+
+[node name="Sprite" type="TextureRect" parent="."]
+unique_name_in_owner = true
+modulate = Color(0.67451, 0.67451, 0.67451, 0.392157)
+layout_mode = 0
+offset_left = -9.0
+offset_top = -8.0
+offset_right = 9.0
+offset_bottom = 10.0
+pivot_offset = Vector2(9, 8)
+texture = ExtResource("2")
+
+[node name="Sprite2" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 0.74902, 0.211765, 1)
+layout_mode = 0
+offset_left = -9.0
+offset_top = -8.0
+offset_right = 9.0
+offset_bottom = 10.0
+pivot_offset = Vector2(9, 8)
+texture = ExtResource("2")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -36.0
+offset_top = 10.0
+offset_right = 37.0
+offset_bottom = 33.0
+text = "default"
+label_settings = SubResource("LabelSettings_0lqu1")
+horizontal_alignment = 1

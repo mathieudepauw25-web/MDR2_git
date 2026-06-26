@@ -1,0 +1,446 @@
+[gd_scene load_steps=31 format=3 uid="uid://dtsrsquom3t2j"]
+
+[ext_resource type="Script" path="res://Interface/Scripts/ArrivalScreen.gd" id="1"]
+[ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="2"]
+[ext_resource type="Texture2D" uid="uid://dgspu27t0djae" path="res://Interface/Sprites/tile_0570.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="4"]
+[ext_resource type="PackedScene" uid="uid://2o1wufyf0h2i" path="res://Interface/TimerArrival.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://op00a3qvecoo" path="res://Interface/TimerBest.tscn" id="6"]
+[ext_resource type="StyleBox" uid="uid://cvb0ef4cnwbsy" path="res://Interface/Themes/ButtonHover.tres" id="7"]
+[ext_resource type="StyleBox" uid="uid://cgd7kvdxm5jsn" path="res://Interface/Themes/ButtonNormal.tres" id="8"]
+[ext_resource type="Script" path="res://System/TextManageCheckbox.gd" id="9"]
+[ext_resource type="Texture2D" uid="uid://ccnu3p7xf38jn" path="res://Interface/Sprites/tile_0034.png" id="10"]
+[ext_resource type="Texture2D" uid="uid://dtcnghvh3viuw" path="res://Interface/Sprites/icon_dash.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://cmfbm6disftm1" path="res://Interface/Sprites/icon_wall.png" id="12"]
+[ext_resource type="Texture2D" uid="uid://f13b0t4ate3j" path="res://Interface/Sprites/icon_fall.png" id="13"]
+[ext_resource type="AudioStream" uid="uid://b7c6jwqucx8kr" path="res://Audio/SFX/Suspence.mp3" id="14"]
+[ext_resource type="AudioStream" uid="uid://dhfymhvh615xc" path="res://Audio/SFX/Snare build up 10.mp3" id="15"]
+[ext_resource type="AudioStream" uid="uid://csnmf6skynep" path="res://Audio/SFX/Snare.mp3" id="16"]
+[ext_resource type="AudioStream" uid="uid://mveooa4f7pg4" path="res://Audio/SFX/ui_click_rollover_misc_05.mp3" id="17"]
+[ext_resource type="AudioStream" uid="uid://d3dxycfae6tnq" path="res://Audio/SFX/ui_click_rollover_misc_01.mp3" id="18"]
+[ext_resource type="AudioStream" uid="uid://dg8s58smu6m7h" path="res://Audio/SFX/Page turned.mp3" id="19"]
+[ext_resource type="AudioStream" uid="uid://c2fr4gk3k7kxo" path="res://Audio/SFX/error_004.ogg" id="20"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tcfpe"]
+bg_color = Color(0.216, 0.2776, 0.3, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_frun7"]
+font = ExtResource("2")
+font_size = 12
+outline_size = 2
+outline_color = Color(0.132981, 1.01797e-05, 0.127194, 1)
+
+[sub_resource type="Curve" id="Curve_1h8b5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.991667, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_fsa3a"]
+curve = SubResource("Curve_1h8b5")
+
+[sub_resource type="Gradient" id="Gradient_ujtex"]
+offsets = PackedFloat32Array(0.0990566, 0.283019, 0.410377, 0.641509, 0.915094)
+colors = PackedColorArray(0.968627, 1, 1, 1, 0.968627, 1, 0, 1, 1, 0.643137, 0.2, 1, 1, 0, 0.0313726, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mraqj"]
+gradient = SubResource("Gradient_ujtex")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_me3p8"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(30, 4, 1)
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = 86.97
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -39.3
+linear_accel_max = 43.51
+scale_min = 0.1
+scale_max = 0.9
+color_ramp = SubResource("GradientTexture1D_mraqj")
+alpha_curve = SubResource("CurveTexture_fsa3a")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yt5nl"]
+atlas = ExtResource("4")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="Theme" id="Theme_1k85u"]
+default_font = ExtResource("2")
+default_font_size = 12
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 12
+Button/fonts/font = ExtResource("2")
+Button/styles/focus = ExtResource("7")
+Button/styles/normal = ExtResource("8")
+
+[sub_resource type="Theme" id="Theme_nti13"]
+default_base_scale = 8.0
+default_font = ExtResource("2")
+
+[node name="ArrivalScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect_UP" type="ColorRect" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_top = -22.0
+offset_right = 333.0
+offset_bottom = 29.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect_Down" type="ColorRect" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_top = 151.0
+offset_right = 333.0
+offset_bottom = 202.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(1, 0.721569, 0.0117647, 1)
+
+[node name="Panel_leaderboard_arrival" type="Panel" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+z_index = 1
+offset_top = 29.0
+offset_right = 173.0
+offset_bottom = 151.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel_leaderboard_arrival"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Panel_world" type="Panel" parent="CanvasLayer/Panel_leaderboard_arrival"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -24.5
+offset_top = -3.0
+offset_right = 24.5
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tcfpe")
+
+[node name="Label_world" type="Label" parent="CanvasLayer/Panel_leaderboard_arrival/Panel_world"]
+layout_mode = 0
+offset_top = -2.0
+offset_right = 49.0
+offset_bottom = 7.0
+theme_override_fonts/font = ExtResource("2")
+theme_override_font_sizes/font_size = 10
+text = "friends"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="icon_arrow_R" type="TextureRect" parent="CanvasLayer/Panel_leaderboard_arrival/Panel_world"]
+layout_mode = 0
+offset_left = 49.0
+offset_top = -2.0
+offset_right = 65.0
+offset_bottom = 14.0
+rotation = 1.5708
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3")
+
+[node name="icon_arrow_L" type="TextureRect" parent="CanvasLayer/Panel_leaderboard_arrival/Panel_world"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = -2.0
+offset_right = 27.0
+offset_bottom = 14.0
+rotation = 1.5708
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3")
+flip_v = true
+
+[node name="Timer" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label_new_record" type="Label" parent="CanvasLayer/Timer"]
+visible = false
+self_modulate = Color(1, 0.815686, 0.415686, 1)
+layout_mode = 0
+offset_left = 192.0
+offset_top = 54.0
+offset_right = 290.0
+offset_bottom = 77.0
+theme_override_colors/font_outline_color = Color(0.972549, 0.733333, 0, 1)
+theme_override_fonts/font = ExtResource("2")
+text = "New record"
+label_settings = SubResource("LabelSettings_frun7")
+metadata/_edit_lock_ = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="CanvasLayer/Timer/Label_new_record"]
+show_behind_parent = true
+position = Vector2(20, 8)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_me3p8")
+texture = SubResource("AtlasTexture_yt5nl")
+lifetime = 2.0
+visibility_rect = Rect2(-100, -100, 1000, 500)
+
+[node name="TimerArrival" parent="CanvasLayer/Timer" instance=ExtResource("5")]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 230.0
+offset_top = 31.0
+offset_right = 230.0
+offset_bottom = 31.0
+scale = Vector2(2, 2)
+pivot_offset = Vector2(0, 13)
+
+[node name="TimerBest" parent="CanvasLayer/Timer" instance=ExtResource("6")]
+unique_name_in_owner = true
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 306.0
+offset_top = 52.0
+offset_right = 306.0
+offset_bottom = 52.0
+
+[node name="Buttons" type="Node2D" parent="CanvasLayer"]
+visible = false
+position = Vector2(9, 4)
+
+[node name="Restart" type="Button" parent="CanvasLayer/Buttons"]
+unique_name_in_owner = true
+offset_left = 186.0
+offset_top = 95.0
+offset_right = 289.0
+offset_bottom = 108.0
+focus_neighbor_top = NodePath("../Title screen")
+focus_neighbor_bottom = NodePath("../Top10")
+theme = SubResource("Theme_1k85u")
+button_mask = 0
+text = "Restart"
+script = ExtResource("9")
+TextEN = "Restart"
+TextFR = "Recommencer"
+
+[node name="Top10" type="Button" parent="CanvasLayer/Buttons"]
+unique_name_in_owner = true
+offset_left = 186.0
+offset_top = 112.0
+offset_right = 289.0
+offset_bottom = 125.0
+focus_neighbor_top = NodePath("../Restart")
+focus_neighbor_bottom = NodePath("../Title screen")
+theme = SubResource("Theme_1k85u")
+button_mask = 0
+text = "Top 10"
+
+[node name="texture_deploy_top10" type="TextureRect" parent="CanvasLayer/Buttons/Top10"]
+visible = false
+modulate = Color(1, 0.329412, 0.278431, 1)
+layout_mode = 0
+offset_left = 17.0
+offset_top = -4.0
+offset_right = 57.0
+offset_bottom = 36.0
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3")
+flip_v = true
+
+[node name="Title screen" type="Button" parent="CanvasLayer/Buttons"]
+unique_name_in_owner = true
+offset_left = 186.0
+offset_top = 129.0
+offset_right = 289.0
+offset_bottom = 142.0
+focus_neighbor_top = NodePath("../Top10")
+focus_neighbor_bottom = NodePath("../Restart")
+theme = SubResource("Theme_1k85u")
+button_mask = 0
+text = "Title screen"
+script = ExtResource("9")
+TextEN = "Title screen"
+TextFR = "Ecran titre"
+
+[node name="Stats_mineur" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_top = 73.0
+offset_right = 320.0
+offset_bottom = 99.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Stats_mineur"]
+layout_mode = 2
+offset_left = 194.0
+offset_top = -2.0
+offset_right = 297.0
+offset_bottom = 20.0
+
+[node name="HBoxContainer_statM" type="HBoxContainer" parent="CanvasLayer/Stats_mineur"]
+layout_mode = 0
+offset_left = 172.0
+offset_right = 319.0
+offset_bottom = 28.0
+scale = Vector2(0.7, 0.7)
+pivot_offset = Vector2(73.6735, 0)
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM"]
+layout_mode = 2
+theme_override_constants/separation = -2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("10")
+stretch_mode = 2
+
+[node name="NbMove" type="Label" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_nti13")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "???"
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM"]
+layout_mode = 2
+theme_override_constants/separation = -2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer2"]
+modulate = Color(0.741176, 0.439216, 0.988235, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("11")
+stretch_mode = 2
+
+[node name="NbDash" type="Label" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_nti13")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "???"
+horizontal_alignment = 1
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM"]
+layout_mode = 2
+theme_override_constants/separation = -2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("12")
+stretch_mode = 2
+
+[node name="NbPok" type="Label" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_nti13")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "???"
+horizontal_alignment = 1
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM"]
+layout_mode = 2
+theme_override_constants/separation = -2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("13")
+stretch_mode = 2
+
+[node name="NbFall" type="Label" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_nti13")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "???"
+horizontal_alignment = 1
+
+[node name="Timer_Best" type="Timer" parent="."]
+wait_time = 4.5
+one_shot = true
+autostart = true
+
+[node name="Timer_Button" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+
+[node name="Suspence" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14")
+pitch_scale = 0.9
+bus = &"SFX"
+
+[node name="Suspence2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15")
+pitch_scale = 1.2
+bus = &"SFX"
+
+[node name="Final_time" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16")
+pitch_scale = 1.4
+bus = &"SFX"
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="UI_menu_up_down" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("17")
+pitch_scale = 1.1
+bus = &"SFX"
+
+[node name="UI_menu_click" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("18")
+pitch_scale = 2.0
+bus = &"SFX"
+
+[node name="UI_page_turn" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("19")
+pitch_scale = 1.5
+bus = &"SFX"
+
+[node name="UI_cancel" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("20")
+volume_db = -9.0
+pitch_scale = 0.85
+bus = &"SFX"
+
+[connection signal="pressed" from="CanvasLayer/Buttons/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="CanvasLayer/Buttons/Top10" to="." method="_on_top_10_pressed"]
+[connection signal="pressed" from="CanvasLayer/Buttons/Title screen" to="." method="_on_title_screen_pressed"]
+[connection signal="timeout" from="Timer_Best" to="." method="_on_timer_best_timeout"]
+[connection signal="timeout" from="Timer_Button" to="." method="_on_timer_button_timeout"]
