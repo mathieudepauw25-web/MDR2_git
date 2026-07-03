@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://b7vn244bxiavw" path="res://World/Sprites/tileset_ICE.png" id="6_grud1"]
 [ext_resource type="Texture2D" uid="uid://c3ltsogceht5k" path="res://World/Sprites/tileset_PLATFORMWAY.png" id="7_0a5d1"]
 [ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="11_p4oi5"]
+[ext_resource type="Script" uid="uid://ct4k1tw0j2o0y" path="res://Larchet/LevelMaker/Scenes/Grid_Visualizer.gd" id="11_phpmh"]
 [ext_resource type="Texture2D" uid="uid://djfkt322s75xs" path="res://World/Sprites/tileset_DECO.png" id="12_w3xod"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wcvum"]
@@ -969,6 +970,12 @@ sources/0 = SubResource("TileSetAtlasSource_p3idt")
 sources/1 = SubResource("TileSetAtlasSource_g8q53")
 sources/3 = SubResource("TileSetAtlasSource_j6muw")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phpmh"]
+bg_color = Color(0, 0.32156864, 0.5137255, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4pd66"]
+font_size = 7
+
 [node name="LevelEditor" type="Node2D" unique_id=997066401]
 script = ExtResource("1_rgpot")
 
@@ -1029,10 +1036,20 @@ tile_set = SubResource("TileSet_ves0e")
 [node name="TileMapLayer_deco2" type="TileMapLayer" parent="MAP/MAP" unique_id=1567172382]
 tile_set = SubResource("TileSet_ves0e")
 
+[node name="GridVisualizer" type="Node2D" parent="MAP" unique_id=269501543]
+script = ExtResource("11_phpmh")
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1446821837]
 position = Vector2(160, 88)
 
 [node name="UI_Layer" type="CanvasLayer" parent="." unique_id=1717558558]
+
+[node name="Coordonnees" type="Label" parent="UI_Layer" unique_id=925334715]
+offset_right = 32.0
+offset_bottom = 11.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_phpmh")
+text = " X: 0, Y: 0"
+label_settings = SubResource("LabelSettings_4pd66")
 
 [node name="PanelContainer" type="PanelContainer" parent="UI_Layer" unique_id=718786337]
 offset_top = 140.0
