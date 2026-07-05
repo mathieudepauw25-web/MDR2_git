@@ -10,7 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://c3ltsogceht5k" path="res://World/Sprites/tileset_PLATFORMWAY.png" id="7_0a5d1"]
 [ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="11_p4oi5"]
 [ext_resource type="Script" uid="uid://ct4k1tw0j2o0y" path="res://Larchet/LevelMaker/Scenes/Grid_Visualizer.gd" id="11_phpmh"]
+[ext_resource type="Texture2D" uid="uid://dbw4m0fkltdsi" path="res://Larchet/Sprites/L.LvlMaker.png" id="12_4pd66"]
+[ext_resource type="StyleBox" uid="uid://cgd7kvdxm5jsn" path="res://Interface/Themes/ButtonNormal.tres" id="12_sh2dv"]
 [ext_resource type="Texture2D" uid="uid://djfkt322s75xs" path="res://World/Sprites/tileset_DECO.png" id="12_w3xod"]
+[ext_resource type="StyleBox" uid="uid://d2wb0x7bmm82g" path="res://Larchet/Menus/Gold.tres" id="13_0nlv8"]
+[ext_resource type="StyleBox" uid="uid://cvb0ef4cnwbsy" path="res://Interface/Themes/ButtonHover.tres" id="13_83jhn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wcvum"]
 texture = ExtResource("1_243wd")
@@ -976,6 +980,21 @@ bg_color = Color(0, 0.32156864, 0.5137255, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_4pd66"]
 font_size = 7
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_phpmh"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_0nlv8"]
+allow_unpress = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4pd66"]
+atlas = ExtResource("12_4pd66")
+region = Rect2(130, 62, 17, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_243wd"]
+atlas = ExtResource("12_4pd66")
+region = Rect2(5, 34, 19, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sh2dv"]
+
 [node name="LevelEditor" type="Node2D" unique_id=997066401]
 script = ExtResource("1_rgpot")
 
@@ -1040,7 +1059,6 @@ tile_set = SubResource("TileSet_ves0e")
 script = ExtResource("11_phpmh")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1446821837]
-position = Vector2(160, 88)
 
 [node name="UI_Layer" type="CanvasLayer" parent="." unique_id=1717558558]
 
@@ -1052,9 +1070,17 @@ text = " X: 0, Y: 0"
 label_settings = SubResource("LabelSettings_4pd66")
 
 [node name="PanelContainer" type="PanelContainer" parent="UI_Layer" unique_id=718786337]
-offset_top = 140.0
-offset_right = 320.0
-offset_bottom = 180.0
+custom_minimum_size = Vector2(0, 32)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -38.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_phpmh")
+metadata/_edit_lock_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI_Layer/PanelContainer" unique_id=2011583506]
 layout_mode = 2
@@ -1065,13 +1091,40 @@ size_flags_vertical = 4
 layout_mode = 2
 
 [node name="Btn_Mur" type="Button" parent="UI_Layer/PanelContainer/HBoxContainer" unique_id=888565075]
-custom_minimum_size = Vector2(24, 24)
+custom_minimum_size = Vector2(33, 34)
 layout_mode = 2
+theme_override_styles/normal = ExtResource("12_sh2dv")
+theme_override_styles/pressed = ExtResource("13_83jhn")
+theme_override_styles/hover = ExtResource("13_0nlv8")
+theme_override_styles/focus = ExtResource("13_83jhn")
+toggle_mode = true
+keep_pressed_outside = true
+button_group = SubResource("ButtonGroup_0nlv8")
+icon = SubResource("AtlasTexture_4pd66")
+icon_alignment = 1
 
 [node name="Btn_Glace" type="Button" parent="UI_Layer/PanelContainer/HBoxContainer" unique_id=2030493878]
-custom_minimum_size = Vector2(24, 24)
+custom_minimum_size = Vector2(33, 34)
 layout_mode = 2
+theme_override_styles/normal = ExtResource("12_sh2dv")
+theme_override_styles/pressed = ExtResource("13_83jhn")
+theme_override_styles/hover = ExtResource("13_0nlv8")
+theme_override_styles/focus = ExtResource("13_83jhn")
+toggle_mode = true
+keep_pressed_outside = true
+button_group = SubResource("ButtonGroup_0nlv8")
+icon = SubResource("AtlasTexture_243wd")
+icon_alignment = 1
 
 [node name="Btn_Gomme" type="Button" parent="UI_Layer/PanelContainer/HBoxContainer" unique_id=1349213310]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
+theme_override_styles/normal = ExtResource("12_sh2dv")
+theme_override_styles/pressed = ExtResource("13_83jhn")
+theme_override_styles/hover = ExtResource("13_0nlv8")
+theme_override_styles/focus = ExtResource("13_83jhn")
+toggle_mode = true
+keep_pressed_outside = true
+button_group = SubResource("ButtonGroup_0nlv8")
+icon = SubResource("AtlasTexture_sh2dv")
+icon_alignment = 1

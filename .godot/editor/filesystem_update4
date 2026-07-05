@@ -1,5 +1,7 @@
 res://default_bus_layout.tres
 res://Larchet/LevelMaker/Scenes/Level_Editor.tscn
 res://Larchet/Skins/Animations/AnimationSkins.tres
+res://Player/Player.tscn
+res://World/World.tscn
 res://Larchet/LevelMaker/Scenes/Level_Editor.gd
-res://Larchet/LevelMaker/Scenes/Grid_Visualizer.gd
+res://Player/Scripts/Player.gd

@@ -34,6 +34,7 @@ var sliding = false
 var superdash: bool = false
 var arrival = false
 var link_platform: Area2D = null
+
 # Mes variables
 var active_tween: Tween
 var is_poking: bool = false
@@ -182,13 +183,6 @@ func move(_direction: Vector2, stats_increase: = true) -> void :
 			slide(direction)
 			return
 
-
-
-
-
-
-
-
 	var tween = get_new_tween()
 	tween.tween_property(self, "global_position", destination, speed).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
 	tween.connect("finished", _on_tween_finished)
@@ -263,7 +257,6 @@ func slide(_direction: Vector2) -> void :
 	var destination_is_not_ice: = !tile_is_type(TileType.ICE, tile_destination)
 
 	if destination_is_wall:
-		print("pok wall")
 		destination = global_position + _direction * (16 - 9)
 		pok_a_wall(destination)
 		return
@@ -383,7 +376,6 @@ func _on_bufferDash_end() -> void :
 	delete_buffer_dash()
 
 func _on_state_machine_state_changed(new_state: Variant) -> void :
-
 	snap_grid()
 
 func _on_area_entered(area: Area2D) -> void :
@@ -414,22 +406,11 @@ func _on_EVENTS_collect_key(nb_key: int, nb_key_need: int) -> void :
 	node_grp_label_key_collect.scale = Vector2.ZERO
 	var tween = create_tween()
 
-
 	tween.tween_property(node_grp_label_key_collect, "scale", Vector2.ONE * 1, 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BOUNCE)
-
-
-
 	tween.tween_property(node_grp_label_key_collect, "scale", Vector2.ZERO, 0.7).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_ELASTIC)
-
 
 	await tween.finished
 	node_grp_label_key_collect.visible = false
-
-
-
-
-
-
 
 
 func _on_smoke_animation_finished() -> void :
@@ -449,7 +430,7 @@ func teleport_to_portal(entrance_pos: Vector2, exit_pos: Vector2) -> void:
 	var tiles_left: int = 0
 	if current_state == "Dash":
 		tiles_left = portal_momentum
-		portal_momentum = 0 # On remet à zéro
+		portal_momentum = 0 
 	elif saved_direction != Vector2.ZERO:
 		var distance_to_end = entrance_pos.distance_to(destination)
 		tiles_left = round(distance_to_end / grid_size)
@@ -476,8 +457,6 @@ func teleport_to_portal(entrance_pos: Vector2, exit_pos: Vector2) -> void:
 		snap_grid()
 
 func get_new_tween() -> Tween:
-	if active_tween and active_tween.is_valid():
-		active_tween.kill()
 	active_tween = create_tween()
 	return active_tween
 

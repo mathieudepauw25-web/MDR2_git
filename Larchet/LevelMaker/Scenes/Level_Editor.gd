@@ -23,6 +23,7 @@ func _ready() -> void:
 	btn_mur.pressed.connect(func(): current_brush = Brush.WALL)
 	btn_glace.pressed.connect(func(): current_brush = Brush.ICE)
 	btn_gomme.pressed.connect(func(): current_brush = Brush.ERASER)
+	btn_mur.button_pressed = true
 
 func _process(_delta: float) -> void:
 	var center_pixel_pos = camera.global_position
@@ -30,6 +31,9 @@ func _process(_delta: float) -> void:
 	lbl_coords.text = "X: %d, Y: %d" % [center_grid_pos.x, center_grid_pos.y]
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.is_echo():
+		if event.keycode == KEY_0 or event.keycode == KEY_KP_0:
+			camera.global_position = Vector2.ZERO
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_MIDDLE:
 			is_panning = event.pressed
