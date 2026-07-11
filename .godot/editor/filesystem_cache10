@@ -1,6 +1,6 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1783267125
-default_bus_layout.tres::AudioBusLayout::2806860750026712788::1783267125::0::1::::<><><>0<>0<><>::
+::res://::1783776199
+default_bus_layout.tres::AudioBusLayout::2806860750026712788::1783776147::0::1::::<><><>0<>0<><>::
 gdre_export.log::TextFile::-1::1781211228::0::1::::<><><>0<>0<><>::
 icon.svg::CompressedTexture2D::8313313395123760746::1769292388::1783200656::1::::<><><>0<>0<>a181657a8fc5ff77b0fea9c0cecddb7a<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 Logo de la bibliotheque (0-00-00-00).png::CompressedTexture2D::9155985766251718714::1769292388::1783200656::1::::<><><>0<>0<>68f4d74f2f56be82c549948a4e5c7f1a<>res://.godot/imported/Logo de la bibliotheque (0-00-00-00).png-c507e1be429b2a66f82a0908929d6e4b.ctex::
@@ -20,7 +20,7 @@ README.md::TextFile::-1::1769292392::0::1::::<><><>0<>0<><>::
 ::res://addons/godotsteam/osx/libgodotsteam.macos.template_release.framework/::1782479766
 ::res://addons/godotsteam/osx/libgodotsteam.macos.template_release.framework/Resources/::1782479766
 ::res://addons/godotsteam/win32/::1782479766
-::res://addons/godotsteam/win64/::1783267118
+::res://addons/godotsteam/win64/::1783776196
 ::res://Arrival/::1782479766
 Arrival.gd::GDScript::39677040594826905::1769292388::0::1::::Arrival<>Area2D<><>0<>0<><>::
 Arrival.tscn::PackedScene::6849809208201474850::1769292388::0::1::::<><><>0<>0<><>::res://Arrival/Arrival.gd<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png
@@ -147,10 +147,10 @@ Key.gd::GDScript::3070608779504726372::1781219066::0::1::::Keys<>Area2D<><>0<>0<
 Key.tscn::PackedScene::486292868475045604::1769292388::0::1::::<><><>0<>0<><>::res://Key/Key.gd<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>uid://c3pjckakrf6fi::::res://Audio/SFX/Collect_key.mp3
 ::res://Larchet/::1782479767
 ::res://Larchet/LevelMaker/::1782479767
-::res://Larchet/LevelMaker/Scenes/::1783274787
+::res://Larchet/LevelMaker/Scenes/::1783276398
 Grid_Visualizer.gd::GDScript::6166950985024083626::1783200443::0::1::::<>Node2D<><>0<>0<><>::
-Level_Editor.gd::GDScript::2914700887132621192::1783269490::0::1::::<>Node2D<><>0<>0<><>::
-Level_Editor.tscn::PackedScene::4458672549042751792::1783274787::0::1::::<><><>0<>0<><>::uid://bo1qmbojsy05h::::res://World/Sprites/tileset_PERSPECTIV.png<>uid://bhr5xyvcopexs::::res://Larchet/LevelMaker/Scenes/Level_Editor.gd<>uid://dit87l100xwoa::::res://World/Sprites/grid tileset.png<>uid://b3csi3ttrhear::::res://World/Sprites/Tileset_FLOOR.png<>uid://fqxvmanr1e2a::::res://World/Map.gd<>uid://crtlqu7gvve6x::::res://World/Sprites/tileset_WALL.png<>uid://b7vn244bxiavw::::res://World/Sprites/tileset_ICE.png<>uid://c3ltsogceht5k::::res://World/Sprites/tileset_PLATFORMWAY.png<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>uid://ct4k1tw0j2o0y::::res://Larchet/LevelMaker/Scenes/Grid_Visualizer.gd<>uid://dbw4m0fkltdsi::::res://Larchet/Sprites/L.LvlMaker.png<>uid://djfkt322s75xs::::res://World/Sprites/tileset_DECO.png
+Level_Editor.gd::GDScript::2914700887132621192::1783275653::0::1::::<>Node2D<><>0<>0<><>::
+Level_Editor.tscn::PackedScene::4458672549042751792::1783276398::0::1::::<><><>0<>0<><>::uid://bo1qmbojsy05h::::res://World/Sprites/tileset_PERSPECTIV.png<>uid://bhr5xyvcopexs::::res://Larchet/LevelMaker/Scenes/Level_Editor.gd<>uid://dit87l100xwoa::::res://World/Sprites/grid tileset.png<>uid://b3csi3ttrhear::::res://World/Sprites/Tileset_FLOOR.png<>uid://fqxvmanr1e2a::::res://World/Map.gd<>uid://crtlqu7gvve6x::::res://World/Sprites/tileset_WALL.png<>uid://b7vn244bxiavw::::res://World/Sprites/tileset_ICE.png<>uid://c3ltsogceht5k::::res://World/Sprites/tileset_PLATFORMWAY.png<>uid://83abci11tpmg::::res://World/Sprites/tileset_ASSETS.png<>uid://ct4k1tw0j2o0y::::res://Larchet/LevelMaker/Scenes/Grid_Visualizer.gd<>uid://dbw4m0fkltdsi::::res://Larchet/Sprites/L.LvlMaker.png<>uid://cgd7kvdxm5jsn::::res://Interface/Themes/ButtonNormal.tres<>uid://djfkt322s75xs::::res://World/Sprites/tileset_DECO.png<>uid://d2wb0x7bmm82g::::res://Larchet/Menus/Gold.tres<>uid://cvb0ef4cnwbsy::::res://Interface/Themes/ButtonHover.tres
 ::res://Larchet/Menus/::1782479767
 ControlSlot.tres::StyleBoxFlat::2001781880593942406::1781639816::0::1::::<><><>0<>0<><>::
 EchPrecSuiv.tres::StyleBoxFlat::8113480011370696213::1781539069::0::1::::<><><>0<>0<><>::
@@ -210,7 +210,7 @@ L.HK.png::CompressedTexture2D::1874701887007086690::1781303176::1781374172::1:::
 L.Prince.png::CompressedTexture2D::2263456070141792076::1781276693::1781374172::1::::<><><>0<>0<>82e33770c9ea9eec4de21ce71ebd4be0<>res://.godot/imported/L.Prince.png-36058c5e8196bc653c583565292c1f0b.ctex::
 Pikmin.png::CompressedTexture2D::2331598623467756363::1781727476::1781727478::1::::<><><>0<>0<>697b8271cea9cf2de7989fc82241f794<>res://.godot/imported/Pikmin.png-9aed18522eb147121775fd1b70bd0bfd.ctex::
 Yi.png::CompressedTexture2D::3937751286264519343::1781537897::1781537904::1::::<><><>0<>0<>c3fa27913849a30da3415fb64f49a135<>res://.godot/imported/Yi.png-3a6d019e235b6104fc18eaa58f33a270.ctex::
-::res://Larchet/Sprites/::1783274836
+::res://Larchet/Sprites/::1783776162
 L.LvlMaker.png::CompressedTexture2D::7276650748901317312::1783274844::1783274846::1::::<><><>0<>0<>c537d290d09121b22dac158f989dd0fb<>res://.godot/imported/L.LvlMaker.png-a040dbe545c4420a9f1a9e025af2b8ae.ctex::
 ::res://Platform/::1782479767
 Platform.gd::GDScript::1831323503369275108::1781264092::0::1::::Platform<>Area2D<><>0<>0<><>::
