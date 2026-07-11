@@ -743,24 +743,6 @@ texture = ExtResource("3_0nlv8")
 sources/1 = SubResource("TileSetAtlasSource_lx30i")
 pattern_0 = SubResource("TileMapPattern_jqo1e")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0nlv8"]
-texture = ExtResource("1_243wd")
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-0:2/0 = 0
-4:2/0 = 0
-0:3/0 = 0
-4:3/0 = 0
-0:4/0 = 0
-1:4/0 = 0
-4:4/0 = 0
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hyoaw"]
 texture = ExtResource("5_ww0en")
 0:0/0 = 0
@@ -797,7 +779,6 @@ texture = ExtResource("5_ww0en")
 
 [sub_resource type="TileSet" id="TileSet_4ohsc"]
 sources/5 = SubResource("TileSetAtlasSource_hyoaw")
-sources/0 = SubResource("TileSetAtlasSource_0nlv8")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_up670"]
 texture = ExtResource("6_grud1")
