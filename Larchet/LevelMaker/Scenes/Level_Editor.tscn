@@ -16,6 +16,38 @@
 [ext_resource type="StyleBox" uid="uid://d2wb0x7bmm82g" path="res://Larchet/Menus/Gold.tres" id="13_0nlv8"]
 [ext_resource type="StyleBox" uid="uid://cvb0ef4cnwbsy" path="res://Interface/Themes/ButtonHover.tres" id="13_83jhn"]
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ww0en"]
+texture = ExtResource("5_ww0en")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+9:4/0 = 0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_83jhn"]
 texture = ExtResource("1_243wd")
 0:0/0 = 0
@@ -62,6 +94,39 @@ texture = ExtResource("1_243wd")
 
 [sub_resource type="TileSet" id="TileSet_ww0en"]
 sources/1 = SubResource("TileSetAtlasSource_83jhn")
+sources/0 = SubResource("TileSetAtlasSource_ww0en")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_grud1"]
+texture = ExtResource("5_ww0en")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+9:4/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0nlv8"]
 texture = ExtResource("1_243wd")
@@ -109,6 +174,7 @@ texture = ExtResource("1_243wd")
 
 [sub_resource type="TileSet" id="TileSet_83jhn"]
 sources/1 = SubResource("TileSetAtlasSource_0nlv8")
+sources/0 = SubResource("TileSetAtlasSource_grud1")
 
 [sub_resource type="TileSet" id="TileSet_meyyo"]
 
@@ -238,7 +304,7 @@ texture = ExtResource("5_ww0en")
 1:2/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_4ohsc"]
-sources/5 = SubResource("TileSetAtlasSource_hyoaw")
+sources/0 = SubResource("TileSetAtlasSource_hyoaw")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_up670"]
 texture = ExtResource("6_grud1")
@@ -472,20 +538,20 @@ y_sort_enabled = true
 
 [node name="TileMapLayer_perspective_right" type="TileMapLayer" parent="MAP/Perspective" unique_id=108649249]
 unique_name_in_owner = true
-z_index = 1
 tile_set = SubResource("TileSet_ww0en")
 
 [node name="TileMapLayer_perspective_down" type="TileMapLayer" parent="MAP/Perspective" unique_id=912088828]
 unique_name_in_owner = true
+z_index = -1
 tile_set = SubResource("TileSet_83jhn")
 
 [node name="TileMapLayer_perspective_left" type="TileMapLayer" parent="MAP/Perspective" unique_id=170777991]
 unique_name_in_owner = true
-z_index = 1
 tile_set = SubResource("TileSet_83jhn")
 
 [node name="TileMapLayer_perspective_up" type="TileMapLayer" parent="MAP/Perspective" unique_id=1257824746]
 unique_name_in_owner = true
+z_index = 1
 tile_set = SubResource("TileSet_83jhn")
 
 [node name="MAP" type="TileMapLayer" parent="MAP" unique_id=2057618501]
