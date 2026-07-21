@@ -65,7 +65,7 @@ func platformFlexCombo() -> void :
 	$delay_platformflex.start()
 	if platform_flex >= 2:
 		var tween = create_tween().set_parallel(true)
-		var modulo5 = platform_flex % 5
+		var _modulo5 = platform_flex % 5
 		var modulo10 = platform_flex % 10
 		label_platform_flex.visible = true
 		label_platform_flex.text = str(platform_flex)

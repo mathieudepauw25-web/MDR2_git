@@ -1,20 +1,20 @@
-[gd_scene load_steps=32 format=3 uid="uid://dgcifnk6smlrl"]
+[gd_scene format=3 uid="uid://dgcifnk6smlrl"]
 
-[ext_resource type="Script" path="res://Interface/Scripts/PauseMenu.gd" id="1"]
-[ext_resource type="Shader" path="res://Interface/Shader/PauseBlur.gdshader" id="2"]
+[ext_resource type="Script" uid="uid://cdl81aue17hw2" path="res://Interface/Scripts/PauseMenu.gd" id="1"]
+[ext_resource type="Shader" uid="uid://bqw0maxha7ge2" path="res://Interface/Shader/PauseBlur.gdshader" id="2"]
 [ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="3"]
 [ext_resource type="StyleBox" uid="uid://cvb0ef4cnwbsy" path="res://Interface/Themes/ButtonHover.tres" id="4"]
 [ext_resource type="StyleBox" uid="uid://cgd7kvdxm5jsn" path="res://Interface/Themes/ButtonNormal.tres" id="5"]
-[ext_resource type="Script" path="res://System/TextManage.gd" id="6"]
+[ext_resource type="Script" uid="uid://687fslo53ix4" path="res://System/TextManage.gd" id="6"]
 [ext_resource type="Texture2D" uid="uid://dro2fw1um2d6a" path="res://Interface/Sprites/icon_time.png" id="7"]
-[ext_resource type="Script" path="res://System/TextManageCheckbox.gd" id="8"]
+[ext_resource type="Script" uid="uid://q7861pw32leb" path="res://System/TextManageCheckbox.gd" id="8"]
 [ext_resource type="Texture2D" uid="uid://ccnu3p7xf38jn" path="res://Interface/Sprites/tile_0034.png" id="9"]
 [ext_resource type="Texture2D" uid="uid://cmfbm6disftm1" path="res://Interface/Sprites/icon_wall.png" id="10"]
 [ext_resource type="Texture2D" uid="uid://f13b0t4ate3j" path="res://Interface/Sprites/icon_fall.png" id="11"]
 [ext_resource type="Texture2D" uid="uid://bn7mwsgv27kd" path="res://Interface/Sprites/tile_0604.png" id="12"]
 [ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="13"]
-[ext_resource type="Script" path="res://System/TextManageLabel.gd" id="14"]
-[ext_resource type="Script" path="res://Interface/label_version_on_pause.gd" id="15"]
+[ext_resource type="Script" uid="uid://bfio7bahqu8ax" path="res://System/TextManageLabel.gd" id="14"]
+[ext_resource type="Script" uid="uid://dylhrmwl144v8" path="res://Interface/label_version_on_pause.gd" id="15"]
 [ext_resource type="AudioStream" uid="uid://dq4ppusluxce4" path="res://Audio/SFX/popup_01.wav" id="16"]
 [ext_resource type="AudioStream" uid="uid://mveooa4f7pg4" path="res://Audio/SFX/ui_click_rollover_misc_05.mp3" id="17"]
 [ext_resource type="AudioStream" uid="uid://d3dxycfae6tnq" path="res://Audio/SFX/ui_click_rollover_misc_01.mp3" id="18"]
@@ -68,8 +68,7 @@ font_size = 8
 outline_size = 2
 outline_color = Color(0.132981, 1.01797e-05, 0.127194, 1)
 
-[node name="PauseMenu" type="Control"]
-visible = false
+[node name="PauseMenu" type="Control" unique_id=2129157747]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -79,7 +78,7 @@ grow_vertical = 2
 script = ExtResource("1")
 metadata/_edit_lock_ = true
 
-[node name="Blur" type="ColorRect" parent="."]
+[node name="Blur" type="ColorRect" parent="." unique_id=77102897]
 material = SubResource("ShaderMaterial_080vl")
 layout_mode = 1
 anchors_preset = 15
@@ -89,7 +88,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 
-[node name="ColorRect2" type="ColorRect" parent="."]
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=13822887]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -104,7 +103,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0.129412)
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=1939646989]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -112,7 +111,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TopBlackBar" type="ColorRect" parent="Control"]
+[node name="TopBlackBar" type="ColorRect" parent="Control" unique_id=1344949568]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -128,7 +127,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="BotomBlackBar" type="ColorRect" parent="Control"]
+[node name="BotomBlackBar" type="ColorRect" parent="Control" unique_id=1806489737]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -144,7 +143,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="LeftBlackBar" type="ColorRect" parent="Control"]
+[node name="LeftBlackBar" type="ColorRect" parent="Control" unique_id=1326519542]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -161,15 +160,15 @@ grow_vertical = 2
 rotation = 0.568977
 color = Color(0, 0, 0, 1)
 
-[node name="Panel_buttons" type="Panel" parent="."]
-layout_mode = 2
+[node name="Panel_buttons" type="Panel" parent="." unique_id=833574034]
+layout_mode = 0
 offset_left = 16.0
 offset_top = 39.0
 offset_right = 122.0
 offset_bottom = 102.0
 
-[node name="VBoxContainer_Buttons" type="VBoxContainer" parent="Panel_buttons"]
-layout_mode = 2
+[node name="VBoxContainer_Buttons" type="VBoxContainer" parent="Panel_buttons" unique_id=1571537336]
+layout_mode = 0
 offset_left = 8.0
 offset_top = 6.0
 offset_right = 98.0
@@ -178,10 +177,11 @@ size_flags_horizontal = 0
 size_flags_vertical = 4
 theme_override_constants/separation = 6
 
-[node name="Restart" type="Button" parent="Panel_buttons/VBoxContainer_Buttons"]
+[node name="Restart" type="Button" parent="Panel_buttons/VBoxContainer_Buttons" unique_id=1979792003]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
+offset_transform_enabled = true
 focus_neighbor_left = NodePath("../../../Panel_fullscreen/CheckButton")
 focus_neighbor_top = NodePath("../../../Panel_slider/HSlider_sound")
 focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
@@ -192,16 +192,17 @@ script = ExtResource("6")
 TextEN = "Restart"
 TextFR = "Recommencer"
 
-[node name="Espacement" type="Control" parent="Panel_buttons/VBoxContainer_Buttons"]
+[node name="Espacement" type="Control" parent="Panel_buttons/VBoxContainer_Buttons" unique_id=1994579357]
 visible = false
 layout_mode = 2
 
-[node name="Espacement2" type="Control" parent="Panel_buttons/VBoxContainer_Buttons"]
+[node name="Espacement2" type="Control" parent="Panel_buttons/VBoxContainer_Buttons" unique_id=1321257399]
 visible = false
 layout_mode = 2
 
-[node name="Resume" type="Button" parent="Panel_buttons/VBoxContainer_Buttons"]
+[node name="Resume" type="Button" parent="Panel_buttons/VBoxContainer_Buttons" unique_id=95180193]
 layout_mode = 2
+offset_transform_enabled = true
 focus_neighbor_left = NodePath("../../../Panel_fullscreen/CheckButton")
 focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
 theme = SubResource("Theme_pl0fo")
@@ -211,7 +212,7 @@ script = ExtResource("6")
 TextEN = "Resume"
 TextFR = "Retour"
 
-[node name="Control" type="Button" parent="Panel_buttons/VBoxContainer_Buttons"]
+[node name="Control" type="Button" parent="Panel_buttons/VBoxContainer_Buttons" unique_id=265590641]
 visible = false
 layout_mode = 2
 focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
@@ -220,8 +221,9 @@ button_mask = 0
 text = "CONTROL
 "
 
-[node name="Title screen" type="Button" parent="Panel_buttons/VBoxContainer_Buttons"]
+[node name="Title screen" type="Button" parent="Panel_buttons/VBoxContainer_Buttons" unique_id=1442842038]
 layout_mode = 2
+offset_transform_enabled = true
 focus_neighbor_left = NodePath("../../../Panel_fullscreen/CheckButton")
 focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
 focus_neighbor_bottom = NodePath("../../../Panel_slider/HSlider_music")
@@ -232,7 +234,7 @@ script = ExtResource("6")
 TextEN = "Title screen"
 TextFR = "Ecran titre"
 
-[node name="Quit" type="Button" parent="Panel_buttons/VBoxContainer_Buttons"]
+[node name="Quit" type="Button" parent="Panel_buttons/VBoxContainer_Buttons" unique_id=693072544]
 visible = false
 layout_mode = 2
 focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
@@ -242,16 +244,16 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_c7owd")
 button_mask = 0
 text = "QUIT"
 
-[node name="Panel_options" type="Panel" parent="."]
-layout_mode = 2
+[node name="Panel_options" type="Panel" parent="." unique_id=270228065]
+layout_mode = 0
 offset_left = 126.0
 offset_top = 39.0
 offset_right = 189.0
 offset_bottom = 147.0
 
-[node name="VBoxContainer_CheckBoxs" type="VBoxContainer" parent="Panel_options"]
+[node name="VBoxContainer_CheckBoxs" type="VBoxContainer" parent="Panel_options" unique_id=836218599]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 0
 offset_top = -1.0
 offset_right = 90.0
 offset_bottom = 155.0
@@ -259,7 +261,7 @@ scale = Vector2(0.7, 0.7)
 theme_override_constants/separation = -2
 alignment = 1
 
-[node name="CheckBox_Timer" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs"]
+[node name="CheckBox_Timer" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs" unique_id=1343653231]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
@@ -277,7 +279,7 @@ script = ExtResource("8")
 TextEN = "Timer"
 TextFR = "Temps"
 
-[node name="CheckBox_BestTimer" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs"]
+[node name="CheckBox_BestTimer" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs" unique_id=1337058310]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
@@ -291,7 +293,7 @@ button_mask = 0
 text = "Record"
 icon = ExtResource("7")
 
-[node name="CheckBox_NbActions" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs"]
+[node name="CheckBox_NbActions" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs" unique_id=1167059456]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
@@ -304,7 +306,7 @@ button_mask = 0
 text = "Actions"
 icon = ExtResource("9")
 
-[node name="CheckBox_NbPok" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs"]
+[node name="CheckBox_NbPok" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs" unique_id=1637228675]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
@@ -320,7 +322,7 @@ script = ExtResource("8")
 TextEN = "Walls"
 TextFR = "Murs"
 
-[node name="CheckBox_NbFall" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs"]
+[node name="CheckBox_NbFall" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs" unique_id=1828202974]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
@@ -336,7 +338,7 @@ script = ExtResource("8")
 TextEN = "Falls"
 TextFR = "Chutes"
 
-[node name="CheckBox_Inputs" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs"]
+[node name="CheckBox_Inputs" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs" unique_id=1744151776]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
@@ -349,7 +351,7 @@ button_mask = 0
 text = "Inputs"
 icon = ExtResource("12")
 
-[node name="CheckBox_Stars" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs"]
+[node name="CheckBox_Stars" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs" unique_id=1887006471]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
@@ -365,14 +367,14 @@ script = ExtResource("8")
 TextEN = "Stars"
 TextFR = "Etoiles"
 
-[node name="Panel_slider" type="Panel" parent="."]
+[node name="Panel_slider" type="Panel" parent="." unique_id=1535602727]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 107.0
 offset_right = 122.0
 offset_bottom = 147.0
 
-[node name="Music" type="Label" parent="Panel_slider"]
+[node name="Music" type="Label" parent="Panel_slider" unique_id=818851338]
 layout_mode = 0
 offset_left = 1.0
 offset_top = -1.0
@@ -386,7 +388,7 @@ script = ExtResource("14")
 TextEN = "Music"
 TextFR = "Musique"
 
-[node name="Sound" type="Label" parent="Panel_slider"]
+[node name="Sound" type="Label" parent="Panel_slider" unique_id=1177519661]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 19.0
@@ -400,7 +402,7 @@ script = ExtResource("14")
 TextEN = "Sound"
 TextFR = "Son"
 
-[node name="HSlider_music" type="HSlider" parent="Panel_slider"]
+[node name="HSlider_music" type="HSlider" parent="Panel_slider" unique_id=1865073485]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 9.0
@@ -418,7 +420,7 @@ step = 3.0
 rounded = true
 allow_greater = true
 
-[node name="HSlider_sound" type="HSlider" parent="Panel_slider"]
+[node name="HSlider_sound" type="HSlider" parent="Panel_slider" unique_id=1822883753]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 29.0
@@ -435,14 +437,14 @@ max_value = 6.0
 step = 3.0
 rounded = true
 
-[node name="Panel_fullscreen" type="Panel" parent="."]
+[node name="Panel_fullscreen" type="Panel" parent="." unique_id=1018767939]
 layout_mode = 0
 offset_left = 193.0
 offset_top = 131.0
 offset_right = 251.0
 offset_bottom = 147.0
 
-[node name="CheckButton" type="CheckButton" parent="Panel_fullscreen"]
+[node name="CheckButton" type="CheckButton" parent="Panel_fullscreen" unique_id=138624798]
 layout_mode = 0
 offset_right = 116.0
 offset_bottom = 32.0
@@ -460,7 +462,7 @@ TextEN = "Fullscreen"
 TextFR = "Plein écran"
 metadata/_edit_lock_ = true
 
-[node name="Panel_superdash" type="Panel" parent="."]
+[node name="Panel_superdash" type="Panel" parent="." unique_id=1453761941]
 visible = false
 layout_mode = 0
 offset_left = 193.0
@@ -468,7 +470,7 @@ offset_top = 112.0
 offset_right = 251.0
 offset_bottom = 128.0
 
-[node name="CheckButton" type="CheckButton" parent="Panel_superdash"]
+[node name="CheckButton" type="CheckButton" parent="Panel_superdash" unique_id=1695138529]
 layout_mode = 0
 offset_right = 116.0
 offset_bottom = 32.0
@@ -486,7 +488,7 @@ text = "SuperDash"
 alignment = 2
 metadata/_edit_lock_ = true
 
-[node name="Label_version" type="Label" parent="."]
+[node name="Label_version" type="Label" parent="." unique_id=255686849]
 modulate = Color(1, 1, 1, 0.792157)
 layout_mode = 0
 offset_left = 277.0
@@ -498,29 +500,29 @@ label_settings = SubResource("LabelSettings_5aepb")
 horizontal_alignment = 2
 script = ExtResource("15")
 
-[node name="Audio_test_sound" type="AudioStreamPlayer" parent="."]
+[node name="Audio_test_sound" type="AudioStreamPlayer" parent="." unique_id=483926867]
 stream = ExtResource("16")
 pitch_scale = 1.8
 bus = &"SFX"
 
-[node name="SFX" type="Node" parent="."]
+[node name="SFX" type="Node" parent="." unique_id=1585799380]
 
-[node name="UI_menu_up_down" type="AudioStreamPlayer" parent="SFX"]
+[node name="UI_menu_up_down" type="AudioStreamPlayer" parent="SFX" unique_id=1100006281]
 stream = ExtResource("17")
 pitch_scale = 1.1
 bus = &"SFX"
 
-[node name="UI_menu_click" type="AudioStreamPlayer" parent="SFX"]
+[node name="UI_menu_click" type="AudioStreamPlayer" parent="SFX" unique_id=1752004186]
 stream = ExtResource("18")
 pitch_scale = 2.0
 bus = &"SFX"
 
-[node name="UI_toggle" type="AudioStreamPlayer" parent="SFX"]
+[node name="UI_toggle" type="AudioStreamPlayer" parent="SFX" unique_id=592199396]
 stream = ExtResource("19")
 pitch_scale = 1.2
 bus = &"SFX"
 
-[node name="UI_paused" type="AudioStreamPlayer" parent="SFX"]
+[node name="UI_paused" type="AudioStreamPlayer" parent="SFX" unique_id=1237564058]
 stream = ExtResource("20")
 volume_db = -6.0
 pitch_scale = 0.8

@@ -131,6 +131,13 @@ func update_text() -> void :
 	$CanvasLayer / HBoxContainer_MENU / Panel_leaderboard_arrival / Panel_world / Label_world.text = text
 
 func _on_start_pressed() -> void :
+	$CanvasLayer.visible = false
+	var target = $Path2D/PathFollow2D/Camera2D 
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_EXPO)
+	tween.tween_property(target, "zoom", Vector2(0.1, 0.1), 02)
+	tween.tween_property(target, "zoom", Vector2(50,50), 25)
+	await get_tree().create_timer(2).timeout
 	get_tree().change_scene_to_file("res://World/World.tscn")
 	Engine.time_scale = 1
 
@@ -191,7 +198,7 @@ func _on_options_pressed(forced_close: bool = false) -> void :
 func _on_quit_pressed() -> void :
 	get_tree().quit()
 
-func _on_leaderboard_scores_downloaded(message, handle, result):
+func _on_leaderboard_scores_downloaded(_message, _handle, result):
 	var compteur: int = 0
 	for r in result:
 		var UserScore = LeaderboardUsersScore1.instantiate()

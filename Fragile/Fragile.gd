@@ -9,6 +9,7 @@ class_name Fragile
 var link_player: Area2D = null
 var is_falling: = false
 
+@warning_ignore("unused_signal")
 signal erase_floor_tile(v_global_position)
 
 func collapsing() -> void :

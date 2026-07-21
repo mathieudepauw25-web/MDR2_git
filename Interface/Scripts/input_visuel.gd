@@ -14,42 +14,42 @@ class_name InputVisuel
 @export var color_hide: Color
 
 func _ready() -> void :
-    EVENTS.connect("options", _on_EVENTS_options)
-    EVENTS.connect("arrival", _on_EVENTS_arrival)
+	EVENTS.connect("options", _on_EVENTS_options)
+	EVENTS.connect("arrival", _on_EVENTS_arrival)
 
-    visible = GAMES.game_data.option6
+	visible = GAMES.game_data.option6
 
-func _process(delta: float) -> void :
-    hide_input(move_r)
-    hide_input(move_u)
-    hide_input(move_l)
-    hide_input(move_d)
+func _process(_delta: float) -> void :
+	hide_input(move_r)
+	hide_input(move_u)
+	hide_input(move_l)
+	hide_input(move_d)
 
-    hide_input(dash_r)
-    hide_input(dash_u)
-    hide_input(dash_l)
-    hide_input(dash_d)
+	hide_input(dash_r)
+	hide_input(dash_u)
+	hide_input(dash_l)
+	hide_input(dash_d)
 
-    if Input.is_action_pressed("move_right"): show_input(move_r)
-    if Input.is_action_pressed("move_up"): show_input(move_u)
-    if Input.is_action_pressed("move_left"): show_input(move_l)
-    if Input.is_action_pressed("move_down"): show_input(move_d)
+	if Input.is_action_pressed("move_right"): show_input(move_r)
+	if Input.is_action_pressed("move_up"): show_input(move_u)
+	if Input.is_action_pressed("move_left"): show_input(move_l)
+	if Input.is_action_pressed("move_down"): show_input(move_d)
 
-    if Input.is_action_pressed("dash_right"): show_input(dash_r)
-    if Input.is_action_pressed("dash_up"): show_input(dash_u)
-    if Input.is_action_pressed("dash_left"): show_input(dash_l)
-    if Input.is_action_pressed("dash_down"): show_input(dash_d)
+	if Input.is_action_pressed("dash_right"): show_input(dash_r)
+	if Input.is_action_pressed("dash_up"): show_input(dash_u)
+	if Input.is_action_pressed("dash_left"): show_input(dash_l)
+	if Input.is_action_pressed("dash_down"): show_input(dash_d)
 
 func show_input(sprite: Sprite2D) -> void :
-    sprite.modulate = color_show
+	sprite.modulate = color_show
 
 func hide_input(sprite: Sprite2D) -> void :
-    sprite.modulate = color_hide
+	sprite.modulate = color_hide
 
 func _on_EVENTS_options(index_option: int, state: bool) -> void :
-    if index_option == 6:
-        EVENTS.emit_signal("save")
-        visible = state
+	if index_option == 6:
+		EVENTS.emit_signal("save")
+		visible = state
 
 func _on_EVENTS_arrival() -> void :
-    visible = false
+	visible = false

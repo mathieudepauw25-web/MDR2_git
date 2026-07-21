@@ -18,7 +18,7 @@ func _ready() -> void :
 	var key_tile = node_map.local_to_map(global_position)
 	global_position = node_map.map_to_local(key_tile)
 
-func _process(delta: float) -> void :
+func _process(_delta: float) -> void :
 	if player_entered != null:
 		check_player_grab(player_entered)
 

@@ -6,6 +6,7 @@ const SAVE_FILE_NAME = "saveMDR.json"
 const SECURITY_KEY = "1354RHEHR465ER"
 
 @export var game_time_scale: float = 1
+@warning_ignore("shadowed_global_identifier")
 @export var LeaderboardUsersScore: PackedScene = preload("res://Interface/LaderboardLine.tscn")
 
 var game_just_launch: = true
@@ -70,7 +71,7 @@ func _ready() -> void :
 	if game_data.option_fullscreen: mode_window = DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
 	DisplayServer.window_set_mode(mode_window)
 
-func _process(delta: float) -> void :
+func _process(_delta: float) -> void :
 	Steam.run_callbacks()
 
 func _input(event: InputEvent) -> void :
@@ -277,8 +278,8 @@ func get_run_time(ref: int = 1) -> String:
 	var value: = ""
 	match ref:
 		1:
-			var min = game_data.run_time / 60
-			value = str("%2d :" % min)
+			var Smin = game_data.run_time / 60
+			value = str("%2d :" % Smin)
 		2:
 			var sec = fmod(game_data.run_time, 60)
 			value = str("%02d :" % sec)
@@ -291,17 +292,17 @@ func change_gameEngine_time(value: float = 0.1) -> void :
 	Engine.time_scale += value
 	print(Engine.time_scale)
 
-func setAchievement(ref_ach: String) -> void :
+func setAchievement(_ref_ach: String) -> void :
 	pass
 	'''if Steam.isSteamRunning() == false: return
 
-	var status = Steam.getAchievement(ref_ach)
+	var status = Steam.getAchievement(_ref_ach)
 	if status["achieved"]:
-		print("Achievement: ", ref_ach, " Already unlocked")
+		print("Achievement: ", _ref_ach, " Already unlocked")
 		return
-	Steam.setAchievement(ref_ach)
+	Steam.setAchievement(_ref_ach)
 	Steam.storeStats()
-	print("Unlocked achievement: ", ref_ach)'''
+	print("Unlocked achievement: ", _ref_ach)'''
 
 func reset_run() -> void :
 	BoardHandleName = "Highscore"
@@ -333,7 +334,7 @@ func _on_EVENTS_save() -> void :
 func _on_leaderboard_find_result(handle: int, found: int) -> void :
 	if found == 1:
 		leaderboard_handles[BoardHandleName] = handle
-		var id = Steam.getSteamID()
+		var _id = Steam.getSteamID()
 
 
 		if handles_count < 2 + 1:
@@ -342,7 +343,7 @@ func _on_leaderboard_find_result(handle: int, found: int) -> void :
 	else:
 		print("No handle was found")
 
-func _on_joy_connection_changed(device: int, connected: bool) -> void :
+func _on_joy_connection_changed(_device: int, connected: bool) -> void :
 	if connected:
 		pass
 	else:

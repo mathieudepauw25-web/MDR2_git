@@ -23,10 +23,10 @@ func compute_time() -> void :
 	if superdash_time:
 		global_time = GAMES.game_data.best_global_time_superdash
 
-	var min = global_time / 60
+	var Smin = global_time / 60
 	var sec = fmod(global_time, 60)
 	var msec = fmod(global_time, 1) * 1000
-	node_best_label_min.text = str("%2d :" % min)
+	node_best_label_min.text = str("%2d :" % Smin)
 	node_best_label_sec.text = str("%02d :" % sec)
 	node_best_label_msec.text = str("%02d" % msec)
 

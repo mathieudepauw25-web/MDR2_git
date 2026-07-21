@@ -63,7 +63,7 @@ func _ready() -> void :
 		$AnimatedSprite2D.play(current_skin)
 	%ParticuleDash.texture = $AnimatedSprite2D.sprite_frames.get_frame_texture($AnimatedSprite2D.animation, 0)
 
-func _process(delta: float) -> void :
+func _process(_delta: float) -> void :
 	$StateMachine / buffer_move.text = buffer_move
 	$StateMachine / buffer_dash.text = buffer_dash
 	if arrival: return
@@ -277,11 +277,11 @@ func make_water_dash(v_global_destination) -> void :
 	EVENTS.emit_signal("waterDash", v_global_destination, direction)
 
 func tile_is_type(tile_type: int, tile_check: Vector2) -> bool:
-	var tile_is_type = false
+	var Stile_is_type = false
 	if node_map.get_child(tile_type).get_cell_source_id(tile_check) != -1:
-		tile_is_type = true
+		Stile_is_type = true
 
-	return tile_is_type
+	return Stile_is_type
 
 func pok_a_wall(_destination: Vector2, speed_pok: float = 0.05, dashing: bool = false) -> void :
 	is_poking = true
@@ -375,7 +375,7 @@ func _on_buffer_end() -> void :
 func _on_bufferDash_end() -> void :
 	delete_buffer_dash()
 
-func _on_state_machine_state_changed(new_state: Variant) -> void :
+func _on_state_machine_state_changed(_new_state: Variant) -> void :
 	snap_grid()
 
 func _on_area_entered(area: Area2D) -> void :
@@ -481,6 +481,6 @@ func _input(event: InputEvent) -> void:
 			%ParticuleDash.texture = $AnimatedSprite2D.sprite_frames.get_frame_texture($AnimatedSprite2D.animation, 0)
 			%M_D_R.play()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if teleport_immunity_frames > 0:
 		teleport_immunity_frames -= 1

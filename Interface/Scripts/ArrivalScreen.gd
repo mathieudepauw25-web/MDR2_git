@@ -161,7 +161,7 @@ func _on_top_10_pressed() -> void :
 			showing_leaderboard = true
 			$CanvasLayer / Buttons / Top10 / texture_deploy_top10.visible = true
 
-func _on_leaderboard_scores_downloaded(handle, result):
+func _on_leaderboard_scores_downloaded(_handle, result):
 	var compteur: int = 0
 	for r in result:
 		var UserScore = LeaderboardUsersScore1.instantiate()

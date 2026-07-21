@@ -34,7 +34,7 @@ func _on_check_button_toggled(toggled_on: bool) -> void :
 	var window_mode = DisplayServer.WINDOW_MODE_WINDOWED
 	if toggled_on: window_mode = DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
 	DisplayServer.window_set_mode(window_mode)
-	%UI_toggle.play()
+	#%UI_toggle.play()
 	EVENTS.emit_signal("save")
 
 
