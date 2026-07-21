@@ -42,10 +42,10 @@ const dicWall: Dictionary = {
 const dicRightWall: Dictionary = {
 	"side_wall" : [Vector2i(2,2),Vector2i(3,2)],
 	"full_wall" : [Vector2i(1,1),Vector2i(3,1)],
-	"mini_wall" : [Vector2i(0,2),Vector2i(1,2)]
+	"mini_wall" : [Vector2i(0,2),Vector2i(1,2)],
+	"Eright_wall" : Vector3i(1,4,1)
 }
 
-# Le "wall" a été intégré ici avec ses coordonnées d'origine
 const dicUpWall: Dictionary = {
 	"Ewall" : [Vector2i(1,0),Vector2i(3,0)],
 	"wall" : [Vector2i(0,0),Vector2i(2,0),Vector2i(9,2)]
@@ -60,8 +60,7 @@ const dicLeft: Dictionary = {
 const dicDown: Dictionary = {
 	"down_grass" : [Vector2i(0,0),Vector2i(1,0),Vector2i(2,0),Vector2i(3,0)],
 	"down_wall" : [Vector3i(0,1,1),Vector3i(1,1,1),Vector3i(2,1,1),Vector3i(3,1,1)],
-	"Eright_grass" : Vector2i(0,4),
-	"Eright_wall" : Vector3i(1,4,1)
+	"Eright_grass" : Vector2i(0,4)
 }
 
 const dicRight: Dictionary = {
@@ -73,7 +72,6 @@ const dicRight: Dictionary = {
 	"mini" : Vector2i(0,3)
 }
 
-# "wall" a été retiré d'ici puisqu'il est désormais géré par dicUpWall
 const dicUp: Dictionary = {
 	"normal_dark" : [Vector2i(3,5),Vector2i(4,5),Vector2i(5,5),Vector2i(6,5)],
 	"normal_light" : [Vector2i(3,6),Vector2i(4,6),Vector2i(5,6),Vector2i(6,6)],
@@ -111,21 +109,21 @@ const grass_bitmask_repo: Dictionary = {
 
 const wall_bitmask_repo: Dictionary = {
 	0: [{"main": dicWall["normal"],
-		 "persp_down": { Vector2i(0,1) : "down_wall", Vector2i(1,1) : "Eright_wall" },
+		 "persp_down": "down_wall",
 		 "persp_left": { Vector2i(-1,0) : "mini", Vector2i(-1,1) : "Eleft" },
-		 "persp_right_wall": "mini_wall",
+		 "persp_right_wall": { Vector2i(1,0) : "mini_wall", Vector2i(1,1) : "Eright_wall" },
 		 "persp_up_wall": {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall"}}],
 	1: [{"main": dicWall["normal"],
-		 "persp_down": { Vector2i(0,1) : "down_wall", Vector2i(1,1) : "Eright_wall" },
+		 "persp_down": "down_wall",
 		 "persp_left": { Vector2i(-1,0) : "full", Vector2i(-1,1) : "Eleft" },
-		 "persp_right_wall": "full_wall",
+		 "persp_right_wall": { Vector2i(1,0) : "full_wall", Vector2i(1,1) : "Eright_wall" },
 		 "persp_up_wall": {Vector2i(1,-1) : "Ewall"}}],
 	2: [{"main": dicWall["normal"],
-		 "persp_down": { Vector2i(0,1) : "down_wall" },
+		 "persp_down": "down_wall",
 		 "persp_left": { Vector2i(-1,0) : "mini", Vector2i(-1,1) : "Eleft"},
 		 "persp_up_wall": {Vector2i(0, -1) : "wall"}}],
 	3: [{"main": dicWall["normal"],
-		 "persp_down": { Vector2i(0,1) : "down_wall" },
+		 "persp_down": "down_wall",
 		 "persp_left": { Vector2i(-1,0) : "full", Vector2i(-1,1) : "Eleft" }}],
 	4: [{"main" : dicWall["full"],
 		 "persp_left": { Vector2i(-1,0) : "mini" },
@@ -141,12 +139,12 @@ const wall_bitmask_repo: Dictionary = {
 	7: [{"main" : dicWall["full"],
 		 "persp_left": { Vector2i(-1,0) : "full"}}],
 	8: [{"main": dicWall["normal"],
-		 "persp_down": { Vector2i(0,1) : "down_wall", Vector2i(1,1) : "Eright_wall" },
-		 "persp_right_wall": "mini_wall",
+		 "persp_down": "down_wall",
+		 "persp_right_wall": { Vector2i(1,0) : "mini_wall", Vector2i(1,1) : "Eright_wall" },
 		 "persp_up_wall": {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall"}}],
 	9: [{"main": dicWall["normal"],
-		 "persp_down": { Vector2i(0,1) : "down_wall", Vector2i(1,1) : "Eright_wall" },
-		 "persp_right_wall": "full_wall",
+		 "persp_down": "down_wall",
+		 "persp_right_wall": { Vector2i(1,0) : "full_wall", Vector2i(1,1) : "Eright_wall" },
 		 "persp_up_wall": {Vector2i(1,-1) : "Ewall"}}],
 	10: [{"main": dicWall["normal"],
 		  "persp_down": "down_wall",
@@ -165,42 +163,29 @@ const wall_bitmask_repo: Dictionary = {
 }
 
 const wall_grass_exceptions: Dictionary = {
-	1: {"persp_right": "full_wall",
+	1: {"persp_right_wall": {Vector2i(1,0) : "full_wall", Vector2i(1,1) : "Eright_wall"},
 		"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall"},
-		"persp_left" : { Vector2i(-1,0) : "full", Vector2i(-1,1) : "Eleft" }},
-	2: {"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall", Vector2i(1,0) : "side_wall"}},
-	3: {"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall", Vector2i(1,0) : "side_wall"},
-		"persp_left" : { Vector2i(-1,0) : "full", Vector2i(-1,1) : "Eleft" }},
-	4: {"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall"},
-		"forbid_Eleft" : true},
-	5: {"persp_right": "full_wall",
-		"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall"},
-		"forbid_Eleft" : true},
-	6: {"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall", Vector2i(1,0) : "side_wall"},
-		"forbid_Eleft" : true},
-	7: {"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall", Vector2i(1,0) : "side_wall"},
-		"forbid_Eleft" : true}
-}
+		"persp_left" : { Vector2i(-1,0) : "full", Vector2i(-1,1) : "Eleft" },},
+	2: {"persp_right_wall": {Vector2i(1,0) : "side_wall", Vector2i(1,1) : "Eright_wall"},
+		"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall", Vector2i(1,0) : "side_wall"},
+		"forbid_Eright_wall" : true},
+	3: {"persp_right_wall": {Vector2i(1,0) : "side_wall", Vector2i(1,1) : "Eright_wall"},
+		"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall", Vector2i(1,0) : "side_wall"},
+		"persp_left" : { Vector2i(-1,0) : "full", Vector2i(-1,1) : "Eleft" },
+		"forbid_Eright_wall" : true}
+	}
 
 func _ready() -> void:
 	var btn_herbe = $UI_Layer/PanelContainer/HBoxContainer/Btn_Herbe
 	var btn_mur = $UI_Layer/PanelContainer/HBoxContainer/Btn_Mur
 	var btn_gomme = $UI_Layer/PanelContainer/HBoxContainer/Btn_Gomme
-	# On crée un groupe pour lier les boutons entre eux
-	# Par défaut, un ButtonGroup empêche de désélectionner le bouton actif.
 	var brush_group = ButtonGroup.new()
-	
-	# On assigne ce groupe à chaque bouton
 	btn_herbe.button_group = brush_group
 	btn_mur.button_group = brush_group
 	btn_gomme.button_group = brush_group
-	
-	# On connecte les signaux
 	btn_herbe.pressed.connect(func(): current_brush = Brush.GRASS)
 	btn_mur.pressed.connect(func(): current_brush = Brush.WALL)
 	btn_gomme.pressed.connect(func(): current_brush = Brush.ERASER)
-	
-	# On active l'herbe par défaut
 	btn_herbe.button_pressed = true
 
 func _process(_delta: float) -> void:
@@ -305,15 +290,25 @@ func update_smart_area(cell_pos: Vector2i) -> void:
 
 func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo: Dictionary, source_id: int) -> void:
 	var score : int = 0
-	if is_tile_connected(layer, cell_pos + Vector2i.UP, source_id):    score += 1
-	if is_tile_connected(layer, cell_pos + Vector2i.RIGHT, source_id): score += 2
-	if is_tile_connected(layer, cell_pos + Vector2i.DOWN, source_id):  score += 4
-	if is_tile_connected(layer, cell_pos + Vector2i.LEFT, source_id):  score += 8
+	
+	if source_id == WALL_SOURCE_ID:
+		if is_tile_connected(layer, cell_pos + Vector2i.UP, source_id):    score += 1
+		if is_tile_connected(layer, cell_pos + Vector2i.RIGHT, source_id): score += 2
+		if is_tile_connected(layer, cell_pos + Vector2i.DOWN, source_id):  score += 4
+		if is_tile_connected(layer, cell_pos + Vector2i.LEFT, source_id) or layer_floor.get_cell_source_id(cell_pos + Vector2i.LEFT) == GRASS_SOURCE_ID:  score += 8
+	else:
+		if is_tile_connected(layer, cell_pos + Vector2i.UP, source_id):    score += 1
+		if is_tile_connected(layer, cell_pos + Vector2i.RIGHT, source_id): score += 2
+		if is_tile_connected(layer, cell_pos + Vector2i.DOWN, source_id):  score += 4
+		if is_tile_connected(layer, cell_pos + Vector2i.LEFT, source_id):  score += 8
+		
 	var theme = cell_themes.get(cell_pos, "_light")
 	var main_theme_key = "dark" if theme == "_dark" else "light"
+	
 	if source_id == GRASS_SOURCE_ID:
 		var main_atlas = get_tile_variation(cell_pos, dicFloor[main_theme_key], main_theme_key)
 		apply_custom_cell(layer, cell_pos, source_id, main_atlas)
+		
 	if repo.has(score):
 		var variations = repo[score]
 		var pseudo_rand = posmod(hash(cell_pos), variations.size())
@@ -322,9 +317,9 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 			var grass_score: int = 0
 			if layer_floor.get_cell_source_id(cell_pos + Vector2i.UP) == GRASS_SOURCE_ID:    grass_score += 1
 			if layer_floor.get_cell_source_id(cell_pos + Vector2i.RIGHT) == GRASS_SOURCE_ID: grass_score += 2
-			if layer_floor.get_cell_source_id(cell_pos + Vector2i.LEFT) == GRASS_SOURCE_ID:  grass_score += 4
 			if wall_grass_exceptions.has(grass_score):
 				tile_data.merge(wall_grass_exceptions[grass_score], true)
+
 		if source_id != GRASS_SOURCE_ID and tile_data.has("main") and tile_data["main"] != null:
 			var data = tile_data["main"]
 			if typeof(data) == TYPE_DICTIONARY:
@@ -342,7 +337,7 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 				var modified_data = data.duplicate()
 				var keys_to_erase = []
 				for offset in modified_data:
-					if modified_data[offset] in ["Eright_grass", "Eright_wall"]:
+					if modified_data[offset] == "Eright_grass":
 						keys_to_erase.append(offset)
 				for k in keys_to_erase:
 					modified_data.erase(k)
@@ -428,6 +423,17 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 
 		if tile_data.has("persp_right_wall") and tile_data["persp_right_wall"] != null:
 			var data = tile_data["persp_right_wall"]
+			var forbid_eright_wall = tile_data.get("forbid_Eright_wall", false)
+			var has_down_right = is_tile_connected(layer, cell_pos + Vector2i(1, 1), source_id)
+			if (has_down_right or forbid_eright_wall) and typeof(data) == TYPE_DICTIONARY:
+				var modified_data = data.duplicate()
+				var keys_to_erase = []
+				for offset in modified_data:
+					if modified_data[offset] == "Eright_wall":
+						keys_to_erase.append(offset)
+				for k in keys_to_erase:
+					modified_data.erase(k)
+				data = modified_data
 			if typeof(data) == TYPE_DICTIONARY:
 				for offset in data:
 					var final_atlas = dicRightWall.get(data[offset] + theme, dicRightWall.get(data[offset]))
