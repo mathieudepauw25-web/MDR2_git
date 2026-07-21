@@ -18,7 +18,7 @@ var current_target_theme: String = ""
 var cell_themes: Dictionary = {}
 
 enum Brush {GRASS, WALL, ICE, ERASER}
-var current_brush: Brush = Brush.WALL
+var current_brush: Brush = Brush.GRASS
 var is_panning: bool = false
 
 var zoom_min: float = 0.2
@@ -186,9 +186,21 @@ func _ready() -> void:
 	var btn_herbe = $UI_Layer/PanelContainer/HBoxContainer/Btn_Herbe
 	var btn_mur = $UI_Layer/PanelContainer/HBoxContainer/Btn_Mur
 	var btn_gomme = $UI_Layer/PanelContainer/HBoxContainer/Btn_Gomme
+	# On crée un groupe pour lier les boutons entre eux
+	# Par défaut, un ButtonGroup empêche de désélectionner le bouton actif.
+	var brush_group = ButtonGroup.new()
+	
+	# On assigne ce groupe à chaque bouton
+	btn_herbe.button_group = brush_group
+	btn_mur.button_group = brush_group
+	btn_gomme.button_group = brush_group
+	
+	# On connecte les signaux
 	btn_herbe.pressed.connect(func(): current_brush = Brush.GRASS)
 	btn_mur.pressed.connect(func(): current_brush = Brush.WALL)
 	btn_gomme.pressed.connect(func(): current_brush = Brush.ERASER)
+	
+	# On active l'herbe par défaut
 	btn_herbe.button_pressed = true
 
 func _process(_delta: float) -> void:
