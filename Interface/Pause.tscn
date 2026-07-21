@@ -69,6 +69,7 @@ outline_size = 2
 outline_color = Color(0.132981, 1.01797e-05, 0.127194, 1)
 
 [node name="PauseMenu" type="Control" unique_id=2129157747]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

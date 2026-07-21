@@ -28,7 +28,7 @@ func _ready() -> void :
 	Engine.time_scale = 1
 	EVENTS.emit_signal("starting")
 	EVENTS.emit_signal("door2")
-	$CanvasLayer / TimerBest.visible = true
+	#$CanvasLayer / TimerBest.visible = true
 	$CanvasLayer / Label_version.text = str(ProjectSettings.get_setting("application/config/version"))
 	check_completion()
 	update_text()

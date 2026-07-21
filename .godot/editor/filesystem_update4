@@ -26,3 +26,5 @@ res://World/WaterDash/WaterDash.gd
 res://Interface/Pause.tscn
 res://World/World.tscn
 res://System/camera.gd
+res://TitleScreen/md_rlogo.gd
+res://TitleScreen/v_box_container_menu.gd
