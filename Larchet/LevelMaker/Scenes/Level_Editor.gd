@@ -165,15 +165,31 @@ const wall_bitmask_repo: Dictionary = {
 const wall_grass_exceptions: Dictionary = {
 	1: {"persp_right_wall": {Vector2i(1,0) : "full_wall", Vector2i(1,1) : "Eright_wall"},
 		"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall"},
-		"persp_left" : { Vector2i(-1,0) : "full", Vector2i(-1,1) : "Eleft" },},
-	2: {"persp_right_wall": {Vector2i(1,0) : "side_wall", Vector2i(1,1) : "Eright_wall"},
+		"persp_left" : { Vector2i(-1,0) : "full", Vector2i(-1,1) : "Eleft"},},
+	2: {"persp_right_wall": {Vector2i(1,0) : "side_wall"},
 		"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall", Vector2i(1,0) : "side_wall"},
 		"forbid_Eright_wall" : true},
-	3: {"persp_right_wall": {Vector2i(1,0) : "side_wall", Vector2i(1,1) : "Eright_wall"},
+	3: {"persp_right_wall": {Vector2i(1,0) : "side_wall"},
 		"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall", Vector2i(1,0) : "side_wall"},
-		"persp_left" : { Vector2i(-1,0) : "full", Vector2i(-1,1) : "Eleft" },
+		"persp_left" : { Vector2i(-1,0) : "full", Vector2i(-1,1) : "Eleft"},
+		"forbid_Eright_wall" : true},
+	4: {"forbid_Eleft" : true,
+		"forbid_Eright_wall" : true},
+	5: {"persp_right_wall": {Vector2i(1,0) : "full_wall"},
+		"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall"},
+		"persp_left" : { Vector2i(-1,0) : "full"},
+		"forbid_Eleft" : true,
+		"forbid_Eright_wall" : true},
+	6: {"persp_right_wall": {Vector2i(1,0) : "side_wall"},
+		"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall", Vector2i(1,0) : "side_wall"},
+		"forbid_Eleft" : true,
+		"forbid_Eright_wall" : true},
+	7: {"persp_right_wall": {Vector2i(1,0) : "side_wall"},
+		"persp_up_wall" : {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall", Vector2i(1,0) : "side_wall"},
+		"persp_left" : { Vector2i(-1,0) : "full"},
+		"forbid_Eleft" : true,
 		"forbid_Eright_wall" : true}
-	}
+}
 
 func _ready() -> void:
 	var btn_herbe = $UI_Layer/PanelContainer/HBoxContainer/Btn_Herbe
@@ -290,25 +306,15 @@ func update_smart_area(cell_pos: Vector2i) -> void:
 
 func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo: Dictionary, source_id: int) -> void:
 	var score : int = 0
-	
-	if source_id == WALL_SOURCE_ID:
-		if is_tile_connected(layer, cell_pos + Vector2i.UP, source_id):    score += 1
-		if is_tile_connected(layer, cell_pos + Vector2i.RIGHT, source_id): score += 2
-		if is_tile_connected(layer, cell_pos + Vector2i.DOWN, source_id):  score += 4
-		if is_tile_connected(layer, cell_pos + Vector2i.LEFT, source_id) or layer_floor.get_cell_source_id(cell_pos + Vector2i.LEFT) == GRASS_SOURCE_ID:  score += 8
-	else:
-		if is_tile_connected(layer, cell_pos + Vector2i.UP, source_id):    score += 1
-		if is_tile_connected(layer, cell_pos + Vector2i.RIGHT, source_id): score += 2
-		if is_tile_connected(layer, cell_pos + Vector2i.DOWN, source_id):  score += 4
-		if is_tile_connected(layer, cell_pos + Vector2i.LEFT, source_id):  score += 8
-		
+	if is_tile_connected(layer, cell_pos + Vector2i.UP, source_id):    score += 1
+	if is_tile_connected(layer, cell_pos + Vector2i.RIGHT, source_id): score += 2
+	if is_tile_connected(layer, cell_pos + Vector2i.DOWN, source_id):  score += 4
+	if is_tile_connected(layer, cell_pos + Vector2i.LEFT, source_id):  score += 8
 	var theme = cell_themes.get(cell_pos, "_light")
 	var main_theme_key = "dark" if theme == "_dark" else "light"
-	
 	if source_id == GRASS_SOURCE_ID:
 		var main_atlas = get_tile_variation(cell_pos, dicFloor[main_theme_key], main_theme_key)
 		apply_custom_cell(layer, cell_pos, source_id, main_atlas)
-		
 	if repo.has(score):
 		var variations = repo[score]
 		var pseudo_rand = posmod(hash(cell_pos), variations.size())
@@ -317,9 +323,9 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 			var grass_score: int = 0
 			if layer_floor.get_cell_source_id(cell_pos + Vector2i.UP) == GRASS_SOURCE_ID:    grass_score += 1
 			if layer_floor.get_cell_source_id(cell_pos + Vector2i.RIGHT) == GRASS_SOURCE_ID: grass_score += 2
+			if layer_floor.get_cell_source_id(cell_pos + Vector2i.DOWN) == GRASS_SOURCE_ID:  grass_score += 4
 			if wall_grass_exceptions.has(grass_score):
 				tile_data.merge(wall_grass_exceptions[grass_score], true)
-
 		if source_id != GRASS_SOURCE_ID and tile_data.has("main") and tile_data["main"] != null:
 			var data = tile_data["main"]
 			if typeof(data) == TYPE_DICTIONARY:
