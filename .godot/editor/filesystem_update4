@@ -1,5 +1,6 @@
 res://Larchet/LevelMaker/Scenes/Level_Editor.tscn
 res://Larchet/Skins/Animations/AnimationSkins.tres
+<<<<<<< Updated upstream
 res://Larchet/LevelMaker/Scenes/Level_Editor.gd
 res://panel_options.gd
 res://Fragile/Fragile.gd
@@ -24,3 +25,7 @@ res://World/secret.gd
 res://World/WaterDash/WaterDash.gd
 res://TitleScreen/TitleScreen.tscn
 res://World/World.tscn
+=======
+res://System/TextManage.gd
+res://Interface/Scripts/timer_best.gd
+>>>>>>> Stashed changes

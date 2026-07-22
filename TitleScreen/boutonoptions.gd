@@ -12,7 +12,7 @@ func _on_focus_entered() -> void:
 	tween.set_loops()
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property(target, "offset_transform_rotation", 0.1, 2)
+	tween.tween_property(target, "offset_transform_rotation", -0.2, 2)
 	tween.tween_property(target, "offset_transform_rotation", 0.2, 2)
 
 

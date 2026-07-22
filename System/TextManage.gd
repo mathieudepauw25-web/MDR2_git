@@ -2,9 +2,9 @@ extends Button
 
 @export var TextEN: String
 @export var TextFR: String
+@export var Basescale: = Vector2(1,1)
 
 func _ready() -> void :
-	scale = offset_transform_scale
 	offset_transform_enabled = true
 	connect("visibility_changed", _on_visibility_changed)
 	EVENTS.connect("save", _on_visibility_changed)
@@ -24,12 +24,12 @@ func _on_focus_entered() -> void:
 	var target = self
 	tween.set_trans(Tween.TRANS_QUINT)
 	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property(target, "offset_transform_scale", scale * Vector2(1.5,1.5), 0.2)
+	tween.tween_property(target, "offset_transform_scale", Basescale * Vector2(1.5,1.5), 0.2)
 	tween.parallel().tween_property(target, "offset_transform_rotation", 0.2, 0.5)
 	tween.set_loops()
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property(target, "offset_transform_rotation", 0.1, 2)
+	tween.tween_property(target, "offset_transform_rotation", -0.2, 2)
 	tween.tween_property(target, "offset_transform_rotation", 0.2, 2)
 
 
@@ -39,5 +39,5 @@ func _on_focus_exited() -> void:
 	z_index = 1
 	tween = create_tween()
 	var target = self
-	tween.tween_property(target, "offset_transform_scale", scale, 0.2)
+	tween.tween_property(target, "offset_transform_scale", Basescale, 0.2)
 	tween.parallel().tween_property(target, "offset_transform_rotation", 0.0, 0.2)

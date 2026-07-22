@@ -38,7 +38,7 @@ func update() -> void :
 func _on_EVENTS_arrival() -> void :
 	visible = false
 
-func _on_EVENTS_options(index_option: int, state: bool) -> void :
+func _on_EVENTS_options(index_option: int, _state: bool) -> void :
 	if index_option == 2:
 		EVENTS.emit_signal("save")
 		#visible = state
