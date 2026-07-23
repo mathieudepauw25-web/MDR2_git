@@ -1,31 +1,9 @@
-res://Larchet/LevelMaker/Scenes/Level_Editor.tscn
-res://Larchet/Skins/Animations/AnimationSkins.tres
-<<<<<<< Updated upstream
-res://Larchet/LevelMaker/Scenes/Level_Editor.gd
-res://panel_options.gd
-res://Fragile/Fragile.gd
-res://Interface/dash_spot.gd
-res://Interface/laderboard_line.gd
-res://Interface/Scripts/ArrivalScreen.gd
-res://Interface/Scripts/input_visuel.gd
-res://Interface/Scripts/PauseMenu.gd
-res://Interface/Scripts/timerArrival.gd
-res://Interface/Scripts/timerCount.gd
+res://default_bus_layout.tres
 res://Interface/Scripts/timer_best.gd
-res://Key/Key.gd
-res://Platform/Platform.gd
-res://Player/Scripts/Player.gd
-res://System/camera.gd
 res://System/TextManage.gd
-res://System/Autoload/EVENTS.gd
-res://System/Autoload/GAMES.gd
-res://TitleScreen/camera_mapfree.gd
-res://TitleScreen/title_screen.gd
-res://World/secret.gd
-res://World/WaterDash/WaterDash.gd
+res://TitleScreen/boutonoptions.gd
+res://TitleScreen/Buttoncontrols.gd
 res://TitleScreen/TitleScreen.tscn
-res://World/World.tscn
-=======
-res://System/TextManage.gd
-res://Interface/Scripts/timer_best.gd
->>>>>>> Stashed changes
+res://Larchet/Skins/Animations/AnimationSkins.tres
+res://Larchet/LevelMaker/Scenes/Level_Editor.tscn
+res://Larchet/LevelMaker/Scenes/Level_Editor.gd
