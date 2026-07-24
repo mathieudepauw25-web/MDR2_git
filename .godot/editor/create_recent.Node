@@ -1,7 +1,9 @@
 TileMapLayer
+Window
+Label
+button
 Camera
 Sprite2D
-Label
 Node2D
 MarginContainer
 HBoxContainer
@@ -10,5 +12,3 @@ VBoxContainer
 PanelContainer
 CanvasLayer
 Camera2D
-AudioStreamPlayer
-Node

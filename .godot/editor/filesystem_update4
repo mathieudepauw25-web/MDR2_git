@@ -1,9 +1,7 @@
 res://default_bus_layout.tres
-res://Interface/Scripts/timer_best.gd
-res://System/TextManage.gd
-res://TitleScreen/boutonoptions.gd
-res://TitleScreen/Buttoncontrols.gd
-res://TitleScreen/TitleScreen.tscn
-res://Larchet/Skins/Animations/AnimationSkins.tres
 res://Larchet/LevelMaker/Scenes/Level_Editor.tscn
+res://Larchet/Skins/Animations/AnimationSkins.tres
 res://Larchet/LevelMaker/Scenes/Level_Editor.gd
+res://Larchet/LevelMaker/TileMapLayer/normal_wall.tres
+res://Larchet/LevelMaker/TileMapLayer/normal_ice.tres
+res://Larchet/LevelMaker/TileMapLayer/normal_grass.tres

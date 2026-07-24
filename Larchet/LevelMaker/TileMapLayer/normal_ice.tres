@@ -1,0 +1,12 @@
+[gd_resource type="TileSet" format=3 uid="uid://dxqot2ss33t6u"]
+
+[ext_resource type="Texture2D" uid="uid://bo1qmbojsy05h" path="res://World/Sprites/tileset_PERSPECTIV.png" id="1_xktgx"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tfa4e"]
+texture = ExtResource("1_xktgx")
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+
+[resource]
+sources/2 = SubResource("TileSetAtlasSource_tfa4e")
