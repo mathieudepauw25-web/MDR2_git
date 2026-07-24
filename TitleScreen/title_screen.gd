@@ -67,6 +67,7 @@ func _input(event: InputEvent) -> void :
 		if event.axis_value < 0 && event.axis_value > -1: return
 		if event.axis_value > 0 && event.axis_value < 1: return
 	if $CanvasLayer.visible == true:
+		if event.is_action_pressed("escape"): button_focus.grab_focus()
 		if event.is_action_pressed("move_down"): node_ui_menu_up_down.play(0.02)
 		if event.is_action_pressed("move_up"): node_ui_menu_up_down.play(0.02)
 		if event.is_action_pressed("ui_accept"): node_ui_menu_click.play()
@@ -79,6 +80,8 @@ func _input(event: InputEvent) -> void :
 			if event.is_action_pressed("escape"):
 				_on_leaderboard_pressed()
 				$SFX / UI_cancel.play()
+	if $CanvasLayer.visible == false:
+		if event.is_action_pressed("escape"): button_focus.grab_focus()
 	if $MapViewControl.visible == true:
 		if event.is_action_pressed("move_down"): pass
 		if event.is_action_pressed("move_up"): pass
@@ -224,4 +227,8 @@ func _on_skins_pressed() -> void:
 	get_tree().change_scene_to_file("res://Larchet/Menus/SkinsPage/Skins.tscn")
 
 func _on_controls_pressed() -> void:
-	get_tree().change_scene_to_file("res://Larchet/Menus/ControlsPage/Scenes/Controls.tscn")
+	$CanvasLayer.visible = false
+	var controls = preload("res://Larchet/Menus/ControlsPage/Scenes/Controls.tscn")
+	var instcontrols = controls.instantiate()
+	get_parent().add_child(instcontrols)
+	#get_tree().change_scene_to_file("res://Larchet/Menus/ControlsPage/Scenes/Controls.tscn")

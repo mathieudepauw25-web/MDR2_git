@@ -69,7 +69,6 @@ outline_size = 2
 outline_color = Color(0.132981, 1.01797e-05, 0.127194, 1)
 
 [node name="PauseMenu" type="Control" unique_id=2129157747]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -166,7 +165,7 @@ layout_mode = 0
 offset_left = 16.0
 offset_top = 39.0
 offset_right = 122.0
-offset_bottom = 102.0
+offset_bottom = 147.0
 
 [node name="VBoxContainer_Buttons" type="VBoxContainer" parent="Panel_buttons" unique_id=1571537336]
 layout_mode = 0
@@ -184,7 +183,7 @@ custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 offset_transform_enabled = true
 focus_neighbor_left = NodePath("../../../Panel_fullscreen/CheckButton")
-focus_neighbor_top = NodePath("../../../Panel_slider/HSlider_sound")
+focus_neighbor_top = NodePath("../Title screen")
 focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
 theme = SubResource("Theme_pl0fo")
 button_mask = 0
@@ -192,6 +191,7 @@ text = "Restart"
 script = ExtResource("6")
 TextEN = "Restart"
 TextFR = "Recommencer"
+augmentation = Vector2(1.3, 1.3)
 
 [node name="Espacement" type="Control" parent="Panel_buttons/VBoxContainer_Buttons" unique_id=1994579357]
 visible = false
@@ -205,13 +205,14 @@ layout_mode = 2
 layout_mode = 2
 offset_transform_enabled = true
 focus_neighbor_left = NodePath("../../../Panel_fullscreen/CheckButton")
-focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions")
 theme = SubResource("Theme_pl0fo")
 button_mask = 0
 text = "Resume"
 script = ExtResource("6")
 TextEN = "Resume"
 TextFR = "Retour"
+augmentation = Vector2(1.3, 1.3)
 
 [node name="Control" type="Button" parent="Panel_buttons/VBoxContainer_Buttons" unique_id=265590641]
 visible = false
@@ -226,14 +227,15 @@ text = "CONTROL
 layout_mode = 2
 offset_transform_enabled = true
 focus_neighbor_left = NodePath("../../../Panel_fullscreen/CheckButton")
-focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
-focus_neighbor_bottom = NodePath("../../../Panel_slider/HSlider_music")
+focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok")
+focus_neighbor_bottom = NodePath("../Restart")
 theme = SubResource("Theme_pl0fo")
 button_mask = 0
 text = "Title screen"
 script = ExtResource("6")
 TextEN = "Title screen"
 TextFR = "Ecran titre"
+augmentation = Vector2(1.3, 1.3)
 
 [node name="Quit" type="Button" parent="Panel_buttons/VBoxContainer_Buttons" unique_id=693072544]
 visible = false
@@ -265,10 +267,12 @@ alignment = 1
 [node name="CheckBox_Timer" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs" unique_id=1343653231]
 unique_name_in_owner = true
 layout_mode = 2
-focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
+offset_transform_enabled = true
+focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Restart")
 focus_neighbor_top = NodePath("../CheckBox_Stars")
 focus_neighbor_bottom = NodePath("../CheckBox_BestTimer")
 theme = SubResource("Theme_wsjbd")
+theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("3")
 theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
 button_pressed = true
@@ -283,9 +287,10 @@ TextFR = "Temps"
 [node name="CheckBox_BestTimer" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs" unique_id=1337058310]
 unique_name_in_owner = true
 layout_mode = 2
-focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
+focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Restart")
 focus_neighbor_top = NodePath("../CheckBox_Timer")
 focus_neighbor_bottom = NodePath("../CheckBox_NbActions")
+theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("3")
 theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
 button_pressed = true
@@ -293,6 +298,9 @@ action_mode = 0
 button_mask = 0
 text = "Record"
 icon = ExtResource("7")
+script = ExtResource("8")
+TextEN = "Record"
+TextFR = "Record"
 
 [node name="CheckBox_NbActions" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs" unique_id=1167059456]
 unique_name_in_owner = true
@@ -300,19 +308,24 @@ layout_mode = 2
 focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
 focus_neighbor_top = NodePath("../CheckBox_BestTimer")
 focus_neighbor_bottom = NodePath("../CheckBox_NbPok")
+theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("3")
 theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
 action_mode = 0
 button_mask = 0
 text = "Actions"
 icon = ExtResource("9")
+script = ExtResource("8")
+TextEN = "Actions"
+TextFR = "Actions"
 
 [node name="CheckBox_NbPok" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs" unique_id=1637228675]
 unique_name_in_owner = true
 layout_mode = 2
-focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
+focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Title screen")
 focus_neighbor_top = NodePath("../CheckBox_NbActions")
 focus_neighbor_bottom = NodePath("../CheckBox_NbFall")
+theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("3")
 theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
 action_mode = 0
@@ -326,9 +339,11 @@ TextFR = "Murs"
 [node name="CheckBox_NbFall" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs" unique_id=1828202974]
 unique_name_in_owner = true
 layout_mode = 2
-focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
+focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Title screen")
 focus_neighbor_top = NodePath("../CheckBox_NbPok")
+focus_neighbor_right = NodePath("../../../Panel_slider/Music/HSlider_music")
 focus_neighbor_bottom = NodePath("../CheckBox_Inputs")
+theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("3")
 theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
 action_mode = 0
@@ -342,22 +357,30 @@ TextFR = "Chutes"
 [node name="CheckBox_Inputs" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs" unique_id=1744151776]
 unique_name_in_owner = true
 layout_mode = 2
-focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
+focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Title screen")
 focus_neighbor_top = NodePath("../CheckBox_NbFall")
+focus_neighbor_right = NodePath("../../../Panel_slider/Music/HSlider_music")
 focus_neighbor_bottom = NodePath("../CheckBox_Stars")
+theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("3")
 theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
 action_mode = 0
 button_mask = 0
 text = "Inputs"
 icon = ExtResource("12")
+script = ExtResource("8")
+TextEN = "Inputs"
+TextFR = "Inputs"
 
 [node name="CheckBox_Stars" type="CheckBox" parent="Panel_options/VBoxContainer_CheckBoxs" unique_id=1887006471]
 unique_name_in_owner = true
 layout_mode = 2
-focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Resume")
+offset_transform_enabled = true
+focus_neighbor_left = NodePath("../../../Panel_buttons/VBoxContainer_Buttons/Title screen")
 focus_neighbor_top = NodePath("../CheckBox_Inputs")
+focus_neighbor_right = NodePath("../../../Panel_slider/Sound/HSlider_sound")
 focus_neighbor_bottom = NodePath("../CheckBox_Timer")
+theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("3")
 theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
 action_mode = 0
@@ -370,10 +393,10 @@ TextFR = "Etoiles"
 
 [node name="Panel_slider" type="Panel" parent="." unique_id=1535602727]
 layout_mode = 0
-offset_left = 16.0
-offset_top = 107.0
-offset_right = 122.0
-offset_bottom = 147.0
+offset_left = 193.0
+offset_top = 108.0
+offset_right = 299.0
+offset_bottom = 148.0
 
 [node name="Music" type="Label" parent="Panel_slider" unique_id=818851338]
 layout_mode = 0
@@ -381,6 +404,7 @@ offset_left = 1.0
 offset_top = -1.0
 offset_right = 106.0
 offset_bottom = 22.0
+theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("3")
 theme_override_font_sizes/font_size = 12
 text = "Music"
@@ -389,30 +413,16 @@ script = ExtResource("14")
 TextEN = "Music"
 TextFR = "Musique"
 
-[node name="Sound" type="Label" parent="Panel_slider" unique_id=1177519661]
+[node name="HSlider_music" type="HSlider" parent="Panel_slider/Music" unique_id=1865073485]
 layout_mode = 0
-offset_left = 1.0
-offset_top = 19.0
-offset_right = 106.0
-offset_bottom = 42.0
-theme_override_fonts/font = ExtResource("3")
-theme_override_font_sizes/font_size = 12
-text = "Sound"
-horizontal_alignment = 1
-script = ExtResource("14")
-TextEN = "Sound"
-TextFR = "Son"
-
-[node name="HSlider_music" type="HSlider" parent="Panel_slider" unique_id=1865073485]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 9.0
-offset_right = 168.0
-offset_bottom = 25.0
+offset_left = 3.0
+offset_top = 10.0
+offset_right = 167.0
+offset_bottom = 26.0
 scale = Vector2(0.6, 0.6)
-focus_neighbor_top = NodePath("../../Panel_buttons/VBoxContainer_Buttons/Title screen")
-focus_neighbor_right = NodePath("../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
-focus_neighbor_bottom = NodePath("../HSlider_sound")
+focus_neighbor_top = NodePath("../../../Panel_fullscreen/CheckButton")
+focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+focus_neighbor_bottom = NodePath("../../Sound/HSlider_sound")
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_ku8nr")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_p6l11")
 min_value = -21.0
@@ -421,16 +431,31 @@ step = 3.0
 rounded = true
 allow_greater = true
 
-[node name="HSlider_sound" type="HSlider" parent="Panel_slider" unique_id=1822883753]
+[node name="Sound" type="Label" parent="Panel_slider" unique_id=1177519661]
 layout_mode = 0
-offset_left = 4.0
-offset_top = 29.0
-offset_right = 167.0
-offset_bottom = 45.0
+offset_left = 1.0
+offset_top = 19.0
+offset_right = 106.0
+offset_bottom = 42.0
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3")
+theme_override_font_sizes/font_size = 12
+text = "Sound"
+horizontal_alignment = 1
+script = ExtResource("14")
+TextEN = "Sound"
+TextFR = "Son"
+
+[node name="HSlider_sound" type="HSlider" parent="Panel_slider/Sound" unique_id=1822883753]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 10.0
+offset_right = 166.0
+offset_bottom = 26.0
 scale = Vector2(0.6, 0.6)
-focus_neighbor_top = NodePath("../HSlider_music")
-focus_neighbor_right = NodePath("../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
-focus_neighbor_bottom = NodePath("../../Panel_buttons/VBoxContainer_Buttons/Restart")
+focus_neighbor_top = NodePath("../../Music/HSlider_music")
+focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+focus_neighbor_bottom = NodePath("../../../Panel_fullscreen/CheckButton")
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_ry8si")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_6nlij")
 min_value = -21.0
@@ -440,18 +465,20 @@ rounded = true
 
 [node name="Panel_fullscreen" type="Panel" parent="." unique_id=1018767939]
 layout_mode = 0
-offset_left = 193.0
-offset_top = 131.0
-offset_right = 251.0
-offset_bottom = 147.0
+offset_left = 192.0
+offset_top = 87.0
+offset_right = 250.0
+offset_bottom = 103.0
 
 [node name="CheckButton" type="CheckButton" parent="Panel_fullscreen" unique_id=138624798]
 layout_mode = 0
 offset_right = 116.0
 offset_bottom = 32.0
 scale = Vector2(0.5, 0.5)
-focus_neighbor_left = NodePath("../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
+focus_neighbor_left = NodePath("../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok")
 focus_neighbor_right = NodePath("../../Panel_buttons/VBoxContainer_Buttons/Resume")
+focus_neighbor_bottom = NodePath("../../Panel_slider/Music/HSlider_music")
+theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("3")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/focus = SubResource("StyleBoxFlat_bp5xg")
@@ -529,19 +556,41 @@ volume_db = -6.0
 pitch_scale = 0.8
 bus = &"SFX"
 
+[connection signal="focus_entered" from="Panel_buttons/VBoxContainer_Buttons/Restart" to="Panel_buttons/VBoxContainer_Buttons/Restart" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Panel_buttons/VBoxContainer_Buttons/Restart" to="Panel_buttons/VBoxContainer_Buttons/Restart" method="_on_focus_exited"]
 [connection signal="pressed" from="Panel_buttons/VBoxContainer_Buttons/Restart" to="." method="_on_restart_pressed"]
+[connection signal="focus_entered" from="Panel_buttons/VBoxContainer_Buttons/Resume" to="Panel_buttons/VBoxContainer_Buttons/Resume" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Panel_buttons/VBoxContainer_Buttons/Resume" to="Panel_buttons/VBoxContainer_Buttons/Resume" method="_on_focus_exited"]
 [connection signal="pressed" from="Panel_buttons/VBoxContainer_Buttons/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="Panel_buttons/VBoxContainer_Buttons/Control" to="." method="_on_resume_pressed"]
+[connection signal="focus_entered" from="Panel_buttons/VBoxContainer_Buttons/Title screen" to="Panel_buttons/VBoxContainer_Buttons/Title screen" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Panel_buttons/VBoxContainer_Buttons/Title screen" to="Panel_buttons/VBoxContainer_Buttons/Title screen" method="_on_focus_exited"]
 [connection signal="pressed" from="Panel_buttons/VBoxContainer_Buttons/Title screen" to="." method="_on_title_screen_pressed"]
 [connection signal="pressed" from="Panel_buttons/VBoxContainer_Buttons/Quit" to="." method="_on_quit_pressed"]
+[connection signal="focus_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer" method="_on_focus_exited"]
 [connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer" to="." method="_on_check_box_timer_toggled"]
+[connection signal="focus_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_BestTimer" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_BestTimer" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_BestTimer" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_BestTimer" method="_on_focus_exited"]
 [connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_BestTimer" to="." method="_on_check_box_best_timer_toggled"]
+[connection signal="focus_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions" method="_on_focus_exited"]
 [connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions" to="." method="_on_check_box_nb_actions_toggled"]
+[connection signal="focus_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok" method="_on_focus_exited"]
 [connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok" to="." method="_on_check_box_nb_pok_toggled"]
+[connection signal="focus_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbFall" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbFall" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbFall" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbFall" method="_on_focus_exited"]
 [connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbFall" to="." method="_on_check_box_nb_fall_toggled"]
+[connection signal="focus_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Inputs" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Inputs" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Inputs" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Inputs" method="_on_focus_exited"]
 [connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Inputs" to="." method="_on_check_box_inputs_toggled"]
+[connection signal="focus_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Stars" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Stars" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Stars" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Stars" method="_on_focus_exited"]
 [connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Stars" to="." method="_on_check_box_stars_toggled"]
-[connection signal="value_changed" from="Panel_slider/HSlider_music" to="." method="_on_slider_music_value_changed"]
-[connection signal="value_changed" from="Panel_slider/HSlider_sound" to="." method="_on_slider_sound_value_changed"]
+[connection signal="value_changed" from="Panel_slider/Music/HSlider_music" to="." method="_on_slider_music_value_changed"]
+[connection signal="value_changed" from="Panel_slider/Sound/HSlider_sound" to="." method="_on_slider_sound_value_changed"]
+[connection signal="focus_entered" from="Panel_fullscreen/CheckButton" to="Panel_fullscreen/CheckButton" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Panel_fullscreen/CheckButton" to="Panel_fullscreen/CheckButton" method="_on_focus_exited"]
 [connection signal="toggled" from="Panel_fullscreen/CheckButton" to="." method="_on_check_button_toggled"]
 [connection signal="toggled" from="Panel_superdash/CheckButton" to="." method="_on_check_buttonSD_toggled"]

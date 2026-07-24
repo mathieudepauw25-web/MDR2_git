@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bq26648d8l5sj" path="res://Larchet/Menus/ControlsPage/Scenes/Menu_Controls.gd" id="1_vyvnk"]
 [ext_resource type="Resource" uid="uid://cu54hhxbquvks" path="res://Larchet/Menus/ControlsPage/Scripts/Control_Config.tres" id="2_84rsi"]
+[ext_resource type="Shader" uid="uid://bqw0maxha7ge2" path="res://Interface/Shader/PauseBlur.gdshader" id="3_mq1ar"]
 [ext_resource type="StyleBox" uid="uid://dnuh3h61crver" path="res://Larchet/Menus/EchPrecSuiv.tres" id="3_nrmgs"]
 [ext_resource type="Script" uid="uid://ej50tywcc4ki" path="res://Interface/Scripts/button.gd" id="4_gjtj6"]
 [ext_resource type="Texture2D" uid="uid://dj1eq3ctkgj53" path="res://Interface/Sprites/tile_0017.png" id="5_frqnb"]
@@ -9,22 +10,28 @@
 [ext_resource type="AudioStream" uid="uid://d3dxycfae6tnq" path="res://Audio/SFX/ui_click_rollover_misc_01.mp3" id="7_cbmfm"]
 [ext_resource type="AudioStream" uid="uid://dmr7iw0k51lo" path="res://Audio/SFX/ui_click_rollover_misc_11.mp3" id="8_cbmfm"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_82lil"]
+shader = ExtResource("3_mq1ar")
+shader_parameter/amount = 1.5
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cbmfm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mq1ar"]
 
-[node name="Controls" type="Control" unique_id=1068331991]
-layout_mode = 3
+[node name="Controls" type="CanvasLayer" unique_id=1766287561]
+script = ExtResource("1_vyvnk")
+config_remap = ExtResource("2_84rsi")
+
+[node name="Blur" type="ColorRect" parent="." unique_id=1425790033]
+material = SubResource("ShaderMaterial_82lil")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_vyvnk")
-config_remap = ExtResource("2_84rsi")
+metadata/_edit_lock_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=842819925]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -43,7 +50,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Back" type="Button" parent="." unique_id=786944918]
-layout_mode = 0
 offset_right = 16.0
 offset_bottom = 16.0
 theme_override_styles/normal = SubResource("StyleBoxEmpty_cbmfm")

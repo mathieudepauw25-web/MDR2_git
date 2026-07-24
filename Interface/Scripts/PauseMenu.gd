@@ -14,8 +14,8 @@ class_name PauseMenu
 @onready var node_check_box_inputs: CheckBox = %CheckBox_Inputs
 @onready var node_check_box_stars: CheckBox = %CheckBox_Stars
 
-@onready var slider_music: HSlider = $Panel_slider / HSlider_music
-@onready var slider_sound: HSlider = $Panel_slider / HSlider_sound
+@onready var slider_music: HSlider = $Panel_slider/Music/HSlider_music
+@onready var slider_sound: HSlider = $Panel_slider/Sound/HSlider_sound
 
 @onready var ui_menu_up_down: AudioStreamPlayer = $SFX / UI_menu_up_down
 @onready var ui_menu_click: AudioStreamPlayer = $SFX / UI_menu_click

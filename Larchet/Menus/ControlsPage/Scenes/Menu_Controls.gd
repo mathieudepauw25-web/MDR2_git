@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 const CONTROL_SLOT_SCENE = preload("res://Larchet/Menus/ControlsPage/Scenes/Control_Slot.tscn")
 
@@ -94,7 +94,9 @@ func save_controls() -> void:
 
 func _on_back_pressed() -> void:
 	$%Select.play()
-	get_tree().change_scene_to_file("res://TitleScreen/TitleScreen.tscn")
+	get_parent().get_child(4).find_child("CanvasLayer").visible = true
+	get_parent().get_child(4).find_child("CanvasLayer").find_child("HBoxContainer_MENU").find_child("VBoxContainer_menu").find_child("Start").grab_focus()
+	queue_free()
 
 func _on_back_hover() -> void:
 	$%Move.play()

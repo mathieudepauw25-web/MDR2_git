@@ -11,8 +11,9 @@ func _ready() -> void:
 		var tween = create_tween()
 		tween.tween_property(get_child(i), "offset_transform_position", Vector2(-50.0, 0.0), 0.3)
 		tween.tween_property(get_child(i), "offset_transform_position", Vector2(0.0, 0.0), 0.1)
-		tween.parallel().tween_property(get_child(i), "offset_transform_scale", get_child(i).offset_transform_scale* Vector2(2.0, 2.0), 0.1)
+		tween.parallel().tween_property(get_child(i), "offset_transform_scale", get_child(i).offset_transform_scale* Vector2(1.3, 1.3), 0.1)
 		tween.tween_property(get_child(i), "offset_transform_scale", scale, 0.1)
 		await get_tree().create_timer(0.2).timeout
-		
+
+
 		

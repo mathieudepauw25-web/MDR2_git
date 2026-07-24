@@ -3,6 +3,7 @@ extends Button
 @export var TextEN: String
 @export var TextFR: String
 @export var Basescale: = Vector2(1,1)
+@export var augmentation: = Vector2(1.5, 1.5)
 
 func _ready() -> void :
 	offset_transform_enabled = true
@@ -22,10 +23,11 @@ func _on_focus_entered() -> void:
 	z_index = 2
 	tween = create_tween()
 	var target = self
+	tween.set_ignore_time_scale(true)
 	tween.set_trans(Tween.TRANS_QUINT)
 	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property(target, "offset_transform_scale", Basescale * Vector2(1.5,1.5), 0.2)
-	tween.parallel().tween_property(target, "offset_transform_rotation", 0.2, 0.5)
+	tween.tween_property(target, "offset_transform_scale", Basescale * augmentation, 0.2)
+	tween.parallel().tween_property(target, "offset_transform_rotation", 0.2, 0.2)
 	tween.set_loops()
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.set_ease(Tween.EASE_OUT)
@@ -38,6 +40,7 @@ func _on_focus_exited() -> void:
 	
 	z_index = 1
 	tween = create_tween()
+	tween.set_ignore_time_scale(true)
 	var target = self
 	tween.tween_property(target, "offset_transform_scale", Basescale, 0.2)
 	tween.parallel().tween_property(target, "offset_transform_rotation", 0.0, 0.2)

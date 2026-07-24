@@ -1,3 +1,4 @@
+CanvasLayer
 TileMapLayer
 Window
 Label
@@ -10,5 +11,4 @@ HBoxContainer
 Button
 VBoxContainer
 PanelContainer
-CanvasLayer
 Camera2D
