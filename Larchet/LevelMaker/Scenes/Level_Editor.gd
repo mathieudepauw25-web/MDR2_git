@@ -46,7 +46,7 @@ var active_persp_Wdown: TileMapLayer
 var active_persp_Wleft: TileMapLayer
 
 var is_repainting_theme: bool = false
-var current_target_theme: String = ""
+var current_target_theme: String = "_light"
 var cell_themes: Dictionary = {}
 
 var pattern_cell_themes: Dictionary = {} 
@@ -156,14 +156,15 @@ func _on_pattern_window_input(event: InputEvent) -> void:
 			erase_pattern_tile()
 
 func paint_pattern_tile(is_just_clicked: bool) -> void:
-	var local_pos = mode3_node.get_local_mouse_position()
-	var grid_pos = m3_floor.local_to_map(local_pos)
+	var grid_pos = m3_floor.local_to_map(mode3_node.get_local_mouse_position())
 	var has_grass = pattern_cell_themes.has(grid_pos)
 	if is_just_clicked:
 		if has_grass:
 			is_repainting_theme = true
-			var current_theme = pattern_cell_themes.get(grid_pos, "_light")
-			current_target_theme = "_dark" if current_theme == "_light" else "_light"
+			if pattern_cell_themes.get(grid_pos, "_light"):
+				current_target_theme = "_dark"
+			else:
+				current_target_theme = "_light"
 			pattern_cell_themes[grid_pos] = current_target_theme
 		else:
 			is_repainting_theme = false
@@ -178,8 +179,7 @@ func paint_pattern_tile(is_just_clicked: bool) -> void:
 	update_pattern_rectangle(null)
 
 func erase_pattern_tile() -> void:
-	var local_pos = mode3_node.get_local_mouse_position()
-	var grid_pos = m3_floor.local_to_map(local_pos)
+	var grid_pos = m3_floor.local_to_map(mode3_node.get_local_mouse_position())
 	if pattern_cell_themes.has(grid_pos):
 		update_pattern_rectangle(grid_pos)
 

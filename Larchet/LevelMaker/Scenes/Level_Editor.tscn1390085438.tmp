@@ -1,0 +1,517 @@
+[gd_scene format=3 uid="uid://b4r2xknoiljbs"]
+
+[ext_resource type="Script" uid="uid://bhr5xyvcopexs" path="res://Larchet/LevelMaker/Scenes/Level_Editor.gd" id="1_rgpot"]
+[ext_resource type="TileSet" uid="uid://yb77ptnauc0s" path="res://Larchet/LevelMaker/TileMapLayer/normal_grass.tres" id="2_0a5d1"]
+[ext_resource type="Texture2D" uid="uid://dit87l100xwoa" path="res://World/Sprites/grid tileset.png" id="2_sh2dv"]
+[ext_resource type="TileSet" uid="uid://cdqkklwmwhk1o" path="res://Larchet/LevelMaker/TileMapLayer/normal_wall.tres" id="3_0a5d1"]
+[ext_resource type="TileSet" uid="uid://dxqot2ss33t6u" path="res://Larchet/LevelMaker/TileMapLayer/normal_ice.tres" id="4_2u0i6"]
+[ext_resource type="Script" uid="uid://fqxvmanr1e2a" path="res://World/Map.gd" id="4_83jhn"]
+[ext_resource type="TileSet" uid="uid://cdepjsmuhlqw4" path="res://Larchet/LevelMaker/TileMapLayer/normal_water.tres" id="5_p2scg"]
+[ext_resource type="Texture2D" uid="uid://b7vn244bxiavw" path="res://World/Sprites/tileset_ICE.png" id="6_grud1"]
+[ext_resource type="Texture2D" uid="uid://c3ltsogceht5k" path="res://World/Sprites/tileset_PLATFORMWAY.png" id="7_0a5d1"]
+[ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="11_p4oi5"]
+[ext_resource type="Script" uid="uid://ct4k1tw0j2o0y" path="res://Larchet/LevelMaker/Scenes/Grid_Visualizer.gd" id="11_phpmh"]
+[ext_resource type="Texture2D" uid="uid://dbw4m0fkltdsi" path="res://Larchet/Sprites/L.LvlMaker.png" id="12_4pd66"]
+[ext_resource type="StyleBox" uid="uid://cgd7kvdxm5jsn" path="res://Interface/Themes/ButtonNormal.tres" id="12_sh2dv"]
+[ext_resource type="Texture2D" uid="uid://djfkt322s75xs" path="res://World/Sprites/tileset_DECO.png" id="12_w3xod"]
+[ext_resource type="StyleBox" uid="uid://d2wb0x7bmm82g" path="res://Larchet/Menus/Gold.tres" id="13_0nlv8"]
+[ext_resource type="StyleBox" uid="uid://cvb0ef4cnwbsy" path="res://Interface/Themes/ButtonHover.tres" id="13_83jhn"]
+[ext_resource type="Script" uid="uid://ej50tywcc4ki" path="res://Interface/Scripts/button.gd" id="13_grud1"]
+[ext_resource type="LabelSettings" uid="uid://ct1olda2r36v8" path="res://Larchet/Menus/LabelFont.tres" id="14_0a5d1"]
+
+[sub_resource type="TileSet" id="TileSet_meyyo"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_up670"]
+texture = ExtResource("6_grud1")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_l66wb"]
+sources/2 = SubResource("TileSetAtlasSource_up670")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ejbwh"]
+texture = ExtResource("7_0a5d1")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_bnoit"]
+sources/0 = SubResource("TileSetAtlasSource_ejbwh")
+
+[sub_resource type="TileSet" id="TileSet_phpmh"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p3idt"]
+texture = ExtResource("2_sh2dv")
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+16:0/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+14:1/0 = 0
+15:1/0 = 0
+16:1/0 = 0
+17:1/0 = 0
+18:1/0 = 0
+19:1/0 = 0
+20:1/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+17:2/0 = 0
+18:2/0 = 0
+19:2/0 = 0
+20:2/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+14:3/0 = 0
+17:3/0 = 0
+18:3/0 = 0
+19:3/0 = 0
+20:3/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+8:4/0 = 0
+9:4/0 = 0
+10:4/0 = 0
+11:4/0 = 0
+12:4/0 = 0
+13:4/0 = 0
+14:4/0 = 0
+17:4/0 = 0
+18:4/0 = 0
+19:4/0 = 0
+20:4/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+17:5/0 = 0
+18:5/0 = 0
+19:5/0 = 0
+20:5/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+8:6/0 = 0
+17:6/0 = 0
+18:6/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+8:7/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g8q53"]
+texture = ExtResource("11_p4oi5")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j6muw"]
+texture = ExtResource("12_w3xod")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ves0e"]
+sources/0 = SubResource("TileSetAtlasSource_p3idt")
+sources/1 = SubResource("TileSetAtlasSource_g8q53")
+sources/3 = SubResource("TileSetAtlasSource_j6muw")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phpmh"]
+bg_color = Color(0, 0.32156864, 0.5137255, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4pd66"]
+font_size = 7
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_phpmh"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_0nlv8"]
+allow_unpress = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_243wd"]
+atlas = ExtResource("12_4pd66")
+region = Rect2(37, 5, 19, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4pd66"]
+atlas = ExtResource("12_4pd66")
+region = Rect2(105, 62, 19, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sh2dv"]
+atlas = ExtResource("12_4pd66")
+region = Rect2(37, 34, 19, 24)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrivr"]
+bg_color = Color(0.101960786, 0.5411765, 0.1764706, 1)
+
+[sub_resource type="GDScript" id="GDScript_kpklm"]
+script/source = "extends Window
+
+func _ready():
+	add_theme_font_size_override(\"title_font_size\", 3)
+	add_theme_constant_override(\"resize_margin\", 8) 
+	var style_border = StyleBoxFlat.new()
+	style_border.bg_color = Color(0.102, 0.541, 0.176, 1.0) 
+	style_border.expand_margin_top = 8
+	style_border.expand_margin_left = 1
+	style_border.expand_margin_right = 1
+	style_border.expand_margin_bottom = 1
+	add_theme_stylebox_override(\"embedded_border\", style_border)
+	add_theme_constant_override(\"close_h_offset\", 25)
+	add_theme_constant_override(\"close_v_offset\", 20)
+"
+
+[node name="LevelEditor" type="Node2D" unique_id=997066401]
+script = ExtResource("1_rgpot")
+
+[node name="MAP" type="Node2D" parent="." unique_id=1035934058]
+
+[node name="Perspective" type="TileMapLayer" parent="MAP" unique_id=1118852303]
+y_sort_enabled = true
+
+[node name="TileMapLayer_perspective_right" type="TileMapLayer" parent="MAP/Perspective" unique_id=108649249]
+unique_name_in_owner = true
+z_index = 1
+tile_set = ExtResource("2_0a5d1")
+
+[node name="TileMapLayer_perspective_right_wall" type="TileMapLayer" parent="MAP/Perspective" unique_id=391077148]
+unique_name_in_owner = true
+z_index = 4
+tile_set = ExtResource("3_0a5d1")
+
+[node name="TileMapLayer_perspective_right_ice" type="TileMapLayer" parent="MAP/Perspective" unique_id=1666466647]
+unique_name_in_owner = true
+z_index = 3
+tile_set = ExtResource("4_2u0i6")
+
+[node name="TileMapLayer_perspective_up" type="TileMapLayer" parent="MAP/Perspective" unique_id=1257824746]
+unique_name_in_owner = true
+z_index = 2
+tile_set = ExtResource("2_0a5d1")
+
+[node name="TileMapLayer_perspective_up_wall" type="TileMapLayer" parent="MAP/Perspective" unique_id=944710573]
+unique_name_in_owner = true
+z_index = 5
+tile_set = ExtResource("3_0a5d1")
+
+[node name="TileMapLayer_perspective_up_ice" type="TileMapLayer" parent="MAP/Perspective" unique_id=715523546]
+unique_name_in_owner = true
+z_index = 3
+tile_set = ExtResource("4_2u0i6")
+
+[node name="TileMapLayer_perspective_water_right" type="TileMapLayer" parent="MAP/Perspective" unique_id=1212006516]
+unique_name_in_owner = true
+z_index = 1
+tile_set = ExtResource("5_p2scg")
+
+[node name="TileMapLayer_perspective_water_down" type="TileMapLayer" parent="MAP/Perspective" unique_id=72140893]
+unique_name_in_owner = true
+tile_set = ExtResource("5_p2scg")
+
+[node name="TileMapLayer_perspective_water_left" type="TileMapLayer" parent="MAP/Perspective" unique_id=1313987442]
+unique_name_in_owner = true
+tile_set = ExtResource("5_p2scg")
+
+[node name="MAP" type="TileMapLayer" parent="MAP" unique_id=2057618501]
+unique_name_in_owner = true
+y_sort_enabled = true
+tile_set = SubResource("TileSet_meyyo")
+script = ExtResource("4_83jhn")
+
+[node name="tileMapLayer_floor" type="TileMapLayer" parent="MAP/MAP" unique_id=2045607498]
+unique_name_in_owner = true
+z_index = 1
+tile_set = ExtResource("2_0a5d1")
+
+[node name="tileMapLayer_wall" type="TileMapLayer" parent="MAP/MAP" unique_id=1845507156]
+unique_name_in_owner = true
+light_mask = 0
+z_index = 4
+y_sort_enabled = true
+tile_set = ExtResource("3_0a5d1")
+
+[node name="tileMapLayer_ice" type="TileMapLayer" parent="MAP/MAP" unique_id=2033571708]
+unique_name_in_owner = true
+z_index = 1
+tile_set = SubResource("TileSet_l66wb")
+
+[node name="tileMapLayer_platformway" type="TileMapLayer" parent="MAP/MAP" unique_id=1773839154]
+tile_set = SubResource("TileSet_bnoit")
+
+[node name="tileMapLayer_fragile" type="TileMapLayer" parent="MAP/MAP" unique_id=1955166609]
+tile_set = SubResource("TileSet_phpmh")
+
+[node name="tileMapLayer_hidden" type="TileMapLayer" parent="MAP/MAP" unique_id=977461877]
+tile_set = SubResource("TileSet_phpmh")
+
+[node name="TileMapLayer_deco" type="TileMapLayer" parent="MAP/MAP" unique_id=1506236018]
+tile_set = SubResource("TileSet_ves0e")
+
+[node name="TileMapLayer_deco2" type="TileMapLayer" parent="MAP/MAP" unique_id=1567172382]
+tile_set = SubResource("TileSet_ves0e")
+
+[node name="GridVisualizer" type="Node2D" parent="MAP" unique_id=269501543]
+script = ExtResource("11_phpmh")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1446821837]
+
+[node name="UI_Layer" type="CanvasLayer" parent="." unique_id=1717558558]
+
+[node name="Coordonnees" type="Label" parent="UI_Layer" unique_id=925334715]
+offset_right = 32.0
+offset_bottom = 11.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_phpmh")
+text = " X: 0, Y: 0"
+label_settings = SubResource("LabelSettings_4pd66")
+
+[node name="grass_mode" type="Button" parent="UI_Layer" unique_id=1526800755]
+custom_minimum_size = Vector2(13, 13)
+offset_left = 40.0
+offset_right = 52.0
+offset_bottom = 12.0
+script = ExtResource("13_grud1")
+metadata/_custom_type_script = "uid://ej50tywcc4ki"
+
+[node name="Label" type="Label" parent="UI_Layer/grass_mode" unique_id=178950622]
+layout_mode = 0
+offset_right = 13.0
+offset_bottom = 13.0
+text = "1"
+label_settings = ExtResource("14_0a5d1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Btn_Mode3" type="Button" parent="UI_Layer" unique_id=724532337]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(20, 13)
+offset_left = 56.0
+offset_right = 76.0
+offset_bottom = 13.0
+script = ExtResource("13_grud1")
+metadata/_custom_type_script = "uid://ej50tywcc4ki"
+
+[node name="Label" type="Label" parent="UI_Layer/Btn_Mode3" unique_id=783718530]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -10.0
+offset_right = 10.0
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "Edit"
+label_settings = ExtResource("14_0a5d1")
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="UI_Layer" unique_id=718786337]
+custom_minimum_size = Vector2(0, 32)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -38.0
+offset_right = -209.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_phpmh")
+metadata/_edit_lock_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI_Layer/PanelContainer" unique_id=2011583506]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="UI_Layer/PanelContainer/HBoxContainer" unique_id=2116188525]
+layout_mode = 2
+
+[node name="Btn_Herbe" type="Button" parent="UI_Layer/PanelContainer/HBoxContainer" unique_id=2030493878]
+custom_minimum_size = Vector2(33, 34)
+layout_mode = 2
+theme_override_styles/normal = ExtResource("12_sh2dv")
+theme_override_styles/pressed = ExtResource("13_83jhn")
+theme_override_styles/hover = ExtResource("13_0nlv8")
+theme_override_styles/focus = ExtResource("13_83jhn")
+toggle_mode = true
+keep_pressed_outside = true
+button_group = SubResource("ButtonGroup_0nlv8")
+icon = SubResource("AtlasTexture_243wd")
+icon_alignment = 1
+
+[node name="Btn_Mur" type="Button" parent="UI_Layer/PanelContainer/HBoxContainer" unique_id=888565075]
+custom_minimum_size = Vector2(33, 34)
+layout_mode = 2
+theme_override_styles/normal = ExtResource("12_sh2dv")
+theme_override_styles/pressed = ExtResource("13_83jhn")
+theme_override_styles/hover = ExtResource("13_0nlv8")
+theme_override_styles/focus = ExtResource("13_83jhn")
+toggle_mode = true
+keep_pressed_outside = true
+button_group = SubResource("ButtonGroup_0nlv8")
+icon = SubResource("AtlasTexture_4pd66")
+icon_alignment = 1
+
+[node name="Btn_Glace" type="Button" parent="UI_Layer/PanelContainer/HBoxContainer" unique_id=1349213310]
+custom_minimum_size = Vector2(33, 34)
+layout_mode = 2
+theme_override_styles/normal = ExtResource("12_sh2dv")
+theme_override_styles/pressed = ExtResource("13_83jhn")
+theme_override_styles/hover = ExtResource("13_0nlv8")
+theme_override_styles/focus = ExtResource("13_83jhn")
+toggle_mode = true
+keep_pressed_outside = true
+button_group = SubResource("ButtonGroup_0nlv8")
+icon = SubResource("AtlasTexture_sh2dv")
+icon_alignment = 1
+
+[node name="PatternWindow" type="Window" parent="UI_Layer" unique_id=1933626132]
+unique_name_in_owner = true
+oversampling_override = 1.0
+title = "Outil"
+position = Vector2i(0, 36)
+size = Vector2i(150, 100)
+min_size = Vector2i(50, 50)
+max_size = Vector2i(200, 200)
+theme_override_styles/embedded_border = SubResource("StyleBoxFlat_xrivr")
+script = SubResource("GDScript_kpklm")
+
+[node name="Mode3" type="TileMapLayer" parent="UI_Layer/PatternWindow" unique_id=1950290280]
+unique_name_in_owner = true
+
+[node name="M3_floor" type="TileMapLayer" parent="UI_Layer/PatternWindow/Mode3" unique_id=1542940374]
+unique_name_in_owner = true
+z_index = 1
+tile_set = ExtResource("2_0a5d1")
+
+[node name="M3_perspective_right" type="TileMapLayer" parent="UI_Layer/PatternWindow/Mode3" unique_id=323463107]
+unique_name_in_owner = true
+z_index = 1
+tile_set = ExtResource("2_0a5d1")
+
+[node name="M3_perspective_up" type="TileMapLayer" parent="UI_Layer/PatternWindow/Mode3" unique_id=908195517]
+unique_name_in_owner = true
+z_index = 2
+tile_set = ExtResource("2_0a5d1")
+
+[node name="M3_water_right" type="TileMapLayer" parent="UI_Layer/PatternWindow/Mode3" unique_id=2104746079]
+unique_name_in_owner = true
+z_index = 1
+tile_set = ExtResource("5_p2scg")
+
+[node name="M3_water_down" type="TileMapLayer" parent="UI_Layer/PatternWindow/Mode3" unique_id=36651461]
+unique_name_in_owner = true
+tile_set = ExtResource("5_p2scg")
+
+[node name="M3_water_left" type="TileMapLayer" parent="UI_Layer/PatternWindow/Mode3" unique_id=1355545669]
+unique_name_in_owner = true
+tile_set = ExtResource("5_p2scg")
+
+[node name="GridVisualizer" type="Node2D" parent="UI_Layer/PatternWindow/Mode3" unique_id=1988199775]
+z_index = 10
+script = ExtResource("11_phpmh")
+
+[connection signal="pressed" from="UI_Layer/grass_mode" to="." method="_on_grass_mode_pressed"]
+[connection signal="pressed" from="UI_Layer/Btn_Mode3" to="." method="_on_mode3_pressed"]
