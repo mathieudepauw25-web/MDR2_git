@@ -8,7 +8,7 @@ class_name TitleScreen
 @onready var node_container_trophy: HBoxContainer = $CanvasLayer / HBoxContainer_trophy
 @onready var node_ui_menu_up_down: AudioStreamPlayer = $SFX / UI_menu_up_down
 @onready var node_ui_menu_click: AudioStreamPlayer = $SFX / UI_menu_click
-@onready var panel_options_2: Control = $CanvasLayer / HBoxContainer_MENU / VBoxContainer_menu / Panel_options2
+@onready var panel_options_2: Control = $CanvasLayer/MenuControl/Panel_options2
 
 
 @export var LeaderboardUsersScore1: PackedScene = preload("res://Interface/LaderboardLine.tscn")
@@ -45,7 +45,6 @@ func _ready() -> void :
 		$CanvasLayer / TimerBest_superdash.visible = false
 
 	GAMES.game_just_launch = false
-	button_focus.grab_focus()
 	EVENTS.emit_signal("update_star_data")
 	Steam.leaderboard_scores_downloaded.connect(_on_leaderboard_scores_downloaded)
 
@@ -196,7 +195,7 @@ func back_to_title_screen() -> void :
 func _on_options_pressed(forced_close: bool = false) -> void :
 	panel_options_2.visible = !panel_options_2.visible
 	if forced_close: panel_options_2.visible = false
-	$CanvasLayer / HBoxContainer_MENU / VBoxContainer_menu / Options / texture_deploy_option.visible = panel_options_2.visible
+	$CanvasLayer/MenuControl/Options/texture_deploy_option.visible = panel_options_2.visible
 
 func _on_quit_pressed() -> void :
 	get_tree().quit()
