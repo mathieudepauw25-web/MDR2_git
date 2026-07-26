@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 class_name MenuSkin
 
 @onready var grid_container: GridContainer = $GridContainer
@@ -60,7 +60,9 @@ func _on_suivant_pressed() -> void:
 
 func _on_back_pressed() -> void:
 	$%Select.play()
-	get_tree().change_scene_to_file("res://TitleScreen/TitleScreen.tscn")
+	get_parent().get_child(4).find_child("CanvasLayer").visible = true
+	get_parent().get_child(4).find_child("CanvasLayer").find_child("MenuControl").find_child("Start").grab_focus()
+	queue_free()
 
 func _on_precedent_pressed() -> void:
 	$%Select.play()

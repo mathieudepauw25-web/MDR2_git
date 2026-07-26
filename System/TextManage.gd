@@ -6,7 +6,7 @@ extends Button
 @export var augmentation: = Vector2(1.5, 1.5)
 
 func _ready() -> void :
-	offset_transform_enabled = false
+	offset_transform_enabled = true
 	connect("visibility_changed", _on_visibility_changed)
 	EVENTS.connect("save", _on_visibility_changed)
 	_on_visibility_changed()

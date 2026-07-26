@@ -5,6 +5,7 @@ class_name panelOptions
 func _ready() -> void :
 	$Panel / HSlider_music.value = GAMES.game_data.option_music
 	$Panel / HSlider_sound.value = GAMES.game_data.option_sound
+	$Panel/CheckButton.focus_neighbor_left = ".."
 
 func _input(event: InputEvent) -> void :
 	if visible == true:

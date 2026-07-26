@@ -6,6 +6,7 @@ const CONTROL_SLOT_SCENE = preload("res://Larchet/Menus/ControlsPage/Scenes/Cont
 @onready var colonne_droite: VBoxContainer = $MarginContainer/HBoxContainer/ColonneDroite
 
 @export var config_remap: ControlsConfig
+@onready var options: Button = $Options
 
 var is_remapping: bool = false
 var action_to_remap: String = ""
@@ -33,6 +34,8 @@ func generate_slots() -> void:
 		slot_instance.gui_input.connect(_on_slot_gui_input.bind(slot_instance))
 		if i == 0:
 			slot_instance.grab_focus.call_deferred()
+		if i == half_point - 1 or i == total_actions + 1:
+			slot_instance.focus_neighbor_bottom = "../../../../Options"
 
 func get_current_key_name(action_id: String) -> String:
 	var events = InputMap.action_get_events(action_id)

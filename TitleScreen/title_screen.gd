@@ -132,16 +132,16 @@ func update_text() -> void :
 		if GAMES.game_data.option_langue == 1: text = "amis"
 	$CanvasLayer / HBoxContainer_MENU / Panel_leaderboard_arrival / Panel_world / Label_world.text = text
 
+### button pressed ###
+@onready var start_campagne: Button = $CanvasLayer/StartControl/StartCampagne
+
 func _on_start_pressed() -> void :
-	$CanvasLayer.visible = false
-	var target = $Path2D/PathFollow2D/Camera2D 
-	var tween = create_tween()
-	tween.set_trans(Tween.TRANS_EXPO)
-	tween.tween_property(target, "zoom", Vector2(0.1, 0.1), 02)
-	tween.tween_property(target, "zoom", Vector2(50,50), 25)
-	await get_tree().create_timer(2).timeout
-	get_tree().change_scene_to_file("res://World/World.tscn")
-	Engine.time_scale = 1
+	$CanvasLayer/MenuControl.visible = false
+	$CanvasLayer/MDRlogo.visible = false
+	$CanvasLayer/StartControl.visible = true
+	start_campagne.grab_focus()
+	
+
 
 func _on_leaderboard_pressed() -> void :
 	if showing_leaderboard:
@@ -223,7 +223,10 @@ func _on_start_focus_entered() -> void :
 ##################### Mes fonctions #####################
 
 func _on_skins_pressed() -> void:
-	get_tree().change_scene_to_file("res://Larchet/Menus/SkinsPage/Skins.tscn")
+	$CanvasLayer.visible = false
+	var skin = preload("res://Larchet/Menus/SkinsPage/Skins.tscn")
+	var instskin = skin.instantiate()
+	get_parent().add_child(instskin)
 
 func _on_controls_pressed() -> void:
 	$CanvasLayer.visible = false
@@ -231,3 +234,18 @@ func _on_controls_pressed() -> void:
 	var instcontrols = controls.instantiate()
 	get_parent().add_child(instcontrols)
 	#get_tree().change_scene_to_file("res://Larchet/Menus/ControlsPage/Scenes/Controls.tscn")
+
+
+func _on_start_campagne_pressed() -> void:
+	$CanvasLayer.visible = false
+	var target = $Path2D/PathFollow2D/Camera2D 
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_EXPO)
+	tween.tween_property(target, "zoom", Vector2(0.1, 0.1), 02)
+	tween.tween_property(target, "zoom", Vector2(50,50), 25)
+	await get_tree().create_timer(2).timeout
+	get_tree().change_scene_to_file("res://World/World.tscn")
+	Engine.time_scale = 1
+
+func _on_start_level_editor_pressed() -> void:
+	get_tree().change_scene_to_file("res://Larchet/LevelMaker/Scenes/Level_Editor.tscn")
