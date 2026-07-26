@@ -1,6 +1,5 @@
 [gd_scene format=4 uid="uid://dxxbyqhgbbbep"]
 
-[ext_resource type="Texture2D" uid="uid://bo1qmbojsy05h" path="res://World/Sprites/tileset_PERSPECTIV.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://dit87l100xwoa" path="res://World/Sprites/grid tileset.png" id="2"]
 [ext_resource type="Texture2D" uid="uid://b3csi3ttrhear" path="res://World/Sprites/Tileset_FLOOR.png" id="3"]
 [ext_resource type="Script" uid="uid://fqxvmanr1e2a" path="res://World/Map.gd" id="4"]
@@ -42,24 +41,6 @@
 [ext_resource type="AudioStream" uid="uid://bcbdx5cwdivj7" path="res://Audio/Music/Sketchbook 2024-08-07.ogg" id="39"]
 [ext_resource type="Script" uid="uid://64un1trqha1y" path="res://World/bgm.gd" id="40"]
 [ext_resource type="AudioStream" uid="uid://b74k0b86gotye" path="res://Audio/Music/Sketchbook 2024-10-23.ogg" id="41"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a3ndu"]
-texture = ExtResource("1")
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-0:2/0 = 0
-4:2/0 = 0
-0:3/0 = 0
-4:3/0 = 0
-0:4/0 = 0
-1:4/0 = 0
-4:4/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kv7ap"]
 texture = ExtResource("2")
@@ -175,7 +156,6 @@ texture = ExtResource("2")
 8:7/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_rf04d"]
-sources/0 = SubResource("TileSetAtlasSource_a3ndu")
 sources/2 = SubResource("TileSetAtlasSource_kv7ap")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mgsxa"]
@@ -379,28 +359,9 @@ texture = ExtResource("2")
 7:7/0 = 0
 8:7/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kfvxq"]
-texture = ExtResource("1")
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-0:2/0 = 0
-4:2/0 = 0
-0:3/0 = 0
-4:3/0 = 0
-0:4/0 = 0
-1:4/0 = 0
-4:4/0 = 0
-
 [sub_resource type="TileSet" id="TileSet_b3ahb"]
 sources/0 = SubResource("TileSetAtlasSource_mgsxa")
 sources/1 = SubResource("TileSetAtlasSource_5e27c")
-sources/2 = SubResource("TileSetAtlasSource_kfvxq")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iel4u"]
 texture = ExtResource("2")
@@ -515,45 +476,8 @@ texture = ExtResource("2")
 7:7/0 = 0
 8:7/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ryqar"]
-texture = ExtResource("1")
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-0:2/0 = 0
-4:2/0 = 0
-0:3/0 = 0
-4:3/0 = 0
-0:4/0 = 0
-1:4/0 = 0
-4:4/0 = 0
-
 [sub_resource type="TileSet" id="TileSet_hdj0j"]
 sources/0 = SubResource("TileSetAtlasSource_iel4u")
-sources/1 = SubResource("TileSetAtlasSource_ryqar")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8oxn1"]
-texture = ExtResource("1")
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-0:2/0 = 0
-4:2/0 = 0
-0:3/0 = 0
-4:3/0 = 0
-0:4/0 = 0
-1:4/0 = 0
-4:4/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tosve"]
 texture = ExtResource("2")
@@ -669,7 +593,6 @@ texture = ExtResource("2")
 8:7/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_fby5k"]
-sources/0 = SubResource("TileSetAtlasSource_8oxn1")
 sources/1 = SubResource("TileSetAtlasSource_tosve")
 
 [sub_resource type="TileSet" id="TileSet_q58aa"]
@@ -1012,7 +935,7 @@ sources/0 = SubResource("TileSetAtlasSource_7tbmg")
 sources/1 = SubResource("TileSetAtlasSource_xhyeq")
 sources/3 = SubResource("TileSetAtlasSource_74qfj")
 
-[sub_resource type="Resource" id="Resource_5ruiw"]
+[sub_resource type="Resource" id="Resource_tlaif"]
 resource_local_to_scene = true
 script = ExtResource("17")
 secret_index = 1
@@ -1026,7 +949,7 @@ font_size = 8
 font_color = Color(0, 0, 0.141176, 1)
 outline_size = 3
 
-[sub_resource type="Resource" id="Resource_a747u"]
+[sub_resource type="Resource" id="Resource_5ruiw"]
 resource_local_to_scene = true
 script = ExtResource("17")
 secret_index = 1
@@ -1339,7 +1262,7 @@ y_sort_enabled = true
 [node name="Secret1" parent="MAP/Interactive/Secret" unique_id=864380091 instance=ExtResource("16")]
 position = Vector2(856, 647)
 index_star = 1
-secret_data = SubResource("Resource_5ruiw")
+secret_data = SubResource("Resource_tlaif")
 
 [node name="Secret2" parent="MAP/Interactive/Secret" unique_id=1544945181 instance=ExtResource("16")]
 position = Vector2(1239.89, 520.554)
@@ -1440,7 +1363,7 @@ script = ExtResource("27")
 [node name="StarCount1" parent="CanvasLayer/VBoxContainer/StarsCount" unique_id=575711974 instance=ExtResource("28")]
 unique_name_in_owner = true
 layout_mode = 2
-secret_data = SubResource("Resource_a747u")
+secret_data = SubResource("Resource_5ruiw")
 
 [node name="StarCount2" parent="CanvasLayer/VBoxContainer/StarsCount" unique_id=2032248389 instance=ExtResource("28")]
 unique_name_in_owner = true
@@ -1537,3 +1460,480 @@ autoplay = true
 bus = &"Music"
 script = ExtResource("40")
 superdash = true
+
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31935" to="MAP/tileMapLayer_fragile/@Area2D@31935" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31935" to="MAP/tileMapLayer_fragile/@Area2D@31935" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31936" to="MAP/tileMapLayer_fragile/@Area2D@31936" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31936" to="MAP/tileMapLayer_fragile/@Area2D@31936" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31937" to="MAP/tileMapLayer_fragile/@Area2D@31937" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31937" to="MAP/tileMapLayer_fragile/@Area2D@31937" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31938" to="MAP/tileMapLayer_fragile/@Area2D@31938" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31938" to="MAP/tileMapLayer_fragile/@Area2D@31938" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31939" to="MAP/tileMapLayer_fragile/@Area2D@31939" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31939" to="MAP/tileMapLayer_fragile/@Area2D@31939" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31940" to="MAP/tileMapLayer_fragile/@Area2D@31940" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31940" to="MAP/tileMapLayer_fragile/@Area2D@31940" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31941" to="MAP/tileMapLayer_fragile/@Area2D@31941" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31941" to="MAP/tileMapLayer_fragile/@Area2D@31941" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31942" to="MAP/tileMapLayer_fragile/@Area2D@31942" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31942" to="MAP/tileMapLayer_fragile/@Area2D@31942" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31943" to="MAP/tileMapLayer_fragile/@Area2D@31943" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31943" to="MAP/tileMapLayer_fragile/@Area2D@31943" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31944" to="MAP/tileMapLayer_fragile/@Area2D@31944" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31944" to="MAP/tileMapLayer_fragile/@Area2D@31944" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31945" to="MAP/tileMapLayer_fragile/@Area2D@31945" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31945" to="MAP/tileMapLayer_fragile/@Area2D@31945" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31946" to="MAP/tileMapLayer_fragile/@Area2D@31946" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31946" to="MAP/tileMapLayer_fragile/@Area2D@31946" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31947" to="MAP/tileMapLayer_fragile/@Area2D@31947" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31947" to="MAP/tileMapLayer_fragile/@Area2D@31947" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31948" to="MAP/tileMapLayer_fragile/@Area2D@31948" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31948" to="MAP/tileMapLayer_fragile/@Area2D@31948" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31949" to="MAP/tileMapLayer_fragile/@Area2D@31949" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31949" to="MAP/tileMapLayer_fragile/@Area2D@31949" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31950" to="MAP/tileMapLayer_fragile/@Area2D@31950" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31950" to="MAP/tileMapLayer_fragile/@Area2D@31950" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31951" to="MAP/tileMapLayer_fragile/@Area2D@31951" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31951" to="MAP/tileMapLayer_fragile/@Area2D@31951" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31952" to="MAP/tileMapLayer_fragile/@Area2D@31952" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31952" to="MAP/tileMapLayer_fragile/@Area2D@31952" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31953" to="MAP/tileMapLayer_fragile/@Area2D@31953" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31953" to="MAP/tileMapLayer_fragile/@Area2D@31953" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31954" to="MAP/tileMapLayer_fragile/@Area2D@31954" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31954" to="MAP/tileMapLayer_fragile/@Area2D@31954" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31955" to="MAP/tileMapLayer_fragile/@Area2D@31955" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31955" to="MAP/tileMapLayer_fragile/@Area2D@31955" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31956" to="MAP/tileMapLayer_fragile/@Area2D@31956" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31956" to="MAP/tileMapLayer_fragile/@Area2D@31956" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31957" to="MAP/tileMapLayer_fragile/@Area2D@31957" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31957" to="MAP/tileMapLayer_fragile/@Area2D@31957" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31958" to="MAP/tileMapLayer_fragile/@Area2D@31958" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31958" to="MAP/tileMapLayer_fragile/@Area2D@31958" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31959" to="MAP/tileMapLayer_fragile/@Area2D@31959" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31959" to="MAP/tileMapLayer_fragile/@Area2D@31959" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31960" to="MAP/tileMapLayer_fragile/@Area2D@31960" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31960" to="MAP/tileMapLayer_fragile/@Area2D@31960" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31961" to="MAP/tileMapLayer_fragile/@Area2D@31961" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31961" to="MAP/tileMapLayer_fragile/@Area2D@31961" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31962" to="MAP/tileMapLayer_fragile/@Area2D@31962" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31962" to="MAP/tileMapLayer_fragile/@Area2D@31962" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31963" to="MAP/tileMapLayer_fragile/@Area2D@31963" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31963" to="MAP/tileMapLayer_fragile/@Area2D@31963" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31964" to="MAP/tileMapLayer_fragile/@Area2D@31964" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31964" to="MAP/tileMapLayer_fragile/@Area2D@31964" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31965" to="MAP/tileMapLayer_fragile/@Area2D@31965" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31965" to="MAP/tileMapLayer_fragile/@Area2D@31965" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31966" to="MAP/tileMapLayer_fragile/@Area2D@31966" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31966" to="MAP/tileMapLayer_fragile/@Area2D@31966" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31967" to="MAP/tileMapLayer_fragile/@Area2D@31967" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31967" to="MAP/tileMapLayer_fragile/@Area2D@31967" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31968" to="MAP/tileMapLayer_fragile/@Area2D@31968" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31968" to="MAP/tileMapLayer_fragile/@Area2D@31968" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31969" to="MAP/tileMapLayer_fragile/@Area2D@31969" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31969" to="MAP/tileMapLayer_fragile/@Area2D@31969" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31970" to="MAP/tileMapLayer_fragile/@Area2D@31970" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31970" to="MAP/tileMapLayer_fragile/@Area2D@31970" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31971" to="MAP/tileMapLayer_fragile/@Area2D@31971" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31971" to="MAP/tileMapLayer_fragile/@Area2D@31971" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31972" to="MAP/tileMapLayer_fragile/@Area2D@31972" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31972" to="MAP/tileMapLayer_fragile/@Area2D@31972" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31973" to="MAP/tileMapLayer_fragile/@Area2D@31973" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31973" to="MAP/tileMapLayer_fragile/@Area2D@31973" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31974" to="MAP/tileMapLayer_fragile/@Area2D@31974" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31974" to="MAP/tileMapLayer_fragile/@Area2D@31974" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31975" to="MAP/tileMapLayer_fragile/@Area2D@31975" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31975" to="MAP/tileMapLayer_fragile/@Area2D@31975" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31976" to="MAP/tileMapLayer_fragile/@Area2D@31976" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31976" to="MAP/tileMapLayer_fragile/@Area2D@31976" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31977" to="MAP/tileMapLayer_fragile/@Area2D@31977" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31977" to="MAP/tileMapLayer_fragile/@Area2D@31977" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31978" to="MAP/tileMapLayer_fragile/@Area2D@31978" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31978" to="MAP/tileMapLayer_fragile/@Area2D@31978" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31979" to="MAP/tileMapLayer_fragile/@Area2D@31979" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31979" to="MAP/tileMapLayer_fragile/@Area2D@31979" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31980" to="MAP/tileMapLayer_fragile/@Area2D@31980" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31980" to="MAP/tileMapLayer_fragile/@Area2D@31980" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31981" to="MAP/tileMapLayer_fragile/@Area2D@31981" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31981" to="MAP/tileMapLayer_fragile/@Area2D@31981" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31982" to="MAP/tileMapLayer_fragile/@Area2D@31982" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31982" to="MAP/tileMapLayer_fragile/@Area2D@31982" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31983" to="MAP/tileMapLayer_fragile/@Area2D@31983" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31983" to="MAP/tileMapLayer_fragile/@Area2D@31983" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31984" to="MAP/tileMapLayer_fragile/@Area2D@31984" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31984" to="MAP/tileMapLayer_fragile/@Area2D@31984" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31985" to="MAP/tileMapLayer_fragile/@Area2D@31985" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31985" to="MAP/tileMapLayer_fragile/@Area2D@31985" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31986" to="MAP/tileMapLayer_fragile/@Area2D@31986" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31986" to="MAP/tileMapLayer_fragile/@Area2D@31986" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31987" to="MAP/tileMapLayer_fragile/@Area2D@31987" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31987" to="MAP/tileMapLayer_fragile/@Area2D@31987" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31988" to="MAP/tileMapLayer_fragile/@Area2D@31988" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31988" to="MAP/tileMapLayer_fragile/@Area2D@31988" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31989" to="MAP/tileMapLayer_fragile/@Area2D@31989" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31989" to="MAP/tileMapLayer_fragile/@Area2D@31989" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31990" to="MAP/tileMapLayer_fragile/@Area2D@31990" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31990" to="MAP/tileMapLayer_fragile/@Area2D@31990" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31991" to="MAP/tileMapLayer_fragile/@Area2D@31991" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31991" to="MAP/tileMapLayer_fragile/@Area2D@31991" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31992" to="MAP/tileMapLayer_fragile/@Area2D@31992" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31992" to="MAP/tileMapLayer_fragile/@Area2D@31992" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31993" to="MAP/tileMapLayer_fragile/@Area2D@31993" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31993" to="MAP/tileMapLayer_fragile/@Area2D@31993" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31994" to="MAP/tileMapLayer_fragile/@Area2D@31994" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31994" to="MAP/tileMapLayer_fragile/@Area2D@31994" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31995" to="MAP/tileMapLayer_fragile/@Area2D@31995" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31995" to="MAP/tileMapLayer_fragile/@Area2D@31995" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31996" to="MAP/tileMapLayer_fragile/@Area2D@31996" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31996" to="MAP/tileMapLayer_fragile/@Area2D@31996" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31997" to="MAP/tileMapLayer_fragile/@Area2D@31997" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31997" to="MAP/tileMapLayer_fragile/@Area2D@31997" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31998" to="MAP/tileMapLayer_fragile/@Area2D@31998" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31998" to="MAP/tileMapLayer_fragile/@Area2D@31998" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@31999" to="MAP/tileMapLayer_fragile/@Area2D@31999" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@31999" to="MAP/tileMapLayer_fragile/@Area2D@31999" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32000" to="MAP/tileMapLayer_fragile/@Area2D@32000" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32000" to="MAP/tileMapLayer_fragile/@Area2D@32000" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32001" to="MAP/tileMapLayer_fragile/@Area2D@32001" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32001" to="MAP/tileMapLayer_fragile/@Area2D@32001" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32002" to="MAP/tileMapLayer_fragile/@Area2D@32002" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32002" to="MAP/tileMapLayer_fragile/@Area2D@32002" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32003" to="MAP/tileMapLayer_fragile/@Area2D@32003" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32003" to="MAP/tileMapLayer_fragile/@Area2D@32003" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32004" to="MAP/tileMapLayer_fragile/@Area2D@32004" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32004" to="MAP/tileMapLayer_fragile/@Area2D@32004" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32005" to="MAP/tileMapLayer_fragile/@Area2D@32005" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32005" to="MAP/tileMapLayer_fragile/@Area2D@32005" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32006" to="MAP/tileMapLayer_fragile/@Area2D@32006" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32006" to="MAP/tileMapLayer_fragile/@Area2D@32006" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32007" to="MAP/tileMapLayer_fragile/@Area2D@32007" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32007" to="MAP/tileMapLayer_fragile/@Area2D@32007" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32008" to="MAP/tileMapLayer_fragile/@Area2D@32008" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32008" to="MAP/tileMapLayer_fragile/@Area2D@32008" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32009" to="MAP/tileMapLayer_fragile/@Area2D@32009" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32009" to="MAP/tileMapLayer_fragile/@Area2D@32009" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32010" to="MAP/tileMapLayer_fragile/@Area2D@32010" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32010" to="MAP/tileMapLayer_fragile/@Area2D@32010" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32011" to="MAP/tileMapLayer_fragile/@Area2D@32011" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32011" to="MAP/tileMapLayer_fragile/@Area2D@32011" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32012" to="MAP/tileMapLayer_fragile/@Area2D@32012" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32012" to="MAP/tileMapLayer_fragile/@Area2D@32012" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32013" to="MAP/tileMapLayer_fragile/@Area2D@32013" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32013" to="MAP/tileMapLayer_fragile/@Area2D@32013" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32014" to="MAP/tileMapLayer_fragile/@Area2D@32014" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32014" to="MAP/tileMapLayer_fragile/@Area2D@32014" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32015" to="MAP/tileMapLayer_fragile/@Area2D@32015" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32015" to="MAP/tileMapLayer_fragile/@Area2D@32015" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32016" to="MAP/tileMapLayer_fragile/@Area2D@32016" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32016" to="MAP/tileMapLayer_fragile/@Area2D@32016" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32017" to="MAP/tileMapLayer_fragile/@Area2D@32017" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32017" to="MAP/tileMapLayer_fragile/@Area2D@32017" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32018" to="MAP/tileMapLayer_fragile/@Area2D@32018" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32018" to="MAP/tileMapLayer_fragile/@Area2D@32018" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32019" to="MAP/tileMapLayer_fragile/@Area2D@32019" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32019" to="MAP/tileMapLayer_fragile/@Area2D@32019" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32020" to="MAP/tileMapLayer_fragile/@Area2D@32020" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32020" to="MAP/tileMapLayer_fragile/@Area2D@32020" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32021" to="MAP/tileMapLayer_fragile/@Area2D@32021" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32021" to="MAP/tileMapLayer_fragile/@Area2D@32021" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32022" to="MAP/tileMapLayer_fragile/@Area2D@32022" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32022" to="MAP/tileMapLayer_fragile/@Area2D@32022" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32023" to="MAP/tileMapLayer_fragile/@Area2D@32023" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32023" to="MAP/tileMapLayer_fragile/@Area2D@32023" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32024" to="MAP/tileMapLayer_fragile/@Area2D@32024" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32024" to="MAP/tileMapLayer_fragile/@Area2D@32024" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32025" to="MAP/tileMapLayer_fragile/@Area2D@32025" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32025" to="MAP/tileMapLayer_fragile/@Area2D@32025" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32026" to="MAP/tileMapLayer_fragile/@Area2D@32026" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32026" to="MAP/tileMapLayer_fragile/@Area2D@32026" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32027" to="MAP/tileMapLayer_fragile/@Area2D@32027" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32027" to="MAP/tileMapLayer_fragile/@Area2D@32027" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32028" to="MAP/tileMapLayer_fragile/@Area2D@32028" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32028" to="MAP/tileMapLayer_fragile/@Area2D@32028" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32029" to="MAP/tileMapLayer_fragile/@Area2D@32029" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32029" to="MAP/tileMapLayer_fragile/@Area2D@32029" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32030" to="MAP/tileMapLayer_fragile/@Area2D@32030" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32030" to="MAP/tileMapLayer_fragile/@Area2D@32030" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32031" to="MAP/tileMapLayer_fragile/@Area2D@32031" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32031" to="MAP/tileMapLayer_fragile/@Area2D@32031" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32032" to="MAP/tileMapLayer_fragile/@Area2D@32032" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32032" to="MAP/tileMapLayer_fragile/@Area2D@32032" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32033" to="MAP/tileMapLayer_fragile/@Area2D@32033" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32033" to="MAP/tileMapLayer_fragile/@Area2D@32033" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32034" to="MAP/tileMapLayer_fragile/@Area2D@32034" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32034" to="MAP/tileMapLayer_fragile/@Area2D@32034" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32035" to="MAP/tileMapLayer_fragile/@Area2D@32035" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32035" to="MAP/tileMapLayer_fragile/@Area2D@32035" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32036" to="MAP/tileMapLayer_fragile/@Area2D@32036" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32036" to="MAP/tileMapLayer_fragile/@Area2D@32036" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32037" to="MAP/tileMapLayer_fragile/@Area2D@32037" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32037" to="MAP/tileMapLayer_fragile/@Area2D@32037" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32038" to="MAP/tileMapLayer_fragile/@Area2D@32038" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32038" to="MAP/tileMapLayer_fragile/@Area2D@32038" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32039" to="MAP/tileMapLayer_fragile/@Area2D@32039" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32039" to="MAP/tileMapLayer_fragile/@Area2D@32039" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32040" to="MAP/tileMapLayer_fragile/@Area2D@32040" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32040" to="MAP/tileMapLayer_fragile/@Area2D@32040" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32041" to="MAP/tileMapLayer_fragile/@Area2D@32041" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32041" to="MAP/tileMapLayer_fragile/@Area2D@32041" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32042" to="MAP/tileMapLayer_fragile/@Area2D@32042" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32042" to="MAP/tileMapLayer_fragile/@Area2D@32042" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32043" to="MAP/tileMapLayer_fragile/@Area2D@32043" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32043" to="MAP/tileMapLayer_fragile/@Area2D@32043" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32044" to="MAP/tileMapLayer_fragile/@Area2D@32044" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32044" to="MAP/tileMapLayer_fragile/@Area2D@32044" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32045" to="MAP/tileMapLayer_fragile/@Area2D@32045" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32045" to="MAP/tileMapLayer_fragile/@Area2D@32045" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32046" to="MAP/tileMapLayer_fragile/@Area2D@32046" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32046" to="MAP/tileMapLayer_fragile/@Area2D@32046" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32047" to="MAP/tileMapLayer_fragile/@Area2D@32047" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32047" to="MAP/tileMapLayer_fragile/@Area2D@32047" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32048" to="MAP/tileMapLayer_fragile/@Area2D@32048" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32048" to="MAP/tileMapLayer_fragile/@Area2D@32048" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32049" to="MAP/tileMapLayer_fragile/@Area2D@32049" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32049" to="MAP/tileMapLayer_fragile/@Area2D@32049" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32050" to="MAP/tileMapLayer_fragile/@Area2D@32050" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32050" to="MAP/tileMapLayer_fragile/@Area2D@32050" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32051" to="MAP/tileMapLayer_fragile/@Area2D@32051" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32051" to="MAP/tileMapLayer_fragile/@Area2D@32051" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32052" to="MAP/tileMapLayer_fragile/@Area2D@32052" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32052" to="MAP/tileMapLayer_fragile/@Area2D@32052" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32053" to="MAP/tileMapLayer_fragile/@Area2D@32053" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32053" to="MAP/tileMapLayer_fragile/@Area2D@32053" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32054" to="MAP/tileMapLayer_fragile/@Area2D@32054" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32054" to="MAP/tileMapLayer_fragile/@Area2D@32054" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32055" to="MAP/tileMapLayer_fragile/@Area2D@32055" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32055" to="MAP/tileMapLayer_fragile/@Area2D@32055" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32056" to="MAP/tileMapLayer_fragile/@Area2D@32056" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32056" to="MAP/tileMapLayer_fragile/@Area2D@32056" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32057" to="MAP/tileMapLayer_fragile/@Area2D@32057" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32057" to="MAP/tileMapLayer_fragile/@Area2D@32057" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32058" to="MAP/tileMapLayer_fragile/@Area2D@32058" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32058" to="MAP/tileMapLayer_fragile/@Area2D@32058" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32059" to="MAP/tileMapLayer_fragile/@Area2D@32059" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32059" to="MAP/tileMapLayer_fragile/@Area2D@32059" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32060" to="MAP/tileMapLayer_fragile/@Area2D@32060" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32060" to="MAP/tileMapLayer_fragile/@Area2D@32060" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32061" to="MAP/tileMapLayer_fragile/@Area2D@32061" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32061" to="MAP/tileMapLayer_fragile/@Area2D@32061" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32062" to="MAP/tileMapLayer_fragile/@Area2D@32062" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32062" to="MAP/tileMapLayer_fragile/@Area2D@32062" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32063" to="MAP/tileMapLayer_fragile/@Area2D@32063" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32063" to="MAP/tileMapLayer_fragile/@Area2D@32063" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32064" to="MAP/tileMapLayer_fragile/@Area2D@32064" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32064" to="MAP/tileMapLayer_fragile/@Area2D@32064" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32065" to="MAP/tileMapLayer_fragile/@Area2D@32065" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32065" to="MAP/tileMapLayer_fragile/@Area2D@32065" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32066" to="MAP/tileMapLayer_fragile/@Area2D@32066" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32066" to="MAP/tileMapLayer_fragile/@Area2D@32066" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32067" to="MAP/tileMapLayer_fragile/@Area2D@32067" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32067" to="MAP/tileMapLayer_fragile/@Area2D@32067" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32068" to="MAP/tileMapLayer_fragile/@Area2D@32068" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32068" to="MAP/tileMapLayer_fragile/@Area2D@32068" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_fragile/@Area2D@32069" to="MAP/tileMapLayer_fragile/@Area2D@32069" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_fragile/@Area2D@32069" to="MAP/tileMapLayer_fragile/@Area2D@32069" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32070" to="MAP/tileMapLayer_hidden/@Area2D@32070" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32070" to="MAP/tileMapLayer_hidden/@Area2D@32070" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32071" to="MAP/tileMapLayer_hidden/@Area2D@32071" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32071" to="MAP/tileMapLayer_hidden/@Area2D@32071" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32072" to="MAP/tileMapLayer_hidden/@Area2D@32072" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32072" to="MAP/tileMapLayer_hidden/@Area2D@32072" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32073" to="MAP/tileMapLayer_hidden/@Area2D@32073" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32073" to="MAP/tileMapLayer_hidden/@Area2D@32073" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32074" to="MAP/tileMapLayer_hidden/@Area2D@32074" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32074" to="MAP/tileMapLayer_hidden/@Area2D@32074" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32075" to="MAP/tileMapLayer_hidden/@Area2D@32075" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32075" to="MAP/tileMapLayer_hidden/@Area2D@32075" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32076" to="MAP/tileMapLayer_hidden/@Area2D@32076" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32076" to="MAP/tileMapLayer_hidden/@Area2D@32076" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32077" to="MAP/tileMapLayer_hidden/@Area2D@32077" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32077" to="MAP/tileMapLayer_hidden/@Area2D@32077" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32078" to="MAP/tileMapLayer_hidden/@Area2D@32078" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32078" to="MAP/tileMapLayer_hidden/@Area2D@32078" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32079" to="MAP/tileMapLayer_hidden/@Area2D@32079" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32079" to="MAP/tileMapLayer_hidden/@Area2D@32079" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32080" to="MAP/tileMapLayer_hidden/@Area2D@32080" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32080" to="MAP/tileMapLayer_hidden/@Area2D@32080" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32081" to="MAP/tileMapLayer_hidden/@Area2D@32081" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32081" to="MAP/tileMapLayer_hidden/@Area2D@32081" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32082" to="MAP/tileMapLayer_hidden/@Area2D@32082" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32082" to="MAP/tileMapLayer_hidden/@Area2D@32082" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32083" to="MAP/tileMapLayer_hidden/@Area2D@32083" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32083" to="MAP/tileMapLayer_hidden/@Area2D@32083" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32084" to="MAP/tileMapLayer_hidden/@Area2D@32084" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32084" to="MAP/tileMapLayer_hidden/@Area2D@32084" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32085" to="MAP/tileMapLayer_hidden/@Area2D@32085" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32085" to="MAP/tileMapLayer_hidden/@Area2D@32085" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32086" to="MAP/tileMapLayer_hidden/@Area2D@32086" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32086" to="MAP/tileMapLayer_hidden/@Area2D@32086" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32087" to="MAP/tileMapLayer_hidden/@Area2D@32087" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32087" to="MAP/tileMapLayer_hidden/@Area2D@32087" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32088" to="MAP/tileMapLayer_hidden/@Area2D@32088" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32088" to="MAP/tileMapLayer_hidden/@Area2D@32088" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32089" to="MAP/tileMapLayer_hidden/@Area2D@32089" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32089" to="MAP/tileMapLayer_hidden/@Area2D@32089" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32090" to="MAP/tileMapLayer_hidden/@Area2D@32090" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32090" to="MAP/tileMapLayer_hidden/@Area2D@32090" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32091" to="MAP/tileMapLayer_hidden/@Area2D@32091" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32091" to="MAP/tileMapLayer_hidden/@Area2D@32091" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32092" to="MAP/tileMapLayer_hidden/@Area2D@32092" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32092" to="MAP/tileMapLayer_hidden/@Area2D@32092" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32093" to="MAP/tileMapLayer_hidden/@Area2D@32093" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32093" to="MAP/tileMapLayer_hidden/@Area2D@32093" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32094" to="MAP/tileMapLayer_hidden/@Area2D@32094" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32094" to="MAP/tileMapLayer_hidden/@Area2D@32094" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32095" to="MAP/tileMapLayer_hidden/@Area2D@32095" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32095" to="MAP/tileMapLayer_hidden/@Area2D@32095" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32096" to="MAP/tileMapLayer_hidden/@Area2D@32096" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32096" to="MAP/tileMapLayer_hidden/@Area2D@32096" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32097" to="MAP/tileMapLayer_hidden/@Area2D@32097" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32097" to="MAP/tileMapLayer_hidden/@Area2D@32097" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32098" to="MAP/tileMapLayer_hidden/@Area2D@32098" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32098" to="MAP/tileMapLayer_hidden/@Area2D@32098" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32099" to="MAP/tileMapLayer_hidden/@Area2D@32099" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32099" to="MAP/tileMapLayer_hidden/@Area2D@32099" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32100" to="MAP/tileMapLayer_hidden/@Area2D@32100" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32100" to="MAP/tileMapLayer_hidden/@Area2D@32100" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32101" to="MAP/tileMapLayer_hidden/@Area2D@32101" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32101" to="MAP/tileMapLayer_hidden/@Area2D@32101" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32102" to="MAP/tileMapLayer_hidden/@Area2D@32102" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32102" to="MAP/tileMapLayer_hidden/@Area2D@32102" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32103" to="MAP/tileMapLayer_hidden/@Area2D@32103" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32103" to="MAP/tileMapLayer_hidden/@Area2D@32103" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32104" to="MAP/tileMapLayer_hidden/@Area2D@32104" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32104" to="MAP/tileMapLayer_hidden/@Area2D@32104" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32105" to="MAP/tileMapLayer_hidden/@Area2D@32105" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32105" to="MAP/tileMapLayer_hidden/@Area2D@32105" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32106" to="MAP/tileMapLayer_hidden/@Area2D@32106" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32106" to="MAP/tileMapLayer_hidden/@Area2D@32106" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32107" to="MAP/tileMapLayer_hidden/@Area2D@32107" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32107" to="MAP/tileMapLayer_hidden/@Area2D@32107" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32108" to="MAP/tileMapLayer_hidden/@Area2D@32108" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32108" to="MAP/tileMapLayer_hidden/@Area2D@32108" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32109" to="MAP/tileMapLayer_hidden/@Area2D@32109" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32109" to="MAP/tileMapLayer_hidden/@Area2D@32109" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32110" to="MAP/tileMapLayer_hidden/@Area2D@32110" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32110" to="MAP/tileMapLayer_hidden/@Area2D@32110" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32111" to="MAP/tileMapLayer_hidden/@Area2D@32111" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32111" to="MAP/tileMapLayer_hidden/@Area2D@32111" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32112" to="MAP/tileMapLayer_hidden/@Area2D@32112" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32112" to="MAP/tileMapLayer_hidden/@Area2D@32112" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32113" to="MAP/tileMapLayer_hidden/@Area2D@32113" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32113" to="MAP/tileMapLayer_hidden/@Area2D@32113" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32114" to="MAP/tileMapLayer_hidden/@Area2D@32114" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32114" to="MAP/tileMapLayer_hidden/@Area2D@32114" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32115" to="MAP/tileMapLayer_hidden/@Area2D@32115" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32115" to="MAP/tileMapLayer_hidden/@Area2D@32115" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32116" to="MAP/tileMapLayer_hidden/@Area2D@32116" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32116" to="MAP/tileMapLayer_hidden/@Area2D@32116" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32117" to="MAP/tileMapLayer_hidden/@Area2D@32117" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32117" to="MAP/tileMapLayer_hidden/@Area2D@32117" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32118" to="MAP/tileMapLayer_hidden/@Area2D@32118" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32118" to="MAP/tileMapLayer_hidden/@Area2D@32118" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32119" to="MAP/tileMapLayer_hidden/@Area2D@32119" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32119" to="MAP/tileMapLayer_hidden/@Area2D@32119" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32120" to="MAP/tileMapLayer_hidden/@Area2D@32120" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32120" to="MAP/tileMapLayer_hidden/@Area2D@32120" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32121" to="MAP/tileMapLayer_hidden/@Area2D@32121" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32121" to="MAP/tileMapLayer_hidden/@Area2D@32121" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32122" to="MAP/tileMapLayer_hidden/@Area2D@32122" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32122" to="MAP/tileMapLayer_hidden/@Area2D@32122" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32123" to="MAP/tileMapLayer_hidden/@Area2D@32123" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32123" to="MAP/tileMapLayer_hidden/@Area2D@32123" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32124" to="MAP/tileMapLayer_hidden/@Area2D@32124" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32124" to="MAP/tileMapLayer_hidden/@Area2D@32124" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32125" to="MAP/tileMapLayer_hidden/@Area2D@32125" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32125" to="MAP/tileMapLayer_hidden/@Area2D@32125" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32126" to="MAP/tileMapLayer_hidden/@Area2D@32126" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32126" to="MAP/tileMapLayer_hidden/@Area2D@32126" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32127" to="MAP/tileMapLayer_hidden/@Area2D@32127" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32127" to="MAP/tileMapLayer_hidden/@Area2D@32127" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32128" to="MAP/tileMapLayer_hidden/@Area2D@32128" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32128" to="MAP/tileMapLayer_hidden/@Area2D@32128" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32129" to="MAP/tileMapLayer_hidden/@Area2D@32129" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32129" to="MAP/tileMapLayer_hidden/@Area2D@32129" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32130" to="MAP/tileMapLayer_hidden/@Area2D@32130" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32130" to="MAP/tileMapLayer_hidden/@Area2D@32130" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32131" to="MAP/tileMapLayer_hidden/@Area2D@32131" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32131" to="MAP/tileMapLayer_hidden/@Area2D@32131" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32132" to="MAP/tileMapLayer_hidden/@Area2D@32132" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32132" to="MAP/tileMapLayer_hidden/@Area2D@32132" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32133" to="MAP/tileMapLayer_hidden/@Area2D@32133" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32133" to="MAP/tileMapLayer_hidden/@Area2D@32133" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32134" to="MAP/tileMapLayer_hidden/@Area2D@32134" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32134" to="MAP/tileMapLayer_hidden/@Area2D@32134" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32135" to="MAP/tileMapLayer_hidden/@Area2D@32135" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32135" to="MAP/tileMapLayer_hidden/@Area2D@32135" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32136" to="MAP/tileMapLayer_hidden/@Area2D@32136" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32136" to="MAP/tileMapLayer_hidden/@Area2D@32136" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32137" to="MAP/tileMapLayer_hidden/@Area2D@32137" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32137" to="MAP/tileMapLayer_hidden/@Area2D@32137" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32138" to="MAP/tileMapLayer_hidden/@Area2D@32138" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32138" to="MAP/tileMapLayer_hidden/@Area2D@32138" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32139" to="MAP/tileMapLayer_hidden/@Area2D@32139" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32139" to="MAP/tileMapLayer_hidden/@Area2D@32139" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32140" to="MAP/tileMapLayer_hidden/@Area2D@32140" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32140" to="MAP/tileMapLayer_hidden/@Area2D@32140" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32141" to="MAP/tileMapLayer_hidden/@Area2D@32141" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32141" to="MAP/tileMapLayer_hidden/@Area2D@32141" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32142" to="MAP/tileMapLayer_hidden/@Area2D@32142" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32142" to="MAP/tileMapLayer_hidden/@Area2D@32142" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32143" to="MAP/tileMapLayer_hidden/@Area2D@32143" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32143" to="MAP/tileMapLayer_hidden/@Area2D@32143" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32144" to="MAP/tileMapLayer_hidden/@Area2D@32144" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32144" to="MAP/tileMapLayer_hidden/@Area2D@32144" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32145" to="MAP/tileMapLayer_hidden/@Area2D@32145" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32145" to="MAP/tileMapLayer_hidden/@Area2D@32145" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32146" to="MAP/tileMapLayer_hidden/@Area2D@32146" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32146" to="MAP/tileMapLayer_hidden/@Area2D@32146" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32147" to="MAP/tileMapLayer_hidden/@Area2D@32147" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32147" to="MAP/tileMapLayer_hidden/@Area2D@32147" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32148" to="MAP/tileMapLayer_hidden/@Area2D@32148" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32148" to="MAP/tileMapLayer_hidden/@Area2D@32148" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32149" to="MAP/tileMapLayer_hidden/@Area2D@32149" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32149" to="MAP/tileMapLayer_hidden/@Area2D@32149" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32150" to="MAP/tileMapLayer_hidden/@Area2D@32150" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32150" to="MAP/tileMapLayer_hidden/@Area2D@32150" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32151" to="MAP/tileMapLayer_hidden/@Area2D@32151" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32151" to="MAP/tileMapLayer_hidden/@Area2D@32151" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32152" to="MAP/tileMapLayer_hidden/@Area2D@32152" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32152" to="MAP/tileMapLayer_hidden/@Area2D@32152" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32153" to="MAP/tileMapLayer_hidden/@Area2D@32153" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32153" to="MAP/tileMapLayer_hidden/@Area2D@32153" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32154" to="MAP/tileMapLayer_hidden/@Area2D@32154" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32154" to="MAP/tileMapLayer_hidden/@Area2D@32154" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32155" to="MAP/tileMapLayer_hidden/@Area2D@32155" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32155" to="MAP/tileMapLayer_hidden/@Area2D@32155" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32156" to="MAP/tileMapLayer_hidden/@Area2D@32156" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32156" to="MAP/tileMapLayer_hidden/@Area2D@32156" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32157" to="MAP/tileMapLayer_hidden/@Area2D@32157" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32157" to="MAP/tileMapLayer_hidden/@Area2D@32157" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32158" to="MAP/tileMapLayer_hidden/@Area2D@32158" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32158" to="MAP/tileMapLayer_hidden/@Area2D@32158" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32159" to="MAP/tileMapLayer_hidden/@Area2D@32159" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32159" to="MAP/tileMapLayer_hidden/@Area2D@32159" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32160" to="MAP/tileMapLayer_hidden/@Area2D@32160" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32160" to="MAP/tileMapLayer_hidden/@Area2D@32160" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32161" to="MAP/tileMapLayer_hidden/@Area2D@32161" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32161" to="MAP/tileMapLayer_hidden/@Area2D@32161" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32162" to="MAP/tileMapLayer_hidden/@Area2D@32162" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32162" to="MAP/tileMapLayer_hidden/@Area2D@32162" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32163" to="MAP/tileMapLayer_hidden/@Area2D@32163" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32163" to="MAP/tileMapLayer_hidden/@Area2D@32163" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32164" to="MAP/tileMapLayer_hidden/@Area2D@32164" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32164" to="MAP/tileMapLayer_hidden/@Area2D@32164" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32165" to="MAP/tileMapLayer_hidden/@Area2D@32165" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32165" to="MAP/tileMapLayer_hidden/@Area2D@32165" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32166" to="MAP/tileMapLayer_hidden/@Area2D@32166" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32166" to="MAP/tileMapLayer_hidden/@Area2D@32166" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32167" to="MAP/tileMapLayer_hidden/@Area2D@32167" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32167" to="MAP/tileMapLayer_hidden/@Area2D@32167" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32168" to="MAP/tileMapLayer_hidden/@Area2D@32168" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32168" to="MAP/tileMapLayer_hidden/@Area2D@32168" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32169" to="MAP/tileMapLayer_hidden/@Area2D@32169" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32169" to="MAP/tileMapLayer_hidden/@Area2D@32169" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32170" to="MAP/tileMapLayer_hidden/@Area2D@32170" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32170" to="MAP/tileMapLayer_hidden/@Area2D@32170" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32171" to="MAP/tileMapLayer_hidden/@Area2D@32171" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32171" to="MAP/tileMapLayer_hidden/@Area2D@32171" method="_on_area_exited"]
+[connection signal="area_entered" from="MAP/tileMapLayer_hidden/@Area2D@32172" to="MAP/tileMapLayer_hidden/@Area2D@32172" method="_on_area_entered"]
+[connection signal="area_exited" from="MAP/tileMapLayer_hidden/@Area2D@32172" to="MAP/tileMapLayer_hidden/@Area2D@32172" method="_on_area_exited"]

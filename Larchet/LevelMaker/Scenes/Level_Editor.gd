@@ -46,7 +46,7 @@ var active_persp_Wdown: TileMapLayer
 var active_persp_Wleft: TileMapLayer
 
 var is_repainting_theme: bool = false
-var current_target_theme: String = ""
+var current_target_theme: String = "_light"
 var cell_themes: Dictionary = {}
 
 var pattern_cell_themes: Dictionary = {} 
@@ -55,168 +55,13 @@ var pattern_size: Vector2i = Vector2i(1, 1)
 var is_panning_pattern: bool = false
 var pattern_zoom: float = 1.0
 
-enum Brush {GRASS, WALL, ICE}
-var current_brush: Brush = Brush.GRASS
-var is_panning: bool = false
+var current_brush: TileSkinData.Brush = TileSkinData.Brush.GRASS
+var current_skin_name: String = "Normal"
 
+var is_panning: bool = false
 var zoom_min: float = 0.2
 var zoom_max: float = 3.0
 var zoom_speed: float = 0.1
-
-const WALL_SOURCE_ID: int = 0
-const GRASS_SOURCE_ID: int = 1
-const ICE_SOURCE_ID: int = 2
-
-const dicFloor: Dictionary = {
-	"dark" : [Vector2i(1,1),Vector2i(3,1),Vector2i(5,1),Vector2i(7,1)],
-	"light" : [Vector2i(1,5),Vector2i(3,5),Vector2i(5,5),Vector2i(7,5)]
-}
-
-const dicWall: Dictionary = {
-	"normal" : [Vector2i(0,1),Vector2i(2,1)],
-	"full" : [Vector2i(6,3),Vector2i(7,3),Vector2i(8,3)]
-}
-
-const dicIce: Variant = Vector2i(0,1)
-
-const dicRightIce: Dictionary = {
-	"ice" : Vector3i(0,1,2)
-}
-
-const dicUpIce: Dictionary = {
-	"normal_ice" : Vector3i(0,0,2),
-	"E_ice" : Vector3i(1,0,2)
-}
-
-const dicWaterRight: Dictionary = {
-	"full" : Vector3i(0,2,3),
-	"mini" : Vector3i(0,3,3),
-	"Eright_grass" : Vector3i(0,4,3),
-	"Eright_wall" : Vector3i(1,4,3)
-}
-
-const dicWaterDown: Dictionary = {
-	"down_grass" : [Vector3i(0,0,3),Vector3i(1,0,3),Vector3i(2,0,3),Vector3i(3,0,3)],
-	"down_wall" : [Vector3i(0,1,3),Vector3i(1,1,3),Vector3i(2,1,3),Vector3i(3,1,3)]
-}
-
-const dicWaterLeft: Dictionary = {
-	"full" : Vector3i(2,2,3),
-	"mini" : Vector3i(2,3,3),
-	"Eleft" : Vector3i(2,4,3)
-}
-
-const dicRightWall: Dictionary = {
-	"normal" : [Vector2i(1,1),Vector2i(3,1)],
-	"Eright_wall" : Vector2i(0,2)
-}
-
-const dicUpWall: Dictionary = {
-	"Ewall" : [Vector2i(1,0),Vector2i(3,0)],
-	"wall" : [Vector2i(0,0),Vector2i(2,0),Vector2i(9,2)]
-}
-
-const dicRight: Dictionary = {
-	"normal_dark" : [Vector2i(2,1),Vector2i(4,1),Vector2i(6,1),Vector2i(8,1)],
-	"normal_light" : [Vector2i(2,5),Vector2i(4,5),Vector2i(6,5),Vector2i(8,5)]
-}
-
-const dicUp: Dictionary = {
-	"normal_dark" : [Vector2i(1,0),Vector2i(3,0),Vector2i(5,0),Vector2i(7,0)],
-	"normal_light" : [Vector2i(1,4),Vector2i(3,4),Vector2i(5,4),Vector2i(7,4)],
-	"E_dark" : Vector2i(2,0),
-	"E_light" : Vector2i(2,4)
-}
-
-const grass_bitmask_repo: Dictionary = {
-	0: [{"persp_down_water": { Vector2i(0,1) : "down_grass" },
-		 "persp_left_water": { Vector2i(-1,0) : "mini", Vector2i(-1,1) : "Eleft" },
-		 "persp_right": {Vector2i(1,0) : "normal", Vector2i(1,1) : "Eright_grass"},
-		 "persp_up": { Vector2i(0,-1) : "normal", Vector2i(1,-1) : "E"}}],
-	1: [{"persp_down_water": { Vector2i(0,1) : "down_grass"},
-		 "persp_left_water": { Vector2i(-1,0) : "full", Vector2i(-1,1) : "Eleft" },
-		 "persp_right": {Vector2i(1,0) : "normal", Vector2i(1,1) : "Eright_grass"}}],
-	2: [{"persp_down_water": { Vector2i(0,1) : "down_grass" },
-		 "persp_left_water": { Vector2i(-1,0) : "mini", Vector2i(-1,1) : "Eleft"},
-		 "persp_up": "normal"}],
-	3: [{"persp_down_water": { Vector2i(0,1) : "down_grass" },
-		 "persp_left_water": { Vector2i(-1,0) : "full", Vector2i(-1,1) : "Eleft" }}],
-	4: [{"persp_left_water": { Vector2i(-1,0) : "mini" },
-		 "persp_right": "normal",
-		 "persp_up": { Vector2i(0,-1) : "normal", Vector2i(1,-1) : "E"}}],
-	5: [{"persp_left_water": { Vector2i(-1,0) : "full" },
-		 "persp_right": "normal"}],
-	6: [{"persp_left_water": "mini",
-		 "persp_up": "normal"}],
-	7: [{"persp_left_water": "full"}],
-	8: [{"persp_down_water": { Vector2i(0,1) : "down_grass"},
-		 "persp_right": {Vector2i(1,0) : "normal", Vector2i(1,1) : "Eright_grass"},
-		 "persp_up": { Vector2i(0,-1) : "normal", Vector2i(1,-1) : "E"}}],
-	9: [{"persp_down_water": { Vector2i(0,1) : "down_grass"},
-		 "persp_right": {Vector2i(1,0) : "normal", Vector2i(1,1) : "Eright_grass"}}],
-	10: [{"persp_down_water": "down_grass",
-		  "persp_up": "normal"}],
-	11: [{"persp_down_water": "down_grass"}],
-	12: [{"persp_right": "normal",
-		  "persp_up": { Vector2i(0,-1) : "normal", Vector2i(1,-1) : "E"}}],
-	13: [{"persp_right": "normal"}],
-	14: [{"persp_up": "normal"}]
-}
-
-const wall_bitmask_repo: Dictionary = {
-	0: [{"main": dicWall["normal"],
-		 "persp_down_water": "down_wall",
-		 "persp_left_water": { Vector2i(-1,0) : "mini", Vector2i(-1,1) : "Eleft" },
-		 "persp_right_wall": { Vector2i(1,0) : "normal", Vector2i(1,1) : "Eright_wall" },
-		 "persp_up_wall": {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall"}}],
-	1: [{"main": dicWall["normal"],
-		 "persp_down_water": "down_wall",
-		 "persp_left_water": { Vector2i(-1,0) : "full", Vector2i(-1,1) : "Eleft" },
-		 "persp_right_wall": { Vector2i(1,0) : "normal", Vector2i(1,1) : "Eright_wall" },
-		 "persp_up_wall": {Vector2i(1,-1) : "Ewall"}}],
-	2: [{"main": dicWall["normal"],
-		 "persp_down_water": "down_wall",
-		 "persp_left_water": { Vector2i(-1,0) : "mini", Vector2i(-1,1) : "Eleft"},
-		 "persp_up_wall": {Vector2i(0, -1) : "wall"}}],
-	3: [{"main": dicWall["normal"],
-		 "persp_down_water": "down_wall",
-		 "persp_left_water": { Vector2i(-1,0) : "full", Vector2i(-1,1) : "Eleft" }}],
-	4: [{"main" : dicWall["full"],
-		 "persp_left_water": { Vector2i(-1,0) : "mini" },
-		 "persp_right_wall": "normal",
-		 "persp_up_wall": {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall"}}],
-	5: [{"main" : dicWall["full"],
-		 "persp_left_water": { Vector2i(-1,0) : "full" },
-		 "persp_right_wall": "normal",
-		 "persp_up_wall": {Vector2i(1,-1) : "Ewall"}}],
-	6: [{"main" : dicWall["full"],
-		 "persp_left_water": "mini",
-		 "persp_up_wall": {Vector2i(0, -1) : "wall"}}],
-	7: [{"main" : dicWall["full"],
-		 "persp_left_water": { Vector2i(-1,0) : "full"}}],
-	8: [{"main": dicWall["normal"],
-		 "persp_down_water": "down_wall",
-		 "persp_right_wall": { Vector2i(1,0) : "normal", Vector2i(1,1) : "Eright_wall" },
-		 "persp_up_wall": {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall"}}],
-	9: [{"main": dicWall["normal"],
-		 "persp_down_water": "down_wall",
-		 "persp_right_wall": { Vector2i(1,0) : "normal", Vector2i(1,1) : "Eright_wall" },
-		 "persp_up_wall": {Vector2i(1,-1) : "Ewall"}}],
-	10: [{"main": dicWall["normal"],
-		  "persp_down_water": "down_wall",
-		  "persp_up_wall": {Vector2i(0, -1) : "wall"}}],
-	11: [{"main": dicWall["normal"],
-		 "persp_down_water": "down_wall"}],
-	12: [{"main" : dicWall["full"],
-		  "persp_right_wall": "normal",
-		  "persp_up_wall": {Vector2i(0, -1) : "wall", Vector2i(1,-1) : "Ewall"}}],
-	13: [{"main" : dicWall["full"],
-		 "persp_right_wall": "normal",
-		 "persp_up_wall": {Vector2i(1,-1) : "Ewall"}}],
-	14: [{"main" : dicWall["full"],
-		 "persp_up_wall": {Vector2i(0, -1) : "wall"}}],
-	15: [{"main" : dicWall["full"]}]
-}
 
 func get_source_id(layer: TileMapLayer, cell_pos: Vector2i) -> int:
 	if layer == null: return -1
@@ -226,6 +71,16 @@ func get_atlas_coords(layer: TileMapLayer, cell_pos: Vector2i) -> Vector2i:
 	if layer == null: return Vector2i(-1, -1)
 	return layer.get_cell_atlas_coords(cell_pos)
 
+func get_skin_element(prefix: String, key: String, theme: String = "") -> Variant:
+	if not TileSkinData.SKINS.has(current_skin_name): return null
+	var skin = TileSkinData.SKINS[current_skin_name]
+	var prefix_key = prefix + "_" + key if prefix != "" else key
+	if skin.has(prefix_key + theme): return skin[prefix_key + theme]
+	if skin.has(prefix_key): return skin[prefix_key]
+	if skin.has(key + theme): return skin[key + theme]
+	if skin.has(key): return skin[key]
+	return null
+
 func _ready() -> void:
 	var btn_herbe = $UI_Layer/PanelContainer/HBoxContainer/Btn_Herbe
 	var btn_mur = $UI_Layer/PanelContainer/HBoxContainer/Btn_Mur
@@ -234,21 +89,16 @@ func _ready() -> void:
 	btn_herbe.button_group = brush_group
 	btn_mur.button_group = brush_group
 	btn_glace.button_group = brush_group
-	
-	btn_herbe.pressed.connect(func(): current_brush = Brush.GRASS)
-	btn_mur.pressed.connect(func(): current_brush = Brush.WALL)
-	btn_glace.pressed.connect(func(): current_brush = Brush.ICE)
-	
+	btn_herbe.pressed.connect(func(): current_brush = TileSkinData.Brush.GRASS)
+	btn_mur.pressed.connect(func(): current_brush = TileSkinData.Brush.WALL)
+	btn_glace.pressed.connect(func(): current_brush = TileSkinData.Brush.ICE)
 	btn_herbe.button_pressed = true
-	
 	pattern_window.hide()
 	btn_mode3.hide()
 	pattern_window.unresizable = false
 	pattern_window.borderless = false
-	
 	pattern_window.close_requested.connect(func(): pattern_window.hide())
 	pattern_window.window_input.connect(_on_pattern_window_input)
-	
 	if not btn_mode3.pressed.is_connected(_on_mode3_pressed):
 		btn_mode3.pressed.connect(_on_mode3_pressed)
 
@@ -264,28 +114,24 @@ func _on_grass_mode_pressed() -> void:
 		grass_mode = 1
 	else:
 		grass_mode += 1
-		
 	lbl_grass_mode.text = str(grass_mode)
-	
 	if grass_mode == 3:
 		btn_mode3.show()
 	else:
 		btn_mode3.hide()
 		pattern_window.hide()
-		
 	refresh_all_grass()
 
 func _on_mode3_pressed() -> void:
 	pattern_window.visible = not pattern_window.visible
 	if pattern_window.visible:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) 
-		current_brush = Brush.GRASS
+		current_brush = TileSkinData.Brush.GRASS
 		$UI_Layer/PanelContainer/HBoxContainer/Btn_Herbe.button_pressed = true
 
 func _on_pattern_window_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_MIDDLE:
 			is_panning_pattern = event.pressed
@@ -296,32 +142,29 @@ func _on_pattern_window_input(event: InputEvent) -> void:
 			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				pattern_zoom = clamp(pattern_zoom - zoom_speed, zoom_min, zoom_max)
 				mode3_node.scale = Vector2(pattern_zoom, pattern_zoom)
-				
 	if event is InputEventMouseMotion:
 		if is_panning_pattern:
 			mode3_node.position += event.relative
 			return
-			
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
 		var is_left = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
 		var is_right = Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
 		var is_just_clicked = event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed
-		
 		if is_left and not is_panning_pattern:
 			paint_pattern_tile(is_just_clicked)
 		elif is_right and not is_panning_pattern:
 			erase_pattern_tile()
 
 func paint_pattern_tile(is_just_clicked: bool) -> void:
-	var local_pos = mode3_node.get_local_mouse_position()
-	var grid_pos = m3_floor.local_to_map(local_pos)
-	
+	var grid_pos = m3_floor.local_to_map(mode3_node.get_local_mouse_position())
 	var has_grass = pattern_cell_themes.has(grid_pos)
 	if is_just_clicked:
 		if has_grass:
 			is_repainting_theme = true
-			var current_theme = pattern_cell_themes.get(grid_pos, "_light")
-			current_target_theme = "_dark" if current_theme == "_light" else "_light"
+			if pattern_cell_themes.get(grid_pos, "_light"):
+				current_target_theme = "_dark"
+			else:
+				current_target_theme = "_light"
 			pattern_cell_themes[grid_pos] = current_target_theme
 		else:
 			is_repainting_theme = false
@@ -333,14 +176,13 @@ func paint_pattern_tile(is_just_clicked: bool) -> void:
 		else:
 			if not has_grass:
 				pattern_cell_themes[grid_pos] = "_light"
-				
 	update_pattern_rectangle(null)
 
 func erase_pattern_tile() -> void:
-	var local_pos = mode3_node.get_local_mouse_position()
-	var grid_pos = m3_floor.local_to_map(local_pos)
+	var grid_pos = m3_floor.local_to_map(mode3_node.get_local_mouse_position())
 	if pattern_cell_themes.has(grid_pos):
 		update_pattern_rectangle(grid_pos)
+
 func update_pattern_rectangle(erased_pos: Variant) -> void:
 	var used_cells = pattern_cell_themes.keys()
 	if used_cells.is_empty():
@@ -364,6 +206,19 @@ func update_pattern_rectangle(erased_pos: Variant) -> void:
 		var shrink_bottom = (erased_pos.y == max_y)
 		if min_x == max_x or min_y == max_y:
 			pattern_cell_themes.erase(erased_pos)
+			used_cells = pattern_cell_themes.keys()
+			if used_cells.is_empty():
+				pattern_size = Vector2i(1, 1)
+				custom_pattern.clear()
+				_clear_and_redraw_pattern_visuals()
+				return
+			min_x = used_cells[0].x; max_x = used_cells[0].x
+			min_y = used_cells[0].y; max_y = used_cells[0].y
+			for cell in used_cells:
+				if cell.x < min_x: min_x = cell.x
+				if cell.x > max_x: max_x = cell.x
+				if cell.y < min_y: min_y = cell.y
+				if cell.y > max_y: max_y = cell.y
 		elif shrink_left or shrink_right or shrink_top or shrink_bottom:
 			var cells_to_remove = []
 			for cell in used_cells:
@@ -396,14 +251,12 @@ func update_pattern_rectangle(erased_pos: Variant) -> void:
 			var pos = Vector2i(x, y)
 			if not pattern_cell_themes.has(pos):
 				pattern_cell_themes[pos] = "_light"
-
 	pattern_size = Vector2i(max_x - min_x + 1, max_y - min_y + 1)
 	custom_pattern.clear()
 	for x in range(pattern_size.x):
 		for y in range(pattern_size.y):
 			var global_c = Vector2i(min_x + x, min_y + y)
 			custom_pattern[Vector2i(x, y)] = pattern_cell_themes.get(global_c, "_light")
-
 	_clear_and_redraw_pattern_visuals()
 
 func _clear_and_redraw_pattern_visuals() -> void:
@@ -414,10 +267,10 @@ func _clear_and_redraw_pattern_visuals() -> void:
 	m3_water_down.clear()
 	m3_water_left.clear()
 	for pos in pattern_cell_themes.keys():
-		m3_floor.set_cell(pos, GRASS_SOURCE_ID, Vector2i(0,0))
+		m3_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 	for pos in pattern_cell_themes.keys():
 		set_active_map(true)
-		apply_bitmask_to_single_cell(pos, m3_floor, grass_bitmask_repo, GRASS_SOURCE_ID)
+		apply_bitmask_to_single_cell(pos, m3_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
 		set_active_map(false)
 	refresh_all_grass()
 
@@ -454,7 +307,7 @@ func refresh_all_grass() -> void:
 	set_active_map(false)
 	var used_cells = layer_floor.get_used_cells()
 	for cell in used_cells:
-		apply_bitmask_to_single_cell(cell, layer_floor, grass_bitmask_repo, GRASS_SOURCE_ID)
+		apply_bitmask_to_single_cell(cell, layer_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
 	set_active_map(was_pattern)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -495,8 +348,8 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 	var grid_pos = layer_floor.local_to_map(mouse_pos)
 	
 	match current_brush:
-		Brush.GRASS:
-			var has_grass = layer_floor.get_cell_source_id(grid_pos) == GRASS_SOURCE_ID
+		TileSkinData.Brush.GRASS:
+			var has_grass = layer_floor.get_cell_source_id(grid_pos) == TileSkinData.GRASS_SOURCE_ID
 			if is_just_clicked:
 				if has_grass:
 					is_repainting_theme = true
@@ -507,7 +360,7 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 				else:
 					is_repainting_theme = false
 					cell_themes[grid_pos] = "_light"
-					layer_floor.set_cell(grid_pos, GRASS_SOURCE_ID, Vector2i(0,0))
+					layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 					layer_wall.set_cell(grid_pos, -1)
 					layer_ice.set_cell(grid_pos, -1)
 					update_smart_area(grid_pos)
@@ -519,12 +372,12 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 				else:
 					if not has_grass:
 						cell_themes[grid_pos] = "_light"
-						layer_floor.set_cell(grid_pos, GRASS_SOURCE_ID, Vector2i(0,0))
+						layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 						layer_wall.set_cell(grid_pos, -1)
 						layer_ice.set_cell(grid_pos, -1)
 						update_smart_area(grid_pos)
-		Brush.ICE:
-			var has_ice = layer_ice.get_cell_source_id(grid_pos) == ICE_SOURCE_ID
+		TileSkinData.Brush.ICE:
+			var has_ice = layer_ice.get_cell_source_id(grid_pos) == TileSkinData.ICE_SOURCE_ID
 			if is_just_clicked:
 				if has_ice:
 					is_repainting_theme = true
@@ -535,8 +388,7 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 				else:
 					is_repainting_theme = false
 					cell_themes[grid_pos] = "_light"
-					var default_ice = dicIce[0] if typeof(dicIce) == TYPE_ARRAY else dicIce
-					layer_ice.set_cell(grid_pos, ICE_SOURCE_ID, default_ice)
+					apply_custom_cell(layer_ice, grid_pos, TileSkinData.ICE_SOURCE_ID, get_tile_variation(grid_pos, get_skin_element("", "ice"), "ice"))
 					layer_floor.set_cell(grid_pos, -1)
 					layer_wall.set_cell(grid_pos, -1)
 					update_smart_area(grid_pos)
@@ -548,13 +400,12 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 				else:
 					if not has_ice:
 						cell_themes[grid_pos] = "_light"
-						var default_ice = dicIce[0] if typeof(dicIce) == TYPE_ARRAY else dicIce
-						layer_ice.set_cell(grid_pos, ICE_SOURCE_ID, default_ice)
+						apply_custom_cell(layer_ice, grid_pos, TileSkinData.ICE_SOURCE_ID, get_tile_variation(grid_pos, get_skin_element("", "ice"), "ice"))
 						layer_floor.set_cell(grid_pos, -1)
 						layer_wall.set_cell(grid_pos, -1)
 						update_smart_area(grid_pos)
-		Brush.WALL:
-			layer_wall.set_cell(grid_pos, WALL_SOURCE_ID, Vector2i(0, 0))
+		TileSkinData.Brush.WALL:
+			layer_wall.set_cell(grid_pos, TileSkinData.WALL_SOURCE_ID, Vector2i(0, 0))
 			layer_floor.set_cell(grid_pos, -1)
 			layer_ice.set_cell(grid_pos, -1)
 			cell_themes.erase(grid_pos)
@@ -586,15 +437,15 @@ func update_smart_area(cell_pos: Vector2i) -> void:
 	for x in range(-3, 4):
 		for y in range(-3, 4):
 			var target_cell = cell_pos + Vector2i(x, y)
-			if layer_wall.get_cell_source_id(target_cell) == WALL_SOURCE_ID:
-				apply_bitmask_to_single_cell(target_cell, layer_wall, wall_bitmask_repo, WALL_SOURCE_ID)
-			if layer_floor.get_cell_source_id(target_cell) == GRASS_SOURCE_ID:
-				apply_bitmask_to_single_cell(target_cell, layer_floor, grass_bitmask_repo, GRASS_SOURCE_ID)
-			if layer_ice.get_cell_source_id(target_cell) == ICE_SOURCE_ID:
-				apply_bitmask_to_single_cell(target_cell, layer_ice, grass_bitmask_repo, ICE_SOURCE_ID)
+			if layer_wall.get_cell_source_id(target_cell) == TileSkinData.WALL_SOURCE_ID:
+				apply_bitmask_to_single_cell(target_cell, layer_wall, TileSkinData.wall_bitmask_repo, TileSkinData.WALL_SOURCE_ID)
+			if layer_floor.get_cell_source_id(target_cell) == TileSkinData.GRASS_SOURCE_ID:
+				apply_bitmask_to_single_cell(target_cell, layer_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
+			if layer_ice.get_cell_source_id(target_cell) == TileSkinData.ICE_SOURCE_ID:
+				apply_bitmask_to_single_cell(target_cell, layer_ice, TileSkinData.grass_bitmask_repo, TileSkinData.ICE_SOURCE_ID)
 
 func is_grass_or_ice(pos: Vector2i) -> bool:
-	return get_source_id(active_floor, pos) == GRASS_SOURCE_ID or get_source_id(active_ice, pos) == ICE_SOURCE_ID
+	return get_source_id(active_floor, pos) == TileSkinData.GRASS_SOURCE_ID or get_source_id(active_ice, pos) == TileSkinData.ICE_SOURCE_ID
 
 func get_grass_theme(cell_pos: Vector2i) -> String:
 	if active_floor == m3_floor:
@@ -621,7 +472,7 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 	
 	var score : int = 0
 	
-	if source_id == WALL_SOURCE_ID:
+	if source_id == TileSkinData.WALL_SOURCE_ID:
 		if is_tile_connected(layer, cell_pos + Vector2i.UP, source_id):    score += 1
 		if is_tile_connected(layer, cell_pos + Vector2i.RIGHT, source_id): score += 2
 		if is_tile_connected(layer, cell_pos + Vector2i.DOWN, source_id):  score += 4
@@ -635,20 +486,20 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 	var theme = get_grass_theme(cell_pos)
 	var main_theme_key = "dark" if theme == "_dark" else "light"
 	
-	if source_id == GRASS_SOURCE_ID:
-		var main_atlas = get_tile_variation(cell_pos, dicFloor[main_theme_key], main_theme_key)
+	if source_id == TileSkinData.GRASS_SOURCE_ID:
+		var main_atlas = get_tile_variation(cell_pos, get_skin_element("floor", main_theme_key), main_theme_key)
 		apply_custom_cell(layer, cell_pos, source_id, main_atlas)
-	elif source_id == ICE_SOURCE_ID:
-		apply_custom_cell(layer, cell_pos, source_id, dicIce)
+	elif source_id == TileSkinData.ICE_SOURCE_ID:
+		apply_custom_cell(layer, cell_pos, source_id, get_tile_variation(cell_pos, get_skin_element("", "ice"), "ice"))
 		
-		var border_source_id = GRASS_SOURCE_ID
-		var no_up = get_source_id(active_ice, cell_pos + Vector2i.UP) != ICE_SOURCE_ID and get_source_id(active_wall, cell_pos + Vector2i.UP) != WALL_SOURCE_ID
-		var no_right = get_source_id(active_ice, cell_pos + Vector2i.RIGHT) != ICE_SOURCE_ID and get_source_id(active_wall, cell_pos + Vector2i.RIGHT) != WALL_SOURCE_ID
-		var no_up_right = get_source_id(active_ice, cell_pos + Vector2i(1, -1)) != ICE_SOURCE_ID and get_source_id(active_wall, cell_pos + Vector2i(1, -1)) != WALL_SOURCE_ID
+		var border_source_id = TileSkinData.GRASS_SOURCE_ID
+		var no_up = get_source_id(active_ice, cell_pos + Vector2i.UP) != TileSkinData.ICE_SOURCE_ID and get_source_id(active_wall, cell_pos + Vector2i.UP) != TileSkinData.WALL_SOURCE_ID
+		var no_right = get_source_id(active_ice, cell_pos + Vector2i.RIGHT) != TileSkinData.ICE_SOURCE_ID and get_source_id(active_wall, cell_pos + Vector2i.RIGHT) != TileSkinData.WALL_SOURCE_ID
+		var no_up_right = get_source_id(active_ice, cell_pos + Vector2i(1, -1)) != TileSkinData.ICE_SOURCE_ID and get_source_id(active_wall, cell_pos + Vector2i(1, -1)) != TileSkinData.WALL_SOURCE_ID
 		
-		if no_up: apply_custom_cell(active_persp_up_ice, cell_pos + Vector2i.UP, border_source_id, dicUpIce["normal_ice"])
-		if no_right: apply_custom_cell(active_persp_right_ice, cell_pos + Vector2i.RIGHT, border_source_id, dicRightIce["ice"])
-		if no_up and no_right and no_up_right: apply_custom_cell(active_persp_up_ice, cell_pos + Vector2i(1, -1), border_source_id, dicUpIce["E_ice"])
+		if no_up: apply_custom_cell(active_persp_up_ice, cell_pos + Vector2i.UP, border_source_id, get_tile_variation(cell_pos, get_skin_element("up_ice", "normal_ice"), "up_ice"))
+		if no_right: apply_custom_cell(active_persp_right_ice, cell_pos + Vector2i.RIGHT, border_source_id, get_tile_variation(cell_pos, get_skin_element("right_ice", "ice"), "right_ice"))
+		if no_up and no_right and no_up_right: apply_custom_cell(active_persp_up_ice, cell_pos + Vector2i(1, -1), border_source_id, get_tile_variation(cell_pos, get_skin_element("up_ice", "E_ice"), "up_ice_E"))
 		
 	if repo.has(score):
 		var variations = repo[score]
@@ -656,29 +507,29 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 		var tile_data = variations[pseudo_rand].duplicate(true)
 		
 		var border_source_id = source_id
-		if source_id == ICE_SOURCE_ID:
-			border_source_id = GRASS_SOURCE_ID
+		if source_id == TileSkinData.ICE_SOURCE_ID:
+			border_source_id = TileSkinData.GRASS_SOURCE_ID
 
-		if source_id == WALL_SOURCE_ID and tile_data.has("main") and tile_data["main"] != null:
+		if source_id == TileSkinData.WALL_SOURCE_ID and tile_data.has("main") and tile_data["main"] != null:
 			var data = tile_data["main"]
 			if typeof(data) == TYPE_DICTIONARY:
 				for offset in data:
-					var final_atlas = get_tile_variation(cell_pos, data[offset], "main_" + str(offset))
+					var final_atlas = get_tile_variation(cell_pos, get_skin_element("wall", str(data[offset])), "main_" + str(offset))
 					apply_custom_cell(layer, cell_pos + offset, source_id, final_atlas)
 			else:
-				var final_atlas = get_tile_variation(cell_pos, data, "main")
+				var final_atlas = get_tile_variation(cell_pos, get_skin_element("wall", str(data)), "main")
 				apply_custom_cell(layer, cell_pos, source_id, final_atlas)
 
 		var process_water_right = func(w_data):
-			var has_solid_right = get_source_id(active_wall, cell_pos + Vector2i.RIGHT) == WALL_SOURCE_ID or is_grass_or_ice(cell_pos + Vector2i.RIGHT)
+			var has_solid_right = get_source_id(active_wall, cell_pos + Vector2i.RIGHT) == TileSkinData.WALL_SOURCE_ID or is_grass_or_ice(cell_pos + Vector2i.RIGHT)
 			if has_solid_right: return 
 				
 			var blocked_eright_wall = (
-				get_source_id(active_wall, cell_pos + Vector2i.RIGHT) == WALL_SOURCE_ID or
+				get_source_id(active_wall, cell_pos + Vector2i.RIGHT) == TileSkinData.WALL_SOURCE_ID or
 				is_grass_or_ice(cell_pos + Vector2i.RIGHT) or
-				get_source_id(active_wall, cell_pos + Vector2i.DOWN) == WALL_SOURCE_ID or
+				get_source_id(active_wall, cell_pos + Vector2i.DOWN) == TileSkinData.WALL_SOURCE_ID or
 				is_grass_or_ice(cell_pos + Vector2i.DOWN) or
-				get_source_id(active_wall, cell_pos + Vector2i(1, 1)) == WALL_SOURCE_ID or
+				get_source_id(active_wall, cell_pos + Vector2i(1, 1)) == TileSkinData.WALL_SOURCE_ID or
 				is_grass_or_ice(cell_pos + Vector2i(1, 1))
 			)
 			
@@ -690,7 +541,7 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 					if tex == "normal":
 						var coords_above = get_atlas_coords(active_persp_Wright, target_pos + Vector2i.UP)
 						tex = "full" if (coords_above.y == 2 or coords_above.y == 3) else "mini"
-					var final_atlas = dicWaterRight.get(tex + theme, dicWaterRight.get(tex))
+					var final_atlas = get_skin_element("water_right", tex, theme)
 					apply_custom_cell(active_persp_Wright, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "water_right_" + str(offset)))
 			else:
 				var tex = str(w_data)
@@ -699,20 +550,20 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 					if tex == "normal":
 						var coords_above = get_atlas_coords(active_persp_Wright, target_pos + Vector2i.UP)
 						tex = "full" if (coords_above.y == 2 or coords_above.y == 3) else "mini"
-					var final_atlas = dicWaterRight.get(tex + theme, dicWaterRight.get(tex))
+					var final_atlas = get_skin_element("water_right", tex, theme)
 					apply_custom_cell(active_persp_Wright, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "water_right"))
 
 		if tile_data.has("persp_down_water") and tile_data["persp_down_water"] != null:
 			var data = tile_data["persp_down_water"]
 			if typeof(data) == TYPE_DICTIONARY:
 				for offset in data:
-					var final_atlas = dicWaterDown.get(str(data[offset]) + theme, dicWaterDown.get(str(data[offset])))
+					var final_atlas = get_skin_element("water_down", str(data[offset]), theme)
 					apply_custom_cell(active_persp_Wdown, cell_pos + offset, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_down_water_" + str(offset)))
 			else:
-				var final_atlas = dicWaterDown.get(str(data) + theme, dicWaterDown.get(str(data)))
+				var final_atlas = get_skin_element("water_down", str(data), theme)
 				apply_custom_cell(active_persp_Wdown, cell_pos + Vector2i.DOWN, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_down_water"))
 
-		if source_id != ICE_SOURCE_ID and tile_data.has("persp_up") and tile_data["persp_up"] != null:
+		if source_id != TileSkinData.ICE_SOURCE_ID and tile_data.has("persp_up") and tile_data["persp_up"] != null:
 			var data = tile_data["persp_up"]
 			var no_up = not is_tile_connected(layer, cell_pos + Vector2i.UP, source_id)
 			var no_right = not is_tile_connected(layer, cell_pos + Vector2i.RIGHT, source_id)
@@ -722,15 +573,15 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 					if data == "normal": data = { Vector2i(0, -1): "normal", Vector2i(1, -1): "E" }
 			if typeof(data) == TYPE_DICTIONARY:
 				for offset in data:
-					var final_atlas = dicUp.get(str(data[offset]) + theme, dicUp.get(str(data[offset])))
+					var final_atlas = get_skin_element("up", str(data[offset]), theme)
 					apply_custom_cell(active_persp_up, cell_pos + offset, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_up_" + str(offset)))
 			else:
-				var final_atlas = dicUp.get(str(data) + theme, dicUp.get(str(data)))
+				var final_atlas = get_skin_element("up", str(data), theme)
 				apply_custom_cell(active_persp_up, cell_pos + Vector2i.UP, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_up"))
 
 		if tile_data.has("persp_left_water") and tile_data["persp_left_water"] != null:
 			var data = tile_data["persp_left_water"]
-			var forbid_eleft = (source_id == WALL_SOURCE_ID and is_grass_or_ice(cell_pos + Vector2i.DOWN))
+			var forbid_eleft = (source_id == TileSkinData.WALL_SOURCE_ID and is_grass_or_ice(cell_pos + Vector2i.DOWN))
 			if is_tile_connected(layer, cell_pos + Vector2i(-1, -1), source_id):
 				if typeof(data) == TYPE_DICTIONARY:
 					var modified_data = data.duplicate()
@@ -754,7 +605,7 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 					if tex == "mini" or tex == "full":
 						var coords_above = get_atlas_coords(active_persp_Wleft, target_pos + Vector2i.UP)
 						tex = "full" if (coords_above.y == 2 or coords_above.y == 3) else "mini"
-					var final_atlas = dicWaterLeft.get(tex + theme, dicWaterLeft.get(tex))
+					var final_atlas = get_skin_element("water_left", tex, theme)
 					apply_custom_cell(active_persp_Wleft, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_left_water_" + str(offset)))
 			else:
 				var tex = str(data)
@@ -762,27 +613,27 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 				if tex == "mini" or tex == "full":
 					var coords_above = get_atlas_coords(active_persp_Wleft, target_pos + Vector2i.UP)
 					tex = "full" if (coords_above.y == 2 or coords_above.y == 3) else "mini"
-				var final_atlas = dicWaterLeft.get(tex + theme, dicWaterLeft.get(tex))
+				var final_atlas = get_skin_element("water_left", tex, theme)
 				apply_custom_cell(active_persp_Wleft, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_left_water"))
 
 		if tile_data.has("persp_right") and tile_data["persp_right"] != null:
 			var data = tile_data["persp_right"]
 			process_water_right.call(data)
-			if source_id != ICE_SOURCE_ID:
+			if source_id != TileSkinData.ICE_SOURCE_ID:
 				if typeof(data) == TYPE_DICTIONARY:
 					for offset in data:
-						var final_atlas = dicRight.get(str(data[offset]) + theme, dicRight.get(str(data[offset])))
+						var final_atlas = get_skin_element("right", str(data[offset]), theme)
 						apply_custom_cell(active_persp_right, cell_pos + offset, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_right_" + str(offset)))
 				else:
-					var final_atlas = dicRight.get(str(data) + theme, dicRight.get(str(data)))
+					var final_atlas = get_skin_element("right", str(data), theme)
 					apply_custom_cell(active_persp_right, cell_pos + Vector2i.RIGHT, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_right"))
 
 		if tile_data.has("persp_right_wall") and tile_data["persp_right_wall"] != null:
 			var data = tile_data["persp_right_wall"]
 			process_water_right.call(data)
-			var forbid_eright_wall = (source_id == WALL_SOURCE_ID and is_grass_or_ice(cell_pos + Vector2i.DOWN))
+			var forbid_eright_wall = (source_id == TileSkinData.WALL_SOURCE_ID and is_grass_or_ice(cell_pos + Vector2i.DOWN))
 			var has_down_right = is_tile_connected(layer, cell_pos + Vector2i(1, 1), source_id)
-			var has_grass_down_right = (source_id == WALL_SOURCE_ID and is_grass_or_ice(cell_pos + Vector2i(1, 1)))
+			var has_grass_down_right = (source_id == TileSkinData.WALL_SOURCE_ID and is_grass_or_ice(cell_pos + Vector2i(1, 1)))
 			if (has_down_right or forbid_eright_wall or has_grass_down_right) and typeof(data) == TYPE_DICTIONARY:
 				var modified_data = data.duplicate()
 				var keys_to_erase = []
@@ -792,20 +643,20 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 				data = modified_data
 			if typeof(data) == TYPE_DICTIONARY:
 				for offset in data:
-					var final_atlas = dicRightWall.get(data[offset] + theme, dicRightWall.get(data[offset]))
+					var final_atlas = get_skin_element("right_wall", str(data[offset]), theme)
 					apply_custom_cell(active_persp_right_wall, cell_pos + offset, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_right_wall_" + str(offset)))
 			else:
-				var final_atlas = dicRightWall.get(data + theme, dicRightWall.get(data))
+				var final_atlas = get_skin_element("right_wall", str(data), theme)
 				apply_custom_cell(active_persp_right_wall, cell_pos + Vector2i.RIGHT, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_right_wall"))
 
 		if tile_data.has("persp_up_wall") and tile_data["persp_up_wall"] != null:
 			var data = tile_data["persp_up_wall"]
 			if typeof(data) == TYPE_DICTIONARY:
 				for offset in data:
-					var final_atlas = dicUpWall.get(data[offset] + theme, dicUpWall.get(data[offset]))
+					var final_atlas = get_skin_element("up_wall", str(data[offset]), theme)
 					apply_custom_cell(active_persp_up_wall, cell_pos + offset, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_up_wall_" + str(offset)))
 			else:
-				var final_atlas = dicUpWall.get(data + theme, dicUpWall.get(data))
+				var final_atlas = get_skin_element("up_wall", str(data), theme)
 				apply_custom_cell(active_persp_up_wall, cell_pos + Vector2i.UP, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_up_wall"))
 
 func get_tile_variation(cell_pos: Vector2i, data_source: Variant, layer_type: String) -> Variant:
@@ -826,6 +677,6 @@ func apply_custom_cell(layer: TileMapLayer, target_pos: Vector2i, default_source
 	layer.set_cell(target_pos, final_source_id, final_coords)
 
 func is_tile_connected(layer: TileMapLayer, pos: Vector2i, base_source_id: int) -> bool:
-	if base_source_id == GRASS_SOURCE_ID or base_source_id == ICE_SOURCE_ID:
-		return is_grass_or_ice(pos) or get_source_id(active_wall, pos) == WALL_SOURCE_ID
+	if base_source_id == TileSkinData.GRASS_SOURCE_ID or base_source_id == TileSkinData.ICE_SOURCE_ID:
+		return is_grass_or_ice(pos) or get_source_id(active_wall, pos) == TileSkinData.WALL_SOURCE_ID
 	return get_source_id(layer, pos) == base_source_id
