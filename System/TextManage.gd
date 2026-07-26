@@ -4,7 +4,7 @@ extends Button
 @export var TextFR: String
 @export var Basescale: = Vector2(1,1)
 @export var augmentation: = Vector2(1.5, 1.5)
-
+@export var move = true
 func _ready() -> void :
 	offset_transform_enabled = true
 	connect("visibility_changed", _on_visibility_changed)
@@ -27,12 +27,13 @@ func _on_focus_entered() -> void:
 	tween.set_trans(Tween.TRANS_QUINT)
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(target, "offset_transform_scale", Basescale * augmentation, 0.2)
-	tween.parallel().tween_property(target, "offset_transform_rotation", 0.2, 0.2)
-	tween.set_loops()
-	tween.set_trans(Tween.TRANS_SINE)
-	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property(target, "offset_transform_rotation", -0.2, 2)
-	tween.tween_property(target, "offset_transform_rotation", 0.2, 2)
+	if move == true:
+		tween.parallel().tween_property(target, "offset_transform_rotation", 0.2, 0.2)
+		tween.set_loops()
+		tween.set_trans(Tween.TRANS_SINE)
+		tween.set_ease(Tween.EASE_OUT)
+		tween.tween_property(target, "offset_transform_rotation", -0.2, 2)
+		tween.tween_property(target, "offset_transform_rotation", 0.2, 2)
 
 
 func _on_focus_exited() -> void:

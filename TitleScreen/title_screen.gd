@@ -52,12 +52,24 @@ func _ready() -> void :
 	AUDIOMANAGER.music_player.volume_db = -30
 	AudioServer.set_bus_effect_enabled(1, 0, false)
 
+	$CanvasLayer/StartControl.visible = false
+	$CanvasLayer/MDRlogo.visible = true
+	
 func _process(delta: float) -> void :
 	node_path_follow_2d.progress_ratio += delta * camera_speed
 	if $BGM.volume_db < 0:
 		$BGM.volume_db += 0.2
+	if Input.is_action_just_pressed("escape"):
+		if $CanvasLayer/StartControl.visible == true:
+			print("susioauosoazhdf")
+			$CanvasLayer/MenuControl.visible = true
+			$CanvasLayer/MDRlogo.visible = true
+			$CanvasLayer/StartControl.visible = false
+			%Start.grab_focus()
 
 func _input(event: InputEvent) -> void :
+
+
 
 	if not Input.is_joy_known(event.get_device()):
 

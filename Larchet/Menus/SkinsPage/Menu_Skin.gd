@@ -49,6 +49,20 @@ func update_menu() -> void:
 			slot_instance.pressed.connect(_on_skin_slot_pressed.bind(skin_data.skin_id))
 		if i == start_index:
 			slot_instance.grab_focus.call_deferred()
+			slot_instance.focus_neighbor_left = precedent.get_path()
+			back.focus_neighbor_bottom = slot_instance.get_path()
+			back.focus_neighbor_right = slot_instance.get_path()
+			precedent.focus_neighbor_right = slot_instance.get_path()
+			precedent.focus_neighbor_top = slot_instance.get_path()
+		#if i >= end_index/2:
+			#slot_instance.focus_neighbor_bottom = suivant.get_path()
+			print(end_index)
+		if i == end_index - 1:
+			slot_instance.focus_neighbor_right = suivant.get_path()
+			suivant.focus_neighbor_left = slot_instance.get_path()
+			suivant.focus_neighbor_top = slot_instance.get_path()
+		if i == end_index/2 - 1:
+			slot_instance.focus_neighbor_right = suivant.get_path()
 	precedent.visible = current_page > 0
 	suivant.visible = end_index < total_skins
 
@@ -61,7 +75,7 @@ func _on_suivant_pressed() -> void:
 func _on_back_pressed() -> void:
 	$%Select.play()
 	get_parent().get_child(4).find_child("CanvasLayer").visible = true
-	get_parent().get_child(4).find_child("CanvasLayer").find_child("MenuControl").find_child("Start").grab_focus()
+	get_parent().get_child(4).find_child("CanvasLayer").find_child("MenuControl").find_child("Skins").grab_focus()
 	queue_free()
 
 func _on_precedent_pressed() -> void:
@@ -104,3 +118,15 @@ func _input(event: InputEvent) -> void:
 				grid_container.get_child(0).grab_focus()
 			else:
 				back.grab_focus()
+
+
+func _on_suivant_focus_entered() -> void:
+	$%Select.play()
+	current_page += 1
+	update_menu()
+
+
+func _on_precedent_focus_entered() -> void:
+	$%Select.play()
+	current_page -= 1
+	update_menu()
