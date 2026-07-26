@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://c5cubmcn3lk3j" path="res://Resources/Secret_data/Secret4.tres" id="8"]
 [ext_resource type="Resource" uid="uid://b6rb010v44rl" path="res://Resources/Secret_data/Secret5.tres" id="9"]
 [ext_resource type="Resource" uid="uid://c0qunmu6la8ot" path="res://Resources/Secret_data/Secret6.tres" id="10"]
+[ext_resource type="Texture2D" uid="uid://bpjhkwmterybp" path="res://ss_e644aa0b327bb9ea99c9ec2528f0fb8445d7f46e.1920x1080.jpg" id="10_v663j"]
 [ext_resource type="PackedScene" uid="uid://op00a3qvecoo" path="res://Interface/TimerBest.tscn" id="11"]
 [ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="12"]
 [ext_resource type="StyleBox" uid="uid://dnuh3h61crver" path="res://Larchet/Menus/EchPrecSuiv.tres" id="13_pqi1g"]
@@ -28,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://8nehy076slkd" path="res://Interface/Sprites/tile_0344.png" id="20"]
 [ext_resource type="Texture2D" uid="uid://ccnu3p7xf38jn" path="res://Interface/Sprites/tile_0034.png" id="21"]
 [ext_resource type="Texture2D" uid="uid://cau4rt11n5hh6" path="res://Interface/Sprites/tile_0346.png" id="22"]
+[ext_resource type="Texture2D" uid="uid://c3exwahivwsrs" path="res://Larchet/Skins/Sprites/L.All_V1.png" id="22_lvbp2"]
 [ext_resource type="Texture2D" uid="uid://dvde7twu85lc6" path="res://Interface/Sprites/tile_0347.png" id="23"]
 [ext_resource type="Texture2D" uid="uid://cp3vki5vscen3" path="res://Interface/Sprites/tile_0345.png" id="24"]
 [ext_resource type="Texture2D" uid="uid://wibs43mj6fet" path="res://Interface/Sprites/tile_0166.png" id="25"]
@@ -72,21 +74,6 @@
 shader = ExtResource("2")
 shader_parameter/amount = 1.5
 
-[sub_resource type="Resource" id="Resource_r1ysb"]
-resource_local_to_scene = true
-script = ExtResource("5")
-secret_index = 1
-secret_color_modulate = Color(0.0156863, 1, 1, 1)
-secret_name = "Secret 1"
-secret_desc = "Secret 1"
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qjbn"]
-bg_color = Color(0.216, 0.2776, 0.3, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-
 [sub_resource type="Theme" id="Theme_h4y7g"]
 default_font_size = 8
 Button/colors/font_hover_color = Color(1, 1, 1, 1)
@@ -107,8 +94,6 @@ Button/styles/normal = ExtResource("14_ye7gv")
 [sub_resource type="GDScript" id="GDScript_ye7gv"]
 script/source = "extends Button
 
-func _on_bouton_skins_pressed() -> void:
-	get_tree().change_scene_to_file(\"res://Larchet/Menus/SkinsPage/Skins.tscn\")
 
 var tween: Tween
 func _on_focus_entered() -> void:
@@ -160,6 +145,21 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 287.04498, -86.155, 0, 0, 0, 0, 160.045, -50.155, 0, 0, 0, 0, 145.045, 0.8450012, 0, 0, 0, 0, 160.045, 62.845, 0, 0, 0, 0, 187.045, 95.845, 0, 0, 0, 0, 233.045, 107.845, 0, 0, 0, 0, 285.04498, 102.845, 0, 0, 0, 0, 316.04498, 95.845, 0, 0, 0, 0, 339.04498, 68.845, 0, 0, 0, 0, 349.04498, 23.845001, 0, 0, 0, 0, 346.04498, -10.154999, 0, 0, 0, 0, 322.04498, -57.155, 0, 0, 0, 0, 287.04498, -86.155)
 }
 point_count = 13
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qjbn"]
+bg_color = Color(0.216, 0.2776, 0.3, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="Resource" id="Resource_r1ysb"]
+resource_local_to_scene = true
+script = ExtResource("5")
+secret_index = 1
+secret_color_modulate = Color(0.0156863, 1, 1, 1)
+secret_name = "Secret 1"
+secret_desc = "Secret 1"
 
 [sub_resource type="LabelSettings" id="LabelSettings_bpm3t"]
 font = ExtResource("12")
@@ -1245,6 +1245,7 @@ offset_top = -79.845
 offset_right = 184.955
 offset_bottom = 131.155
 color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
 
 [node name="MDRlogo" type="TextureRect" parent="CanvasLayer" unique_id=2070858163]
 anchors_preset = 15
@@ -1309,89 +1310,251 @@ gravity = Vector2(-900, 0)
 scale_amount_min = 2.3
 scale_amount_max = 2.3
 
-[node name="Panel_star" type="Panel" parent="CanvasLayer" unique_id=1430261193]
+[node name="StartControl" type="Control" parent="CanvasLayer" unique_id=650131698]
 visible = false
-offset_left = 158.0
-offset_top = 31.0
-offset_right = 265.0
-offset_bottom = 43.0
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="HBoxContainer_star" type="HBoxContainer" parent="CanvasLayer/Panel_star" unique_id=1726483620]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 8.0
-offset_top = -7.0
-offset_right = 8.0
-offset_bottom = -7.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 15
-alignment = 1
-
-[node name="StarCount1" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1542527147 instance=ExtResource("4")]
-layout_mode = 2
-secret_data = SubResource("Resource_r1ysb")
-
-[node name="StarCount2" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1480194519 instance=ExtResource("4")]
-layout_mode = 2
-secret_data = ExtResource("6")
-
-[node name="StarCount3" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1363818523 instance=ExtResource("4")]
-layout_mode = 2
-secret_data = ExtResource("7")
-
-[node name="StarCount4" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=20854970 instance=ExtResource("4")]
-layout_mode = 2
-secret_data = ExtResource("8")
-
-[node name="StarCount5" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=286318278 instance=ExtResource("4")]
-layout_mode = 2
-secret_data = ExtResource("9")
-
-[node name="StarCount6" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=738963109 instance=ExtResource("4")]
-layout_mode = 2
-secret_data = ExtResource("10")
-
-[node name="TimerBest" parent="CanvasLayer" unique_id=847359061 instance=ExtResource("11")]
-visible = false
-offset_left = 292.0
-offset_top = 3.0
-offset_right = 132.0
-offset_bottom = -87.0
-scale = Vector2(2, 2)
-
-[node name="best_Label_msec" parent="CanvasLayer/TimerBest/Control" index="2"]
+[node name="StartCampagne" type="Button" parent="CanvasLayer/StartControl" unique_id=1646396890]
+z_index = 1
 layout_mode = 0
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = -20.5
-offset_top = -4.0
-offset_right = -2.5
-offset_bottom = 19.0
-grow_horizontal = 1
+offset_left = -106.045
+offset_top = -25.845001
+offset_right = 2.9550018
+offset_bottom = 80.155
+offset_transform_enabled = true
+theme = SubResource("Theme_h4y7g")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = ExtResource("14")
+theme_override_styles/hover = ExtResource("15_8xq3f")
+theme_override_styles/focus = ExtResource("15_8xq3f")
+button_mask = 0
+text = "Campagne"
+icon = ExtResource("10_v663j")
+icon_alignment = 1
+vertical_icon_alignment = 2
+expand_icon = true
+script = ExtResource("15")
+TextEN = "Campagne"
+TextFR = "Campagne"
+augmentation = Vector2(1.1, 1.1)
 
-[node name="TimerBest_superdash" parent="CanvasLayer" unique_id=454201099 instance=ExtResource("11")]
+[node name="StartLevelEditor" type="Button" parent="CanvasLayer/StartControl" unique_id=483512248]
+z_index = 1
+layout_mode = 0
+offset_left = 7.955002
+offset_top = 36.155
+offset_right = 114.955
+offset_bottom = 80.155
+offset_transform_enabled = true
+focus_neighbor_left = NodePath("../StartCampagne")
+theme = SubResource("Theme_h4y7g")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = ExtResource("14")
+theme_override_styles/hover = ExtResource("15_8xq3f")
+theme_override_styles/focus = ExtResource("15_8xq3f")
+button_mask = 0
+text = "Level Editor"
+expand_icon = true
+script = ExtResource("15")
+TextEN = "Level editor"
+TextFR = "editeur de niveau"
+augmentation = Vector2(1.1, 1.1)
+
+[node name="StartOnlineLevel" type="Button" parent="CanvasLayer/StartControl" unique_id=1944629534]
+z_index = 1
+layout_mode = 0
+offset_left = 6.955002
+offset_top = -24.845001
+offset_right = 114.955
+offset_bottom = 32.155
+offset_transform_enabled = true
+theme = SubResource("Theme_h4y7g")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = ExtResource("14")
+theme_override_styles/hover = ExtResource("15_8xq3f")
+theme_override_styles/focus = ExtResource("15_8xq3f")
+button_mask = 0
+text = "Online Level"
+expand_icon = true
+script = ExtResource("15")
+TextEN = "Online level"
+TextFR = "niveau en ligne "
+augmentation = Vector2(1.1, 1.1)
+
+[node name="MenuControl" type="Control" parent="CanvasLayer" unique_id=1590043801]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -80.045
+offset_top = 84.155
+offset_right = -80.045
+offset_bottom = 84.155
+size_flags_horizontal = 4
+size_flags_vertical = 4
+offset_transform_scale = Vector2(1.135, 1.135)
+script = ExtResource("14_r1ysb")
+
+[node name="Panel" type="Panel" parent="CanvasLayer/MenuControl" unique_id=1391299699]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -11.0
+offset_right = 168.0
+offset_bottom = 26.0
+offset_transform_enabled = true
+
+[node name="Start" type="Button" parent="CanvasLayer/MenuControl/Panel" unique_id=2009865203]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 0
+offset_left = 55.0
+offset_top = 4.0
+offset_right = 124.0
+offset_bottom = 33.0
+offset_transform_enabled = true
+focus_neighbor_top = NodePath("../../Quit")
+theme = SubResource("Theme_h4y7g")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = ExtResource("14")
+theme_override_styles/hover = ExtResource("15_8xq3f")
+theme_override_styles/focus = ExtResource("15_8xq3f")
+button_mask = 0
+text = "Start"
+expand_icon = true
+script = ExtResource("15")
+TextEN = "Start"
+TextFR = "Commencer"
+augmentation = Vector2(1.3, 1.3)
+
+[node name="Skins" type="Button" parent="CanvasLayer/MenuControl/Panel" unique_id=1755859042]
+z_index = 1
+layout_mode = 0
+offset_left = 3.0
+offset_top = 9.0
+offset_right = 53.0
+offset_bottom = 33.0
+offset_transform_enabled = true
+theme = SubResource("Theme_8fs27")
+theme_override_styles/normal = ExtResource("14")
+theme_override_styles/hover = ExtResource("15_8xq3f")
+theme_override_styles/focus = ExtResource("15_8xq3f")
+button_mask = 0
+text = "Skins"
+alignment = 2
+expand_icon = true
+script = SubResource("GDScript_ye7gv")
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/MenuControl/Panel/Skins" unique_id=1061633405]
+position = Vector2(14, 13)
+scale = Vector2(1.5, 1.4285715)
+texture = ExtResource("22_lvbp2")
+region_enabled = true
+region_rect = Rect2(50, 32, 13, 14)
+
+[node name="Controls" type="Button" parent="CanvasLayer/MenuControl/Panel" unique_id=2014148059]
+z_index = 1
+layout_mode = 0
+offset_left = 127.0
+offset_top = 15.0
+offset_right = 164.0
+offset_bottom = 33.0
+offset_transform_enabled = true
+theme = SubResource("Theme_8fs27")
+theme_override_styles/normal = ExtResource("14")
+theme_override_styles/hover = ExtResource("15_8xq3f")
+theme_override_styles/focus = ExtResource("15_8xq3f")
+button_mask = 0
+text = "Controls"
+expand_icon = true
+script = ExtResource("18_lmqdj")
+
+[node name="Map" type="Button" parent="CanvasLayer/MenuControl" unique_id=1974773974]
 visible = false
-modulate = Color(1, 1, 1, 0.588235)
-offset_left = 267.0
-offset_top = 40.0
-offset_right = 107.0
-offset_bottom = -50.0
+z_index = 1
+layout_mode = 0
+offset_left = 27.0
+offset_right = 48.0
+offset_bottom = 18.0
+offset_transform_enabled = true
+theme = SubResource("Theme_8fs27")
+theme_override_styles/normal = ExtResource("14_ye7gv")
+theme_override_styles/hover = ExtResource("15_8xq3f")
+theme_override_styles/focus = ExtResource("15_8xq3f")
+button_mask = 0
+text = "Map"
+script = ExtResource("15")
+TextEN = "Map"
+TextFR = "Carte"
+
+[node name="Options" type="Button" parent="CanvasLayer/MenuControl" unique_id=329072095]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_left = -65.0
+offset_top = -142.0
+offset_right = -17.0
+offset_bottom = -117.0
+offset_transform_enabled = true
+theme = SubResource("Theme_8fs27")
+theme_override_styles/normal = ExtResource("14")
+theme_override_styles/hover = ExtResource("15_8xq3f")
+theme_override_styles/focus = ExtResource("15_8xq3f")
+button_mask = 0
+text = "Options"
+script = ExtResource("19_v0fyl")
+
+[node name="texture_deploy_option" type="TextureRect" parent="CanvasLayer/MenuControl/Options" unique_id=1215230124]
+visible = false
+modulate = Color(1, 0.329412, 0.278431, 1)
+layout_mode = 0
+offset_left = 71.0
+offset_top = -4.0
+offset_right = 111.0
+offset_bottom = 36.0
 scale = Vector2(0.5, 0.5)
-superdash_time = true
+texture = ExtResource("16")
+flip_v = true
 
-[node name="best_Label_msec" parent="CanvasLayer/TimerBest_superdash/Control" index="2"]
+[node name="Panel_options2" parent="CanvasLayer/MenuControl" unique_id=418497896 instance=ExtResource("17")]
+visible = false
+custom_minimum_size = Vector2(70, 42.445)
 layout_mode = 0
-anchor_left = 0.0
+anchors_preset = 0
 anchor_right = 0.0
-offset_left = -19.0
-offset_top = -4.0
-offset_right = -1.0
-offset_bottom = 19.0
-grow_horizontal = 1
+anchor_bottom = 0.0
+offset_bottom = 0.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="Quit" type="Button" parent="CanvasLayer/MenuControl" unique_id=635595062]
+z_index = 1
+layout_mode = 0
+offset_left = -65.0
+offset_top = 10.0
+offset_right = -27.0
+offset_bottom = 31.0
+offset_transform_enabled = true
+focus_neighbor_bottom = NodePath("../Panel/Start")
+theme = SubResource("Theme_pn7vh")
+theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
+theme_override_styles/normal = ExtResource("14")
+theme_override_styles/hover = ExtResource("15_8xq3f")
+theme_override_styles/focus = SubResource("StyleBoxFlat_v0fyl")
+button_mask = 0
+text = "Quit"
+script = ExtResource("15")
+TextEN = "Quit"
+TextFR = "Quitter"
+
+[node name="Path2D" type="Path2D" parent="CanvasLayer/MenuControl" unique_id=138878661]
+position = Vector2(-39, -65.99999)
+scale = Vector2(0.48507357, 0.55074745)
+curve = SubResource("Curve2D_r1ysb")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="CanvasLayer/MenuControl/Path2D" unique_id=1774424415]
+position = Vector2(287.04498, -86.155)
+rotation = 2.865374
 
 [node name="HBoxContainer_trophy" type="HBoxContainer" parent="CanvasLayer" unique_id=1349854037]
 visible = false
@@ -1438,6 +1601,7 @@ layout_mode = 2
 index_challenge = 6
 
 [node name="HBoxContainer_MENU" type="HBoxContainer" parent="CanvasLayer" unique_id=1484605486]
+visible = false
 propagate_maximum_size = false
 anchors_preset = 12
 anchor_top = 1.0
@@ -1511,153 +1675,43 @@ scale = Vector2(0.7, 0.7)
 texture = ExtResource("16")
 flip_v = true
 
-[node name="MenuControl" type="Control" parent="CanvasLayer" unique_id=1590043801]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -80.045
-offset_top = 84.155
-offset_right = -80.045
-offset_bottom = 84.155
-size_flags_horizontal = 4
-size_flags_vertical = 4
-offset_transform_enabled = true
-offset_transform_scale = Vector2(1.135, 1.135)
-script = ExtResource("14_r1ysb")
-
-[node name="Start" type="Button" parent="CanvasLayer/MenuControl" unique_id=2009865203]
-unique_name_in_owner = true
-z_index = 1
-layout_mode = 0
-offset_right = 24.000038
-offset_bottom = 18.0
-offset_transform_enabled = true
-focus_neighbor_top = NodePath("../Quit")
-theme = SubResource("Theme_h4y7g")
-theme_override_styles/normal = ExtResource("14")
-theme_override_styles/hover = ExtResource("15_8xq3f")
-theme_override_styles/focus = ExtResource("15_8xq3f")
-button_mask = 0
-text = "Start"
-expand_icon = true
-script = ExtResource("15")
-TextEN = "Start"
-TextFR = "Commencer"
-
-[node name="Map" type="Button" parent="CanvasLayer/MenuControl" unique_id=1974773974]
+[node name="TimerBest_superdash" parent="CanvasLayer" unique_id=454201099 instance=ExtResource("11")]
 visible = false
-z_index = 1
-layout_mode = 0
-offset_left = 27.0
-offset_right = 48.0
-offset_bottom = 18.0
-offset_transform_enabled = true
-theme = SubResource("Theme_8fs27")
-theme_override_styles/normal = ExtResource("14_ye7gv")
-theme_override_styles/hover = ExtResource("15_8xq3f")
-theme_override_styles/focus = ExtResource("15_8xq3f")
-button_mask = 0
-text = "Map"
-script = ExtResource("15")
-TextEN = "Map"
-TextFR = "Carte"
-
-[node name="Skins" type="Button" parent="CanvasLayer/MenuControl" unique_id=1755859042]
-z_index = 1
-layout_mode = 0
-offset_left = 27.0
-offset_right = 52.0
-offset_bottom = 18.0
-offset_transform_enabled = true
-theme = SubResource("Theme_8fs27")
-theme_override_styles/normal = ExtResource("14")
-theme_override_styles/hover = ExtResource("15_8xq3f")
-theme_override_styles/focus = ExtResource("15_8xq3f")
-button_mask = 0
-text = "Skins"
-expand_icon = true
-script = SubResource("GDScript_ye7gv")
-
-[node name="Controls" type="Button" parent="CanvasLayer/MenuControl" unique_id=2014148059]
-z_index = 1
-layout_mode = 0
-offset_left = 55.0
-offset_right = 92.0
-offset_bottom = 18.0
-offset_transform_enabled = true
-theme = SubResource("Theme_8fs27")
-theme_override_styles/normal = ExtResource("14")
-theme_override_styles/hover = ExtResource("15_8xq3f")
-theme_override_styles/focus = ExtResource("15_8xq3f")
-button_mask = 0
-text = "Controls"
-expand_icon = true
-script = ExtResource("18_lmqdj")
-
-[node name="Options" type="Button" parent="CanvasLayer/MenuControl" unique_id=329072095]
-z_index = 1
-layout_mode = 0
-offset_left = 95.0
-offset_right = 129.0
-offset_bottom = 18.0
-offset_transform_enabled = true
-theme = SubResource("Theme_8fs27")
-theme_override_styles/normal = ExtResource("14")
-theme_override_styles/hover = ExtResource("15_8xq3f")
-theme_override_styles/focus = ExtResource("15_8xq3f")
-button_mask = 0
-text = "Options"
-script = ExtResource("19_v0fyl")
-
-[node name="texture_deploy_option" type="TextureRect" parent="CanvasLayer/MenuControl/Options" unique_id=1215230124]
-visible = false
-modulate = Color(1, 0.329412, 0.278431, 1)
-layout_mode = 0
-offset_left = 71.0
-offset_top = -4.0
-offset_right = 111.0
-offset_bottom = 36.0
+modulate = Color(1, 1, 1, 0.588235)
+offset_left = 267.0
+offset_top = 40.0
+offset_right = 107.0
+offset_bottom = -50.0
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("16")
-flip_v = true
+superdash_time = true
 
-[node name="Panel_options2" parent="CanvasLayer/MenuControl" unique_id=418497896 instance=ExtResource("17")]
-visible = false
-custom_minimum_size = Vector2(70, 42.445)
+[node name="best_Label_msec" parent="CanvasLayer/TimerBest_superdash/Control" index="2"]
 layout_mode = 0
-anchors_preset = 0
+anchor_left = 0.0
 anchor_right = 0.0
-anchor_bottom = 0.0
-offset_bottom = 0.0
-size_flags_horizontal = 0
-size_flags_vertical = 8
+offset_left = -19.0
+offset_top = -4.0
+offset_right = -1.0
+offset_bottom = 19.0
+grow_horizontal = 1
 
-[node name="Quit" type="Button" parent="CanvasLayer/MenuControl" unique_id=635595062]
-z_index = 1
+[node name="TimerBest" parent="CanvasLayer" unique_id=847359061 instance=ExtResource("11")]
+visible = false
+offset_left = 292.0
+offset_top = 3.0
+offset_right = 132.0
+offset_bottom = -87.0
+scale = Vector2(2, 2)
+
+[node name="best_Label_msec" parent="CanvasLayer/TimerBest/Control" index="2"]
 layout_mode = 0
-offset_left = 132.0
-offset_right = 153.0
-offset_bottom = 18.0
-offset_transform_enabled = true
-focus_neighbor_bottom = NodePath("../Start")
-theme = SubResource("Theme_pn7vh")
-theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
-theme_override_styles/normal = ExtResource("14")
-theme_override_styles/hover = ExtResource("15_8xq3f")
-theme_override_styles/focus = SubResource("StyleBoxFlat_v0fyl")
-button_mask = 0
-text = "Quit"
-script = ExtResource("15")
-TextEN = "Quit"
-TextFR = "Quitter"
-
-[node name="Path2D" type="Path2D" parent="CanvasLayer/MenuControl" unique_id=138878661]
-position = Vector2(-39, -65.99999)
-scale = Vector2(0.48507357, 0.55074745)
-curve = SubResource("Curve2D_r1ysb")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="CanvasLayer/MenuControl/Path2D" unique_id=1774424415]
-position = Vector2(287.04498, -86.155)
-rotation = 2.865374
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = -20.5
+offset_top = -4.0
+offset_right = -2.5
+offset_bottom = 19.0
+grow_horizontal = 1
 
 [node name="HBoxContainer_trophy2" type="HBoxContainer" parent="CanvasLayer" unique_id=2011621600]
 visible = false
@@ -1691,6 +1745,52 @@ offset_left = 212.0
 offset_top = 100.0
 offset_right = 314.0
 offset_bottom = 160.0
+
+[node name="Panel_star" type="Panel" parent="CanvasLayer" unique_id=1430261193]
+visible = false
+offset_left = 158.0
+offset_top = 31.0
+offset_right = 265.0
+offset_bottom = 43.0
+
+[node name="HBoxContainer_star" type="HBoxContainer" parent="CanvasLayer/Panel_star" unique_id=1726483620]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -7.0
+offset_right = 8.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="StarCount1" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1542527147 instance=ExtResource("4")]
+layout_mode = 2
+secret_data = SubResource("Resource_r1ysb")
+
+[node name="StarCount2" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1480194519 instance=ExtResource("4")]
+layout_mode = 2
+secret_data = ExtResource("6")
+
+[node name="StarCount3" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1363818523 instance=ExtResource("4")]
+layout_mode = 2
+secret_data = ExtResource("7")
+
+[node name="StarCount4" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=20854970 instance=ExtResource("4")]
+layout_mode = 2
+secret_data = ExtResource("8")
+
+[node name="StarCount5" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=286318278 instance=ExtResource("4")]
+layout_mode = 2
+secret_data = ExtResource("9")
+
+[node name="StarCount6" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=738963109 instance=ExtResource("4")]
+layout_mode = 2
+secret_data = ExtResource("10")
 
 [node name="Label_version" type="Label" parent="CanvasLayer" unique_id=825322161]
 modulate = Color(1, 1, 1, 0.792157)
@@ -2311,501 +2411,510 @@ stream = ExtResource("60")
 bus = &"Music"
 
 [connection signal="logoAnimationFini" from="CanvasLayer/MDRlogo" to="CanvasLayer/MenuControl" method="_on_md_rlogo_logo_animation_fini"]
-[connection signal="focus_entered" from="CanvasLayer/MenuControl/Start" to="." method="_on_start_focus_entered"]
-[connection signal="focus_entered" from="CanvasLayer/MenuControl/Start" to="CanvasLayer/MenuControl/Start" method="_on_focus_entered"]
-[connection signal="focus_exited" from="CanvasLayer/MenuControl/Start" to="CanvasLayer/MenuControl/Start" method="_on_focus_exited"]
-[connection signal="pressed" from="CanvasLayer/MenuControl/Start" to="." method="_on_start_pressed"]
+[connection signal="focus_entered" from="CanvasLayer/StartControl/StartCampagne" to="CanvasLayer/StartControl/StartCampagne" method="_on_focus_entered"]
+[connection signal="focus_exited" from="CanvasLayer/StartControl/StartCampagne" to="CanvasLayer/StartControl/StartCampagne" method="_on_focus_exited"]
+[connection signal="pressed" from="CanvasLayer/StartControl/StartCampagne" to="." method="_on_start_campagne_pressed"]
+[connection signal="focus_entered" from="CanvasLayer/StartControl/StartLevelEditor" to="CanvasLayer/StartControl/StartLevelEditor" method="_on_focus_entered"]
+[connection signal="focus_exited" from="CanvasLayer/StartControl/StartLevelEditor" to="CanvasLayer/StartControl/StartLevelEditor" method="_on_focus_exited"]
+[connection signal="pressed" from="CanvasLayer/StartControl/StartLevelEditor" to="." method="_on_start_level_editor_pressed"]
+[connection signal="focus_entered" from="CanvasLayer/StartControl/StartOnlineLevel" to="CanvasLayer/StartControl/StartOnlineLevel" method="_on_focus_entered"]
+[connection signal="focus_exited" from="CanvasLayer/StartControl/StartOnlineLevel" to="CanvasLayer/StartControl/StartOnlineLevel" method="_on_focus_exited"]
+[connection signal="focus_entered" from="CanvasLayer/MenuControl/Panel/Start" to="." method="_on_start_focus_entered"]
+[connection signal="focus_entered" from="CanvasLayer/MenuControl/Panel/Start" to="CanvasLayer/MenuControl/Panel/Start" method="_on_focus_entered"]
+[connection signal="focus_exited" from="CanvasLayer/MenuControl/Panel/Start" to="CanvasLayer/MenuControl/Panel/Start" method="_on_focus_exited"]
+[connection signal="pressed" from="CanvasLayer/MenuControl/Panel/Start" to="." method="_on_start_pressed"]
+[connection signal="focus_entered" from="CanvasLayer/MenuControl/Panel/Skins" to="CanvasLayer/MenuControl/Panel/Skins" method="_on_focus_entered"]
+[connection signal="focus_exited" from="CanvasLayer/MenuControl/Panel/Skins" to="CanvasLayer/MenuControl/Panel/Skins" method="_on_focus_exited"]
+[connection signal="pressed" from="CanvasLayer/MenuControl/Panel/Skins" to="." method="_on_skins_pressed"]
+[connection signal="focus_entered" from="CanvasLayer/MenuControl/Panel/Controls" to="CanvasLayer/MenuControl/Panel/Controls" method="_on_focus_entered"]
+[connection signal="focus_exited" from="CanvasLayer/MenuControl/Panel/Controls" to="CanvasLayer/MenuControl/Panel/Controls" method="_on_focus_exited"]
+[connection signal="pressed" from="CanvasLayer/MenuControl/Panel/Controls" to="." method="_on_controls_pressed"]
 [connection signal="focus_entered" from="CanvasLayer/MenuControl/Map" to="CanvasLayer/MenuControl/Map" method="_on_focus_entered"]
 [connection signal="focus_exited" from="CanvasLayer/MenuControl/Map" to="CanvasLayer/MenuControl/Map" method="_on_focus_exited"]
 [connection signal="pressed" from="CanvasLayer/MenuControl/Map" to="." method="_on_map_pressed"]
-[connection signal="focus_entered" from="CanvasLayer/MenuControl/Skins" to="CanvasLayer/MenuControl/Skins" method="_on_focus_entered"]
-[connection signal="focus_exited" from="CanvasLayer/MenuControl/Skins" to="CanvasLayer/MenuControl/Skins" method="_on_focus_exited"]
-[connection signal="pressed" from="CanvasLayer/MenuControl/Skins" to="." method="_on_skins_pressed"]
-[connection signal="focus_entered" from="CanvasLayer/MenuControl/Controls" to="CanvasLayer/MenuControl/Controls" method="_on_focus_entered"]
-[connection signal="focus_exited" from="CanvasLayer/MenuControl/Controls" to="CanvasLayer/MenuControl/Controls" method="_on_focus_exited"]
-[connection signal="pressed" from="CanvasLayer/MenuControl/Controls" to="." method="_on_controls_pressed"]
 [connection signal="focus_entered" from="CanvasLayer/MenuControl/Options" to="CanvasLayer/MenuControl/Options" method="_on_focus_entered"]
 [connection signal="focus_exited" from="CanvasLayer/MenuControl/Options" to="CanvasLayer/MenuControl/Options" method="_on_focus_exited"]
 [connection signal="pressed" from="CanvasLayer/MenuControl/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="CanvasLayer/MenuControl/Options" to="CanvasLayer/MenuControl/Options" method="_on_pressed"]
 [connection signal="focus_entered" from="CanvasLayer/MenuControl/Quit" to="CanvasLayer/MenuControl/Quit" method="_on_focus_entered"]
 [connection signal="focus_exited" from="CanvasLayer/MenuControl/Quit" to="CanvasLayer/MenuControl/Quit" method="_on_focus_exited"]
 [connection signal="pressed" from="CanvasLayer/MenuControl/Quit" to="." method="_on_quit_pressed"]
 [connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/Fragile" to="World/MAP/tileMapLayer_fragile/Fragile" method="_on_area_entered"]
 [connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/Fragile" to="World/MAP/tileMapLayer_fragile/Fragile" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117349" to="World/MAP/tileMapLayer_fragile/@Area2D@117349" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117349" to="World/MAP/tileMapLayer_fragile/@Area2D@117349" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117350" to="World/MAP/tileMapLayer_fragile/@Area2D@117350" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117350" to="World/MAP/tileMapLayer_fragile/@Area2D@117350" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117351" to="World/MAP/tileMapLayer_fragile/@Area2D@117351" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117351" to="World/MAP/tileMapLayer_fragile/@Area2D@117351" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117352" to="World/MAP/tileMapLayer_fragile/@Area2D@117352" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117352" to="World/MAP/tileMapLayer_fragile/@Area2D@117352" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117353" to="World/MAP/tileMapLayer_fragile/@Area2D@117353" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117353" to="World/MAP/tileMapLayer_fragile/@Area2D@117353" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117354" to="World/MAP/tileMapLayer_fragile/@Area2D@117354" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117354" to="World/MAP/tileMapLayer_fragile/@Area2D@117354" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117355" to="World/MAP/tileMapLayer_fragile/@Area2D@117355" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117355" to="World/MAP/tileMapLayer_fragile/@Area2D@117355" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117356" to="World/MAP/tileMapLayer_fragile/@Area2D@117356" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117356" to="World/MAP/tileMapLayer_fragile/@Area2D@117356" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117357" to="World/MAP/tileMapLayer_fragile/@Area2D@117357" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117357" to="World/MAP/tileMapLayer_fragile/@Area2D@117357" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117358" to="World/MAP/tileMapLayer_fragile/@Area2D@117358" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117358" to="World/MAP/tileMapLayer_fragile/@Area2D@117358" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117359" to="World/MAP/tileMapLayer_fragile/@Area2D@117359" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117359" to="World/MAP/tileMapLayer_fragile/@Area2D@117359" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117360" to="World/MAP/tileMapLayer_fragile/@Area2D@117360" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117360" to="World/MAP/tileMapLayer_fragile/@Area2D@117360" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117361" to="World/MAP/tileMapLayer_fragile/@Area2D@117361" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117361" to="World/MAP/tileMapLayer_fragile/@Area2D@117361" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117362" to="World/MAP/tileMapLayer_fragile/@Area2D@117362" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117362" to="World/MAP/tileMapLayer_fragile/@Area2D@117362" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117363" to="World/MAP/tileMapLayer_fragile/@Area2D@117363" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117363" to="World/MAP/tileMapLayer_fragile/@Area2D@117363" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117364" to="World/MAP/tileMapLayer_fragile/@Area2D@117364" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117364" to="World/MAP/tileMapLayer_fragile/@Area2D@117364" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117365" to="World/MAP/tileMapLayer_fragile/@Area2D@117365" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117365" to="World/MAP/tileMapLayer_fragile/@Area2D@117365" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117366" to="World/MAP/tileMapLayer_fragile/@Area2D@117366" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117366" to="World/MAP/tileMapLayer_fragile/@Area2D@117366" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117367" to="World/MAP/tileMapLayer_fragile/@Area2D@117367" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117367" to="World/MAP/tileMapLayer_fragile/@Area2D@117367" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117368" to="World/MAP/tileMapLayer_fragile/@Area2D@117368" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117368" to="World/MAP/tileMapLayer_fragile/@Area2D@117368" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117369" to="World/MAP/tileMapLayer_fragile/@Area2D@117369" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117369" to="World/MAP/tileMapLayer_fragile/@Area2D@117369" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117370" to="World/MAP/tileMapLayer_fragile/@Area2D@117370" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117370" to="World/MAP/tileMapLayer_fragile/@Area2D@117370" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117371" to="World/MAP/tileMapLayer_fragile/@Area2D@117371" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117371" to="World/MAP/tileMapLayer_fragile/@Area2D@117371" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117372" to="World/MAP/tileMapLayer_fragile/@Area2D@117372" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117372" to="World/MAP/tileMapLayer_fragile/@Area2D@117372" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117373" to="World/MAP/tileMapLayer_fragile/@Area2D@117373" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117373" to="World/MAP/tileMapLayer_fragile/@Area2D@117373" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117374" to="World/MAP/tileMapLayer_fragile/@Area2D@117374" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117374" to="World/MAP/tileMapLayer_fragile/@Area2D@117374" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117375" to="World/MAP/tileMapLayer_fragile/@Area2D@117375" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117375" to="World/MAP/tileMapLayer_fragile/@Area2D@117375" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117376" to="World/MAP/tileMapLayer_fragile/@Area2D@117376" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117376" to="World/MAP/tileMapLayer_fragile/@Area2D@117376" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117377" to="World/MAP/tileMapLayer_fragile/@Area2D@117377" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117377" to="World/MAP/tileMapLayer_fragile/@Area2D@117377" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117378" to="World/MAP/tileMapLayer_fragile/@Area2D@117378" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117378" to="World/MAP/tileMapLayer_fragile/@Area2D@117378" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117379" to="World/MAP/tileMapLayer_fragile/@Area2D@117379" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117379" to="World/MAP/tileMapLayer_fragile/@Area2D@117379" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117380" to="World/MAP/tileMapLayer_fragile/@Area2D@117380" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117380" to="World/MAP/tileMapLayer_fragile/@Area2D@117380" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117381" to="World/MAP/tileMapLayer_fragile/@Area2D@117381" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117381" to="World/MAP/tileMapLayer_fragile/@Area2D@117381" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117382" to="World/MAP/tileMapLayer_fragile/@Area2D@117382" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117382" to="World/MAP/tileMapLayer_fragile/@Area2D@117382" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117383" to="World/MAP/tileMapLayer_fragile/@Area2D@117383" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117383" to="World/MAP/tileMapLayer_fragile/@Area2D@117383" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117384" to="World/MAP/tileMapLayer_fragile/@Area2D@117384" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117384" to="World/MAP/tileMapLayer_fragile/@Area2D@117384" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117385" to="World/MAP/tileMapLayer_fragile/@Area2D@117385" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117385" to="World/MAP/tileMapLayer_fragile/@Area2D@117385" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117386" to="World/MAP/tileMapLayer_fragile/@Area2D@117386" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117386" to="World/MAP/tileMapLayer_fragile/@Area2D@117386" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117387" to="World/MAP/tileMapLayer_fragile/@Area2D@117387" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117387" to="World/MAP/tileMapLayer_fragile/@Area2D@117387" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117388" to="World/MAP/tileMapLayer_fragile/@Area2D@117388" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117388" to="World/MAP/tileMapLayer_fragile/@Area2D@117388" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117389" to="World/MAP/tileMapLayer_fragile/@Area2D@117389" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117389" to="World/MAP/tileMapLayer_fragile/@Area2D@117389" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117390" to="World/MAP/tileMapLayer_fragile/@Area2D@117390" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117390" to="World/MAP/tileMapLayer_fragile/@Area2D@117390" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117391" to="World/MAP/tileMapLayer_fragile/@Area2D@117391" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117391" to="World/MAP/tileMapLayer_fragile/@Area2D@117391" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117392" to="World/MAP/tileMapLayer_fragile/@Area2D@117392" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117392" to="World/MAP/tileMapLayer_fragile/@Area2D@117392" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117393" to="World/MAP/tileMapLayer_fragile/@Area2D@117393" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117393" to="World/MAP/tileMapLayer_fragile/@Area2D@117393" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117394" to="World/MAP/tileMapLayer_fragile/@Area2D@117394" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117394" to="World/MAP/tileMapLayer_fragile/@Area2D@117394" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117395" to="World/MAP/tileMapLayer_fragile/@Area2D@117395" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117395" to="World/MAP/tileMapLayer_fragile/@Area2D@117395" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117396" to="World/MAP/tileMapLayer_fragile/@Area2D@117396" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117396" to="World/MAP/tileMapLayer_fragile/@Area2D@117396" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117397" to="World/MAP/tileMapLayer_fragile/@Area2D@117397" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117397" to="World/MAP/tileMapLayer_fragile/@Area2D@117397" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117398" to="World/MAP/tileMapLayer_fragile/@Area2D@117398" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117398" to="World/MAP/tileMapLayer_fragile/@Area2D@117398" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117399" to="World/MAP/tileMapLayer_fragile/@Area2D@117399" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117399" to="World/MAP/tileMapLayer_fragile/@Area2D@117399" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117400" to="World/MAP/tileMapLayer_fragile/@Area2D@117400" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117400" to="World/MAP/tileMapLayer_fragile/@Area2D@117400" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117401" to="World/MAP/tileMapLayer_fragile/@Area2D@117401" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117401" to="World/MAP/tileMapLayer_fragile/@Area2D@117401" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117402" to="World/MAP/tileMapLayer_fragile/@Area2D@117402" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117402" to="World/MAP/tileMapLayer_fragile/@Area2D@117402" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117403" to="World/MAP/tileMapLayer_fragile/@Area2D@117403" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117403" to="World/MAP/tileMapLayer_fragile/@Area2D@117403" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117404" to="World/MAP/tileMapLayer_fragile/@Area2D@117404" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117404" to="World/MAP/tileMapLayer_fragile/@Area2D@117404" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117405" to="World/MAP/tileMapLayer_fragile/@Area2D@117405" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117405" to="World/MAP/tileMapLayer_fragile/@Area2D@117405" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117406" to="World/MAP/tileMapLayer_fragile/@Area2D@117406" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117406" to="World/MAP/tileMapLayer_fragile/@Area2D@117406" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117407" to="World/MAP/tileMapLayer_fragile/@Area2D@117407" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117407" to="World/MAP/tileMapLayer_fragile/@Area2D@117407" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117408" to="World/MAP/tileMapLayer_fragile/@Area2D@117408" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117408" to="World/MAP/tileMapLayer_fragile/@Area2D@117408" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117409" to="World/MAP/tileMapLayer_fragile/@Area2D@117409" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117409" to="World/MAP/tileMapLayer_fragile/@Area2D@117409" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117410" to="World/MAP/tileMapLayer_fragile/@Area2D@117410" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117410" to="World/MAP/tileMapLayer_fragile/@Area2D@117410" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117411" to="World/MAP/tileMapLayer_fragile/@Area2D@117411" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117411" to="World/MAP/tileMapLayer_fragile/@Area2D@117411" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117412" to="World/MAP/tileMapLayer_fragile/@Area2D@117412" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117412" to="World/MAP/tileMapLayer_fragile/@Area2D@117412" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117413" to="World/MAP/tileMapLayer_fragile/@Area2D@117413" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117413" to="World/MAP/tileMapLayer_fragile/@Area2D@117413" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117414" to="World/MAP/tileMapLayer_fragile/@Area2D@117414" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117414" to="World/MAP/tileMapLayer_fragile/@Area2D@117414" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117415" to="World/MAP/tileMapLayer_fragile/@Area2D@117415" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117415" to="World/MAP/tileMapLayer_fragile/@Area2D@117415" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117416" to="World/MAP/tileMapLayer_fragile/@Area2D@117416" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117416" to="World/MAP/tileMapLayer_fragile/@Area2D@117416" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117417" to="World/MAP/tileMapLayer_fragile/@Area2D@117417" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117417" to="World/MAP/tileMapLayer_fragile/@Area2D@117417" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117418" to="World/MAP/tileMapLayer_fragile/@Area2D@117418" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117418" to="World/MAP/tileMapLayer_fragile/@Area2D@117418" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117419" to="World/MAP/tileMapLayer_fragile/@Area2D@117419" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117419" to="World/MAP/tileMapLayer_fragile/@Area2D@117419" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117420" to="World/MAP/tileMapLayer_fragile/@Area2D@117420" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117420" to="World/MAP/tileMapLayer_fragile/@Area2D@117420" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117421" to="World/MAP/tileMapLayer_fragile/@Area2D@117421" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117421" to="World/MAP/tileMapLayer_fragile/@Area2D@117421" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117422" to="World/MAP/tileMapLayer_fragile/@Area2D@117422" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117422" to="World/MAP/tileMapLayer_fragile/@Area2D@117422" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117423" to="World/MAP/tileMapLayer_fragile/@Area2D@117423" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117423" to="World/MAP/tileMapLayer_fragile/@Area2D@117423" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117424" to="World/MAP/tileMapLayer_fragile/@Area2D@117424" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117424" to="World/MAP/tileMapLayer_fragile/@Area2D@117424" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117425" to="World/MAP/tileMapLayer_fragile/@Area2D@117425" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117425" to="World/MAP/tileMapLayer_fragile/@Area2D@117425" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117426" to="World/MAP/tileMapLayer_fragile/@Area2D@117426" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117426" to="World/MAP/tileMapLayer_fragile/@Area2D@117426" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117427" to="World/MAP/tileMapLayer_fragile/@Area2D@117427" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117427" to="World/MAP/tileMapLayer_fragile/@Area2D@117427" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117428" to="World/MAP/tileMapLayer_fragile/@Area2D@117428" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117428" to="World/MAP/tileMapLayer_fragile/@Area2D@117428" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117429" to="World/MAP/tileMapLayer_fragile/@Area2D@117429" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117429" to="World/MAP/tileMapLayer_fragile/@Area2D@117429" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117430" to="World/MAP/tileMapLayer_fragile/@Area2D@117430" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117430" to="World/MAP/tileMapLayer_fragile/@Area2D@117430" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117431" to="World/MAP/tileMapLayer_fragile/@Area2D@117431" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117431" to="World/MAP/tileMapLayer_fragile/@Area2D@117431" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117432" to="World/MAP/tileMapLayer_fragile/@Area2D@117432" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117432" to="World/MAP/tileMapLayer_fragile/@Area2D@117432" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117433" to="World/MAP/tileMapLayer_fragile/@Area2D@117433" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117433" to="World/MAP/tileMapLayer_fragile/@Area2D@117433" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117434" to="World/MAP/tileMapLayer_fragile/@Area2D@117434" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117434" to="World/MAP/tileMapLayer_fragile/@Area2D@117434" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117435" to="World/MAP/tileMapLayer_fragile/@Area2D@117435" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117435" to="World/MAP/tileMapLayer_fragile/@Area2D@117435" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117436" to="World/MAP/tileMapLayer_fragile/@Area2D@117436" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117436" to="World/MAP/tileMapLayer_fragile/@Area2D@117436" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117437" to="World/MAP/tileMapLayer_fragile/@Area2D@117437" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117437" to="World/MAP/tileMapLayer_fragile/@Area2D@117437" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117438" to="World/MAP/tileMapLayer_fragile/@Area2D@117438" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117438" to="World/MAP/tileMapLayer_fragile/@Area2D@117438" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117439" to="World/MAP/tileMapLayer_fragile/@Area2D@117439" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117439" to="World/MAP/tileMapLayer_fragile/@Area2D@117439" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117440" to="World/MAP/tileMapLayer_fragile/@Area2D@117440" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117440" to="World/MAP/tileMapLayer_fragile/@Area2D@117440" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117441" to="World/MAP/tileMapLayer_fragile/@Area2D@117441" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117441" to="World/MAP/tileMapLayer_fragile/@Area2D@117441" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117442" to="World/MAP/tileMapLayer_fragile/@Area2D@117442" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117442" to="World/MAP/tileMapLayer_fragile/@Area2D@117442" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117443" to="World/MAP/tileMapLayer_fragile/@Area2D@117443" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117443" to="World/MAP/tileMapLayer_fragile/@Area2D@117443" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117444" to="World/MAP/tileMapLayer_fragile/@Area2D@117444" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117444" to="World/MAP/tileMapLayer_fragile/@Area2D@117444" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117445" to="World/MAP/tileMapLayer_fragile/@Area2D@117445" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117445" to="World/MAP/tileMapLayer_fragile/@Area2D@117445" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117446" to="World/MAP/tileMapLayer_fragile/@Area2D@117446" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117446" to="World/MAP/tileMapLayer_fragile/@Area2D@117446" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117447" to="World/MAP/tileMapLayer_fragile/@Area2D@117447" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117447" to="World/MAP/tileMapLayer_fragile/@Area2D@117447" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117448" to="World/MAP/tileMapLayer_fragile/@Area2D@117448" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117448" to="World/MAP/tileMapLayer_fragile/@Area2D@117448" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117449" to="World/MAP/tileMapLayer_fragile/@Area2D@117449" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117449" to="World/MAP/tileMapLayer_fragile/@Area2D@117449" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117450" to="World/MAP/tileMapLayer_fragile/@Area2D@117450" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117450" to="World/MAP/tileMapLayer_fragile/@Area2D@117450" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117451" to="World/MAP/tileMapLayer_fragile/@Area2D@117451" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117451" to="World/MAP/tileMapLayer_fragile/@Area2D@117451" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117452" to="World/MAP/tileMapLayer_fragile/@Area2D@117452" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117452" to="World/MAP/tileMapLayer_fragile/@Area2D@117452" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117453" to="World/MAP/tileMapLayer_fragile/@Area2D@117453" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117453" to="World/MAP/tileMapLayer_fragile/@Area2D@117453" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117454" to="World/MAP/tileMapLayer_fragile/@Area2D@117454" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117454" to="World/MAP/tileMapLayer_fragile/@Area2D@117454" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117455" to="World/MAP/tileMapLayer_fragile/@Area2D@117455" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117455" to="World/MAP/tileMapLayer_fragile/@Area2D@117455" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117456" to="World/MAP/tileMapLayer_fragile/@Area2D@117456" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117456" to="World/MAP/tileMapLayer_fragile/@Area2D@117456" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117457" to="World/MAP/tileMapLayer_fragile/@Area2D@117457" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117457" to="World/MAP/tileMapLayer_fragile/@Area2D@117457" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117458" to="World/MAP/tileMapLayer_fragile/@Area2D@117458" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117458" to="World/MAP/tileMapLayer_fragile/@Area2D@117458" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117459" to="World/MAP/tileMapLayer_fragile/@Area2D@117459" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117459" to="World/MAP/tileMapLayer_fragile/@Area2D@117459" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117460" to="World/MAP/tileMapLayer_fragile/@Area2D@117460" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117460" to="World/MAP/tileMapLayer_fragile/@Area2D@117460" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117461" to="World/MAP/tileMapLayer_fragile/@Area2D@117461" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117461" to="World/MAP/tileMapLayer_fragile/@Area2D@117461" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117462" to="World/MAP/tileMapLayer_fragile/@Area2D@117462" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117462" to="World/MAP/tileMapLayer_fragile/@Area2D@117462" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117463" to="World/MAP/tileMapLayer_fragile/@Area2D@117463" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117463" to="World/MAP/tileMapLayer_fragile/@Area2D@117463" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117464" to="World/MAP/tileMapLayer_fragile/@Area2D@117464" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117464" to="World/MAP/tileMapLayer_fragile/@Area2D@117464" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117465" to="World/MAP/tileMapLayer_fragile/@Area2D@117465" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117465" to="World/MAP/tileMapLayer_fragile/@Area2D@117465" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117466" to="World/MAP/tileMapLayer_fragile/@Area2D@117466" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117466" to="World/MAP/tileMapLayer_fragile/@Area2D@117466" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117467" to="World/MAP/tileMapLayer_fragile/@Area2D@117467" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117467" to="World/MAP/tileMapLayer_fragile/@Area2D@117467" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117468" to="World/MAP/tileMapLayer_fragile/@Area2D@117468" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117468" to="World/MAP/tileMapLayer_fragile/@Area2D@117468" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117469" to="World/MAP/tileMapLayer_fragile/@Area2D@117469" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117469" to="World/MAP/tileMapLayer_fragile/@Area2D@117469" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117470" to="World/MAP/tileMapLayer_fragile/@Area2D@117470" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117470" to="World/MAP/tileMapLayer_fragile/@Area2D@117470" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117471" to="World/MAP/tileMapLayer_fragile/@Area2D@117471" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117471" to="World/MAP/tileMapLayer_fragile/@Area2D@117471" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117472" to="World/MAP/tileMapLayer_fragile/@Area2D@117472" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117472" to="World/MAP/tileMapLayer_fragile/@Area2D@117472" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117473" to="World/MAP/tileMapLayer_fragile/@Area2D@117473" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117473" to="World/MAP/tileMapLayer_fragile/@Area2D@117473" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117474" to="World/MAP/tileMapLayer_fragile/@Area2D@117474" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117474" to="World/MAP/tileMapLayer_fragile/@Area2D@117474" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117475" to="World/MAP/tileMapLayer_fragile/@Area2D@117475" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117475" to="World/MAP/tileMapLayer_fragile/@Area2D@117475" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117476" to="World/MAP/tileMapLayer_fragile/@Area2D@117476" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117476" to="World/MAP/tileMapLayer_fragile/@Area2D@117476" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117477" to="World/MAP/tileMapLayer_fragile/@Area2D@117477" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117477" to="World/MAP/tileMapLayer_fragile/@Area2D@117477" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117478" to="World/MAP/tileMapLayer_fragile/@Area2D@117478" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117478" to="World/MAP/tileMapLayer_fragile/@Area2D@117478" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117479" to="World/MAP/tileMapLayer_fragile/@Area2D@117479" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117479" to="World/MAP/tileMapLayer_fragile/@Area2D@117479" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117480" to="World/MAP/tileMapLayer_fragile/@Area2D@117480" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117480" to="World/MAP/tileMapLayer_fragile/@Area2D@117480" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117481" to="World/MAP/tileMapLayer_fragile/@Area2D@117481" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117481" to="World/MAP/tileMapLayer_fragile/@Area2D@117481" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@117482" to="World/MAP/tileMapLayer_fragile/@Area2D@117482" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@117482" to="World/MAP/tileMapLayer_fragile/@Area2D@117482" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340276" to="World/MAP/tileMapLayer_fragile/@Area2D@340276" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340276" to="World/MAP/tileMapLayer_fragile/@Area2D@340276" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340277" to="World/MAP/tileMapLayer_fragile/@Area2D@340277" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340277" to="World/MAP/tileMapLayer_fragile/@Area2D@340277" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340278" to="World/MAP/tileMapLayer_fragile/@Area2D@340278" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340278" to="World/MAP/tileMapLayer_fragile/@Area2D@340278" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340279" to="World/MAP/tileMapLayer_fragile/@Area2D@340279" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340279" to="World/MAP/tileMapLayer_fragile/@Area2D@340279" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340280" to="World/MAP/tileMapLayer_fragile/@Area2D@340280" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340280" to="World/MAP/tileMapLayer_fragile/@Area2D@340280" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340281" to="World/MAP/tileMapLayer_fragile/@Area2D@340281" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340281" to="World/MAP/tileMapLayer_fragile/@Area2D@340281" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340282" to="World/MAP/tileMapLayer_fragile/@Area2D@340282" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340282" to="World/MAP/tileMapLayer_fragile/@Area2D@340282" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340283" to="World/MAP/tileMapLayer_fragile/@Area2D@340283" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340283" to="World/MAP/tileMapLayer_fragile/@Area2D@340283" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340284" to="World/MAP/tileMapLayer_fragile/@Area2D@340284" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340284" to="World/MAP/tileMapLayer_fragile/@Area2D@340284" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340285" to="World/MAP/tileMapLayer_fragile/@Area2D@340285" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340285" to="World/MAP/tileMapLayer_fragile/@Area2D@340285" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340286" to="World/MAP/tileMapLayer_fragile/@Area2D@340286" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340286" to="World/MAP/tileMapLayer_fragile/@Area2D@340286" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340287" to="World/MAP/tileMapLayer_fragile/@Area2D@340287" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340287" to="World/MAP/tileMapLayer_fragile/@Area2D@340287" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340288" to="World/MAP/tileMapLayer_fragile/@Area2D@340288" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340288" to="World/MAP/tileMapLayer_fragile/@Area2D@340288" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340289" to="World/MAP/tileMapLayer_fragile/@Area2D@340289" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340289" to="World/MAP/tileMapLayer_fragile/@Area2D@340289" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340290" to="World/MAP/tileMapLayer_fragile/@Area2D@340290" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340290" to="World/MAP/tileMapLayer_fragile/@Area2D@340290" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340291" to="World/MAP/tileMapLayer_fragile/@Area2D@340291" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340291" to="World/MAP/tileMapLayer_fragile/@Area2D@340291" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340292" to="World/MAP/tileMapLayer_fragile/@Area2D@340292" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340292" to="World/MAP/tileMapLayer_fragile/@Area2D@340292" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340293" to="World/MAP/tileMapLayer_fragile/@Area2D@340293" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340293" to="World/MAP/tileMapLayer_fragile/@Area2D@340293" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340294" to="World/MAP/tileMapLayer_fragile/@Area2D@340294" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340294" to="World/MAP/tileMapLayer_fragile/@Area2D@340294" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340295" to="World/MAP/tileMapLayer_fragile/@Area2D@340295" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340295" to="World/MAP/tileMapLayer_fragile/@Area2D@340295" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340296" to="World/MAP/tileMapLayer_fragile/@Area2D@340296" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340296" to="World/MAP/tileMapLayer_fragile/@Area2D@340296" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340297" to="World/MAP/tileMapLayer_fragile/@Area2D@340297" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340297" to="World/MAP/tileMapLayer_fragile/@Area2D@340297" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340298" to="World/MAP/tileMapLayer_fragile/@Area2D@340298" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340298" to="World/MAP/tileMapLayer_fragile/@Area2D@340298" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340299" to="World/MAP/tileMapLayer_fragile/@Area2D@340299" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340299" to="World/MAP/tileMapLayer_fragile/@Area2D@340299" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340300" to="World/MAP/tileMapLayer_fragile/@Area2D@340300" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340300" to="World/MAP/tileMapLayer_fragile/@Area2D@340300" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340301" to="World/MAP/tileMapLayer_fragile/@Area2D@340301" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340301" to="World/MAP/tileMapLayer_fragile/@Area2D@340301" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340302" to="World/MAP/tileMapLayer_fragile/@Area2D@340302" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340302" to="World/MAP/tileMapLayer_fragile/@Area2D@340302" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340303" to="World/MAP/tileMapLayer_fragile/@Area2D@340303" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340303" to="World/MAP/tileMapLayer_fragile/@Area2D@340303" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340304" to="World/MAP/tileMapLayer_fragile/@Area2D@340304" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340304" to="World/MAP/tileMapLayer_fragile/@Area2D@340304" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340305" to="World/MAP/tileMapLayer_fragile/@Area2D@340305" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340305" to="World/MAP/tileMapLayer_fragile/@Area2D@340305" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340306" to="World/MAP/tileMapLayer_fragile/@Area2D@340306" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340306" to="World/MAP/tileMapLayer_fragile/@Area2D@340306" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340307" to="World/MAP/tileMapLayer_fragile/@Area2D@340307" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340307" to="World/MAP/tileMapLayer_fragile/@Area2D@340307" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340308" to="World/MAP/tileMapLayer_fragile/@Area2D@340308" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340308" to="World/MAP/tileMapLayer_fragile/@Area2D@340308" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340309" to="World/MAP/tileMapLayer_fragile/@Area2D@340309" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340309" to="World/MAP/tileMapLayer_fragile/@Area2D@340309" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340310" to="World/MAP/tileMapLayer_fragile/@Area2D@340310" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340310" to="World/MAP/tileMapLayer_fragile/@Area2D@340310" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340311" to="World/MAP/tileMapLayer_fragile/@Area2D@340311" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340311" to="World/MAP/tileMapLayer_fragile/@Area2D@340311" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340312" to="World/MAP/tileMapLayer_fragile/@Area2D@340312" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340312" to="World/MAP/tileMapLayer_fragile/@Area2D@340312" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340313" to="World/MAP/tileMapLayer_fragile/@Area2D@340313" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340313" to="World/MAP/tileMapLayer_fragile/@Area2D@340313" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340314" to="World/MAP/tileMapLayer_fragile/@Area2D@340314" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340314" to="World/MAP/tileMapLayer_fragile/@Area2D@340314" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340315" to="World/MAP/tileMapLayer_fragile/@Area2D@340315" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340315" to="World/MAP/tileMapLayer_fragile/@Area2D@340315" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340316" to="World/MAP/tileMapLayer_fragile/@Area2D@340316" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340316" to="World/MAP/tileMapLayer_fragile/@Area2D@340316" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340317" to="World/MAP/tileMapLayer_fragile/@Area2D@340317" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340317" to="World/MAP/tileMapLayer_fragile/@Area2D@340317" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340318" to="World/MAP/tileMapLayer_fragile/@Area2D@340318" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340318" to="World/MAP/tileMapLayer_fragile/@Area2D@340318" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340319" to="World/MAP/tileMapLayer_fragile/@Area2D@340319" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340319" to="World/MAP/tileMapLayer_fragile/@Area2D@340319" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340320" to="World/MAP/tileMapLayer_fragile/@Area2D@340320" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340320" to="World/MAP/tileMapLayer_fragile/@Area2D@340320" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340321" to="World/MAP/tileMapLayer_fragile/@Area2D@340321" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340321" to="World/MAP/tileMapLayer_fragile/@Area2D@340321" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340322" to="World/MAP/tileMapLayer_fragile/@Area2D@340322" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340322" to="World/MAP/tileMapLayer_fragile/@Area2D@340322" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340323" to="World/MAP/tileMapLayer_fragile/@Area2D@340323" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340323" to="World/MAP/tileMapLayer_fragile/@Area2D@340323" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340324" to="World/MAP/tileMapLayer_fragile/@Area2D@340324" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340324" to="World/MAP/tileMapLayer_fragile/@Area2D@340324" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340325" to="World/MAP/tileMapLayer_fragile/@Area2D@340325" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340325" to="World/MAP/tileMapLayer_fragile/@Area2D@340325" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340326" to="World/MAP/tileMapLayer_fragile/@Area2D@340326" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340326" to="World/MAP/tileMapLayer_fragile/@Area2D@340326" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340327" to="World/MAP/tileMapLayer_fragile/@Area2D@340327" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340327" to="World/MAP/tileMapLayer_fragile/@Area2D@340327" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340328" to="World/MAP/tileMapLayer_fragile/@Area2D@340328" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340328" to="World/MAP/tileMapLayer_fragile/@Area2D@340328" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340329" to="World/MAP/tileMapLayer_fragile/@Area2D@340329" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340329" to="World/MAP/tileMapLayer_fragile/@Area2D@340329" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340330" to="World/MAP/tileMapLayer_fragile/@Area2D@340330" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340330" to="World/MAP/tileMapLayer_fragile/@Area2D@340330" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340331" to="World/MAP/tileMapLayer_fragile/@Area2D@340331" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340331" to="World/MAP/tileMapLayer_fragile/@Area2D@340331" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340332" to="World/MAP/tileMapLayer_fragile/@Area2D@340332" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340332" to="World/MAP/tileMapLayer_fragile/@Area2D@340332" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340333" to="World/MAP/tileMapLayer_fragile/@Area2D@340333" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340333" to="World/MAP/tileMapLayer_fragile/@Area2D@340333" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340334" to="World/MAP/tileMapLayer_fragile/@Area2D@340334" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340334" to="World/MAP/tileMapLayer_fragile/@Area2D@340334" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340335" to="World/MAP/tileMapLayer_fragile/@Area2D@340335" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340335" to="World/MAP/tileMapLayer_fragile/@Area2D@340335" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340336" to="World/MAP/tileMapLayer_fragile/@Area2D@340336" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340336" to="World/MAP/tileMapLayer_fragile/@Area2D@340336" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340337" to="World/MAP/tileMapLayer_fragile/@Area2D@340337" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340337" to="World/MAP/tileMapLayer_fragile/@Area2D@340337" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340338" to="World/MAP/tileMapLayer_fragile/@Area2D@340338" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340338" to="World/MAP/tileMapLayer_fragile/@Area2D@340338" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340339" to="World/MAP/tileMapLayer_fragile/@Area2D@340339" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340339" to="World/MAP/tileMapLayer_fragile/@Area2D@340339" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340340" to="World/MAP/tileMapLayer_fragile/@Area2D@340340" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340340" to="World/MAP/tileMapLayer_fragile/@Area2D@340340" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340341" to="World/MAP/tileMapLayer_fragile/@Area2D@340341" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340341" to="World/MAP/tileMapLayer_fragile/@Area2D@340341" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340342" to="World/MAP/tileMapLayer_fragile/@Area2D@340342" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340342" to="World/MAP/tileMapLayer_fragile/@Area2D@340342" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340343" to="World/MAP/tileMapLayer_fragile/@Area2D@340343" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340343" to="World/MAP/tileMapLayer_fragile/@Area2D@340343" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340344" to="World/MAP/tileMapLayer_fragile/@Area2D@340344" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340344" to="World/MAP/tileMapLayer_fragile/@Area2D@340344" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340345" to="World/MAP/tileMapLayer_fragile/@Area2D@340345" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340345" to="World/MAP/tileMapLayer_fragile/@Area2D@340345" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340346" to="World/MAP/tileMapLayer_fragile/@Area2D@340346" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340346" to="World/MAP/tileMapLayer_fragile/@Area2D@340346" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340347" to="World/MAP/tileMapLayer_fragile/@Area2D@340347" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340347" to="World/MAP/tileMapLayer_fragile/@Area2D@340347" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340348" to="World/MAP/tileMapLayer_fragile/@Area2D@340348" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340348" to="World/MAP/tileMapLayer_fragile/@Area2D@340348" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340349" to="World/MAP/tileMapLayer_fragile/@Area2D@340349" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340349" to="World/MAP/tileMapLayer_fragile/@Area2D@340349" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340350" to="World/MAP/tileMapLayer_fragile/@Area2D@340350" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340350" to="World/MAP/tileMapLayer_fragile/@Area2D@340350" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340351" to="World/MAP/tileMapLayer_fragile/@Area2D@340351" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340351" to="World/MAP/tileMapLayer_fragile/@Area2D@340351" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340352" to="World/MAP/tileMapLayer_fragile/@Area2D@340352" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340352" to="World/MAP/tileMapLayer_fragile/@Area2D@340352" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340353" to="World/MAP/tileMapLayer_fragile/@Area2D@340353" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340353" to="World/MAP/tileMapLayer_fragile/@Area2D@340353" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340354" to="World/MAP/tileMapLayer_fragile/@Area2D@340354" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340354" to="World/MAP/tileMapLayer_fragile/@Area2D@340354" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340355" to="World/MAP/tileMapLayer_fragile/@Area2D@340355" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340355" to="World/MAP/tileMapLayer_fragile/@Area2D@340355" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340356" to="World/MAP/tileMapLayer_fragile/@Area2D@340356" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340356" to="World/MAP/tileMapLayer_fragile/@Area2D@340356" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340357" to="World/MAP/tileMapLayer_fragile/@Area2D@340357" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340357" to="World/MAP/tileMapLayer_fragile/@Area2D@340357" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340358" to="World/MAP/tileMapLayer_fragile/@Area2D@340358" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340358" to="World/MAP/tileMapLayer_fragile/@Area2D@340358" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340359" to="World/MAP/tileMapLayer_fragile/@Area2D@340359" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340359" to="World/MAP/tileMapLayer_fragile/@Area2D@340359" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340360" to="World/MAP/tileMapLayer_fragile/@Area2D@340360" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340360" to="World/MAP/tileMapLayer_fragile/@Area2D@340360" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340361" to="World/MAP/tileMapLayer_fragile/@Area2D@340361" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340361" to="World/MAP/tileMapLayer_fragile/@Area2D@340361" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340362" to="World/MAP/tileMapLayer_fragile/@Area2D@340362" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340362" to="World/MAP/tileMapLayer_fragile/@Area2D@340362" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340363" to="World/MAP/tileMapLayer_fragile/@Area2D@340363" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340363" to="World/MAP/tileMapLayer_fragile/@Area2D@340363" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340364" to="World/MAP/tileMapLayer_fragile/@Area2D@340364" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340364" to="World/MAP/tileMapLayer_fragile/@Area2D@340364" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340365" to="World/MAP/tileMapLayer_fragile/@Area2D@340365" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340365" to="World/MAP/tileMapLayer_fragile/@Area2D@340365" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340366" to="World/MAP/tileMapLayer_fragile/@Area2D@340366" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340366" to="World/MAP/tileMapLayer_fragile/@Area2D@340366" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340367" to="World/MAP/tileMapLayer_fragile/@Area2D@340367" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340367" to="World/MAP/tileMapLayer_fragile/@Area2D@340367" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340368" to="World/MAP/tileMapLayer_fragile/@Area2D@340368" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340368" to="World/MAP/tileMapLayer_fragile/@Area2D@340368" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340369" to="World/MAP/tileMapLayer_fragile/@Area2D@340369" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340369" to="World/MAP/tileMapLayer_fragile/@Area2D@340369" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340370" to="World/MAP/tileMapLayer_fragile/@Area2D@340370" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340370" to="World/MAP/tileMapLayer_fragile/@Area2D@340370" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340371" to="World/MAP/tileMapLayer_fragile/@Area2D@340371" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340371" to="World/MAP/tileMapLayer_fragile/@Area2D@340371" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340372" to="World/MAP/tileMapLayer_fragile/@Area2D@340372" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340372" to="World/MAP/tileMapLayer_fragile/@Area2D@340372" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340373" to="World/MAP/tileMapLayer_fragile/@Area2D@340373" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340373" to="World/MAP/tileMapLayer_fragile/@Area2D@340373" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340374" to="World/MAP/tileMapLayer_fragile/@Area2D@340374" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340374" to="World/MAP/tileMapLayer_fragile/@Area2D@340374" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340375" to="World/MAP/tileMapLayer_fragile/@Area2D@340375" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340375" to="World/MAP/tileMapLayer_fragile/@Area2D@340375" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340376" to="World/MAP/tileMapLayer_fragile/@Area2D@340376" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340376" to="World/MAP/tileMapLayer_fragile/@Area2D@340376" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340377" to="World/MAP/tileMapLayer_fragile/@Area2D@340377" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340377" to="World/MAP/tileMapLayer_fragile/@Area2D@340377" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340378" to="World/MAP/tileMapLayer_fragile/@Area2D@340378" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340378" to="World/MAP/tileMapLayer_fragile/@Area2D@340378" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340379" to="World/MAP/tileMapLayer_fragile/@Area2D@340379" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340379" to="World/MAP/tileMapLayer_fragile/@Area2D@340379" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340380" to="World/MAP/tileMapLayer_fragile/@Area2D@340380" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340380" to="World/MAP/tileMapLayer_fragile/@Area2D@340380" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340381" to="World/MAP/tileMapLayer_fragile/@Area2D@340381" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340381" to="World/MAP/tileMapLayer_fragile/@Area2D@340381" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340382" to="World/MAP/tileMapLayer_fragile/@Area2D@340382" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340382" to="World/MAP/tileMapLayer_fragile/@Area2D@340382" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340383" to="World/MAP/tileMapLayer_fragile/@Area2D@340383" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340383" to="World/MAP/tileMapLayer_fragile/@Area2D@340383" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340384" to="World/MAP/tileMapLayer_fragile/@Area2D@340384" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340384" to="World/MAP/tileMapLayer_fragile/@Area2D@340384" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340385" to="World/MAP/tileMapLayer_fragile/@Area2D@340385" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340385" to="World/MAP/tileMapLayer_fragile/@Area2D@340385" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340386" to="World/MAP/tileMapLayer_fragile/@Area2D@340386" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340386" to="World/MAP/tileMapLayer_fragile/@Area2D@340386" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340387" to="World/MAP/tileMapLayer_fragile/@Area2D@340387" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340387" to="World/MAP/tileMapLayer_fragile/@Area2D@340387" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340388" to="World/MAP/tileMapLayer_fragile/@Area2D@340388" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340388" to="World/MAP/tileMapLayer_fragile/@Area2D@340388" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340389" to="World/MAP/tileMapLayer_fragile/@Area2D@340389" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340389" to="World/MAP/tileMapLayer_fragile/@Area2D@340389" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340390" to="World/MAP/tileMapLayer_fragile/@Area2D@340390" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340390" to="World/MAP/tileMapLayer_fragile/@Area2D@340390" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340391" to="World/MAP/tileMapLayer_fragile/@Area2D@340391" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340391" to="World/MAP/tileMapLayer_fragile/@Area2D@340391" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340392" to="World/MAP/tileMapLayer_fragile/@Area2D@340392" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340392" to="World/MAP/tileMapLayer_fragile/@Area2D@340392" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340393" to="World/MAP/tileMapLayer_fragile/@Area2D@340393" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340393" to="World/MAP/tileMapLayer_fragile/@Area2D@340393" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340394" to="World/MAP/tileMapLayer_fragile/@Area2D@340394" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340394" to="World/MAP/tileMapLayer_fragile/@Area2D@340394" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340395" to="World/MAP/tileMapLayer_fragile/@Area2D@340395" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340395" to="World/MAP/tileMapLayer_fragile/@Area2D@340395" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340396" to="World/MAP/tileMapLayer_fragile/@Area2D@340396" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340396" to="World/MAP/tileMapLayer_fragile/@Area2D@340396" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340397" to="World/MAP/tileMapLayer_fragile/@Area2D@340397" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340397" to="World/MAP/tileMapLayer_fragile/@Area2D@340397" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340398" to="World/MAP/tileMapLayer_fragile/@Area2D@340398" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340398" to="World/MAP/tileMapLayer_fragile/@Area2D@340398" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340399" to="World/MAP/tileMapLayer_fragile/@Area2D@340399" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340399" to="World/MAP/tileMapLayer_fragile/@Area2D@340399" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340400" to="World/MAP/tileMapLayer_fragile/@Area2D@340400" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340400" to="World/MAP/tileMapLayer_fragile/@Area2D@340400" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340401" to="World/MAP/tileMapLayer_fragile/@Area2D@340401" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340401" to="World/MAP/tileMapLayer_fragile/@Area2D@340401" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340402" to="World/MAP/tileMapLayer_fragile/@Area2D@340402" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340402" to="World/MAP/tileMapLayer_fragile/@Area2D@340402" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340403" to="World/MAP/tileMapLayer_fragile/@Area2D@340403" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340403" to="World/MAP/tileMapLayer_fragile/@Area2D@340403" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340404" to="World/MAP/tileMapLayer_fragile/@Area2D@340404" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340404" to="World/MAP/tileMapLayer_fragile/@Area2D@340404" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340405" to="World/MAP/tileMapLayer_fragile/@Area2D@340405" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340405" to="World/MAP/tileMapLayer_fragile/@Area2D@340405" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340406" to="World/MAP/tileMapLayer_fragile/@Area2D@340406" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340406" to="World/MAP/tileMapLayer_fragile/@Area2D@340406" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340407" to="World/MAP/tileMapLayer_fragile/@Area2D@340407" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340407" to="World/MAP/tileMapLayer_fragile/@Area2D@340407" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340408" to="World/MAP/tileMapLayer_fragile/@Area2D@340408" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340408" to="World/MAP/tileMapLayer_fragile/@Area2D@340408" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_fragile/@Area2D@340409" to="World/MAP/tileMapLayer_fragile/@Area2D@340409" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_fragile/@Area2D@340409" to="World/MAP/tileMapLayer_fragile/@Area2D@340409" method="_on_area_exited"]
 [connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/Hidden" to="World/MAP/tileMapLayer_hidden/Hidden" method="_on_area_entered"]
 [connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/Hidden" to="World/MAP/tileMapLayer_hidden/Hidden" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117483" to="World/MAP/tileMapLayer_hidden/@Area2D@117483" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117483" to="World/MAP/tileMapLayer_hidden/@Area2D@117483" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117484" to="World/MAP/tileMapLayer_hidden/@Area2D@117484" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117484" to="World/MAP/tileMapLayer_hidden/@Area2D@117484" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117485" to="World/MAP/tileMapLayer_hidden/@Area2D@117485" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117485" to="World/MAP/tileMapLayer_hidden/@Area2D@117485" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117486" to="World/MAP/tileMapLayer_hidden/@Area2D@117486" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117486" to="World/MAP/tileMapLayer_hidden/@Area2D@117486" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117487" to="World/MAP/tileMapLayer_hidden/@Area2D@117487" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117487" to="World/MAP/tileMapLayer_hidden/@Area2D@117487" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117488" to="World/MAP/tileMapLayer_hidden/@Area2D@117488" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117488" to="World/MAP/tileMapLayer_hidden/@Area2D@117488" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117489" to="World/MAP/tileMapLayer_hidden/@Area2D@117489" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117489" to="World/MAP/tileMapLayer_hidden/@Area2D@117489" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117490" to="World/MAP/tileMapLayer_hidden/@Area2D@117490" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117490" to="World/MAP/tileMapLayer_hidden/@Area2D@117490" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117491" to="World/MAP/tileMapLayer_hidden/@Area2D@117491" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117491" to="World/MAP/tileMapLayer_hidden/@Area2D@117491" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117492" to="World/MAP/tileMapLayer_hidden/@Area2D@117492" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117492" to="World/MAP/tileMapLayer_hidden/@Area2D@117492" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117493" to="World/MAP/tileMapLayer_hidden/@Area2D@117493" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117493" to="World/MAP/tileMapLayer_hidden/@Area2D@117493" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117494" to="World/MAP/tileMapLayer_hidden/@Area2D@117494" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117494" to="World/MAP/tileMapLayer_hidden/@Area2D@117494" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117495" to="World/MAP/tileMapLayer_hidden/@Area2D@117495" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117495" to="World/MAP/tileMapLayer_hidden/@Area2D@117495" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117496" to="World/MAP/tileMapLayer_hidden/@Area2D@117496" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117496" to="World/MAP/tileMapLayer_hidden/@Area2D@117496" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117497" to="World/MAP/tileMapLayer_hidden/@Area2D@117497" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117497" to="World/MAP/tileMapLayer_hidden/@Area2D@117497" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117498" to="World/MAP/tileMapLayer_hidden/@Area2D@117498" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117498" to="World/MAP/tileMapLayer_hidden/@Area2D@117498" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117499" to="World/MAP/tileMapLayer_hidden/@Area2D@117499" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117499" to="World/MAP/tileMapLayer_hidden/@Area2D@117499" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117500" to="World/MAP/tileMapLayer_hidden/@Area2D@117500" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117500" to="World/MAP/tileMapLayer_hidden/@Area2D@117500" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117501" to="World/MAP/tileMapLayer_hidden/@Area2D@117501" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117501" to="World/MAP/tileMapLayer_hidden/@Area2D@117501" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117502" to="World/MAP/tileMapLayer_hidden/@Area2D@117502" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117502" to="World/MAP/tileMapLayer_hidden/@Area2D@117502" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117503" to="World/MAP/tileMapLayer_hidden/@Area2D@117503" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117503" to="World/MAP/tileMapLayer_hidden/@Area2D@117503" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117504" to="World/MAP/tileMapLayer_hidden/@Area2D@117504" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117504" to="World/MAP/tileMapLayer_hidden/@Area2D@117504" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117505" to="World/MAP/tileMapLayer_hidden/@Area2D@117505" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117505" to="World/MAP/tileMapLayer_hidden/@Area2D@117505" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117506" to="World/MAP/tileMapLayer_hidden/@Area2D@117506" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117506" to="World/MAP/tileMapLayer_hidden/@Area2D@117506" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117507" to="World/MAP/tileMapLayer_hidden/@Area2D@117507" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117507" to="World/MAP/tileMapLayer_hidden/@Area2D@117507" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117508" to="World/MAP/tileMapLayer_hidden/@Area2D@117508" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117508" to="World/MAP/tileMapLayer_hidden/@Area2D@117508" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117509" to="World/MAP/tileMapLayer_hidden/@Area2D@117509" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117509" to="World/MAP/tileMapLayer_hidden/@Area2D@117509" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117510" to="World/MAP/tileMapLayer_hidden/@Area2D@117510" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117510" to="World/MAP/tileMapLayer_hidden/@Area2D@117510" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117511" to="World/MAP/tileMapLayer_hidden/@Area2D@117511" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117511" to="World/MAP/tileMapLayer_hidden/@Area2D@117511" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117512" to="World/MAP/tileMapLayer_hidden/@Area2D@117512" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117512" to="World/MAP/tileMapLayer_hidden/@Area2D@117512" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117513" to="World/MAP/tileMapLayer_hidden/@Area2D@117513" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117513" to="World/MAP/tileMapLayer_hidden/@Area2D@117513" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117514" to="World/MAP/tileMapLayer_hidden/@Area2D@117514" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117514" to="World/MAP/tileMapLayer_hidden/@Area2D@117514" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117515" to="World/MAP/tileMapLayer_hidden/@Area2D@117515" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117515" to="World/MAP/tileMapLayer_hidden/@Area2D@117515" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117516" to="World/MAP/tileMapLayer_hidden/@Area2D@117516" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117516" to="World/MAP/tileMapLayer_hidden/@Area2D@117516" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117517" to="World/MAP/tileMapLayer_hidden/@Area2D@117517" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117517" to="World/MAP/tileMapLayer_hidden/@Area2D@117517" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117518" to="World/MAP/tileMapLayer_hidden/@Area2D@117518" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117518" to="World/MAP/tileMapLayer_hidden/@Area2D@117518" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117519" to="World/MAP/tileMapLayer_hidden/@Area2D@117519" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117519" to="World/MAP/tileMapLayer_hidden/@Area2D@117519" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117520" to="World/MAP/tileMapLayer_hidden/@Area2D@117520" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117520" to="World/MAP/tileMapLayer_hidden/@Area2D@117520" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117521" to="World/MAP/tileMapLayer_hidden/@Area2D@117521" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117521" to="World/MAP/tileMapLayer_hidden/@Area2D@117521" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117522" to="World/MAP/tileMapLayer_hidden/@Area2D@117522" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117522" to="World/MAP/tileMapLayer_hidden/@Area2D@117522" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117523" to="World/MAP/tileMapLayer_hidden/@Area2D@117523" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117523" to="World/MAP/tileMapLayer_hidden/@Area2D@117523" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117524" to="World/MAP/tileMapLayer_hidden/@Area2D@117524" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117524" to="World/MAP/tileMapLayer_hidden/@Area2D@117524" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117525" to="World/MAP/tileMapLayer_hidden/@Area2D@117525" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117525" to="World/MAP/tileMapLayer_hidden/@Area2D@117525" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117526" to="World/MAP/tileMapLayer_hidden/@Area2D@117526" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117526" to="World/MAP/tileMapLayer_hidden/@Area2D@117526" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117527" to="World/MAP/tileMapLayer_hidden/@Area2D@117527" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117527" to="World/MAP/tileMapLayer_hidden/@Area2D@117527" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117528" to="World/MAP/tileMapLayer_hidden/@Area2D@117528" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117528" to="World/MAP/tileMapLayer_hidden/@Area2D@117528" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117529" to="World/MAP/tileMapLayer_hidden/@Area2D@117529" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117529" to="World/MAP/tileMapLayer_hidden/@Area2D@117529" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117530" to="World/MAP/tileMapLayer_hidden/@Area2D@117530" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117530" to="World/MAP/tileMapLayer_hidden/@Area2D@117530" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117531" to="World/MAP/tileMapLayer_hidden/@Area2D@117531" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117531" to="World/MAP/tileMapLayer_hidden/@Area2D@117531" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117532" to="World/MAP/tileMapLayer_hidden/@Area2D@117532" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117532" to="World/MAP/tileMapLayer_hidden/@Area2D@117532" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117533" to="World/MAP/tileMapLayer_hidden/@Area2D@117533" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117533" to="World/MAP/tileMapLayer_hidden/@Area2D@117533" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117534" to="World/MAP/tileMapLayer_hidden/@Area2D@117534" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117534" to="World/MAP/tileMapLayer_hidden/@Area2D@117534" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117535" to="World/MAP/tileMapLayer_hidden/@Area2D@117535" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117535" to="World/MAP/tileMapLayer_hidden/@Area2D@117535" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117536" to="World/MAP/tileMapLayer_hidden/@Area2D@117536" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117536" to="World/MAP/tileMapLayer_hidden/@Area2D@117536" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117537" to="World/MAP/tileMapLayer_hidden/@Area2D@117537" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117537" to="World/MAP/tileMapLayer_hidden/@Area2D@117537" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117538" to="World/MAP/tileMapLayer_hidden/@Area2D@117538" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117538" to="World/MAP/tileMapLayer_hidden/@Area2D@117538" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117539" to="World/MAP/tileMapLayer_hidden/@Area2D@117539" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117539" to="World/MAP/tileMapLayer_hidden/@Area2D@117539" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117540" to="World/MAP/tileMapLayer_hidden/@Area2D@117540" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117540" to="World/MAP/tileMapLayer_hidden/@Area2D@117540" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117541" to="World/MAP/tileMapLayer_hidden/@Area2D@117541" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117541" to="World/MAP/tileMapLayer_hidden/@Area2D@117541" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117542" to="World/MAP/tileMapLayer_hidden/@Area2D@117542" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117542" to="World/MAP/tileMapLayer_hidden/@Area2D@117542" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117543" to="World/MAP/tileMapLayer_hidden/@Area2D@117543" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117543" to="World/MAP/tileMapLayer_hidden/@Area2D@117543" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117544" to="World/MAP/tileMapLayer_hidden/@Area2D@117544" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117544" to="World/MAP/tileMapLayer_hidden/@Area2D@117544" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117545" to="World/MAP/tileMapLayer_hidden/@Area2D@117545" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117545" to="World/MAP/tileMapLayer_hidden/@Area2D@117545" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117546" to="World/MAP/tileMapLayer_hidden/@Area2D@117546" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117546" to="World/MAP/tileMapLayer_hidden/@Area2D@117546" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117547" to="World/MAP/tileMapLayer_hidden/@Area2D@117547" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117547" to="World/MAP/tileMapLayer_hidden/@Area2D@117547" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117548" to="World/MAP/tileMapLayer_hidden/@Area2D@117548" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117548" to="World/MAP/tileMapLayer_hidden/@Area2D@117548" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117549" to="World/MAP/tileMapLayer_hidden/@Area2D@117549" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117549" to="World/MAP/tileMapLayer_hidden/@Area2D@117549" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117550" to="World/MAP/tileMapLayer_hidden/@Area2D@117550" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117550" to="World/MAP/tileMapLayer_hidden/@Area2D@117550" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117551" to="World/MAP/tileMapLayer_hidden/@Area2D@117551" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117551" to="World/MAP/tileMapLayer_hidden/@Area2D@117551" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117552" to="World/MAP/tileMapLayer_hidden/@Area2D@117552" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117552" to="World/MAP/tileMapLayer_hidden/@Area2D@117552" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117553" to="World/MAP/tileMapLayer_hidden/@Area2D@117553" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117553" to="World/MAP/tileMapLayer_hidden/@Area2D@117553" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117554" to="World/MAP/tileMapLayer_hidden/@Area2D@117554" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117554" to="World/MAP/tileMapLayer_hidden/@Area2D@117554" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117555" to="World/MAP/tileMapLayer_hidden/@Area2D@117555" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117555" to="World/MAP/tileMapLayer_hidden/@Area2D@117555" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117556" to="World/MAP/tileMapLayer_hidden/@Area2D@117556" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117556" to="World/MAP/tileMapLayer_hidden/@Area2D@117556" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117557" to="World/MAP/tileMapLayer_hidden/@Area2D@117557" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117557" to="World/MAP/tileMapLayer_hidden/@Area2D@117557" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117558" to="World/MAP/tileMapLayer_hidden/@Area2D@117558" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117558" to="World/MAP/tileMapLayer_hidden/@Area2D@117558" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117559" to="World/MAP/tileMapLayer_hidden/@Area2D@117559" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117559" to="World/MAP/tileMapLayer_hidden/@Area2D@117559" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117560" to="World/MAP/tileMapLayer_hidden/@Area2D@117560" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117560" to="World/MAP/tileMapLayer_hidden/@Area2D@117560" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117561" to="World/MAP/tileMapLayer_hidden/@Area2D@117561" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117561" to="World/MAP/tileMapLayer_hidden/@Area2D@117561" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117562" to="World/MAP/tileMapLayer_hidden/@Area2D@117562" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117562" to="World/MAP/tileMapLayer_hidden/@Area2D@117562" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117563" to="World/MAP/tileMapLayer_hidden/@Area2D@117563" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117563" to="World/MAP/tileMapLayer_hidden/@Area2D@117563" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117564" to="World/MAP/tileMapLayer_hidden/@Area2D@117564" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117564" to="World/MAP/tileMapLayer_hidden/@Area2D@117564" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117565" to="World/MAP/tileMapLayer_hidden/@Area2D@117565" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117565" to="World/MAP/tileMapLayer_hidden/@Area2D@117565" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117566" to="World/MAP/tileMapLayer_hidden/@Area2D@117566" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117566" to="World/MAP/tileMapLayer_hidden/@Area2D@117566" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117567" to="World/MAP/tileMapLayer_hidden/@Area2D@117567" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117567" to="World/MAP/tileMapLayer_hidden/@Area2D@117567" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117568" to="World/MAP/tileMapLayer_hidden/@Area2D@117568" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117568" to="World/MAP/tileMapLayer_hidden/@Area2D@117568" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117569" to="World/MAP/tileMapLayer_hidden/@Area2D@117569" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117569" to="World/MAP/tileMapLayer_hidden/@Area2D@117569" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117570" to="World/MAP/tileMapLayer_hidden/@Area2D@117570" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117570" to="World/MAP/tileMapLayer_hidden/@Area2D@117570" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117571" to="World/MAP/tileMapLayer_hidden/@Area2D@117571" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117571" to="World/MAP/tileMapLayer_hidden/@Area2D@117571" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117572" to="World/MAP/tileMapLayer_hidden/@Area2D@117572" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117572" to="World/MAP/tileMapLayer_hidden/@Area2D@117572" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117573" to="World/MAP/tileMapLayer_hidden/@Area2D@117573" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117573" to="World/MAP/tileMapLayer_hidden/@Area2D@117573" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117574" to="World/MAP/tileMapLayer_hidden/@Area2D@117574" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117574" to="World/MAP/tileMapLayer_hidden/@Area2D@117574" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117575" to="World/MAP/tileMapLayer_hidden/@Area2D@117575" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117575" to="World/MAP/tileMapLayer_hidden/@Area2D@117575" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117576" to="World/MAP/tileMapLayer_hidden/@Area2D@117576" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117576" to="World/MAP/tileMapLayer_hidden/@Area2D@117576" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117577" to="World/MAP/tileMapLayer_hidden/@Area2D@117577" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117577" to="World/MAP/tileMapLayer_hidden/@Area2D@117577" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117578" to="World/MAP/tileMapLayer_hidden/@Area2D@117578" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117578" to="World/MAP/tileMapLayer_hidden/@Area2D@117578" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117579" to="World/MAP/tileMapLayer_hidden/@Area2D@117579" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117579" to="World/MAP/tileMapLayer_hidden/@Area2D@117579" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117580" to="World/MAP/tileMapLayer_hidden/@Area2D@117580" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117580" to="World/MAP/tileMapLayer_hidden/@Area2D@117580" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117581" to="World/MAP/tileMapLayer_hidden/@Area2D@117581" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117581" to="World/MAP/tileMapLayer_hidden/@Area2D@117581" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117582" to="World/MAP/tileMapLayer_hidden/@Area2D@117582" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117582" to="World/MAP/tileMapLayer_hidden/@Area2D@117582" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117583" to="World/MAP/tileMapLayer_hidden/@Area2D@117583" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117583" to="World/MAP/tileMapLayer_hidden/@Area2D@117583" method="_on_area_exited"]
-[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@117584" to="World/MAP/tileMapLayer_hidden/@Area2D@117584" method="_on_area_entered"]
-[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@117584" to="World/MAP/tileMapLayer_hidden/@Area2D@117584" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340410" to="World/MAP/tileMapLayer_hidden/@Area2D@340410" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340410" to="World/MAP/tileMapLayer_hidden/@Area2D@340410" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340411" to="World/MAP/tileMapLayer_hidden/@Area2D@340411" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340411" to="World/MAP/tileMapLayer_hidden/@Area2D@340411" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340412" to="World/MAP/tileMapLayer_hidden/@Area2D@340412" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340412" to="World/MAP/tileMapLayer_hidden/@Area2D@340412" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340413" to="World/MAP/tileMapLayer_hidden/@Area2D@340413" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340413" to="World/MAP/tileMapLayer_hidden/@Area2D@340413" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340414" to="World/MAP/tileMapLayer_hidden/@Area2D@340414" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340414" to="World/MAP/tileMapLayer_hidden/@Area2D@340414" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340415" to="World/MAP/tileMapLayer_hidden/@Area2D@340415" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340415" to="World/MAP/tileMapLayer_hidden/@Area2D@340415" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340416" to="World/MAP/tileMapLayer_hidden/@Area2D@340416" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340416" to="World/MAP/tileMapLayer_hidden/@Area2D@340416" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340417" to="World/MAP/tileMapLayer_hidden/@Area2D@340417" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340417" to="World/MAP/tileMapLayer_hidden/@Area2D@340417" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340418" to="World/MAP/tileMapLayer_hidden/@Area2D@340418" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340418" to="World/MAP/tileMapLayer_hidden/@Area2D@340418" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340419" to="World/MAP/tileMapLayer_hidden/@Area2D@340419" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340419" to="World/MAP/tileMapLayer_hidden/@Area2D@340419" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340420" to="World/MAP/tileMapLayer_hidden/@Area2D@340420" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340420" to="World/MAP/tileMapLayer_hidden/@Area2D@340420" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340421" to="World/MAP/tileMapLayer_hidden/@Area2D@340421" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340421" to="World/MAP/tileMapLayer_hidden/@Area2D@340421" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340422" to="World/MAP/tileMapLayer_hidden/@Area2D@340422" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340422" to="World/MAP/tileMapLayer_hidden/@Area2D@340422" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340423" to="World/MAP/tileMapLayer_hidden/@Area2D@340423" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340423" to="World/MAP/tileMapLayer_hidden/@Area2D@340423" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340424" to="World/MAP/tileMapLayer_hidden/@Area2D@340424" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340424" to="World/MAP/tileMapLayer_hidden/@Area2D@340424" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340425" to="World/MAP/tileMapLayer_hidden/@Area2D@340425" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340425" to="World/MAP/tileMapLayer_hidden/@Area2D@340425" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340426" to="World/MAP/tileMapLayer_hidden/@Area2D@340426" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340426" to="World/MAP/tileMapLayer_hidden/@Area2D@340426" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340427" to="World/MAP/tileMapLayer_hidden/@Area2D@340427" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340427" to="World/MAP/tileMapLayer_hidden/@Area2D@340427" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340428" to="World/MAP/tileMapLayer_hidden/@Area2D@340428" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340428" to="World/MAP/tileMapLayer_hidden/@Area2D@340428" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340429" to="World/MAP/tileMapLayer_hidden/@Area2D@340429" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340429" to="World/MAP/tileMapLayer_hidden/@Area2D@340429" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340430" to="World/MAP/tileMapLayer_hidden/@Area2D@340430" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340430" to="World/MAP/tileMapLayer_hidden/@Area2D@340430" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340431" to="World/MAP/tileMapLayer_hidden/@Area2D@340431" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340431" to="World/MAP/tileMapLayer_hidden/@Area2D@340431" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340432" to="World/MAP/tileMapLayer_hidden/@Area2D@340432" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340432" to="World/MAP/tileMapLayer_hidden/@Area2D@340432" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340433" to="World/MAP/tileMapLayer_hidden/@Area2D@340433" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340433" to="World/MAP/tileMapLayer_hidden/@Area2D@340433" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340434" to="World/MAP/tileMapLayer_hidden/@Area2D@340434" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340434" to="World/MAP/tileMapLayer_hidden/@Area2D@340434" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340435" to="World/MAP/tileMapLayer_hidden/@Area2D@340435" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340435" to="World/MAP/tileMapLayer_hidden/@Area2D@340435" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340436" to="World/MAP/tileMapLayer_hidden/@Area2D@340436" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340436" to="World/MAP/tileMapLayer_hidden/@Area2D@340436" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340437" to="World/MAP/tileMapLayer_hidden/@Area2D@340437" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340437" to="World/MAP/tileMapLayer_hidden/@Area2D@340437" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340438" to="World/MAP/tileMapLayer_hidden/@Area2D@340438" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340438" to="World/MAP/tileMapLayer_hidden/@Area2D@340438" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340439" to="World/MAP/tileMapLayer_hidden/@Area2D@340439" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340439" to="World/MAP/tileMapLayer_hidden/@Area2D@340439" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340440" to="World/MAP/tileMapLayer_hidden/@Area2D@340440" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340440" to="World/MAP/tileMapLayer_hidden/@Area2D@340440" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340441" to="World/MAP/tileMapLayer_hidden/@Area2D@340441" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340441" to="World/MAP/tileMapLayer_hidden/@Area2D@340441" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340442" to="World/MAP/tileMapLayer_hidden/@Area2D@340442" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340442" to="World/MAP/tileMapLayer_hidden/@Area2D@340442" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340443" to="World/MAP/tileMapLayer_hidden/@Area2D@340443" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340443" to="World/MAP/tileMapLayer_hidden/@Area2D@340443" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340444" to="World/MAP/tileMapLayer_hidden/@Area2D@340444" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340444" to="World/MAP/tileMapLayer_hidden/@Area2D@340444" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340445" to="World/MAP/tileMapLayer_hidden/@Area2D@340445" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340445" to="World/MAP/tileMapLayer_hidden/@Area2D@340445" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340446" to="World/MAP/tileMapLayer_hidden/@Area2D@340446" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340446" to="World/MAP/tileMapLayer_hidden/@Area2D@340446" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340447" to="World/MAP/tileMapLayer_hidden/@Area2D@340447" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340447" to="World/MAP/tileMapLayer_hidden/@Area2D@340447" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340448" to="World/MAP/tileMapLayer_hidden/@Area2D@340448" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340448" to="World/MAP/tileMapLayer_hidden/@Area2D@340448" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340449" to="World/MAP/tileMapLayer_hidden/@Area2D@340449" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340449" to="World/MAP/tileMapLayer_hidden/@Area2D@340449" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340450" to="World/MAP/tileMapLayer_hidden/@Area2D@340450" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340450" to="World/MAP/tileMapLayer_hidden/@Area2D@340450" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340451" to="World/MAP/tileMapLayer_hidden/@Area2D@340451" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340451" to="World/MAP/tileMapLayer_hidden/@Area2D@340451" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340452" to="World/MAP/tileMapLayer_hidden/@Area2D@340452" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340452" to="World/MAP/tileMapLayer_hidden/@Area2D@340452" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340453" to="World/MAP/tileMapLayer_hidden/@Area2D@340453" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340453" to="World/MAP/tileMapLayer_hidden/@Area2D@340453" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340454" to="World/MAP/tileMapLayer_hidden/@Area2D@340454" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340454" to="World/MAP/tileMapLayer_hidden/@Area2D@340454" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340455" to="World/MAP/tileMapLayer_hidden/@Area2D@340455" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340455" to="World/MAP/tileMapLayer_hidden/@Area2D@340455" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340456" to="World/MAP/tileMapLayer_hidden/@Area2D@340456" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340456" to="World/MAP/tileMapLayer_hidden/@Area2D@340456" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340457" to="World/MAP/tileMapLayer_hidden/@Area2D@340457" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340457" to="World/MAP/tileMapLayer_hidden/@Area2D@340457" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340458" to="World/MAP/tileMapLayer_hidden/@Area2D@340458" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340458" to="World/MAP/tileMapLayer_hidden/@Area2D@340458" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340459" to="World/MAP/tileMapLayer_hidden/@Area2D@340459" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340459" to="World/MAP/tileMapLayer_hidden/@Area2D@340459" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340460" to="World/MAP/tileMapLayer_hidden/@Area2D@340460" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340460" to="World/MAP/tileMapLayer_hidden/@Area2D@340460" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340461" to="World/MAP/tileMapLayer_hidden/@Area2D@340461" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340461" to="World/MAP/tileMapLayer_hidden/@Area2D@340461" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340462" to="World/MAP/tileMapLayer_hidden/@Area2D@340462" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340462" to="World/MAP/tileMapLayer_hidden/@Area2D@340462" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340463" to="World/MAP/tileMapLayer_hidden/@Area2D@340463" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340463" to="World/MAP/tileMapLayer_hidden/@Area2D@340463" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340464" to="World/MAP/tileMapLayer_hidden/@Area2D@340464" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340464" to="World/MAP/tileMapLayer_hidden/@Area2D@340464" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340465" to="World/MAP/tileMapLayer_hidden/@Area2D@340465" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340465" to="World/MAP/tileMapLayer_hidden/@Area2D@340465" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340466" to="World/MAP/tileMapLayer_hidden/@Area2D@340466" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340466" to="World/MAP/tileMapLayer_hidden/@Area2D@340466" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340467" to="World/MAP/tileMapLayer_hidden/@Area2D@340467" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340467" to="World/MAP/tileMapLayer_hidden/@Area2D@340467" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340468" to="World/MAP/tileMapLayer_hidden/@Area2D@340468" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340468" to="World/MAP/tileMapLayer_hidden/@Area2D@340468" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340469" to="World/MAP/tileMapLayer_hidden/@Area2D@340469" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340469" to="World/MAP/tileMapLayer_hidden/@Area2D@340469" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340470" to="World/MAP/tileMapLayer_hidden/@Area2D@340470" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340470" to="World/MAP/tileMapLayer_hidden/@Area2D@340470" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340471" to="World/MAP/tileMapLayer_hidden/@Area2D@340471" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340471" to="World/MAP/tileMapLayer_hidden/@Area2D@340471" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340472" to="World/MAP/tileMapLayer_hidden/@Area2D@340472" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340472" to="World/MAP/tileMapLayer_hidden/@Area2D@340472" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340473" to="World/MAP/tileMapLayer_hidden/@Area2D@340473" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340473" to="World/MAP/tileMapLayer_hidden/@Area2D@340473" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340474" to="World/MAP/tileMapLayer_hidden/@Area2D@340474" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340474" to="World/MAP/tileMapLayer_hidden/@Area2D@340474" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340475" to="World/MAP/tileMapLayer_hidden/@Area2D@340475" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340475" to="World/MAP/tileMapLayer_hidden/@Area2D@340475" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340476" to="World/MAP/tileMapLayer_hidden/@Area2D@340476" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340476" to="World/MAP/tileMapLayer_hidden/@Area2D@340476" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340477" to="World/MAP/tileMapLayer_hidden/@Area2D@340477" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340477" to="World/MAP/tileMapLayer_hidden/@Area2D@340477" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340478" to="World/MAP/tileMapLayer_hidden/@Area2D@340478" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340478" to="World/MAP/tileMapLayer_hidden/@Area2D@340478" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340479" to="World/MAP/tileMapLayer_hidden/@Area2D@340479" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340479" to="World/MAP/tileMapLayer_hidden/@Area2D@340479" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340480" to="World/MAP/tileMapLayer_hidden/@Area2D@340480" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340480" to="World/MAP/tileMapLayer_hidden/@Area2D@340480" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340481" to="World/MAP/tileMapLayer_hidden/@Area2D@340481" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340481" to="World/MAP/tileMapLayer_hidden/@Area2D@340481" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340482" to="World/MAP/tileMapLayer_hidden/@Area2D@340482" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340482" to="World/MAP/tileMapLayer_hidden/@Area2D@340482" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340483" to="World/MAP/tileMapLayer_hidden/@Area2D@340483" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340483" to="World/MAP/tileMapLayer_hidden/@Area2D@340483" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340484" to="World/MAP/tileMapLayer_hidden/@Area2D@340484" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340484" to="World/MAP/tileMapLayer_hidden/@Area2D@340484" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340485" to="World/MAP/tileMapLayer_hidden/@Area2D@340485" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340485" to="World/MAP/tileMapLayer_hidden/@Area2D@340485" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340486" to="World/MAP/tileMapLayer_hidden/@Area2D@340486" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340486" to="World/MAP/tileMapLayer_hidden/@Area2D@340486" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340487" to="World/MAP/tileMapLayer_hidden/@Area2D@340487" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340487" to="World/MAP/tileMapLayer_hidden/@Area2D@340487" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340488" to="World/MAP/tileMapLayer_hidden/@Area2D@340488" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340488" to="World/MAP/tileMapLayer_hidden/@Area2D@340488" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340489" to="World/MAP/tileMapLayer_hidden/@Area2D@340489" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340489" to="World/MAP/tileMapLayer_hidden/@Area2D@340489" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340490" to="World/MAP/tileMapLayer_hidden/@Area2D@340490" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340490" to="World/MAP/tileMapLayer_hidden/@Area2D@340490" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340491" to="World/MAP/tileMapLayer_hidden/@Area2D@340491" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340491" to="World/MAP/tileMapLayer_hidden/@Area2D@340491" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340492" to="World/MAP/tileMapLayer_hidden/@Area2D@340492" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340492" to="World/MAP/tileMapLayer_hidden/@Area2D@340492" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340493" to="World/MAP/tileMapLayer_hidden/@Area2D@340493" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340493" to="World/MAP/tileMapLayer_hidden/@Area2D@340493" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340494" to="World/MAP/tileMapLayer_hidden/@Area2D@340494" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340494" to="World/MAP/tileMapLayer_hidden/@Area2D@340494" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340495" to="World/MAP/tileMapLayer_hidden/@Area2D@340495" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340495" to="World/MAP/tileMapLayer_hidden/@Area2D@340495" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340496" to="World/MAP/tileMapLayer_hidden/@Area2D@340496" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340496" to="World/MAP/tileMapLayer_hidden/@Area2D@340496" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340497" to="World/MAP/tileMapLayer_hidden/@Area2D@340497" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340497" to="World/MAP/tileMapLayer_hidden/@Area2D@340497" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340498" to="World/MAP/tileMapLayer_hidden/@Area2D@340498" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340498" to="World/MAP/tileMapLayer_hidden/@Area2D@340498" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340499" to="World/MAP/tileMapLayer_hidden/@Area2D@340499" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340499" to="World/MAP/tileMapLayer_hidden/@Area2D@340499" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340500" to="World/MAP/tileMapLayer_hidden/@Area2D@340500" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340500" to="World/MAP/tileMapLayer_hidden/@Area2D@340500" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340501" to="World/MAP/tileMapLayer_hidden/@Area2D@340501" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340501" to="World/MAP/tileMapLayer_hidden/@Area2D@340501" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340502" to="World/MAP/tileMapLayer_hidden/@Area2D@340502" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340502" to="World/MAP/tileMapLayer_hidden/@Area2D@340502" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340503" to="World/MAP/tileMapLayer_hidden/@Area2D@340503" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340503" to="World/MAP/tileMapLayer_hidden/@Area2D@340503" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340504" to="World/MAP/tileMapLayer_hidden/@Area2D@340504" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340504" to="World/MAP/tileMapLayer_hidden/@Area2D@340504" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340505" to="World/MAP/tileMapLayer_hidden/@Area2D@340505" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340505" to="World/MAP/tileMapLayer_hidden/@Area2D@340505" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340506" to="World/MAP/tileMapLayer_hidden/@Area2D@340506" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340506" to="World/MAP/tileMapLayer_hidden/@Area2D@340506" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340507" to="World/MAP/tileMapLayer_hidden/@Area2D@340507" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340507" to="World/MAP/tileMapLayer_hidden/@Area2D@340507" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340508" to="World/MAP/tileMapLayer_hidden/@Area2D@340508" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340508" to="World/MAP/tileMapLayer_hidden/@Area2D@340508" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340509" to="World/MAP/tileMapLayer_hidden/@Area2D@340509" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340509" to="World/MAP/tileMapLayer_hidden/@Area2D@340509" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340510" to="World/MAP/tileMapLayer_hidden/@Area2D@340510" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340510" to="World/MAP/tileMapLayer_hidden/@Area2D@340510" method="_on_area_exited"]
+[connection signal="area_entered" from="World/MAP/tileMapLayer_hidden/@Area2D@340511" to="World/MAP/tileMapLayer_hidden/@Area2D@340511" method="_on_area_entered"]
+[connection signal="area_exited" from="World/MAP/tileMapLayer_hidden/@Area2D@340511" to="World/MAP/tileMapLayer_hidden/@Area2D@340511" method="_on_area_exited"]
 
-[editable path="CanvasLayer/TimerBest"]
 [editable path="CanvasLayer/TimerBest_superdash"]
+[editable path="CanvasLayer/TimerBest"]

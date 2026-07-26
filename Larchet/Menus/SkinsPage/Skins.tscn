@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ccpcjq4sy7k7u" path="res://Larchet/Menus/SkinsPage/Menu_Skin.gd" id="1_mcgil"]
 [ext_resource type="Script" uid="uid://ej50tywcc4ki" path="res://Interface/Scripts/button.gd" id="2_ctci1"]
+[ext_resource type="Shader" uid="uid://bqw0maxha7ge2" path="res://Interface/Shader/PauseBlur.gdshader" id="2_jgynd"]
 [ext_resource type="StyleBox" uid="uid://dnuh3h61crver" path="res://Larchet/Menus/EchPrecSuiv.tres" id="2_v44pn"]
 [ext_resource type="Texture2D" uid="uid://dl8q1p1p8v37j" path="res://Interface/Sprites/tile_0167.png" id="3_4brkj"]
 [ext_resource type="Texture2D" uid="uid://8dfikh4timra" path="res://Interface/Sprites/tile_0169.png" id="4_v44pn"]
@@ -9,6 +10,10 @@
 [ext_resource type="SpriteFrames" uid="uid://cwc8nldjr73dv" path="res://Larchet/Others_Chara/Animation/Cat.tres" id="7_h0igu"]
 [ext_resource type="AudioStream" uid="uid://mveooa4f7pg4" path="res://Audio/SFX/ui_click_rollover_misc_05.mp3" id="8_1a23a"]
 [ext_resource type="AudioStream" uid="uid://d3dxycfae6tnq" path="res://Audio/SFX/ui_click_rollover_misc_01.mp3" id="9_jgynd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jgynd"]
+shader = ExtResource("2_jgynd")
+shader_parameter/amount = 1.5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h0igu"]
 
@@ -22,18 +27,20 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8o27j"]
 
-[node name="SkinsPage" type="Control" unique_id=538929206]
-layout_mode = 3
+[node name="SkinsPage" type="CanvasLayer" unique_id=251887687]
+script = ExtResource("1_mcgil")
+
+[node name="Blur" type="ColorRect" parent="." unique_id=350293778]
+material = SubResource("ShaderMaterial_jgynd")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_mcgil")
+metadata/_edit_lock_ = true
 
 [node name="GridContainer" type="GridContainer" parent="." unique_id=1998058100]
 custom_minimum_size = Vector2(270, 130)
-layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -49,7 +56,6 @@ columns = 4
 metadata/_edit_lock_ = true
 
 [node name="Suivant" type="Button" parent="." unique_id=1247736304]
-layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -72,7 +78,6 @@ position = Vector2(8, 8)
 texture = ExtResource("3_4brkj")
 
 [node name="Precedent" type="Button" parent="." unique_id=2034366624]
-layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -92,7 +97,6 @@ position = Vector2(8, 8)
 texture = ExtResource("4_v44pn")
 
 [node name="Back" type="Button" parent="." unique_id=130804968]
-layout_mode = 1
 offset_right = 16.0
 offset_bottom = 16.0
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jgynd")
@@ -109,6 +113,7 @@ texture = ExtResource("5_h0igu")
 
 [node name="Cat_Zone" type="Control" parent="." unique_id=1222061285]
 z_index = 1
+layout_mode = 3
 anchors_preset = 0
 offset_left = 1.0
 offset_top = 160.0

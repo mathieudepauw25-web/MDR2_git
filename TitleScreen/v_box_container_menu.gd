@@ -6,14 +6,21 @@ func _ready() -> void:
 	#for i in range(get_child_count()):
 		#get_child(i).visible = false
 	visible = false
-
+	tween = create_tween()
+	tween.tween_property($Panel, "offset_transform_position_ratio", Vector2(0,20), 0)
 
 		
 
 var tween : Tween
 func _on_md_rlogo_logo_animation_fini() -> void:
 	$"../BlackScreen".visible = false
+	tween = create_tween()
 	visible = true
+	tween.tween_property($Panel, "offset_transform_position_ratio", Vector2(0,2), 0.2)
+	tween.tween_property($Panel, "offset_transform_position_ratio", Vector2(0,0), 0.1)
+	
+	
+	
 	
 	#for i in range(get_child_count()):
 		#if i != 1 :
