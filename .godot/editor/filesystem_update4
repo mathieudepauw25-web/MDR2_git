@@ -16,3 +16,9 @@ res://Larchet/LevelMaker/TileMapLayer/normal_ice.tres
 res://Larchet/LevelMaker/TileMapLayer/normal_water.tres
 res://Larchet/Others_Chara/Animation/Cat.tres
 res://Larchet/Menus/SkinsPage/Menu_Skin.gd
+res://Larchet/LevelMaker/Scenes/Level_Editor.tscn
+res://Larchet/LevelMaker/Scenes/Level_Editor.gd
+res://Larchet/LevelMaker/Scripts/Camera.gd
+res://Larchet/LevelMaker/Scripts/UI_Level_Editor.gd
+res://Larchet/LevelMaker/Scripts/Pattern_Window.gd
+res://Larchet/LevelMaker/Scripts/Tile_Skin_Data.gd

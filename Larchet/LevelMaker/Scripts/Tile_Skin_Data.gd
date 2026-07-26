@@ -1,6 +1,6 @@
 class_name TileSkinData
 
-enum Brush {GRASS, WALL, ICE}
+enum Brush {GRASS, WALL, ICE, TRANS}
 
 const WALL_SOURCE_ID: int = 0
 const GRASS_SOURCE_ID: int = 1
@@ -10,6 +10,7 @@ const SKINS: Dictionary = {
 	"Normal": {
 		"floor_dark" : [Vector3i(1,1,1), Vector3i(3,1,1), Vector3i(5,1,1), Vector3i(7,1,1)],
 		"floor_light" : [Vector3i(1,5,1), Vector3i(3,5,1), Vector3i(5,5,1), Vector3i(7,5,1)],
+		"transparent" : [Vector3i(12,4,1)],
 		"wall_normal" : [Vector3i(0,1,0), Vector3i(2,1,0)],
 		"wall_full" : [Vector3i(6,3,0), Vector3i(7,3,0), Vector3i(8,3,0)],
 		"ice" : [Vector3i(0,1,2)],

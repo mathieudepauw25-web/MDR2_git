@@ -405,19 +405,18 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -40.0
-offset_right = -172.0
+offset_top = -38.0
+offset_right = -209.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_phpmh")
+metadata/_edit_lock_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI_Layer/PanelContainer" unique_id=2011583506]
-custom_minimum_size = Vector2(148, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-metadata/_edit_lock_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="UI_Layer/PanelContainer/HBoxContainer" unique_id=2116188525]
 layout_mode = 2
@@ -480,7 +479,6 @@ oversampling_override = 1.0
 title = "Outil"
 position = Vector2i(0, 36)
 size = Vector2i(150, 100)
-visible = false
 min_size = Vector2i(50, 50)
 max_size = Vector2i(200, 200)
 theme_override_styles/embedded_border = SubResource("StyleBoxFlat_xrivr")
