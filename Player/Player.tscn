@@ -338,7 +338,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hagla")
 }],
-"loop": false,
+"loop": 0,
 "name": &"dash",
 "speed": 20.0
 }, {
@@ -364,7 +364,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_twy2r")
 }],
-"loop": false,
+"loop": 0,
 "name": &"dashUD",
 "speed": 20.0
 }]
@@ -554,7 +554,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_03jbi")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 45.0
 }]

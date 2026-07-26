@@ -6,6 +6,7 @@ extends Node2D
 @onready var layer_ice: TileMapLayer = %tileMapLayer_ice
 @onready var layer_persp_right: TileMapLayer = %TileMapLayer_perspective_right
 @onready var layer_persp_right_wall: TileMapLayer = %TileMapLayer_perspective_right_wall
+@onready var layer_persp_Eright_wall: TileMapLayer = %TileMapLayer_perspective_Eright_wall
 @onready var layer_persp_right_ice: TileMapLayer = %TileMapLayer_perspective_right_ice
 @onready var layer_persp_up: TileMapLayer = %TileMapLayer_perspective_up
 @onready var layer_persp_up_wall: TileMapLayer = %TileMapLayer_perspective_up_wall
@@ -23,6 +24,7 @@ var active_wall: TileMapLayer
 var active_ice: TileMapLayer
 var active_persp_right: TileMapLayer
 var active_persp_right_wall: TileMapLayer
+var active_persp_Eright_wall: TileMapLayer
 var active_persp_right_ice: TileMapLayer
 var active_persp_up: TileMapLayer
 var active_persp_up_wall: TileMapLayer
@@ -86,6 +88,7 @@ func set_active_map(is_pattern: bool) -> void:
 		active_ice = null  
 		active_persp_right = pattern_window.m3_persp_right
 		active_persp_right_wall = null
+		active_persp_Eright_wall = null
 		active_persp_right_ice = null
 		active_persp_up = pattern_window.m3_persp_up
 		active_persp_up_wall = null
@@ -99,6 +102,7 @@ func set_active_map(is_pattern: bool) -> void:
 		active_ice = layer_ice
 		active_persp_right = layer_persp_right
 		active_persp_right_wall = layer_persp_right_wall
+		active_persp_Eright_wall = layer_persp_Eright_wall
 		active_persp_right_ice = layer_persp_right_ice
 		active_persp_up = layer_persp_up
 		active_persp_up_wall = layer_persp_up_wall
@@ -128,18 +132,47 @@ func _unhandled_input(event: InputEvent) -> void:
 			paint_smart_tile(is_just_clicked)
 		elif is_right_clicking and not camera.is_panning:
 			erase_all_layers()
+	if event is InputEventKey:
+		if event.keycode == KEY_SPACE and not event.echo:
+			refresh_all_grass()
 
 func paint_smart_tile(is_just_clicked: bool = false) -> void:
 	var mouse_pos = get_global_mouse_position()
 	var grid_pos = layer_floor.local_to_map(mouse_pos)
+	var has_grass = layer_floor.get_cell_source_id(grid_pos) == TileSkinData.GRASS_SOURCE_ID
+	var has_wall = layer_wall.get_cell_source_id(grid_pos) == TileSkinData.WALL_SOURCE_ID
+	var has_ice = layer_ice.get_cell_source_id(grid_pos) == TileSkinData.ICE_SOURCE_ID
+	var is_empty = not has_wall and not has_ice and not has_grass
+	var current_theme = cell_themes.get(grid_pos, "")
+	var is_trans = current_theme == "_trans"
+	var is_bridge = current_theme == "_bridge_v" or current_theme == "_bridge_h"
+	if ui_layer.get("is_locked") and ui_layer.is_locked:
+		match current_brush:
+			TileSkinData.Brush.GRASS:
+				if not is_empty and not (has_grass and not is_trans and not is_bridge): return
+			TileSkinData.Brush.TRANS:
+				if not is_empty and not is_trans: return
+			TileSkinData.Brush.BRIDGE:
+				if not is_empty and not is_bridge: return
+			TileSkinData.Brush.WALL:
+				if not is_empty and not has_wall: return
+			TileSkinData.Brush.ICE:
+				if not is_empty and not has_ice: return
 	match current_brush:
 		TileSkinData.Brush.GRASS:
-			var has_grass = layer_floor.get_cell_source_id(grid_pos) == TileSkinData.GRASS_SOURCE_ID
+			var is_real_grass = has_grass and not is_trans and not is_bridge
 			if is_just_clicked:
-				if has_grass:
+				if is_trans or is_bridge:
+					is_repainting_theme = false
+					cell_themes[grid_pos] = "_light"
+					layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
+					layer_wall.set_cell(grid_pos, -1)
+					layer_ice.set_cell(grid_pos, -1)
+					update_smart_area(grid_pos)
+				elif is_real_grass:
 					is_repainting_theme = true
-					var current_theme = cell_themes.get(grid_pos, "_light")
-					current_target_theme = "_dark" if current_theme == "_light" else "_light"
+					var current_grass_theme = cell_themes.get(grid_pos, "_light")
+					current_target_theme = "_dark" if current_grass_theme == "_light" else "_light"
 					cell_themes[grid_pos] = current_target_theme
 					update_smart_area(grid_pos)
 				else:
@@ -151,11 +184,11 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 					update_smart_area(grid_pos)
 			else:
 				if is_repainting_theme:
-					if has_grass and cell_themes.get(grid_pos, "_light") != current_target_theme:
+					if is_real_grass and cell_themes.get(grid_pos, "_light") != current_target_theme:
 						cell_themes[grid_pos] = current_target_theme
 						update_smart_area(grid_pos)
 				else:
-					if not has_grass:
+					if not is_real_grass:
 						cell_themes[grid_pos] = "_light"
 						layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 						layer_wall.set_cell(grid_pos, -1)
@@ -176,12 +209,38 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 				cell_themes.erase(grid_pos)
 				update_smart_area(grid_pos)
 		TileSkinData.Brush.TRANS:
-			if cell_themes.get(grid_pos) != "_trans":
+			if current_theme != "_trans":
 				cell_themes[grid_pos] = "_trans"
 				layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 				layer_wall.set_cell(grid_pos, -1)
 				layer_ice.set_cell(grid_pos, -1)
 				update_smart_area(grid_pos)
+		TileSkinData.Brush.BRIDGE:
+			if is_just_clicked:
+				if is_bridge:
+					is_repainting_theme = true
+					current_target_theme = "_bridge_h" if current_theme == "_bridge_v" else "_bridge_v"
+					cell_themes[grid_pos] = current_target_theme
+					update_smart_area(grid_pos)
+				else:
+					is_repainting_theme = false
+					cell_themes[grid_pos] = "_bridge_h"
+					layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
+					layer_wall.set_cell(grid_pos, -1)
+					layer_ice.set_cell(grid_pos, -1)
+					update_smart_area(grid_pos)
+			else:
+				if is_repainting_theme:
+					if is_bridge and current_theme != current_target_theme:
+						cell_themes[grid_pos] = current_target_theme
+						update_smart_area(grid_pos)
+				else:
+					if not is_bridge:
+						cell_themes[grid_pos] = "_bridge_h"
+						layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
+						layer_wall.set_cell(grid_pos, -1)
+						layer_ice.set_cell(grid_pos, -1)
+						update_smart_area(grid_pos)
 
 func _apply_brush_to_layer(grid_pos: Vector2i, target_layer: TileMapLayer, source_id: int) -> void:
 	if source_id == TileSkinData.GRASS_SOURCE_ID:
@@ -194,6 +253,28 @@ func _apply_brush_to_layer(grid_pos: Vector2i, target_layer: TileMapLayer, sourc
 
 func erase_all_layers(specific_pos = null) -> void:
 	var grid_pos = specific_pos if specific_pos != null else layer_wall.local_to_map(get_global_mouse_position())
+	var has_wall = layer_wall.get_cell_source_id(grid_pos) == TileSkinData.WALL_SOURCE_ID
+	var has_ice = layer_ice.get_cell_source_id(grid_pos) == TileSkinData.ICE_SOURCE_ID
+	var has_grass = layer_floor.get_cell_source_id(grid_pos) == TileSkinData.GRASS_SOURCE_ID
+	var current_theme = cell_themes.get(grid_pos, "")
+	var is_trans = current_theme == "_trans"
+	var is_bridge = current_theme == "_bridge_v" or current_theme == "_bridge_h"
+	
+	if ui_layer.get("is_locked") and ui_layer.is_locked:
+		var matches_selection = false
+		match current_brush:
+			TileSkinData.Brush.GRASS:
+				matches_selection = (has_grass and not is_trans and not is_bridge)
+			TileSkinData.Brush.TRANS:
+				matches_selection = is_trans
+			TileSkinData.Brush.BRIDGE:
+				matches_selection = is_bridge
+			TileSkinData.Brush.WALL:
+				matches_selection = has_wall
+			TileSkinData.Brush.ICE:
+				matches_selection = has_ice
+		if not matches_selection:
+			return
 	cell_themes.erase(grid_pos)
 	layer_floor.set_cell(grid_pos, -1)
 	layer_wall.set_cell(grid_pos, -1)
@@ -202,7 +283,7 @@ func erase_all_layers(specific_pos = null) -> void:
 
 func update_smart_area(cell_pos: Vector2i, is_pattern: bool = false) -> void:
 	set_active_map(is_pattern)
-	var layers_to_clear = [active_persp_up, active_persp_up_wall, active_persp_up_ice, active_persp_right, active_persp_right_wall, active_persp_right_ice, active_persp_Wright, active_persp_Wdown, active_persp_Wleft]
+	var layers_to_clear = [active_persp_up, active_persp_up_wall, active_persp_up_ice, active_persp_right, active_persp_right_wall, active_persp_Eright_wall, active_persp_right_ice, active_persp_Wright, active_persp_Wdown, active_persp_Wleft]
 	for x in range(-2, 3):
 		for y in range(-2, 3):
 			var target_cell = cell_pos + Vector2i(x, y)
@@ -220,11 +301,17 @@ func update_smart_area(cell_pos: Vector2i, is_pattern: bool = false) -> void:
 	if is_pattern: set_active_map(false)
 
 func is_grass_or_ice(pos: Vector2i) -> bool:
+	if active_floor == layer_floor:
+		var theme = cell_themes.get(pos)
+		if theme == "_trans" or theme == "_bridge_v" or theme == "_bridge_h":
+			return false
 	return get_source_id(active_floor, pos) == TileSkinData.GRASS_SOURCE_ID or get_source_id(active_ice, pos) == TileSkinData.ICE_SOURCE_ID
 
 func get_grass_theme(cell_pos: Vector2i) -> String:
-	if active_floor == layer_floor and cell_themes.get(cell_pos) == "_trans":
-		return "_trans"
+	if active_floor == layer_floor:
+		var theme = cell_themes.get(cell_pos)
+		if theme == "_trans" or theme == "_bridge_v" or theme == "_bridge_h":
+			return theme
 	if pattern_window.m3_floor != null and active_floor == pattern_window.m3_floor:
 		return pattern_window.pattern_cell_themes.get(cell_pos, "_light")
 	match grass_mode:
@@ -241,10 +328,17 @@ func get_grass_theme(cell_pos: Vector2i) -> String:
 func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo: Dictionary, source_id: int) -> void:
 	if layer == null: return
 	var theme = get_grass_theme(cell_pos)
-	if source_id == TileSkinData.GRASS_SOURCE_ID and theme == "_trans":
-		var trans_atlas = get_tile_variation(cell_pos, get_skin_element("", "transparent"), "transparent")
-		apply_custom_cell(layer, cell_pos, source_id, trans_atlas)
-		return
+	if source_id == TileSkinData.GRASS_SOURCE_ID:
+		if theme == "_trans":
+			var trans_key = "visible_transparent" if Input.is_key_pressed(KEY_SPACE) else "transparent"
+			var trans_atlas = get_tile_variation(cell_pos, get_skin_element("", trans_key), trans_key)
+			apply_custom_cell(layer, cell_pos, source_id, trans_atlas)
+			return
+		elif theme == "_bridge_v" or theme == "_bridge_h":
+			var bridge_key = theme.substr(1) 
+			var bridge_atlas = get_tile_variation(cell_pos, get_skin_element("", bridge_key), bridge_key)
+			apply_custom_cell(layer, cell_pos, source_id, bridge_atlas)
+			return
 	var score : int = 0
 	if source_id == TileSkinData.WALL_SOURCE_ID:
 		if is_tile_connected(layer, cell_pos + Vector2i.UP, source_id):    score += 1
@@ -405,11 +499,21 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 				data = modified_data
 			if typeof(data) == TYPE_DICTIONARY:
 				for offset in data:
-					var final_atlas = get_skin_element("right_wall", str(data[offset]), theme)
-					apply_custom_cell(active_persp_right_wall, cell_pos + offset, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_right_wall_" + str(offset)))
+					var tex = str(data[offset])
+					var final_atlas = get_skin_element("right_wall", tex, theme)
+					var target_pos = cell_pos + offset
+					if tex == "Eright_wall":
+						apply_custom_cell(active_persp_Eright_wall, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_Eright_wall_" + str(offset)))
+					else:
+						apply_custom_cell(active_persp_right_wall, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_right_wall_" + str(offset)))
 			else:
-				var final_atlas = get_skin_element("right_wall", str(data), theme)
-				apply_custom_cell(active_persp_right_wall, cell_pos + Vector2i.RIGHT, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_right_wall"))
+				var tex = str(data)
+				var final_atlas = get_skin_element("right_wall", tex, theme)
+				var target_pos = cell_pos + Vector2i.RIGHT
+				if tex == "Eright_wall":
+					apply_custom_cell(active_persp_Eright_wall, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_Eright_wall"))
+				else:
+					apply_custom_cell(active_persp_right_wall, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_right_wall"))
 
 		if tile_data.has("persp_up_wall") and tile_data["persp_up_wall"] != null:
 			var data = tile_data["persp_up_wall"]
