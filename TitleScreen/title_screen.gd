@@ -151,7 +151,7 @@ func _on_start_pressed() -> void :
 	$CanvasLayer/MenuControl.visible = false
 	$CanvasLayer/MDRlogo.visible = false
 	$CanvasLayer/StartControl.visible = true
-	start_campagne.grab_focus()
+	$CanvasLayer/StartControl/GrabFocusButton.grab_focus()
 	
 
 

@@ -6,20 +6,15 @@ res://Larchet/LevelMaker/TileMapLayer/normal_grass.tres
 res://Larchet/LevelMaker/TileMapLayer/normal_wall.tres
 res://Larchet/LevelMaker/TileMapLayer/normal_ice.tres
 res://Larchet/LevelMaker/TileMapLayer/normal_water.tres
-<<<<<<< HEAD
-res://Larchet/Others_Chara/Animation/Cat.tres
-res://Larchet/Menus/SkinsPage/Menu_Skin.gd
-res://Larchet/LevelMaker/Scenes/Level_Editor.tscn
-res://Larchet/LevelMaker/Scenes/Level_Editor.gd
-res://Larchet/LevelMaker/Scripts/Camera.gd
-res://Larchet/LevelMaker/Scripts/UI_Level_Editor.gd
-res://Larchet/LevelMaker/Scripts/Pattern_Window.gd
-res://Larchet/LevelMaker/Scripts/Tile_Skin_Data.gd
-=======
 res://Interface/Scripts/button.gd
 res://TitleScreen/TitleScreen.tscn
 res://Larchet/Menus/ControlsPage/Scenes/Menu_Controls.gd
 res://TitleScreen/boutonoptions.gd
 res://TitleScreen/title_screen.gd
 res://System/TextManage.gd
->>>>>>> b4ff5d0 (fix: le menu de skin ne voulait plus changer de page)
+res://Larchet/LevelMaker/Scenes/Level_Editor.gd
+res://Larchet/LevelMaker/Scripts/Pattern_Window.gd
+res://Larchet/LevelMaker/Scripts/Tile_Skin_Data.gd
+res://TitleScreen/start_control.gd
+res://Larchet/Menus/SkinsPage/Skin_Slot.tscn
+res://Larchet/Menus/SkinsPage/Skin_Slot.gd
