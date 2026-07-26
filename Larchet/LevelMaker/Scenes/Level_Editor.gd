@@ -377,33 +377,10 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 						layer_ice.set_cell(grid_pos, -1)
 						update_smart_area(grid_pos)
 		TileSkinData.Brush.ICE:
-			var has_ice = layer_ice.get_cell_source_id(grid_pos) == TileSkinData.ICE_SOURCE_ID
-			if is_just_clicked:
-				if has_ice:
-					is_repainting_theme = true
-					var current_theme = cell_themes.get(grid_pos, "_light")
-					current_target_theme = "_dark" if current_theme == "_light" else "_light"
-					cell_themes[grid_pos] = current_target_theme
-					update_smart_area(grid_pos)
-				else:
-					is_repainting_theme = false
-					cell_themes[grid_pos] = "_light"
-					apply_custom_cell(layer_ice, grid_pos, TileSkinData.ICE_SOURCE_ID, get_tile_variation(grid_pos, get_skin_element("", "ice"), "ice"))
-					layer_floor.set_cell(grid_pos, -1)
-					layer_wall.set_cell(grid_pos, -1)
-					update_smart_area(grid_pos)
-			else:
-				if is_repainting_theme:
-					if has_ice and cell_themes.get(grid_pos, "_light") != current_target_theme:
-						cell_themes[grid_pos] = current_target_theme
-						update_smart_area(grid_pos)
-				else:
-					if not has_ice:
-						cell_themes[grid_pos] = "_light"
-						apply_custom_cell(layer_ice, grid_pos, TileSkinData.ICE_SOURCE_ID, get_tile_variation(grid_pos, get_skin_element("", "ice"), "ice"))
-						layer_floor.set_cell(grid_pos, -1)
-						layer_wall.set_cell(grid_pos, -1)
-						update_smart_area(grid_pos)
+			apply_custom_cell(layer_ice, grid_pos, TileSkinData.ICE_SOURCE_ID, get_tile_variation(grid_pos, get_skin_element("", "ice"), "ice"))
+			layer_floor.set_cell(grid_pos, -1)
+			layer_wall.set_cell(grid_pos, -1)
+			update_smart_area(grid_pos)
 		TileSkinData.Brush.WALL:
 			layer_wall.set_cell(grid_pos, TileSkinData.WALL_SOURCE_ID, Vector2i(0, 0))
 			layer_floor.set_cell(grid_pos, -1)
@@ -469,9 +446,7 @@ func get_grass_theme(cell_pos: Vector2i) -> String:
 
 func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo: Dictionary, source_id: int) -> void:
 	if layer == null: return
-	
 	var score : int = 0
-	
 	if source_id == TileSkinData.WALL_SOURCE_ID:
 		if is_tile_connected(layer, cell_pos + Vector2i.UP, source_id):    score += 1
 		if is_tile_connected(layer, cell_pos + Vector2i.RIGHT, source_id): score += 2
@@ -482,30 +457,24 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 		if is_tile_connected(layer, cell_pos + Vector2i.RIGHT, source_id): score += 2
 		if is_tile_connected(layer, cell_pos + Vector2i.DOWN, source_id):  score += 4
 		if is_tile_connected(layer, cell_pos + Vector2i.LEFT, source_id):  score += 8
-		
 	var theme = get_grass_theme(cell_pos)
 	var main_theme_key = "dark" if theme == "_dark" else "light"
-	
 	if source_id == TileSkinData.GRASS_SOURCE_ID:
 		var main_atlas = get_tile_variation(cell_pos, get_skin_element("floor", main_theme_key), main_theme_key)
 		apply_custom_cell(layer, cell_pos, source_id, main_atlas)
 	elif source_id == TileSkinData.ICE_SOURCE_ID:
 		apply_custom_cell(layer, cell_pos, source_id, get_tile_variation(cell_pos, get_skin_element("", "ice"), "ice"))
-		
 		var border_source_id = TileSkinData.GRASS_SOURCE_ID
 		var no_up = get_source_id(active_ice, cell_pos + Vector2i.UP) != TileSkinData.ICE_SOURCE_ID and get_source_id(active_wall, cell_pos + Vector2i.UP) != TileSkinData.WALL_SOURCE_ID
 		var no_right = get_source_id(active_ice, cell_pos + Vector2i.RIGHT) != TileSkinData.ICE_SOURCE_ID and get_source_id(active_wall, cell_pos + Vector2i.RIGHT) != TileSkinData.WALL_SOURCE_ID
 		var no_up_right = get_source_id(active_ice, cell_pos + Vector2i(1, -1)) != TileSkinData.ICE_SOURCE_ID and get_source_id(active_wall, cell_pos + Vector2i(1, -1)) != TileSkinData.WALL_SOURCE_ID
-		
 		if no_up: apply_custom_cell(active_persp_up_ice, cell_pos + Vector2i.UP, border_source_id, get_tile_variation(cell_pos, get_skin_element("up_ice", "normal_ice"), "up_ice"))
 		if no_right: apply_custom_cell(active_persp_right_ice, cell_pos + Vector2i.RIGHT, border_source_id, get_tile_variation(cell_pos, get_skin_element("right_ice", "ice"), "right_ice"))
 		if no_up and no_right and no_up_right: apply_custom_cell(active_persp_up_ice, cell_pos + Vector2i(1, -1), border_source_id, get_tile_variation(cell_pos, get_skin_element("up_ice", "E_ice"), "up_ice_E"))
-		
 	if repo.has(score):
 		var variations = repo[score]
 		var pseudo_rand = posmod(hash(cell_pos), variations.size())
 		var tile_data = variations[pseudo_rand].duplicate(true)
-		
 		var border_source_id = source_id
 		if source_id == TileSkinData.ICE_SOURCE_ID:
 			border_source_id = TileSkinData.GRASS_SOURCE_ID
