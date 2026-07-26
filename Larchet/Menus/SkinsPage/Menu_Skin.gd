@@ -18,9 +18,9 @@ var is_mouse_active: bool = true
 
 func _ready() -> void:
 	cat.play("Idle")
-	for button in [back, suivant, precedent]:
-		button.mouse_entered.connect(_on_button_hover)
-		button.focus_entered.connect(_on_button_hover)
+	for button_UI in [back, suivant, precedent]:
+		button_UI.mouse_entered.connect(_on_button_hover)
+		button_UI.focus_entered.connect(_on_button_hover)
 	update_menu()
 
 func update_menu() -> void:

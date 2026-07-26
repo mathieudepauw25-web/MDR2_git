@@ -1,7 +1,7 @@
 extends Button
 
 
-@onready var panel_options_2: panelOptions = $"Panel_options2"
+@onready var panel_options_2: panelOptions = %Panel_options2
 
 func _ready() -> void:
 	pass
