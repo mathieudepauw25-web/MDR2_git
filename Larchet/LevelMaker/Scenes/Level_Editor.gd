@@ -19,6 +19,8 @@ extends Node2D
 @onready var ui_layer = $UI_Layer
 @onready var pattern_window: Window = %PatternWindow
 
+const PLAYER_SCENE = preload("res://Player/Player.tscn")
+
 var active_floor: TileMapLayer
 var active_wall: TileMapLayer
 var active_ice: TileMapLayer

@@ -10,6 +10,7 @@ signal mode3_toggled()
 @onready var btn_grass_mode: Button = %grass_mode
 @onready var btn_mode3: Button = %Btn_Mode3
 @onready var btn_OL: Button = %Btn_Open_Locked
+@onready var btn_test: Button = %Btn_Test
 @onready var btn_herbe = $PanelContainer/HBoxContainer/Btn_Herbe
 @onready var btn_mur = $PanelContainer/HBoxContainer/Btn_Mur
 @onready var btn_glace = $PanelContainer/HBoxContainer/Btn_Glace
@@ -61,3 +62,5 @@ func _on_mode3_pressed() -> void:
 
 func update_coords(x: int, y: int) -> void:
 	lbl_coords.text = "X: %d, Y: %d" % [x, y]
+
+func UI_visible
