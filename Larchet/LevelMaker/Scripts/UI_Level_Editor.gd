@@ -7,6 +7,7 @@ signal mode3_toggled()
 @onready var lbl_coords: Label = $Coordonnees
 @onready var lbl_grass_mode: Label = $grass_mode/Label
 @onready var lbl_OL: Label = $Btn_Open_Locked/Label
+@onready var lbl_test: Label = $Btn_Test/Label
 @onready var btn_grass_mode: Button = %grass_mode
 @onready var btn_mode3: Button = %Btn_Mode3
 @onready var btn_OL: Button = %Btn_Open_Locked
@@ -37,6 +38,7 @@ func _ready() -> void:
 	if not btn_mode3.pressed.is_connected(_on_mode3_pressed):
 		btn_mode3.pressed.connect(_on_mode3_pressed)
 	btn_OL.pressed.connect(_on_OL_pressed)
+	btn_test.pressed.connect(_on_test_pressed)
 
 func _on_grass_mode_pressed() -> void:
 	grass_mode = 1 if grass_mode == 3 else grass_mode + 1
@@ -63,4 +65,18 @@ func _on_mode3_pressed() -> void:
 func update_coords(x: int, y: int) -> void:
 	lbl_coords.text = "X: %d, Y: %d" % [x, y]
 
-func UI_visible
+func _on_test_pressed() -> void:
+	if lbl_test.text == ">":
+		lbl_test.text = "="
+		for UI in self.get_children():
+			if UI != btn_test:
+				UI.visible = false
+		get_parent().play_map()
+	else:
+		lbl_test.text = ">"
+		for UI in self.get_children():
+			if UI != %PatternWindow and UI != btn_mode3:
+				UI.visible = true
+		if lbl_grass_mode.text == "3":
+			btn_mode3.visible = true
+		get_parent().back_to_editor()

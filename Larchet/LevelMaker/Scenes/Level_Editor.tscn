@@ -258,9 +258,11 @@ region = Rect2(67, 21, 15, 14)
 bg_color = Color(0.101960786, 0.5411765, 0.1764706, 1)
 
 [node name="LevelEditor" type="Node2D" unique_id=997066401]
+y_sort_enabled = true
 script = ExtResource("1_rgpot")
 
 [node name="MAP" type="Node2D" parent="." unique_id=1035934058]
+y_sort_enabled = true
 
 [node name="Perspective" type="TileMapLayer" parent="MAP" unique_id=1118852303]
 y_sort_enabled = true
@@ -292,7 +294,7 @@ tile_set = ExtResource("2_0a5d1")
 
 [node name="TileMapLayer_perspective_up_wall" type="TileMapLayer" parent="MAP/Perspective" unique_id=944710573]
 unique_name_in_owner = true
-z_index = 5
+z_index = 6
 tile_set = ExtResource("3_0a5d1")
 
 [node name="TileMapLayer_perspective_up_ice" type="TileMapLayer" parent="MAP/Perspective" unique_id=715523546]
@@ -327,7 +329,7 @@ tile_set = ExtResource("2_0a5d1")
 [node name="tileMapLayer_wall" type="TileMapLayer" parent="MAP/MAP" unique_id=1845507156]
 unique_name_in_owner = true
 light_mask = 0
-z_index = 4
+z_index = 5
 y_sort_enabled = true
 tile_set = ExtResource("3_0a5d1")
 
@@ -340,6 +342,7 @@ tile_set = SubResource("TileSet_l66wb")
 tile_set = SubResource("TileSet_bnoit")
 
 [node name="tileMapLayer_fragile" type="TileMapLayer" parent="MAP/MAP" unique_id=1955166609]
+unique_name_in_owner = true
 tile_set = SubResource("TileSet_phpmh")
 
 [node name="tileMapLayer_hidden" type="TileMapLayer" parent="MAP/MAP" unique_id=977461877]
@@ -370,8 +373,8 @@ label_settings = SubResource("LabelSettings_4pd66")
 [node name="grass_mode" type="Button" parent="UI_Layer" unique_id=1526800755]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(13, 13)
-offset_left = 40.0
-offset_right = 56.0
+offset_left = 64.0
+offset_right = 80.0
 offset_bottom = 16.0
 script = ExtResource("13_grud1")
 metadata/_custom_type_script = "uid://ej50tywcc4ki"
@@ -387,10 +390,9 @@ vertical_alignment = 1
 
 [node name="Btn_Mode3" type="Button" parent="UI_Layer" unique_id=724532337]
 unique_name_in_owner = true
-visible = false
 custom_minimum_size = Vector2(20, 13)
-offset_left = 64.0
-offset_right = 88.0
+offset_left = 88.0
+offset_right = 112.0
 offset_bottom = 16.0
 script = ExtResource("13_grud1")
 metadata/_custom_type_script = "uid://ej50tywcc4ki"
@@ -425,10 +427,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Btn_Test" type="Button" parent="UI_Layer" unique_id=288618131]
-offset_left = 4.0
-offset_top = 36.0
-offset_right = 20.0
-offset_bottom = 52.0
+unique_name_in_owner = true
+offset_left = 40.0
+offset_right = 56.0
+offset_bottom = 16.0
 
 [node name="Label" type="Label" parent="UI_Layer/Btn_Test" unique_id=1622012396]
 layout_mode = 0
@@ -440,10 +442,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Btn_Save" type="Button" parent="UI_Layer" unique_id=488087923]
-offset_left = 296.0
-offset_top = 8.0
-offset_right = 312.0
-offset_bottom = 24.0
+offset_left = 304.0
+offset_right = 320.0
+offset_bottom = 16.0
 
 [node name="Label" type="Label" parent="UI_Layer/Btn_Save" unique_id=234619000]
 layout_mode = 0

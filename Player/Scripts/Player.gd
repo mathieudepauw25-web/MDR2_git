@@ -2,11 +2,7 @@ extends Area2D
 class_name Player
 
 @onready var node_state_machine: StateMachine = %StateMachine
-@onready var node_map: TileMapLayer = %MAP
-@onready var node_label_move: Label = %LabelMove
-@onready var node_label_dash: Label = %LabelDash
 @onready var node_animation_player: AnimationPlayer = %AnimationPlayer
-@onready var node_tile_map_layer_fragile: TileMapLayer = %tileMapLayer_fragile
 @onready var node_timer_first_move: Timer = %Timer_first_move
 @onready var node_timer_pok: Timer = %Timer_pok
 @onready var node_smoke: AnimatedSprite2D = %Smoke
@@ -35,13 +31,14 @@ var superdash: bool = false
 var arrival = false
 var link_platform: Area2D = null
 
-# Mes variables
 var active_tween: Tween
 var is_poking: bool = false
 var action_start_position: Vector2 = global_position
 var portal_momentum: int = 0
 var cheat_buffer: String = ""
 var teleport_immunity_frames: int = 0
+var node_map: TileMapLayer
+var node_tile_map_layer_fragile: TileMapLayer
 
 enum TileType{
 	FLOOR, 
@@ -54,6 +51,13 @@ enum TileType{
 
 
 func _ready() -> void :
+	var parent = get_parent()
+	if parent != null and ((parent.name == "LevelEditor") != null):
+		node_map = parent.get_node_or_null("%MAP")
+		node_tile_map_layer_fragile = parent.get_node_or_null("%tileMapLayer_fragile")
+	else:
+		node_map = get_node("%MAP")
+		node_tile_map_layer_fragile = get_node("%tileMapLayer_fragile")
 	EVENTS.connect("arrival", _on_EVENTS_arrival)
 	EVENTS.connect("collect_key", _on_EVENTS_collect_key)
 	snap_grid()
@@ -106,7 +110,6 @@ func add_buffer_move(input: String) -> void :
 	if Engine.time_scale == 0: return
 	launch_starting_signal()
 	buffer_move = input
-	node_label_move.text = buffer_move
 	$buffer_move.start(buffer_timing)
 
 
@@ -115,19 +118,16 @@ func add_buffer_dash(input: String) -> void :
 	launch_starting_signal()
 	buffer_move = ""
 	buffer_dash = input
-	node_label_dash.text = buffer_dash
 	$buffer_dash.start(buffer_timing)
 
 
 func delete_buffer_move() -> void :
 	if buffer_move == "": return
 	buffer_move = ""
-	node_label_move.text = buffer_move
 
 func delete_buffer_dash() -> void :
 	if buffer_dash == "": return
 	buffer_dash = ""
-	node_label_dash.text = buffer_dash
 
 
 func show_game_input() -> void :
