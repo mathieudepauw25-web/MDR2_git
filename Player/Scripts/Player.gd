@@ -52,7 +52,7 @@ enum TileType{
 
 func _ready() -> void :
 	var parent = get_parent()
-	if parent != null and ((parent.name == "LevelEditor") != null):
+	if parent != null and (parent.name == "LevelEditor"):
 		node_map = parent.get_node_or_null("%MAP")
 		node_tile_map_layer_fragile = parent.get_node_or_null("%tileMapLayer_fragile")
 	else:
@@ -61,11 +61,14 @@ func _ready() -> void :
 	EVENTS.connect("arrival", _on_EVENTS_arrival)
 	EVENTS.connect("collect_key", _on_EVENTS_collect_key)
 	snap_grid()
-	show_game_input()
+	if not(parent != null and (parent.name == "LevelEditor")):
+		print("caca")
+		show_game_input()
 	var current_skin = GESTIONNAIRESKIN.player_data.equipped_skin
 	if $AnimatedSprite2D.sprite_frames.has_animation(current_skin):
 		$AnimatedSprite2D.play(current_skin)
 	%ParticuleDash.texture = $AnimatedSprite2D.sprite_frames.get_frame_texture($AnimatedSprite2D.animation, 0)
+	%Smoke.visible = false
 
 func _process(_delta: float) -> void :
 	$StateMachine / buffer_move.text = buffer_move

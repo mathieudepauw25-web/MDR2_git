@@ -557,6 +557,10 @@ func play_map():
 	player.position = Vector2.ZERO
 	player.z_index = 5
 	add_child(player)
+	var player_camera = player.get_node_or_null("Camera2D")
+	if player_camera != null:
+		player_camera.make_current()
 
 func back_to_editor():
 	player.queue_free()
+	camera.make_current()

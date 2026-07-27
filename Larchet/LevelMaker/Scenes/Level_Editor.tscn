@@ -373,8 +373,8 @@ label_settings = SubResource("LabelSettings_4pd66")
 [node name="grass_mode" type="Button" parent="UI_Layer" unique_id=1526800755]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(13, 13)
-offset_left = 64.0
-offset_right = 80.0
+offset_left = 37.0
+offset_right = 53.0
 offset_bottom = 16.0
 script = ExtResource("13_grud1")
 metadata/_custom_type_script = "uid://ej50tywcc4ki"
@@ -391,8 +391,8 @@ vertical_alignment = 1
 [node name="Btn_Mode3" type="Button" parent="UI_Layer" unique_id=724532337]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 13)
-offset_left = 88.0
-offset_right = 112.0
+offset_left = 56.0
+offset_right = 80.0
 offset_bottom = 16.0
 script = ExtResource("13_grud1")
 metadata/_custom_type_script = "uid://ej50tywcc4ki"
@@ -428,9 +428,10 @@ vertical_alignment = 1
 
 [node name="Btn_Test" type="Button" parent="UI_Layer" unique_id=288618131]
 unique_name_in_owner = true
-offset_left = 40.0
-offset_right = 56.0
-offset_bottom = 16.0
+offset_left = 304.0
+offset_top = 160.0
+offset_right = 320.0
+offset_bottom = 176.0
 
 [node name="Label" type="Label" parent="UI_Layer/Btn_Test" unique_id=1622012396]
 layout_mode = 0

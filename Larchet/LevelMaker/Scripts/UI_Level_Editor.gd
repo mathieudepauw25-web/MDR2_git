@@ -17,6 +17,7 @@ signal mode3_toggled()
 @onready var btn_glace = $PanelContainer/HBoxContainer/Btn_Glace
 @onready var btn_transparent = $PanelContainer/HBoxContainer/Btn_Transparent
 @onready var btn_bridge = $PanelContainer/HBoxContainer/Btn_Bridge
+@onready var grid = $"../MAP/GridVisualizer"
 
 var grass_mode: int = 1
 var is_locked: bool = false
@@ -71,6 +72,7 @@ func _on_test_pressed() -> void:
 		for UI in self.get_children():
 			if UI != btn_test:
 				UI.visible = false
+		grid.visible = false
 		get_parent().play_map()
 	else:
 		lbl_test.text = ">"
@@ -79,4 +81,5 @@ func _on_test_pressed() -> void:
 				UI.visible = true
 		if lbl_grass_mode.text == "3":
 			btn_mode3.visible = true
+		grid.visible = true
 		get_parent().back_to_editor()

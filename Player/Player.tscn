@@ -680,6 +680,7 @@ process_material = SubResource("ParticleProcessMaterial_4qpuh")
 
 [node name="Smoke" type="AnimatedSprite2D" parent="Node" unique_id=28977525]
 unique_name_in_owner = true
+visible = false
 modulate = Color(1, 1, 1, 0.721569)
 show_behind_parent = true
 sprite_frames = SubResource("SpriteFrames_nvttr")
