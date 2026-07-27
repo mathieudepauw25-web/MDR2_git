@@ -20,6 +20,7 @@ var top10_world: = false
 const MAIN_THEME = preload("res://Audio/Music/Sketchbook 2024-10-14.ogg")
 
 func _ready() -> void :
+	$CanvasLayer/BlackScreen.visible = true
 	GAMES.superdash_run = false
 	if GAMES.SteamisRunning:
 		GAMES.find_leaderboard("Highscore")
