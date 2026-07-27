@@ -38,6 +38,7 @@ func _ready() -> void:
 	btn_herbe.button_pressed = true
 	if not btn_mode3.pressed.is_connected(_on_mode3_pressed):
 		btn_mode3.pressed.connect(_on_mode3_pressed)
+	btn_mode3.visible = false
 	btn_OL.pressed.connect(_on_OL_pressed)
 	btn_test.pressed.connect(_on_test_pressed)
 
