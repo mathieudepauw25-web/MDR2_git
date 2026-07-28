@@ -10,8 +10,6 @@ func _ready() -> void:
 
 var tween: Tween
 func _on_focus_entered() -> void:
-	focus_neighbor_left = $"../MarginContainer/HBoxContainer/ColonneGauche".get_child(4).get_path()
-	focus_neighbor_top = $"../MarginContainer/HBoxContainer/ColonneGauche".get_child(4).get_path()
 	z_index = 2
 	tween = create_tween()
 	var target = self

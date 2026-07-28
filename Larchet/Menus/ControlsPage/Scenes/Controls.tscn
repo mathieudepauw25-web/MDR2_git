@@ -6,29 +6,15 @@
 [ext_resource type="StyleBox" uid="uid://dnuh3h61crver" path="res://Larchet/Menus/EchPrecSuiv.tres" id="3_nrmgs"]
 [ext_resource type="Script" uid="uid://ej50tywcc4ki" path="res://Interface/Scripts/button.gd" id="4_gjtj6"]
 [ext_resource type="Texture2D" uid="uid://dj1eq3ctkgj53" path="res://Interface/Sprites/tile_0017.png" id="5_frqnb"]
+[ext_resource type="Script" uid="uid://bfio7bahqu8ax" path="res://System/TextManageLabel.gd" id="5_yrkro"]
 [ext_resource type="AudioStream" uid="uid://mveooa4f7pg4" path="res://Audio/SFX/ui_click_rollover_misc_05.mp3" id="6_frqnb"]
 [ext_resource type="AudioStream" uid="uid://d3dxycfae6tnq" path="res://Audio/SFX/ui_click_rollover_misc_01.mp3" id="7_cbmfm"]
 [ext_resource type="AudioStream" uid="uid://dmr7iw0k51lo" path="res://Audio/SFX/ui_click_rollover_misc_11.mp3" id="8_cbmfm"]
 [ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="10_6vj2y"]
-[ext_resource type="StyleBox" uid="uid://3rxb4yawp623" path="res://Larchet/Menus/ControlSlot.tres" id="11_i1qvj"]
-[ext_resource type="StyleBox" uid="uid://cgd7kvdxm5jsn" path="res://Interface/Themes/ButtonNormal.tres" id="12_xsdd6"]
-[ext_resource type="StyleBox" uid="uid://d2wb0x7bmm82g" path="res://Larchet/Menus/Gold.tres" id="13_k5015"]
-[ext_resource type="Script" uid="uid://mg3cgnfkk28r" path="res://TitleScreen/boutonoptions.gd" id="14_qvxqh"]
-[ext_resource type="Texture2D" uid="uid://dgspu27t0djae" path="res://Interface/Sprites/tile_0570.png" id="15_kws5j"]
-[ext_resource type="PackedScene" uid="uid://bvrjl8tgtm4jg" path="res://panel_slider.tscn" id="16_8l2g4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_82lil"]
 shader = ExtResource("3_mq1ar")
 shader_parameter/amount = 1.5
-
-[sub_resource type="Theme" id="Theme_urj7r"]
-default_font = ExtResource("10_6vj2y")
-default_font_size = 12
-Button/colors/font_hover_color = Color(1, 1, 1, 1)
-Button/font_sizes/font_size = 12
-Button/fonts/font = ExtResource("10_6vj2y")
-Button/styles/focus = ExtResource("3_nrmgs")
-Button/styles/normal = ExtResource("11_i1qvj")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cbmfm"]
 
@@ -46,53 +32,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Options" type="Button" parent="." unique_id=3461972]
-z_index = 1
-offset_left = 134.0
-offset_top = 155.0
-offset_right = 204.0
-offset_bottom = 173.0
-offset_transform_enabled = true
-focus_neighbor_right = NodePath("Panel_options2")
-theme = SubResource("Theme_urj7r")
-theme_override_styles/normal = ExtResource("12_xsdd6")
-theme_override_styles/hover = ExtResource("13_k5015")
-theme_override_styles/focus = ExtResource("13_k5015")
-button_mask = 0
-text = "Options"
-script = ExtResource("14_qvxqh")
-
-[node name="texture_deploy_option" type="TextureRect" parent="Options" unique_id=1798277105]
-visible = false
-modulate = Color(1, 0.329412, 0.278431, 1)
-layout_mode = 0
-offset_left = 52.000004
-offset_top = 19.0
-offset_right = 92.0
-offset_bottom = 59.0
-rotation = -1.5677074
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("15_kws5j")
-flip_v = true
-
-[node name="Panel_options2" parent="Options" unique_id=1402151509 instance=ExtResource("16_8l2g4")]
-visible = false
-custom_minimum_size = Vector2(70, 42.445)
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 76.0
-offset_top = -24.0
-offset_right = 146.0
-offset_bottom = 18.445007
-size_flags_horizontal = 0
-size_flags_vertical = 8
+[node name="Titre" type="Label" parent="." unique_id=1873600865]
+offset_left = 115.0
+offset_top = -5.0
+offset_right = 228.0
+offset_bottom = 39.0
+theme_override_fonts/font = ExtResource("10_6vj2y")
+theme_override_font_sizes/font_size = 49
+text = "Controls"
+script = ExtResource("5_yrkro")
+TextEN = "Controls"
+TextFR = "Controls"
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=842819925]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 28.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 18
@@ -141,9 +98,6 @@ stream = ExtResource("8_cbmfm")
 volume_db = -3.0
 pitch_scale = 1.1
 
-[connection signal="focus_entered" from="Options" to="Options" method="_on_focus_entered"]
-[connection signal="focus_exited" from="Options" to="Options" method="_on_focus_exited"]
-[connection signal="pressed" from="Options" to="Options" method="_on_pressed"]
 [connection signal="focus_entered" from="Back" to="." method="_on_back_hover"]
 [connection signal="mouse_entered" from="Back" to="." method="_on_back_hover"]
 [connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

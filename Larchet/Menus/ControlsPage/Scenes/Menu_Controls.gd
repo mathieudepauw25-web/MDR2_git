@@ -6,7 +6,7 @@ const CONTROL_SLOT_SCENE = preload("res://Larchet/Menus/ControlsPage/Scenes/Cont
 @onready var colonne_droite: VBoxContainer = $MarginContainer/HBoxContainer/ColonneDroite
 
 @export var config_remap: ControlsConfig
-@onready var options: Button = $Options
+@onready var BuTToptions: Button = $ButOptions
 
 var is_remapping: bool = false
 var action_to_remap: String = ""
@@ -96,10 +96,12 @@ func save_controls() -> void:
 	config.save("user://controls.cfg")
 
 func _on_back_pressed() -> void:
-	$%Select.play()
-	get_parent().get_child(4).find_child("CanvasLayer").visible = true
-	get_parent().get_child(4).find_child("CanvasLayer").find_child("MenuControl").find_child("Controls").grab_focus()
-	queue_free()
+	if visible == true:
+		visible = false
+		print(get_parent().get_children())
+		print(get_parent().get_child(5))
+		get_parent().get_child(5).visible = true
+		queue_free()
 
 func _on_back_hover() -> void:
 	$%Move.play()

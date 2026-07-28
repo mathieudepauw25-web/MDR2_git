@@ -208,7 +208,6 @@ func back_to_title_screen() -> void :
 func _on_options_pressed(forced_close: bool = false) -> void :
 	panel_options_2.visible = !panel_options_2.visible
 	if forced_close: panel_options_2.visible = false
-	$CanvasLayer/MenuControl/Options/texture_deploy_option.visible = panel_options_2.visible
 
 func _on_quit_pressed() -> void :
 	get_tree().quit()
@@ -227,7 +226,6 @@ func _on_leaderboard_scores_downloaded(_message, _handle, result):
 
 func _on_EVENTS_close_option() -> void :
 	_on_options_pressed(true)
-	$CanvasLayer / HBoxContainer_MENU / VBoxContainer_menu / Options.grab_focus()
 
 
 func _on_start_focus_entered() -> void :
@@ -243,9 +241,9 @@ func _on_skins_pressed() -> void:
 
 func _on_controls_pressed() -> void:
 	$CanvasLayer.visible = false
-	var controls = preload("res://Larchet/Menus/ControlsPage/Scenes/Controls.tscn")
-	var instcontrols = controls.instantiate()
-	get_parent().add_child(instcontrols)
+	var options = preload("res://Interface/options.tscn")
+	var instOptions = options.instantiate()
+	get_parent().add_child(instOptions)
 	#get_tree().change_scene_to_file("res://Larchet/Menus/ControlsPage/Scenes/Controls.tscn")
 
 

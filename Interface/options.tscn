@@ -1,0 +1,321 @@
+[gd_scene format=3 uid="uid://dst7u81hly555"]
+
+[ext_resource type="Script" uid="uid://dxivyxta6plkn" path="res://Interface/options.gd" id="1_ripu1"]
+[ext_resource type="Shader" uid="uid://bqw0maxha7ge2" path="res://Interface/Shader/PauseBlur.gdshader" id="2_0meqe"]
+[ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="2_b5l1t"]
+[ext_resource type="StyleBox" uid="uid://dnuh3h61crver" path="res://Larchet/Menus/EchPrecSuiv.tres" id="3_0meqe"]
+[ext_resource type="StyleBox" uid="uid://3rxb4yawp623" path="res://Larchet/Menus/ControlSlot.tres" id="4_xl3qi"]
+[ext_resource type="StyleBox" uid="uid://cgd7kvdxm5jsn" path="res://Interface/Themes/ButtonNormal.tres" id="5_77jud"]
+[ext_resource type="StyleBox" uid="uid://d2wb0x7bmm82g" path="res://Larchet/Menus/Gold.tres" id="6_4rn25"]
+[ext_resource type="Script" uid="uid://bfio7bahqu8ax" path="res://System/TextManageLabel.gd" id="10_k0mej"]
+[ext_resource type="Script" uid="uid://ej50tywcc4ki" path="res://Interface/Scripts/button.gd" id="10_q0mq6"]
+[ext_resource type="Texture2D" uid="uid://dj1eq3ctkgj53" path="res://Interface/Sprites/tile_0017.png" id="11_2gsww"]
+[ext_resource type="Script" uid="uid://687fslo53ix4" path="res://System/TextManage.gd" id="11_q0mq6"]
+[ext_resource type="Texture2D" uid="uid://bf3g65sygf4tg" path="res://System/icon_flag_EN.png" id="11_yqdu5"]
+[ext_resource type="Texture2D" uid="uid://c0vm5dlglt050" path="res://System/icon_flag_FR.png" id="12_q0mq6"]
+[ext_resource type="AudioStream" uid="uid://dq4ppusluxce4" path="res://Audio/SFX/popup_01.wav" id="13_2gsww"]
+[ext_resource type="AudioStream" uid="uid://mveooa4f7pg4" path="res://Audio/SFX/ui_click_rollover_misc_05.mp3" id="14_hjojw"]
+[ext_resource type="AudioStream" uid="uid://d3dxycfae6tnq" path="res://Audio/SFX/ui_click_rollover_misc_01.mp3" id="15_5qm78"]
+[ext_resource type="AudioStream" uid="uid://8hsofowytkgk" path="res://Audio/SFX/switch_001.ogg" id="16_8spqf"]
+[ext_resource type="AudioStream" uid="uid://cjlhw05gtgyl5" path="res://Audio/SFX/select_005.ogg" id="17_8ur1h"]
+[ext_resource type="AudioStream" uid="uid://c2fr4gk3k7kxo" path="res://Audio/SFX/error_004.ogg" id="18_m68of"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xl3qi"]
+shader = ExtResource("2_0meqe")
+shader_parameter/amount = 1.5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5qm78"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8spqf"]
+
+[sub_resource type="Theme" id="Theme_hjojw"]
+default_font = ExtResource("2_b5l1t")
+default_font_size = 12
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 12
+Button/fonts/font = ExtResource("2_b5l1t")
+Button/styles/focus = ExtResource("3_0meqe")
+Button/styles/normal = ExtResource("4_xl3qi")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4f806"]
+bg_color = Color(1, 0.984314, 0.968627, 0.705882)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xwqlf"]
+bg_color = Color(1, 0.74902, 0.211765, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pmhmu"]
+bg_color = Color(1, 1, 1, 0.705882)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n8528"]
+bg_color = Color(1, 0.74902, 0.211765, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hr1ff"]
+bg_color = Color(1, 0.74902, 0.211765, 0.588235)
+border_color = Color(0.631373, 0.431373, 0.192157, 1)
+shadow_color = Color(0.532531, 0.359746, 0.15196, 0.392157)
+shadow_size = 2
+anti_aliasing = false
+
+[sub_resource type="Theme" id="Theme_2keol"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3d76f"]
+bg_color = Color(1, 0.74902, 0.211765, 0.588235)
+border_color = Color(0.631373, 0.431373, 0.192157, 1)
+shadow_color = Color(0.532531, 0.359746, 0.15196, 0.392157)
+shadow_size = 2
+anti_aliasing = false
+
+[node name="Options" type="CanvasLayer" unique_id=2135590969]
+script = ExtResource("1_ripu1")
+
+[node name="Blur" type="ColorRect" parent="." unique_id=301184433]
+z_index = -5
+material = SubResource("ShaderMaterial_xl3qi")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Titre" type="Label" parent="." unique_id=827706717]
+offset_left = 115.0
+offset_top = -5.0
+offset_right = 198.0
+offset_bottom = 39.0
+theme_override_fonts/font = ExtResource("2_b5l1t")
+theme_override_font_sizes/font_size = 49
+text = "Options"
+script = ExtResource("10_k0mej")
+TextEN = "Options"
+TextFR = "Options"
+
+[node name="Back" type="Button" parent="." unique_id=427544515]
+offset_right = 16.0
+offset_bottom = 16.0
+focus_neighbor_right = NodePath("../OptionButton_lang")
+focus_neighbor_bottom = NodePath("../HSlider_music")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5qm78")
+theme_override_styles/pressed = ExtResource("3_0meqe")
+theme_override_styles/hover = ExtResource("3_0meqe")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_8spqf")
+theme_override_styles/focus = ExtResource("3_0meqe")
+script = ExtResource("10_q0mq6")
+metadata/_custom_type_script = "uid://ej50tywcc4ki"
+
+[node name="Sprite2D" type="Sprite2D" parent="Back" unique_id=1275761151]
+position = Vector2(8, 8)
+texture = ExtResource("11_2gsww")
+
+[node name="Controle" type="Button" parent="." unique_id=940968117]
+z_index = 1
+offset_left = 226.0
+offset_top = 142.0
+offset_right = 311.0
+offset_bottom = 173.0
+offset_transform_enabled = true
+focus_neighbor_left = NodePath("../CheckButton")
+focus_neighbor_top = NodePath("../OptionButton_lang")
+theme = SubResource("Theme_hjojw")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = ExtResource("5_77jud")
+theme_override_styles/hover = ExtResource("6_4rn25")
+theme_override_styles/focus = ExtResource("6_4rn25")
+button_mask = 0
+text = "Controls"
+script = ExtResource("11_q0mq6")
+TextEN = "Controls"
+TextFR = "Controls"
+augmentation = Vector2(1.2, 1.2)
+
+[node name="HSlider_music" type="HSlider" parent="." unique_id=2049976952]
+offset_left = 83.0
+offset_top = 43.0
+offset_right = 288.0
+offset_bottom = 84.0
+scale = Vector2(0.57, 0.57)
+focus_neighbor_left = NodePath("../Back")
+focus_neighbor_top = NodePath("../Back")
+focus_neighbor_bottom = NodePath("../HSlider_sound")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_4f806")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_xwqlf")
+min_value = -21.0
+max_value = 6.0
+step = 3.0
+rounded = true
+allow_greater = true
+
+[node name="Panel" type="Panel" parent="HSlider_music" unique_id=1485854226]
+z_index = -1
+layout_mode = 0
+offset_left = -135.08772
+offset_top = 1.7543831
+offset_right = 210.52632
+offset_bottom = 38.59649
+
+[node name="Music" type="Label" parent="HSlider_music" unique_id=1882520898]
+layout_mode = 0
+offset_left = -128.07019
+offset_top = -5.263159
+offset_right = -45.07019
+offset_bottom = 38.73684
+theme_override_fonts/font = ExtResource("2_b5l1t")
+theme_override_font_sizes/font_size = 49
+text = "Music"
+script = ExtResource("10_k0mej")
+TextEN = "Music"
+TextFR = "Musique"
+
+[node name="HSlider_sound" type="HSlider" parent="." unique_id=73246412]
+offset_left = 66.0
+offset_top = 72.99999
+offset_right = 294.8462
+offset_bottom = 102.46154
+scale = Vector2(0.52, 0.52)
+focus_neighbor_top = NodePath("../HSlider_music")
+focus_neighbor_right = NodePath("../Controle")
+focus_neighbor_bottom = NodePath("../CheckButton")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_pmhmu")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_n8528")
+min_value = -21.0
+max_value = 6.0
+step = 3.0
+rounded = true
+
+[node name="Sound" type="Label" parent="HSlider_sound" unique_id=1311240681]
+layout_mode = 0
+offset_left = -109.61539
+offset_top = -9.615383
+offset_right = -20.615387
+offset_bottom = 34.384617
+theme_override_fonts/font = ExtResource("2_b5l1t")
+theme_override_font_sizes/font_size = 49
+text = "Sound"
+script = ExtResource("10_k0mej")
+TextEN = "Sound"
+TextFR = "Son"
+
+[node name="Panel2" type="Panel" parent="HSlider_sound" unique_id=1875923432]
+z_index = -1
+layout_mode = 0
+offset_left = -115.38462
+offset_top = -7.692302
+offset_right = 238.46158
+offset_bottom = 34.61539
+metadata/_edit_lock_ = true
+
+[node name="CheckButton" type="CheckButton" parent="." unique_id=581552274]
+offset_left = 74.0
+offset_top = 159.0
+offset_right = 118.0
+offset_bottom = 190.0
+scale = Vector2(0.5, 0.5)
+focus_neighbor_top = NodePath("../HSlider_sound")
+focus_neighbor_right = NodePath("../Controle")
+theme_override_fonts/font = ExtResource("2_b5l1t")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxFlat_hr1ff")
+button_mask = 0
+alignment = 1
+
+[node name="Fullscreen" type="Label" parent="CheckButton" unique_id=1996404029]
+layout_mode = 0
+offset_left = -134.0
+offset_top = -6.0
+offset_right = -6.0
+offset_bottom = 30.0
+focus_neighbor_right = NodePath("../../OptionButton_lang")
+theme_override_fonts/font = ExtResource("2_b5l1t")
+theme_override_font_sizes/font_size = 40
+text = "Fullscreen"
+script = ExtResource("10_k0mej")
+TextEN = "Fullscreen"
+TextFR = "Plein écran"
+
+[node name="Panel3" type="Panel" parent="CheckButton" unique_id=22314502]
+z_index = -1
+layout_mode = 0
+offset_left = -140.0
+offset_top = -8.0
+offset_right = 48.0
+offset_bottom = 34.0
+
+[node name="OptionButton_lang" type="OptionButton" parent="." unique_id=1669988680]
+offset_left = 262.0
+offset_top = 5.9999847
+offset_right = 326.0
+offset_bottom = 33.999985
+scale = Vector2(0.81, 0.81)
+focus_neighbor_left = NodePath("../Back")
+focus_neighbor_bottom = NodePath("../Controle")
+theme = SubResource("Theme_2keol")
+theme_override_constants/h_separation = 0
+theme_override_styles/focus = SubResource("StyleBoxFlat_3d76f")
+button_mask = 0
+flat = true
+selected = 0
+item_count = 2
+popup/item_0/icon = ExtResource("11_yqdu5")
+popup/item_0/id = 0
+popup/item_1/icon = ExtResource("12_q0mq6")
+popup/item_1/id = 1
+
+[node name="Panel4" type="Panel" parent="OptionButton_lang" unique_id=1445204994]
+z_index = -1
+layout_mode = 0
+offset_left = -3.703682
+offset_top = -3.7036858
+offset_right = 69.4815
+offset_bottom = 32.098785
+
+[node name="Audio_test_sound" type="AudioStreamPlayer" parent="." unique_id=1530333872]
+stream = ExtResource("13_2gsww")
+pitch_scale = 1.8
+bus = &"SFX"
+
+[node name="SFX" type="Node" parent="." unique_id=2062106454]
+
+[node name="UI_menu_up_down" type="AudioStreamPlayer" parent="SFX" unique_id=653939472]
+unique_name_in_owner = true
+stream = ExtResource("14_hjojw")
+pitch_scale = 1.1
+bus = &"SFX"
+
+[node name="UI_menu_click" type="AudioStreamPlayer" parent="SFX" unique_id=1453486526]
+unique_name_in_owner = true
+stream = ExtResource("15_5qm78")
+pitch_scale = 2.0
+bus = &"SFX"
+
+[node name="UI_toggle" type="AudioStreamPlayer" parent="SFX" unique_id=1887869775]
+unique_name_in_owner = true
+stream = ExtResource("16_8spqf")
+pitch_scale = 1.2
+bus = &"SFX"
+
+[node name="UI_paused" type="AudioStreamPlayer" parent="SFX" unique_id=1341576923]
+unique_name_in_owner = true
+stream = ExtResource("17_8ur1h")
+volume_db = -6.0
+pitch_scale = 0.8
+bus = &"SFX"
+
+[node name="UI_cancel" type="AudioStreamPlayer" parent="SFX" unique_id=1538968297]
+unique_name_in_owner = true
+stream = ExtResource("18_m68of")
+volume_db = -9.0
+pitch_scale = 0.85
+bus = &"SFX"
+
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
+[connection signal="focus_entered" from="Controle" to="Controle" method="_on_focus_entered"]
+[connection signal="focus_exited" from="Controle" to="Controle" method="_on_focus_exited"]
+[connection signal="pressed" from="Controle" to="." method="_on_controle_pressed"]
+[connection signal="value_changed" from="HSlider_music" to="." method="_on_h_slider_music_value_changed"]
+[connection signal="value_changed" from="HSlider_sound" to="." method="_on_h_slider_sound_value_changed"]
+[connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="item_selected" from="OptionButton_lang" to="." method="_on_option_button_lang_item_selected"]

@@ -15,6 +15,7 @@ var skins_per_page: int = 8
 var is_cat_hovered: bool = false
 var is_mouse_active: bool = true
 
+var hoveredsuivant = false
 
 func _ready() -> void:
 	cat.play("Idle")
@@ -63,6 +64,15 @@ func update_menu() -> void:
 			suivant.focus_neighbor_top = slot_instance.get_path()
 		if i == end_index/2 - 1:
 			slot_instance.focus_neighbor_right = suivant.get_path()
+		if i <= end_index/2 - 1:
+			slot_instance.focus_neighbor_top = back.get_path()
+		if i >= end_index/2:
+			slot_instance.clip_contents = true
+			if i > end_index/4:
+				slot_instance.focus_neighbor_bottom = suivant.get_path()
+			elif i < end_index/4:
+				slot_instance.focus_neighbor_bottom = back.get_path()
+		
 	precedent.visible = current_page > 0
 	suivant.visible = end_index < total_skins
 
@@ -71,6 +81,8 @@ func _on_suivant_pressed() -> void:
 	$%Select.play()
 	current_page += 1
 	update_menu()
+	hoveredsuivant = false
+	
 
 func _on_back_pressed() -> void:
 	$%Select.play()
@@ -82,6 +94,7 @@ func _on_precedent_pressed() -> void:
 	$%Select.play()
 	current_page -= 1
 	update_menu()
+	hoveredsuivant = false
 
 func _on_skin_slot_pressed(clicked_skin_id: String) -> void:
 	GESTIONNAIRESKIN.equip_skin(clicked_skin_id)
@@ -118,15 +131,27 @@ func _input(event: InputEvent) -> void:
 				grid_container.get_child(0).grab_focus()
 			else:
 				back.grab_focus()
-
-
-func _on_suivant_focus_entered() -> void:
+	if event.is_action_pressed("ui_down") and get_viewport().gui_get_focus_owner().clip_contents == true:
+		hoveredsuivant = true
+func next_page():
 	$%Select.play()
 	current_page += 1
 	update_menu()
+	hoveredsuivant = false
 
-
-func _on_precedent_focus_entered() -> void:
+func back_page():
 	$%Select.play()
 	current_page -= 1
 	update_menu()
+	hoveredsuivant = false
+
+
+
+func _on_suivant_focus_entered() -> void:
+	if hoveredsuivant == false:
+		next_page()
+	
+
+func _on_precedent_focus_entered() -> void:
+	if hoveredsuivant == false:
+		back_page()
