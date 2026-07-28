@@ -83,10 +83,11 @@ grow_vertical = 2
 metadata/_edit_lock_ = true
 
 [node name="Titre" type="Label" parent="." unique_id=827706717]
-offset_left = 115.0
-offset_top = -5.0
-offset_right = 198.0
-offset_bottom = 39.0
+offset_left = 117.0
+offset_top = -4.0
+offset_right = 230.0
+offset_bottom = 40.0
+scale = Vector2(0.925, 0.925)
 theme_override_fonts/font = ExtResource("2_b5l1t")
 theme_override_font_sizes/font_size = 49
 text = "Options"
@@ -133,11 +134,11 @@ TextFR = "Controls"
 augmentation = Vector2(1.2, 1.2)
 
 [node name="HSlider_music" type="HSlider" parent="." unique_id=2049976952]
-offset_left = 83.0
-offset_top = 43.0
-offset_right = 288.0
-offset_bottom = 84.0
-scale = Vector2(0.57, 0.57)
+offset_left = 67.00001
+offset_top = 44.0
+offset_right = 272.0
+offset_bottom = 85.0
+scale = Vector2(0.45, 0.45)
 focus_neighbor_left = NodePath("../Back")
 focus_neighbor_top = NodePath("../Back")
 focus_neighbor_bottom = NodePath("../HSlider_sound")
@@ -171,11 +172,11 @@ TextEN = "Music"
 TextFR = "Musique"
 
 [node name="HSlider_sound" type="HSlider" parent="." unique_id=73246412]
-offset_left = 66.0
-offset_top = 72.99999
-offset_right = 294.8462
-offset_bottom = 102.46154
-scale = Vector2(0.52, 0.52)
+offset_left = 52.0
+offset_top = 68.00001
+offset_right = 280.8462
+offset_bottom = 97.461555
+scale = Vector2(0.4, 0.4)
 focus_neighbor_top = NodePath("../HSlider_music")
 focus_neighbor_right = NodePath("../Controle")
 focus_neighbor_bottom = NodePath("../CheckButton")
@@ -209,11 +210,11 @@ offset_bottom = 34.61539
 metadata/_edit_lock_ = true
 
 [node name="CheckButton" type="CheckButton" parent="." unique_id=581552274]
-offset_left = 74.0
-offset_top = 159.0
-offset_right = 118.0
-offset_bottom = 190.0
-scale = Vector2(0.5, 0.5)
+offset_left = 63.0
+offset_top = 161.0
+offset_right = 107.0
+offset_bottom = 192.0
+scale = Vector2(0.4, 0.4)
 focus_neighbor_top = NodePath("../HSlider_sound")
 focus_neighbor_right = NodePath("../Controle")
 theme_override_fonts/font = ExtResource("2_b5l1t")
@@ -224,10 +225,10 @@ alignment = 1
 
 [node name="Fullscreen" type="Label" parent="CheckButton" unique_id=1996404029]
 layout_mode = 0
-offset_left = -134.0
-offset_top = -6.0
-offset_right = -6.0
-offset_bottom = 30.0
+offset_left = -132.5
+offset_top = -5.0000153
+offset_right = -4.5
+offset_bottom = 30.999985
 focus_neighbor_right = NodePath("../../OptionButton_lang")
 theme_override_fonts/font = ExtResource("2_b5l1t")
 theme_override_font_sizes/font_size = 40
@@ -245,11 +246,11 @@ offset_right = 48.0
 offset_bottom = 34.0
 
 [node name="OptionButton_lang" type="OptionButton" parent="." unique_id=1669988680]
-offset_left = 262.0
-offset_top = 5.9999847
-offset_right = 326.0
-offset_bottom = 33.999985
-scale = Vector2(0.81, 0.81)
+offset_left = 287.0
+offset_top = 5.0
+offset_right = 351.0
+offset_bottom = 33.0
+scale = Vector2(0.4, 0.4)
 focus_neighbor_left = NodePath("../Back")
 focus_neighbor_bottom = NodePath("../Controle")
 theme = SubResource("Theme_2keol")

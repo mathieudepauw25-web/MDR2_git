@@ -59,5 +59,5 @@ func _on_check_button_toggled(toggled_on: bool) -> void :
 
 func _on_option_button_lang_item_selected(index: int) -> void :
 	GAMES.game_data.option_langue = index
-	$Panel / OptionButton_lang.selected = GAMES.game_data.option_langue
+	$OptionButton_lang.selected = GAMES.game_data.option_langue
 	EVENTS.emit_signal("save")

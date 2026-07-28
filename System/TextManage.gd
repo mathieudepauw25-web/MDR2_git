@@ -55,3 +55,7 @@ func _on_focus_exited() -> void:
 	var target = self
 	tween.tween_property(target, "offset_transform_scale", Basescale, 0.2)
 	tween.parallel().tween_property(target, "offset_transform_rotation", 0.0, 0.2)
+
+
+func _on_mouse_entered() -> void:
+	grab_focus()

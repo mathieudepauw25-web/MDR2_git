@@ -34,7 +34,7 @@ func _on_start_campagne_focus_entered() -> void:
 	await timer.timeout
 	if FocusTimerCmampagne == true:
 		tween = create_tween()
-		tween.tween_property(campagne_panel, "offset_transform_position_ratio", Vector2(1.07, 0), 0.2)
+		tween.tween_property(campagne_panel, "offset_transform_position_ratio", Vector2(0.87, 0), 0.2)
 func _on_start_campagne_focus_exited() -> void:
 	FocusTimerCmampagne = false
 	$StartCampagne/CPUParticles2D.emitting = false
@@ -62,7 +62,7 @@ func _on_start_level_editor_focus_entered() -> void:
 	await timer.timeout
 	if FocusTimerLevelEditor == true:
 		tween = create_tween()
-		tween.tween_property(panel_level_editor, "offset_transform_position_ratio", Vector2(-1.08, 0), 0.2)
+		tween.tween_property(panel_level_editor, "offset_transform_position_ratio", Vector2(-0.97, 0), 0.2)
 func _on_start_level_editor_focus_exited() -> void:
 	FocusTimerLevelEditor = false
 
@@ -91,7 +91,7 @@ func _on_start_online_level_focus_entered() -> void:
 	await timer.timeout
 	if FocusTimerOnlineLevel == true:
 		tween = create_tween()
-		tween.tween_property(panel_online_level, "offset_transform_position_ratio", Vector2(-1.08, 0), 0.2)
+		tween.tween_property(panel_online_level, "offset_transform_position_ratio", Vector2(-0.97, 0), 0.2)
 func _on_start_online_level_focus_exited() -> void:
 	FocusTimerOnlineLevel = false
 
