@@ -19,6 +19,9 @@ extends Node2D
 @onready var ui_layer = $UI_Layer
 @onready var pattern_window: Window = %PatternWindow
 
+const PLAYER_SCENE = preload("res://Player/Player.tscn")
+var player: Node2D = null
+
 var active_floor: TileMapLayer
 var active_wall: TileMapLayer
 var active_ice: TileMapLayer
@@ -149,7 +152,7 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 	if ui_layer.get("is_locked") and ui_layer.is_locked:
 		match current_brush:
 			TileSkinData.Brush.GRASS:
-				if not is_empty and not (has_grass and not is_trans and not is_bridge): return
+				if not is_empty and not (has_grass and not is_trans and not is_bridge and not has_ice): return
 			TileSkinData.Brush.TRANS:
 				if not is_empty and not is_trans: return
 			TileSkinData.Brush.BRIDGE:
@@ -160,7 +163,7 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 				if not is_empty and not has_ice: return
 	match current_brush:
 		TileSkinData.Brush.GRASS:
-			var is_real_grass = has_grass and not is_trans and not is_bridge
+			var is_real_grass = has_grass and not is_trans and not is_bridge and not has_ice
 			if is_just_clicked:
 				if is_trans or is_bridge:
 					is_repainting_theme = false
@@ -197,7 +200,9 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 		TileSkinData.Brush.ICE:
 			if layer_ice.get_cell_source_id(grid_pos) != TileSkinData.ICE_SOURCE_ID:
 				apply_custom_cell(layer_ice, grid_pos, TileSkinData.ICE_SOURCE_ID, get_tile_variation(grid_pos, get_skin_element("", "ice"), "ice"))
-				layer_floor.set_cell(grid_pos, -1)
+				layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
+				if not cell_themes.has(grid_pos):
+					cell_themes[grid_pos] = "_light"
 				layer_wall.set_cell(grid_pos, -1)
 				cell_themes.erase(grid_pos)
 				update_smart_area(grid_pos)
@@ -248,7 +253,7 @@ func _apply_brush_to_layer(grid_pos: Vector2i, target_layer: TileMapLayer, sourc
 		layer_ice.set_cell(grid_pos, -1)
 	else:
 		apply_custom_cell(target_layer, grid_pos, source_id, get_tile_variation(grid_pos, get_skin_element("", "ice"), "ice"))
-		layer_floor.set_cell(grid_pos, -1)
+		layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 	layer_wall.set_cell(grid_pos, -1)
 
 func erase_all_layers(specific_pos = null) -> void:
@@ -264,7 +269,7 @@ func erase_all_layers(specific_pos = null) -> void:
 		var matches_selection = false
 		match current_brush:
 			TileSkinData.Brush.GRASS:
-				matches_selection = (has_grass and not is_trans and not is_bridge)
+				matches_selection = (has_grass and not is_trans and not is_bridge and not has_ice)
 			TileSkinData.Brush.TRANS:
 				matches_selection = is_trans
 			TileSkinData.Brush.BRIDGE:
@@ -305,7 +310,7 @@ func is_grass_or_ice(pos: Vector2i) -> bool:
 		var theme = cell_themes.get(pos)
 		if theme == "_trans" or theme == "_bridge_v" or theme == "_bridge_h":
 			return false
-	return get_source_id(active_floor, pos) == TileSkinData.GRASS_SOURCE_ID or get_source_id(active_ice, pos) == TileSkinData.ICE_SOURCE_ID
+	return get_source_id(active_floor, pos) == TileSkinData.GRASS_SOURCE_ID
 
 func get_grass_theme(cell_pos: Vector2i) -> String:
 	if active_floor == layer_floor:
@@ -546,3 +551,16 @@ func is_tile_connected(layer: TileMapLayer, pos: Vector2i, base_source_id: int) 
 	if base_source_id == TileSkinData.GRASS_SOURCE_ID or base_source_id == TileSkinData.ICE_SOURCE_ID:
 		return is_grass_or_ice(pos) or get_source_id(active_wall, pos) == TileSkinData.WALL_SOURCE_ID
 	return get_source_id(layer, pos) == base_source_id
+
+func play_map():
+	player = PLAYER_SCENE.instantiate()
+	player.position = Vector2.ZERO
+	player.z_index = 5
+	add_child(player)
+	var player_camera = player.get_node_or_null("Camera2D")
+	if player_camera != null:
+		player_camera.make_current()
+
+func back_to_editor():
+	player.queue_free()
+	camera.make_current()

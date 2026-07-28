@@ -10,6 +10,7 @@ var shake_strength: float = 0.0
 
 
 func _ready() -> void :
+	zoom = Vector2.ONE
 	EVENTS.connect("shake_camera", on_EVENTS_shake_camera)
 	EVENTS.connect("arrival", _on_EVENTS_arrival)
 
