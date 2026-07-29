@@ -1,6 +1,6 @@
 class_name TileSkinData
 
-enum Brush {GRASS, WALL, ICE, TRANS, BRIDGE}
+enum Brush {GRASS, WALL, ICE, TRANS, BRIDGE, FRAGREEN, FRAWOOD, HIDDEN}
 
 const WALL_SOURCE_ID: int = 0
 const GRASS_SOURCE_ID: int = 1
@@ -38,7 +38,10 @@ const SKINS: Dictionary = {
 		"up_normal_dark" : [Vector3i(1,0,1), Vector3i(3,0,1), Vector3i(5,0,1), Vector3i(7,0,1)],
 		"up_normal_light" : [Vector3i(1,4,1), Vector3i(3,4,1), Vector3i(5,4,1), Vector3i(7,4,1)],
 		"up_E_dark" : [Vector3i(2,0,1)],
-		"up_E_light" : [Vector3i(2,4,1)]
+		"up_E_light" : [Vector3i(2,4,1)],
+		"fragile_dark" : [Vector3i(2,0,4)],
+		"fragile_wood" : [Vector3i(0,0,4), Vector3i(0,1,4), Vector3i(1,0,4), Vector3i(1,1,4)],
+		"hidden" : [Vector3i(10,5,1)]
 	}
 }
 

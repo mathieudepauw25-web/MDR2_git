@@ -90,6 +90,7 @@ texture = ExtResource("2_uvp1d")
 12:7/0 = 0
 13:7/0 = 0
 12:4/0 = 0
+14:0/0 = 0
 
 [resource]
 sources/1 = SubResource("TileSetAtlasSource_crfik")

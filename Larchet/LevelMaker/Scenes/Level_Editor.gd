@@ -14,13 +14,20 @@ extends Node2D
 @onready var layer_persp_Wright: TileMapLayer = %TileMapLayer_perspective_water_right
 @onready var layer_persp_Wdown: TileMapLayer = %TileMapLayer_perspective_water_down
 @onready var layer_persp_Wleft: TileMapLayer = %TileMapLayer_perspective_water_left
+@onready var layer_fragile: TileMapLayer = %tileMapLayer_fragile
+@onready var layer_hidden: TileMapLayer = %tileMapLayer_hidden # NOUVEAU LAYER
 
 @onready var camera: Camera2D = $Camera2D
 @onready var ui_layer = $UI_Layer
 @onready var pattern_window: Window = %PatternWindow
+@onready var sprite_player = $Sprite_player
 
 const PLAYER_SCENE = preload("res://Player/Player.tscn")
+const FRAGILE_SCENE = preload("res://Fragile/Fragile.tscn")
+const HIDDEN_SCENE = preload("res://Hidden/Hidden.tscn")
 var player: Node2D = null
+var spawned_fragiles: Dictionary = {}
+var spawned_hiddens: Dictionary = {} # NOUVEAU DICO
 
 var active_floor: TileMapLayer
 var active_wall: TileMapLayer
@@ -43,6 +50,9 @@ var cell_themes: Dictionary = {}
 var grass_mode: int = 1
 var current_brush: TileSkinData.Brush = TileSkinData.Brush.GRASS
 var current_skin_name: String = "Normal"
+var is_dragging_player: bool = false
+var is_moving: bool = false
+var player_drag_start_pos: Vector2 = Vector2.ZERO
 
 func get_source_id(layer: TileMapLayer, cell_pos: Vector2i) -> int:
 	if layer == null: return -1
@@ -77,6 +87,17 @@ func _ready() -> void:
 			pattern_window.visible = not pattern_window.visible
 			if pattern_window.visible:
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE))
+	for x in range(-1, 2):
+		for y in range(-1, 2):
+			var grid_pos = Vector2i(x, y)
+			cell_themes[grid_pos] = "_light"
+			layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
+			layer_wall.set_cell(grid_pos, -1)
+			layer_ice.set_cell(grid_pos, -1)
+			update_smart_area(grid_pos)
+	var player_area = sprite_player.get_node_or_null("Area2D")
+	if player_area:
+		player_area.input_event.connect(_on_player_area_input_event)
 
 func _process(_delta: float) -> void:
 	var center_pixel_pos = camera.global_position
@@ -125,6 +146,8 @@ func refresh_all_grass() -> void:
 	set_active_map(was_pattern)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if is_moving:
+		return
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
 		var is_left_clicking = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
 		var is_right_clicking = Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
@@ -149,10 +172,14 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 	var current_theme = cell_themes.get(grid_pos, "")
 	var is_trans = current_theme == "_trans"
 	var is_bridge = current_theme == "_bridge_v" or current_theme == "_bridge_h"
+	var is_fragreen = current_theme == "_fragreen"
+	var is_frawood = current_theme == "_frawood"
+	var is_hidden = current_theme == "_hidden"
+	
 	if ui_layer.get("is_locked") and ui_layer.is_locked:
 		match current_brush:
 			TileSkinData.Brush.GRASS:
-				if not is_empty and not (has_grass and not is_trans and not is_bridge and not has_ice): return
+				if not is_empty and not (has_grass and not is_trans and not is_bridge and not has_ice and not is_fragreen and not is_frawood and not is_hidden): return
 			TileSkinData.Brush.TRANS:
 				if not is_empty and not is_trans: return
 			TileSkinData.Brush.BRIDGE:
@@ -161,12 +188,32 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 				if not is_empty and not has_wall: return
 			TileSkinData.Brush.ICE:
 				if not is_empty and not has_ice: return
+			TileSkinData.Brush.FRAGREEN:
+				if not is_empty and not is_fragreen: return
+			TileSkinData.Brush.FRAWOOD:
+				if not is_empty and not is_frawood: return
+			TileSkinData.Brush.HIDDEN:
+				if not is_empty and not is_hidden: return
+				
 	match current_brush:
+		TileSkinData.Brush.HIDDEN:
+			if current_theme != "_hidden":
+				_spawn_hidden(grid_pos, "_hidden")
+				update_smart_area(grid_pos)
+				
+		TileSkinData.Brush.FRAGREEN, TileSkinData.Brush.FRAWOOD:
+			var target_theme = "_fragreen" if current_brush == TileSkinData.Brush.FRAGREEN else "_frawood"
+			if current_theme != target_theme:
+				_spawn_fragile(grid_pos, target_theme)
+				update_smart_area(grid_pos)
+				
 		TileSkinData.Brush.GRASS:
-			var is_real_grass = has_grass and not is_trans and not is_bridge and not has_ice
+			var is_real_grass = has_grass and not is_trans and not is_bridge and not has_ice and not is_fragreen and not is_frawood and not is_hidden
 			if is_just_clicked:
-				if is_trans or is_bridge:
+				if is_trans or is_bridge or is_fragreen or is_frawood or is_hidden:
 					is_repainting_theme = false
+					_remove_fragile(grid_pos) # Nettoyage
+					_remove_hidden(grid_pos)
 					cell_themes[grid_pos] = "_light"
 					layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 					layer_wall.set_cell(grid_pos, -1)
@@ -180,6 +227,8 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 					update_smart_area(grid_pos)
 				else:
 					is_repainting_theme = false
+					_remove_fragile(grid_pos)
+					_remove_hidden(grid_pos)
 					cell_themes[grid_pos] = "_light"
 					layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 					layer_wall.set_cell(grid_pos, -1)
@@ -192,34 +241,45 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 						update_smart_area(grid_pos)
 				else:
 					if not is_real_grass:
+						_remove_fragile(grid_pos)
+						_remove_hidden(grid_pos)
 						cell_themes[grid_pos] = "_light"
 						layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 						layer_wall.set_cell(grid_pos, -1)
 						layer_ice.set_cell(grid_pos, -1)
 						update_smart_area(grid_pos)
+						
 		TileSkinData.Brush.ICE:
 			if layer_ice.get_cell_source_id(grid_pos) != TileSkinData.ICE_SOURCE_ID:
+				_remove_fragile(grid_pos)
+				_remove_hidden(grid_pos)
 				apply_custom_cell(layer_ice, grid_pos, TileSkinData.ICE_SOURCE_ID, get_tile_variation(grid_pos, get_skin_element("", "ice"), "ice"))
 				layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
-				if not cell_themes.has(grid_pos):
+				if not cell_themes.has(grid_pos) or is_fragreen or is_frawood or is_trans or is_bridge or is_hidden:
 					cell_themes[grid_pos] = "_light"
 				layer_wall.set_cell(grid_pos, -1)
-				cell_themes.erase(grid_pos)
 				update_smart_area(grid_pos)
+				
 		TileSkinData.Brush.WALL:
 			if layer_wall.get_cell_source_id(grid_pos) != TileSkinData.WALL_SOURCE_ID:
+				_remove_fragile(grid_pos)
+				_remove_hidden(grid_pos)
 				layer_wall.set_cell(grid_pos, TileSkinData.WALL_SOURCE_ID, Vector2i(0, 0))
 				layer_floor.set_cell(grid_pos, -1)
 				layer_ice.set_cell(grid_pos, -1)
 				cell_themes.erase(grid_pos)
 				update_smart_area(grid_pos)
+				
 		TileSkinData.Brush.TRANS:
 			if current_theme != "_trans":
+				_remove_fragile(grid_pos)
+				_remove_hidden(grid_pos)
 				cell_themes[grid_pos] = "_trans"
 				layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 				layer_wall.set_cell(grid_pos, -1)
 				layer_ice.set_cell(grid_pos, -1)
 				update_smart_area(grid_pos)
+				
 		TileSkinData.Brush.BRIDGE:
 			if is_just_clicked:
 				if is_bridge:
@@ -229,6 +289,8 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 					update_smart_area(grid_pos)
 				else:
 					is_repainting_theme = false
+					_remove_fragile(grid_pos)
+					_remove_hidden(grid_pos)
 					cell_themes[grid_pos] = "_bridge_h"
 					layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 					layer_wall.set_cell(grid_pos, -1)
@@ -241,6 +303,8 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 						update_smart_area(grid_pos)
 				else:
 					if not is_bridge:
+						_remove_fragile(grid_pos)
+						_remove_hidden(grid_pos)
 						cell_themes[grid_pos] = "_bridge_h"
 						layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 						layer_wall.set_cell(grid_pos, -1)
@@ -264,12 +328,15 @@ func erase_all_layers(specific_pos = null) -> void:
 	var current_theme = cell_themes.get(grid_pos, "")
 	var is_trans = current_theme == "_trans"
 	var is_bridge = current_theme == "_bridge_v" or current_theme == "_bridge_h"
+	var is_fragreen = current_theme == "_fragreen"
+	var is_frawood = current_theme == "_frawood"
+	var is_hidden = current_theme == "_hidden"
 	
 	if ui_layer.get("is_locked") and ui_layer.is_locked:
 		var matches_selection = false
 		match current_brush:
 			TileSkinData.Brush.GRASS:
-				matches_selection = (has_grass and not is_trans and not is_bridge and not has_ice)
+				matches_selection = (has_grass and not is_trans and not is_bridge and not has_ice and not is_fragreen and not is_frawood and not is_hidden)
 			TileSkinData.Brush.TRANS:
 				matches_selection = is_trans
 			TileSkinData.Brush.BRIDGE:
@@ -278,12 +345,21 @@ func erase_all_layers(specific_pos = null) -> void:
 				matches_selection = has_wall
 			TileSkinData.Brush.ICE:
 				matches_selection = has_ice
+			TileSkinData.Brush.FRAGREEN:
+				matches_selection = is_fragreen
+			TileSkinData.Brush.FRAWOOD:
+				matches_selection = is_frawood
+			TileSkinData.Brush.HIDDEN:
+				matches_selection = is_hidden
 		if not matches_selection:
 			return
+			
 	cell_themes.erase(grid_pos)
 	layer_floor.set_cell(grid_pos, -1)
 	layer_wall.set_cell(grid_pos, -1)
 	layer_ice.set_cell(grid_pos, -1)
+	_remove_fragile(grid_pos)
+	_remove_hidden(grid_pos)
 	update_smart_area(grid_pos)
 
 func update_smart_area(cell_pos: Vector2i, is_pattern: bool = false) -> void:
@@ -308,14 +384,14 @@ func update_smart_area(cell_pos: Vector2i, is_pattern: bool = false) -> void:
 func is_grass_or_ice(pos: Vector2i) -> bool:
 	if active_floor == layer_floor:
 		var theme = cell_themes.get(pos)
-		if theme == "_trans" or theme == "_bridge_v" or theme == "_bridge_h":
+		if theme == "_trans" or theme == "_bridge_v" or theme == "_bridge_h" or theme == "_frawood" or theme == "_fragreen" or theme == "_hidden":
 			return false
 	return get_source_id(active_floor, pos) == TileSkinData.GRASS_SOURCE_ID
 
 func get_grass_theme(cell_pos: Vector2i) -> String:
 	if active_floor == layer_floor:
 		var theme = cell_themes.get(cell_pos)
-		if theme == "_trans" or theme == "_bridge_v" or theme == "_bridge_h":
+		if theme == "_trans" or theme == "_bridge_v" or theme == "_bridge_h" or theme == "_fragreen" or theme == "_frawood" or theme == "_hidden":
 			return theme
 	if pattern_window.m3_floor != null and active_floor == pattern_window.m3_floor:
 		return pattern_window.pattern_cell_themes.get(cell_pos, "_light")
@@ -333,8 +409,12 @@ func get_grass_theme(cell_pos: Vector2i) -> String:
 func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo: Dictionary, source_id: int) -> void:
 	if layer == null: return
 	var theme = get_grass_theme(cell_pos)
+	
 	if source_id == TileSkinData.GRASS_SOURCE_ID:
-		if theme == "_trans":
+		if theme == "_fragreen" or theme == "_frawood" or theme == "_hidden":
+			apply_custom_cell(layer, cell_pos, source_id, Vector2i(14, 0)) 
+			return
+		elif theme == "_trans":
 			var trans_key = "visible_transparent" if Input.is_key_pressed(KEY_SPACE) else "transparent"
 			var trans_atlas = get_tile_variation(cell_pos, get_skin_element("", trans_key), trans_key)
 			apply_custom_cell(layer, cell_pos, source_id, trans_atlas)
@@ -554,13 +634,128 @@ func is_tile_connected(layer: TileMapLayer, pos: Vector2i, base_source_id: int) 
 
 func play_map():
 	player = PLAYER_SCENE.instantiate()
-	player.position = Vector2.ZERO
+	player.position = sprite_player.global_position
 	player.z_index = 5
 	add_child(player)
+	sprite_player.visible = false
 	var player_camera = player.get_node_or_null("Camera2D")
 	if player_camera != null:
 		player_camera.make_current()
+	for hidden_block in spawned_hiddens.values():
+		if is_instance_valid(hidden_block):
+			hidden_block.sprite.scale = Vector2.ZERO
 
 func back_to_editor():
 	player.queue_free()
 	camera.make_current()
+	sprite_player.visible = true
+	for hidden_block in spawned_hiddens.values():
+		if is_instance_valid(hidden_block):
+			hidden_block.sprite.scale = Vector2.ONE
+
+func _on_player_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and is_moving:
+		if event.pressed:
+			is_dragging_player = true
+			player_drag_start_pos = sprite_player.global_position
+			get_viewport().set_input_as_handled()
+
+func _input(event: InputEvent) -> void:
+	if is_dragging_player:
+		if event is InputEventMouseMotion:
+			sprite_player.global_position = get_global_mouse_position()
+			get_viewport().set_input_as_handled()
+		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+			if not event.pressed:
+				is_dragging_player = false
+				snap_player_to_grid()
+				get_viewport().set_input_as_handled()
+
+func snap_player_to_grid() -> void:
+	var grid_pos = layer_floor.local_to_map(sprite_player.global_position)
+	var has_floor = layer_floor.get_cell_source_id(grid_pos) != -1 and not spawned_fragiles.has(grid_pos)
+	if has_floor:
+		sprite_player.global_position = layer_floor.map_to_local(grid_pos) + Vector2(0, -2)
+	else:
+		sprite_player.global_position = player_drag_start_pos
+
+func apply_skin_to_fragile(fragile_node: Node2D) -> void:
+	if layer_fragile == null: return
+	var grid_pos = layer_fragile.local_to_map(fragile_node.position)
+	var theme = cell_themes.get(grid_pos, "_fragreen")
+	var skin_key = "fragile_wood" if theme == "_frawood" else "fragile_dark"
+	var skin_data = get_skin_element("", skin_key, "")
+	if skin_data == null: return
+	var atlas_data = get_tile_variation(grid_pos, skin_data, skin_key)
+	var final_coords: Vector2i
+	var final_source_id: int = TileSkinData.GRASS_SOURCE_ID 
+	if typeof(atlas_data) == TYPE_VECTOR3I:
+		final_coords = Vector2i(atlas_data.x, atlas_data.y)
+		final_source_id = atlas_data.z
+	elif typeof(atlas_data) == TYPE_VECTOR2I:
+		final_coords = atlas_data
+	var atlas_source = layer_fragile.tile_set.get_source(final_source_id) as TileSetAtlasSource
+	if atlas_source:
+		var base_texture = atlas_source.texture
+		fragile_node.set_skin(base_texture, final_coords)
+
+func apply_skin_to_hidden(hidden_node: Node2D) -> void:
+	if layer_hidden == null: return
+	var grid_pos = layer_hidden.local_to_map(hidden_node.position)
+	var skin_key = "hidden"
+	var skin_data = get_skin_element("", skin_key, "")
+	if skin_data == null: return
+	var atlas_data = get_tile_variation(grid_pos, skin_data, skin_key)
+	var final_coords: Vector2i
+	var final_source_id: int = TileSkinData.GRASS_SOURCE_ID
+	if typeof(atlas_data) == TYPE_VECTOR3I:
+		final_coords = Vector2i(atlas_data.x, atlas_data.y)
+		final_source_id = atlas_data.z
+	elif typeof(atlas_data) == TYPE_VECTOR2I:
+		final_coords = atlas_data
+	var atlas_source = layer_floor.tile_set.get_source(final_source_id) as TileSetAtlasSource
+	if atlas_source:
+		var base_texture = atlas_source.texture
+		hidden_node.set_skin(base_texture, final_coords)
+
+func _spawn_fragile(grid_pos: Vector2i, target_theme: String) -> void:
+	_remove_fragile(grid_pos)
+	_remove_hidden(grid_pos)
+	cell_themes[grid_pos] = target_theme
+	layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(14,0))
+	layer_wall.set_cell(grid_pos, -1)
+	layer_ice.set_cell(grid_pos, -1)
+	if layer_fragile != null:
+		var fragile = FRAGILE_SCENE.instantiate()
+		fragile.position = layer_fragile.map_to_local(grid_pos)
+		layer_fragile.add_child(fragile)
+		spawned_fragiles[grid_pos] = fragile
+
+func _remove_fragile(grid_pos: Vector2i) -> void:
+	if spawned_fragiles.has(grid_pos):
+		if is_instance_valid(spawned_fragiles[grid_pos]):
+			spawned_fragiles[grid_pos].queue_free()
+		spawned_fragiles.erase(grid_pos)
+		if layer_fragile != null:
+			layer_fragile.set_cell(grid_pos, -1)
+
+func _spawn_hidden(grid_pos: Vector2i, target_theme: String) -> void:
+	_remove_hidden(grid_pos)
+	_remove_fragile(grid_pos)
+	cell_themes[grid_pos] = target_theme
+	layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(14,0))
+	layer_wall.set_cell(grid_pos, -1)
+	layer_ice.set_cell(grid_pos, -1)
+	if layer_hidden != null:
+		var hidden_inst = HIDDEN_SCENE.instantiate()
+		hidden_inst.position = layer_hidden.map_to_local(grid_pos)
+		layer_hidden.add_child(hidden_inst)
+		spawned_hiddens[grid_pos] = hidden_inst
+
+func _remove_hidden(grid_pos: Vector2i) -> void:
+	if spawned_hiddens.has(grid_pos):
+		if is_instance_valid(spawned_hiddens[grid_pos]):
+			spawned_hiddens[grid_pos].queue_free()
+		spawned_hiddens.erase(grid_pos)
+		if layer_hidden != null:
+			layer_hidden.set_cell(grid_pos, -1)

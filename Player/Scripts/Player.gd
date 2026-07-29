@@ -38,7 +38,6 @@ var portal_momentum: int = 0
 var cheat_buffer: String = ""
 var teleport_immunity_frames: int = 0
 var node_map: TileMapLayer
-var node_tile_map_layer_fragile: TileMapLayer
 
 enum TileType{
 	FLOOR, 
@@ -54,10 +53,8 @@ func _ready() -> void :
 	var parent = get_parent()
 	if parent != null and (parent.name == "LevelEditor"):
 		node_map = parent.get_node_or_null("%MAP")
-		node_tile_map_layer_fragile = parent.get_node_or_null("%tileMapLayer_fragile")
 	else:
 		node_map = get_node("%MAP")
-		node_tile_map_layer_fragile = get_node("%tileMapLayer_fragile")
 	EVENTS.connect("arrival", _on_EVENTS_arrival)
 	EVENTS.connect("collect_key", _on_EVENTS_collect_key)
 	snap_grid()
@@ -229,7 +226,7 @@ func dash(_direction: Vector2, remaining_tiles: int = 0) -> void :
 			portal_momentum = dash_factor - index_repeat
 			break 
 		var destination_is_wall: = tile_is_type(TileType.WALL, tile_destination)
-		var destination_is_hidden: = tile_is_type(TileType.HIDDEN, tile_destination)
+		var destination_is_hidden: = is_hidden_at(tile_destination)
 		var destination_is_pit: = !tile_is_type(TileType.FLOOR, tile_destination)
 		var destination_is_ice: = tile_is_type(TileType.ICE, tile_destination)
 		if destination_is_wall:
@@ -307,7 +304,7 @@ func pok_a_wall(_destination: Vector2, speed_pok: float = 0.05, dashing: bool = 
 
 func fall_into_pit(_destination: Vector2) -> void :
 	var current_tile = node_map.local_to_map(global_position)
-	var tile_is_hidden: = tile_is_type(TileType.HIDDEN, current_tile)
+	var tile_is_hidden: = is_hidden_at(current_tile)
 	if tile_is_hidden: return
 	EVENTS.emit_signal("player_fall")
 	direction = Vector2.ZERO
@@ -332,7 +329,7 @@ func snap_grid() -> void :
 	if node_state_machine.current_state.name != "Idle": return
 	var player_tile = node_map.local_to_map(global_position)
 	var is_pit: = !tile_is_type(TileType.FLOOR, player_tile)
-	var is_fragile: = tile_is_type(TileType.FRAGILE, player_tile)
+	var is_fragile: = is_fragile_at(player_tile)
 	var is_ice: = tile_is_type(TileType.ICE, player_tile)
 	global_position = node_map.map_to_local(player_tile)
 	on_tile_ice = false
@@ -487,3 +484,19 @@ func _input(event: InputEvent) -> void:
 func _physics_process(_delta: float) -> void:
 	if teleport_immunity_frames > 0:
 		teleport_immunity_frames -= 1
+
+func is_fragile_at(tile_pos: Vector2i) -> bool:
+	var fragile_layer = node_map.get_child(TileType.FRAGILE)
+	if fragile_layer != null:
+		for child in fragile_layer.get_children():
+			if child is Fragile and node_map.local_to_map(child.global_position) == tile_pos:
+				return true
+	return false
+
+func is_hidden_at(tile_pos: Vector2i) -> bool:
+	var hidden_layer = node_map.get_child(TileType.HIDDEN)
+	if hidden_layer != null:
+		for child in hidden_layer.get_children():
+			if child is Hidden and node_map.local_to_map(child.global_position) == tile_pos:
+				return true
+	return false

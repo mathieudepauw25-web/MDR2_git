@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqai0fmd7ihml"]
+[gd_scene format=3 uid="uid://cqai0fmd7ihml"]
 
-[ext_resource type="Script" path="res://Platform/Platform.gd" id="1"]
+[ext_resource type="Script" uid="uid://1ddvo51lw2n5" path="res://Platform/Platform.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="2"]
 [ext_resource type="AudioStream" uid="uid://cybujyeuqm7y6" path="res://Audio/SFX/Subtle_Slash_3.wav" id="3"]
 [ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="4"]
@@ -20,30 +20,30 @@ outline_color = Color(0.976471, 0.658824, 0, 1)
 shadow_size = 9
 shadow_color = Color(0, 0, 0, 0.415686)
 
-[node name="Plateform" type="Area2D"]
+[node name="Plateform" type="Area2D" unique_id=1027172106]
 collision_layer = 8
 collision_mask = 7
 script = ExtResource("1")
 speed = 0.39
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=542577729]
 texture = SubResource("AtlasTexture_xplle")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1531774804]
 shape = SubResource("RectangleShape2D_jsb5o")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1513222148]
 stream = ExtResource("3")
 volume_db = -4.0
 pitch_scale = 2.0
 max_distance = 100.0
 bus = &"SFX"
 
-[node name="delay_platformflex" type="Timer" parent="."]
+[node name="delay_platformflex" type="Timer" parent="." unique_id=274716138]
 wait_time = 1.2
 one_shot = true
 
-[node name="Label_platformFlex" type="Label" parent="."]
+[node name="Label_platformFlex" type="Label" parent="." unique_id=1240015166]
 unique_name_in_owner = true
 visible = false
 z_index = 2
@@ -55,7 +55,7 @@ text = "Speed Up"
 label_settings = SubResource("LabelSettings_3yd11")
 horizontal_alignment = 1
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2043280983]
 stream = ExtResource("5")
 pitch_scale = 0.75
 

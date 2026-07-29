@@ -9,9 +9,13 @@
 [ext_resource type="TileSet" uid="uid://cdepjsmuhlqw4" path="res://Larchet/LevelMaker/TileMapLayer/normal_water.tres" id="5_p2scg"]
 [ext_resource type="Texture2D" uid="uid://b7vn244bxiavw" path="res://World/Sprites/tileset_ICE.png" id="6_grud1"]
 [ext_resource type="Texture2D" uid="uid://c3ltsogceht5k" path="res://World/Sprites/tileset_PLATFORMWAY.png" id="7_0a5d1"]
+[ext_resource type="PackedScene" uid="uid://jsa83e1ucxbb" path="res://Fragile/Fragile.tscn" id="9_p4oi5"]
+[ext_resource type="Texture2D" uid="uid://bswlaatnlxwn6" path="res://Larchet/Sprites/L.tileset_FRAGILE.png" id="10_w3xod"]
 [ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="11_p4oi5"]
 [ext_resource type="Script" uid="uid://ct4k1tw0j2o0y" path="res://Larchet/LevelMaker/Scenes/Grid_Visualizer.gd" id="11_phpmh"]
+[ext_resource type="PackedScene" uid="uid://dtv8pwu0e5vjp" path="res://Hidden/Hidden.tscn" id="11_wcvum"]
 [ext_resource type="Texture2D" uid="uid://dbw4m0fkltdsi" path="res://Larchet/Sprites/L.LvlMaker.png" id="12_4pd66"]
+[ext_resource type="Texture2D" uid="uid://b3csi3ttrhear" path="res://World/Sprites/Tileset_FLOOR.png" id="12_d5nb6"]
 [ext_resource type="StyleBox" uid="uid://cgd7kvdxm5jsn" path="res://Interface/Themes/ButtonNormal.tres" id="12_sh2dv"]
 [ext_resource type="Texture2D" uid="uid://djfkt322s75xs" path="res://World/Sprites/tileset_DECO.png" id="12_w3xod"]
 [ext_resource type="Script" uid="uid://b81bcq6ebeqqb" path="res://Larchet/LevelMaker/Scripts/Camera.gd" id="13_0a5d1"]
@@ -20,6 +24,7 @@
 [ext_resource type="Script" uid="uid://ej50tywcc4ki" path="res://Interface/Scripts/button.gd" id="13_grud1"]
 [ext_resource type="LabelSettings" uid="uid://ct1olda2r36v8" path="res://Larchet/Menus/LabelFont.tres" id="14_0a5d1"]
 [ext_resource type="Script" uid="uid://cjhf8s8sjw6ej" path="res://Larchet/LevelMaker/Scripts/UI_Level_Editor.gd" id="14_2u0i6"]
+[ext_resource type="Texture2D" uid="uid://c3exwahivwsrs" path="res://Larchet/Skins/Sprites/L.All_V1.png" id="14_bkxf0"]
 [ext_resource type="Script" uid="uid://njtryytv6pqi" path="res://Larchet/LevelMaker/Scripts/Pattern_Window.gd" id="21_p2scg"]
 
 [sub_resource type="TileSet" id="TileSet_meyyo"]
@@ -47,7 +52,118 @@ texture = ExtResource("7_0a5d1")
 [sub_resource type="TileSet" id="TileSet_bnoit"]
 sources/0 = SubResource("TileSetAtlasSource_ejbwh")
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_w3xod"]
+resource_name = "Fragile"
+scenes/1/scene = ExtResource("9_p4oi5")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_od0m7"]
+texture = ExtResource("10_w3xod")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_phpmh"]
+sources/0 = SubResource("TileSetScenesCollectionSource_w3xod")
+sources/4 = SubResource("TileSetAtlasSource_od0m7")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_1vd10"]
+resource_name = "Hidden"
+scenes/1/scene = ExtResource("11_wcvum")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_13ofl"]
+texture = ExtResource("12_d5nb6")
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+10:2/0 = 0
+12:2/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+10:3/0 = 0
+12:3/0 = 0
+13:3/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+8:4/0 = 0
+10:4/0 = 0
+11:4/0 = 0
+12:4/0 = 0
+13:4/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+10:5/0 = 0
+11:5/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+8:6/0 = 0
+10:6/0 = 0
+11:6/0 = 0
+12:6/0 = 0
+13:6/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+8:7/0 = 0
+10:7/0 = 0
+11:7/0 = 0
+12:7/0 = 0
+13:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_w3xod"]
+sources/0 = SubResource("TileSetScenesCollectionSource_1vd10")
+sources/2 = SubResource("TileSetAtlasSource_13ofl")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p3idt"]
 texture = ExtResource("2_sh2dv")
@@ -223,6 +339,17 @@ sources/0 = SubResource("TileSetAtlasSource_p3idt")
 sources/1 = SubResource("TileSetAtlasSource_g8q53")
 sources/3 = SubResource("TileSetAtlasSource_j6muw")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bkxf0"]
+size = Vector2(14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xrivr"]
+atlas = ExtResource("14_bkxf0")
+region = Rect2(3, 1, 10, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bkxf0"]
+atlas = ExtResource("11_p4oi5")
+region = Rect2(64, 32, 16, 16)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phpmh"]
 bg_color = Color(0, 0.32156864, 0.5137255, 1)
 
@@ -253,6 +380,18 @@ region = Rect2(70, 64, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_tlaif"]
 atlas = ExtResource("12_4pd66")
 region = Rect2(67, 21, 15, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3xod"]
+atlas = ExtResource("10_w3xod")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wcvum"]
+atlas = ExtResource("10_w3xod")
+region = Rect2(17, 0, 15, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d5nb6"]
+atlas = ExtResource("12_4pd66")
+region = Rect2(38, 63, 17, 17)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrivr"]
 bg_color = Color(0.101960786, 0.5411765, 0.1764706, 1)
@@ -323,7 +462,7 @@ script = ExtResource("4_83jhn")
 
 [node name="tileMapLayer_floor" type="TileMapLayer" parent="MAP/MAP" unique_id=2045607498]
 unique_name_in_owner = true
-z_index = 1
+z_index = 2
 tile_set = ExtResource("2_0a5d1")
 
 [node name="tileMapLayer_wall" type="TileMapLayer" parent="MAP/MAP" unique_id=1845507156]
@@ -335,7 +474,7 @@ tile_set = ExtResource("3_0a5d1")
 
 [node name="tileMapLayer_ice" type="TileMapLayer" parent="MAP/MAP" unique_id=2033571708]
 unique_name_in_owner = true
-z_index = 1
+z_index = 2
 tile_set = SubResource("TileSet_l66wb")
 
 [node name="tileMapLayer_platformway" type="TileMapLayer" parent="MAP/MAP" unique_id=1773839154]
@@ -343,10 +482,13 @@ tile_set = SubResource("TileSet_bnoit")
 
 [node name="tileMapLayer_fragile" type="TileMapLayer" parent="MAP/MAP" unique_id=1955166609]
 unique_name_in_owner = true
+z_index = 2
 tile_set = SubResource("TileSet_phpmh")
 
 [node name="tileMapLayer_hidden" type="TileMapLayer" parent="MAP/MAP" unique_id=977461877]
-tile_set = SubResource("TileSet_phpmh")
+unique_name_in_owner = true
+z_index = 2
+tile_set = SubResource("TileSet_w3xod")
 
 [node name="TileMapLayer_deco" type="TileMapLayer" parent="MAP/MAP" unique_id=1506236018]
 tile_set = SubResource("TileSet_ves0e")
@@ -358,7 +500,26 @@ tile_set = SubResource("TileSet_ves0e")
 script = ExtResource("11_phpmh")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1446821837]
+position = Vector2(8, 8)
 script = ExtResource("13_0a5d1")
+
+[node name="Sprite_player" type="Node2D" parent="." unique_id=1543727950]
+z_index = 6
+position = Vector2(8, 6)
+
+[node name="Area2D" type="Area2D" parent="Sprite_player" unique_id=186331306]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite_player/Area2D" unique_id=72922978]
+unique_name_in_owner = true
+scale = Vector2(0.7, 0.8)
+shape = SubResource("RectangleShape2D_bkxf0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite_player/Area2D" unique_id=433329067]
+texture = SubResource("AtlasTexture_xrivr")
+
+[node name="Shadow" type="Sprite2D" parent="Sprite_player/Area2D" unique_id=976712032]
+position = Vector2(0, 6)
+texture = SubResource("AtlasTexture_bkxf0")
 
 [node name="UI_Layer" type="CanvasLayer" parent="." unique_id=1717558558]
 script = ExtResource("14_2u0i6")
@@ -456,6 +617,22 @@ label_settings = ExtResource("14_0a5d1")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Btn_Move" type="Button" parent="UI_Layer" unique_id=1477032492]
+unique_name_in_owner = true
+offset_left = 4.0
+offset_top = 36.0
+offset_right = 20.0
+offset_bottom = 52.0
+
+[node name="Label" type="Label" parent="UI_Layer/Btn_Move" unique_id=1938461842]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+text = "="
+label_settings = ExtResource("14_0a5d1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="PanelContainer" type="PanelContainer" parent="UI_Layer" unique_id=718786337]
 custom_minimum_size = Vector2(0, 32)
 anchors_preset = 12
@@ -463,7 +640,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -40.0
-offset_right = -135.0
+offset_right = -24.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -542,6 +719,45 @@ toggle_mode = true
 keep_pressed_outside = true
 button_group = SubResource("ButtonGroup_0nlv8")
 icon = SubResource("AtlasTexture_tlaif")
+icon_alignment = 1
+
+[node name="Btn_Fragile_Green" type="Button" parent="UI_Layer/PanelContainer/HBoxContainer" unique_id=2009960005]
+custom_minimum_size = Vector2(33, 34)
+layout_mode = 2
+theme_override_styles/normal = ExtResource("12_sh2dv")
+theme_override_styles/pressed = ExtResource("13_83jhn")
+theme_override_styles/hover = ExtResource("13_0nlv8")
+theme_override_styles/focus = ExtResource("13_83jhn")
+toggle_mode = true
+keep_pressed_outside = true
+button_group = SubResource("ButtonGroup_0nlv8")
+icon = SubResource("AtlasTexture_w3xod")
+icon_alignment = 1
+
+[node name="Btn_Fragile_Wood" type="Button" parent="UI_Layer/PanelContainer/HBoxContainer" unique_id=1752245680]
+custom_minimum_size = Vector2(33, 34)
+layout_mode = 2
+theme_override_styles/normal = ExtResource("12_sh2dv")
+theme_override_styles/pressed = ExtResource("13_83jhn")
+theme_override_styles/hover = ExtResource("13_0nlv8")
+theme_override_styles/focus = ExtResource("13_83jhn")
+toggle_mode = true
+keep_pressed_outside = true
+button_group = SubResource("ButtonGroup_0nlv8")
+icon = SubResource("AtlasTexture_wcvum")
+icon_alignment = 1
+
+[node name="Btn_Hidden" type="Button" parent="UI_Layer/PanelContainer/HBoxContainer" unique_id=23996515]
+custom_minimum_size = Vector2(33, 34)
+layout_mode = 2
+theme_override_styles/normal = ExtResource("12_sh2dv")
+theme_override_styles/pressed = ExtResource("13_83jhn")
+theme_override_styles/hover = ExtResource("13_0nlv8")
+theme_override_styles/focus = ExtResource("13_83jhn")
+toggle_mode = true
+keep_pressed_outside = true
+button_group = SubResource("ButtonGroup_0nlv8")
+icon = SubResource("AtlasTexture_d5nb6")
 icon_alignment = 1
 
 [node name="PatternWindow" type="Window" parent="UI_Layer" unique_id=1933626132]
