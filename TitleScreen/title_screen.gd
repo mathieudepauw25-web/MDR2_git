@@ -149,6 +149,7 @@ func update_text() -> void :
 @onready var start_campagne: Button = $CanvasLayer/StartControl/StartCampagne
 
 func _on_start_pressed() -> void :
+	print("start")
 	$CanvasLayer/MenuControl.visible = false
 	$CanvasLayer/MDRlogo.visible = false
 	$CanvasLayer/StartControl.visible = true

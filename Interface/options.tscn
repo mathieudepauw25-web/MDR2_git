@@ -4,7 +4,6 @@
 [ext_resource type="Shader" uid="uid://bqw0maxha7ge2" path="res://Interface/Shader/PauseBlur.gdshader" id="2_0meqe"]
 [ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="2_b5l1t"]
 [ext_resource type="StyleBox" uid="uid://dnuh3h61crver" path="res://Larchet/Menus/EchPrecSuiv.tres" id="3_0meqe"]
-[ext_resource type="StyleBox" uid="uid://3rxb4yawp623" path="res://Larchet/Menus/ControlSlot.tres" id="4_xl3qi"]
 [ext_resource type="StyleBox" uid="uid://cgd7kvdxm5jsn" path="res://Interface/Themes/ButtonNormal.tres" id="5_77jud"]
 [ext_resource type="StyleBox" uid="uid://d2wb0x7bmm82g" path="res://Larchet/Menus/Gold.tres" id="6_4rn25"]
 [ext_resource type="Script" uid="uid://bfio7bahqu8ax" path="res://System/TextManageLabel.gd" id="10_k0mej"]
@@ -27,15 +26,6 @@ shader_parameter/amount = 1.5
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5qm78"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8spqf"]
-
-[sub_resource type="Theme" id="Theme_hjojw"]
-default_font = ExtResource("2_b5l1t")
-default_font_size = 12
-Button/colors/font_hover_color = Color(1, 1, 1, 1)
-Button/font_sizes/font_size = 12
-Button/fonts/font = ExtResource("2_b5l1t")
-Button/styles/focus = ExtResource("3_0meqe")
-Button/styles/normal = ExtResource("4_xl3qi")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4f806"]
 bg_color = Color(1, 0.984314, 0.968627, 0.705882)
@@ -121,12 +111,11 @@ offset_bottom = 173.0
 offset_transform_enabled = true
 focus_neighbor_left = NodePath("../CheckButton")
 focus_neighbor_top = NodePath("../OptionButton_lang")
-theme = SubResource("Theme_hjojw")
+theme_override_fonts/font = ExtResource("2_b5l1t")
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = ExtResource("5_77jud")
 theme_override_styles/hover = ExtResource("6_4rn25")
 theme_override_styles/focus = ExtResource("6_4rn25")
-button_mask = 0
 text = "Controls"
 script = ExtResource("11_q0mq6")
 TextEN = "Controls"

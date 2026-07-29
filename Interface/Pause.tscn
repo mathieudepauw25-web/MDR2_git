@@ -5,6 +5,7 @@
 [ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="3"]
 [ext_resource type="StyleBox" uid="uid://cvb0ef4cnwbsy" path="res://Interface/Themes/ButtonHover.tres" id="4"]
 [ext_resource type="StyleBox" uid="uid://cgd7kvdxm5jsn" path="res://Interface/Themes/ButtonNormal.tres" id="5"]
+[ext_resource type="StyleBox" uid="uid://d2wb0x7bmm82g" path="res://Larchet/Menus/Gold.tres" id="5_qplcl"]
 [ext_resource type="Script" uid="uid://687fslo53ix4" path="res://System/TextManage.gd" id="6"]
 [ext_resource type="Texture2D" uid="uid://dro2fw1um2d6a" path="res://Interface/Sprites/icon_time.png" id="7"]
 [ext_resource type="Script" uid="uid://q7861pw32leb" path="res://System/TextManageCheckbox.gd" id="8"]
@@ -186,8 +187,10 @@ offset_transform_enabled = true
 focus_neighbor_left = NodePath("../../../Panel_fullscreen/CheckButton")
 focus_neighbor_top = NodePath("../Title screen")
 focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer")
-theme = SubResource("Theme_pl0fo")
-button_mask = 0
+theme_override_fonts/font = ExtResource("3")
+theme_override_styles/normal = ExtResource("5")
+theme_override_styles/hover = ExtResource("5_qplcl")
+theme_override_styles/focus = ExtResource("5_qplcl")
 text = "Restart"
 script = ExtResource("6")
 TextEN = "Restart"
@@ -207,8 +210,10 @@ layout_mode = 2
 offset_transform_enabled = true
 focus_neighbor_left = NodePath("../../../Panel_fullscreen/CheckButton")
 focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions")
-theme = SubResource("Theme_pl0fo")
-button_mask = 0
+theme_override_fonts/font = ExtResource("3")
+theme_override_styles/normal = ExtResource("5")
+theme_override_styles/hover = ExtResource("5_qplcl")
+theme_override_styles/focus = ExtResource("5_qplcl")
 text = "Resume"
 script = ExtResource("6")
 TextEN = "Resume"
@@ -230,8 +235,10 @@ offset_transform_enabled = true
 focus_neighbor_left = NodePath("../../../Panel_fullscreen/CheckButton")
 focus_neighbor_right = NodePath("../../../Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok")
 focus_neighbor_bottom = NodePath("../Restart")
-theme = SubResource("Theme_pl0fo")
-button_mask = 0
+theme_override_fonts/font = ExtResource("3")
+theme_override_styles/normal = ExtResource("5")
+theme_override_styles/hover = ExtResource("5_qplcl")
+theme_override_styles/focus = ExtResource("5_qplcl")
 text = "Title screen"
 script = ExtResource("6")
 TextEN = "Title screen"

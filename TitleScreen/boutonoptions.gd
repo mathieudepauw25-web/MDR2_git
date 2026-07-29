@@ -1,8 +1,6 @@
 extends Button
 
 
-@onready var panel_options_2: panelOptions = $Panel_options2
-
 func _ready() -> void:
 	pass
 
@@ -26,9 +24,3 @@ func _on_focus_exited() -> void:
 	var target = self
 	tween.tween_property(target, "offset_transform_scale", Vector2(1.0,1.0), 0.2)
 	tween.parallel().tween_property(target, "offset_transform_rotation", 0.0, 0.2)
-
-
-func _on_pressed(forced_close: bool = false) -> void:
-	panel_options_2.visible = !panel_options_2.visible
-	if forced_close: panel_options_2.visible = false
-	$texture_deploy_option.visible = panel_options_2.visible
