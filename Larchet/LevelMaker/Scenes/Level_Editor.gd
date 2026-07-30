@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var map_node: Node2D = $MAP
+@onready var map_node: Node2D = $MAP_global
 @onready var layer_floor: TileMapLayer = %tileMapLayer_floor
 @onready var layer_wall: TileMapLayer = %tileMapLayer_wall
 @onready var layer_ice: TileMapLayer = %tileMapLayer_ice
@@ -25,9 +25,11 @@ extends Node2D
 const PLAYER_SCENE = preload("res://Player/Player.tscn")
 const FRAGILE_SCENE = preload("res://Fragile/Fragile.tscn")
 const HIDDEN_SCENE = preload("res://Hidden/Hidden.tscn")
+const SCENE_TEST = preload("res://Larchet/LevelMaker/Scenes/Level_Editor_Tester.tscn")
+var instance_scene_test: Node2D = null
 var player: Node2D = null
 var spawned_fragiles: Dictionary = {}
-var spawned_hiddens: Dictionary = {} # NOUVEAU DICO
+var spawned_hiddens: Dictionary = {}
 
 var active_floor: TileMapLayer
 var active_wall: TileMapLayer
@@ -697,7 +699,10 @@ func apply_skin_to_fragile(fragile_node: Node2D) -> void:
 	var atlas_source = layer_fragile.tile_set.get_source(final_source_id) as TileSetAtlasSource
 	if atlas_source:
 		var base_texture = atlas_source.texture
-		fragile_node.set_skin(base_texture, final_coords)
+		if theme == "_frawood":
+			fragile_node.set_skin(base_texture, final_coords,true)
+		else:
+			fragile_node.set_skin(base_texture, final_coords,false)
 
 func apply_skin_to_hidden(hidden_node: Node2D) -> void:
 	if layer_hidden == null: return
@@ -750,6 +755,7 @@ func _spawn_hidden(grid_pos: Vector2i, target_theme: String) -> void:
 		var hidden_inst = HIDDEN_SCENE.instantiate()
 		hidden_inst.position = layer_hidden.map_to_local(grid_pos)
 		layer_hidden.add_child(hidden_inst)
+		hidden_inst.sprite.scale = Vector2.ONE
 		spawned_hiddens[grid_pos] = hidden_inst
 
 func _remove_hidden(grid_pos: Vector2i) -> void:
@@ -759,3 +765,89 @@ func _remove_hidden(grid_pos: Vector2i) -> void:
 		spawned_hiddens.erase(grid_pos)
 		if layer_hidden != null:
 			layer_hidden.set_cell(grid_pos, -1)
+
+func sauvegarder_niveau() -> void:
+	var player_grid_pos = layer_floor.local_to_map(sprite_player.global_position)
+	if not (layer_floor.get_cell_source_id(player_grid_pos) != -1 and not spawned_fragiles.has(player_grid_pos)):
+		print("Veuillez positionner le player sur une case stable")
+		return
+	var json_data = {
+		"global": {
+			"grass_mode": grass_mode,
+			"player_pos": [player_grid_pos.x, player_grid_pos.y],
+			"Tile_skin": current_skin_name
+		},
+		"cellules": {}
+	}
+	if grass_mode == 3 and pattern_window != null:
+		var dark_cells = []
+		for p in pattern_window.custom_pattern:
+			if pattern_window.custom_pattern[p] == "_dark":
+				dark_cells.append([p.x, p.y])
+		json_data["grass_modele"] = {
+			"taille": [pattern_window.pattern_size.x, pattern_window.pattern_size.y],
+			"is_dark": dark_cells
+		}
+	var herbe_list = []
+	var mur_list = []
+	var ice_list = []
+	var trans_list = []
+	var bridge_list = []
+	var fragreen_list = []
+	var frawood_list = []
+	var hidden_list = []
+	var used_floor = layer_floor.get_used_cells()
+	for pos in used_floor:
+		if layer_floor.get_cell_source_id(pos) == TileSkinData.GRASS_SOURCE_ID:
+			var theme = cell_themes.get(pos, "_light")
+			match theme:
+				"_dark": herbe_list.append([pos.x, pos.y, true])
+				"_light": herbe_list.append([pos.x, pos.y])
+				"_trans": trans_list.append([pos.x, pos.y])
+				"_bridge_v": bridge_list.append([pos.x, pos.y, true])
+				"_bridge_h": bridge_list.append([pos.x, pos.y])
+				"_fragreen": fragreen_list.append([pos.x, pos.y])
+				"_frawood": frawood_list.append([pos.x, pos.y])
+				"_hidden": hidden_list.append([pos.x, pos.y])
+	var used_wall = layer_wall.get_used_cells()
+	for pos in used_wall:
+		if layer_wall.get_cell_source_id(pos) == TileSkinData.WALL_SOURCE_ID:
+			mur_list.append([pos.x, pos.y])
+	var used_ice = layer_ice.get_used_cells()
+	for pos in used_ice:
+		if layer_ice.get_cell_source_id(pos) == TileSkinData.ICE_SOURCE_ID:
+			ice_list.append([pos.x, pos.y])
+	var cellules = json_data["cellules"]
+	if herbe_list.size() > 0: cellules["herbe"] = herbe_list
+	if mur_list.size() > 0: cellules["mur"] = mur_list
+	if ice_list.size() > 0: cellules["ice"] = ice_list
+	if trans_list.size() > 0: cellules["transparent"] = trans_list
+	if bridge_list.size() > 0: cellules["bridge"] = bridge_list
+	if fragreen_list.size() > 0: cellules["fragreen"] = fragreen_list
+	if frawood_list.size() > 0: cellules["frawood"] = frawood_list
+	if hidden_list.size() > 0: cellules["hidden"] = hidden_list
+	JSONGestionnaire.sauvegarder_map("res://Larchet/LevelMaker/Level_temp/test.json", json_data)
+
+func lancer_scene_test() -> void:
+	sauvegarder_niveau()
+	self.visible = false
+	self.process_mode = Node.PROCESS_MODE_DISABLED
+	ui_layer.process_mode = Node.PROCESS_MODE_ALWAYS
+	if not is_instance_valid(instance_scene_test):
+		instance_scene_test = SCENE_TEST.instantiate()
+		get_tree().root.add_child(instance_scene_test)
+	instance_scene_test.visible = true
+	instance_scene_test.process_mode = Node.PROCESS_MODE_INHERIT
+	instance_scene_test.charger_et_generer("res://Levels/Level0.json")
+
+func quitter_scene_test() -> void:
+	if is_instance_valid(instance_scene_test):
+		if instance_scene_test.has_method("_nettoyer_niveau"):
+			instance_scene_test._nettoyer_niveau()
+		instance_scene_test.visible = false
+		instance_scene_test.process_mode = Node.PROCESS_MODE_DISABLED
+	self.visible = true
+	self.process_mode = Node.PROCESS_MODE_INHERIT
+	ui_layer.process_mode = Node.PROCESS_MODE_INHERIT
+	if camera != null:
+		camera.make_current()

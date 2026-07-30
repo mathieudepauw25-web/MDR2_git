@@ -33,8 +33,6 @@ func _ready() -> void :
 	$CanvasLayer / Label_version.text = str(ProjectSettings.get_setting("application/config/version"))
 	check_completion()
 	update_text()
-	if GAMES.all_trophy_unlock:
-		$CanvasLayer/MenuControl/Map.visible = true
 
 	if (GAMES.game_data.best_global_time >= GAMES.game_data.defaut_highscore
 	and GAMES.game_just_launch == true):

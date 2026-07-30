@@ -49,17 +49,18 @@ enum TileType{
 }
 
 
-func _ready() -> void :
+func _ready() -> void:
 	var parent = get_parent()
-	if parent != null and (parent.name == "LevelEditor"):
-		node_map = parent.get_node_or_null("%MAP")
+	if parent != null and parent.has_node("MAP"):
+		node_map = parent.get_node("MAP")
+	elif parent != null and parent.find_child("MAP", true, false) != null:
+		node_map = parent.find_child("MAP", true, false)
 	else:
-		node_map = get_node("%MAP")
+		node_map = get_node("%MAP")    
 	EVENTS.connect("arrival", _on_EVENTS_arrival)
 	EVENTS.connect("collect_key", _on_EVENTS_collect_key)
 	snap_grid()
-	if not(parent != null and (parent.name == "LevelEditor")):
-		print("caca")
+	if not (parent != null and parent.name == "LevelEditor"):
 		show_game_input()
 	var current_skin = GESTIONNAIRESKIN.player_data.equipped_skin
 	if $AnimatedSprite2D.sprite_frames.has_animation(current_skin):

@@ -7,6 +7,7 @@ var active_tween: Tween
 func _ready() -> void:
 	EVENTS.connect("hidden_tiles", _on_EVENTS_hidden_tiles)
 	call_deferred("_request_skin")
+	sprite.scale = Vector2.ZERO
 
 func _request_skin() -> void:
 	var editor = get_tree().current_scene 

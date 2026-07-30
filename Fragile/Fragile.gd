@@ -21,10 +21,15 @@ func _request_skin() -> void:
 	if editor and editor.has_method("apply_skin_to_fragile"):
 		editor.apply_skin_to_fragile(self)
 
-func set_skin(base_texture: Texture2D, atlas_coords: Vector2i, tile_size: int = 16) -> void:
+func set_skin(base_texture: Texture2D, atlas_coords: Vector2i, true_square: bool) -> void:
 	var atlas = AtlasTexture.new()
 	atlas.atlas = base_texture
-	atlas.region = Rect2(atlas_coords.x * tile_size, atlas_coords.y * tile_size, tile_size, tile_size)
+	var start_x = atlas_coords.x * 16
+	if true_square:
+		atlas.region = Rect2(start_x, atlas_coords.y * 16, 16, 16)
+		sprite.position = Vector2(0,0)
+	else:
+		atlas.region = Rect2(start_x, atlas_coords.y * 16 -1, 17, 17)
 	sprite.texture = atlas
 
 func collapsing() -> void :

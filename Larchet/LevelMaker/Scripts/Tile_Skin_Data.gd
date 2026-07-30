@@ -39,7 +39,7 @@ const SKINS: Dictionary = {
 		"up_normal_light" : [Vector3i(1,4,1), Vector3i(3,4,1), Vector3i(5,4,1), Vector3i(7,4,1)],
 		"up_E_dark" : [Vector3i(2,0,1)],
 		"up_E_light" : [Vector3i(2,4,1)],
-		"fragile_dark" : [Vector3i(2,0,4)],
+		"fragile_dark" : [Vector3i(0,3,4)],
 		"fragile_wood" : [Vector3i(0,0,4), Vector3i(0,1,4), Vector3i(1,0,4), Vector3i(1,1,4)],
 		"hidden" : [Vector3i(10,5,1)]
 	}

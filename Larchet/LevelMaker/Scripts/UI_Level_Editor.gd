@@ -9,11 +9,14 @@ signal mode3_toggled()
 @onready var lbl_OL: Label = $Btn_Open_Locked/Label
 @onready var lbl_test: Label = $Btn_Test/Label
 @onready var lbl_move: Label = $Btn_Move/Label
+@onready var lbl_tester: Label = $Btn_Tester/Label
 @onready var btn_grass_mode: Button = %grass_mode
 @onready var btn_mode3: Button = %Btn_Mode3
 @onready var btn_OL: Button = %Btn_Open_Locked
 @onready var btn_test: Button = %Btn_Test
+@onready var btn_save: Button = %Btn_Save
 @onready var btn_move: Button = %Btn_Move
+@onready var btn_tester: Button = %Btn_Tester
 @onready var btn_herbe = $PanelContainer/HBoxContainer/Btn_Herbe
 @onready var btn_mur = $PanelContainer/HBoxContainer/Btn_Mur
 @onready var btn_glace = $PanelContainer/HBoxContainer/Btn_Glace
@@ -22,7 +25,7 @@ signal mode3_toggled()
 @onready var btn_fragile_green = $PanelContainer/HBoxContainer/Btn_Fragile_Green
 @onready var btn_fragile_wood = $PanelContainer/HBoxContainer/Btn_Fragile_Wood
 @onready var btn_hidden = $PanelContainer/HBoxContainer/Btn_Hidden
-@onready var grid = $"../MAP/GridVisualizer"
+@onready var grid = $"../MAP_global/GridVisualizer"
 
 var grass_mode: int = 1
 var is_locked: bool = false
@@ -52,7 +55,14 @@ func _ready() -> void:
 	btn_mode3.visible = false
 	btn_OL.pressed.connect(_on_OL_pressed)
 	btn_test.pressed.connect(_on_test_pressed)
+	btn_save.pressed.connect(_on_save_pressed)
 	btn_move.pressed.connect(_on_move_pressed)
+	btn_tester.pressed.connect(_on_tester_pressed)
+
+func UI_visible() -> void:
+	for UI in self.get_children():
+			if UI != btn_test:
+				UI.visible = true
 
 func _on_grass_mode_pressed() -> void:
 	grass_mode = 1 if grass_mode == 3 else grass_mode + 1
@@ -104,3 +114,22 @@ func _on_move_pressed() -> void:
 	else:
 		lbl_move.text = "="
 		$"..".is_moving = false
+
+func _on_save_pressed() -> void:
+	get_parent().sauvegarder_niveau()
+
+func _on_tester_pressed() -> void:
+	if lbl_tester.text == "T":
+		lbl_tester.text = "B"
+		for UI in get_children():
+			if UI != btn_tester:
+				UI.visible = false
+		get_parent().lancer_scene_test()
+	else:
+		lbl_tester.text = "T"
+		for UI in get_children():
+			if UI != %PatternWindow and UI != btn_mode3:
+				UI.visible = true
+		if lbl_grass_mode.text == "3":
+			btn_mode3.visible = true
+		get_parent().quitter_scene_test()
