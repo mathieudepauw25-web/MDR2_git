@@ -942,12 +942,27 @@ func generer_editeur_depuis_data(map_data: Dictionary) -> void:
 	sprite_player.global_position = layer_floor.map_to_local(player_grid_pos) + Vector2(0, -2)
 
 func rafraichir_autotiling_global() -> void:
+	var toutes_les_cases: Dictionary = {}
 	for pos in layer_wall.get_used_cells():
-		apply_bitmask_to_single_cell(pos, layer_wall, TileSkinData.wall_bitmask_repo, TileSkinData.WALL_SOURCE_ID)
+		toutes_les_cases[pos] = true
 	for pos in layer_floor.get_used_cells():
-		apply_bitmask_to_single_cell(pos, layer_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
+		toutes_les_cases[pos] = true
 	for pos in layer_ice.get_used_cells():
-		apply_bitmask_to_single_cell(pos, layer_ice, TileSkinData.grass_bitmask_repo, TileSkinData.ICE_SOURCE_ID)
+		toutes_les_cases[pos] = true
+	var liste_triee: Array[Vector2i] = []
+	for pos in toutes_les_cases.keys():
+		liste_triee.append(pos)
+	liste_triee.sort_custom(func(a: Vector2i, b: Vector2i) -> bool:
+		if a.y == b.y:
+			return a.x < b.x
+		return a.y < b.y)
+	for pos in liste_triee:
+		if get_source_id(layer_wall, pos) == TileSkinData.WALL_SOURCE_ID:
+			apply_bitmask_to_single_cell(pos, layer_wall, TileSkinData.wall_bitmask_repo, TileSkinData.WALL_SOURCE_ID)
+		if get_source_id(layer_floor, pos) == TileSkinData.GRASS_SOURCE_ID:
+			apply_bitmask_to_single_cell(pos, layer_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
+		if get_source_id(layer_ice, pos) == TileSkinData.ICE_SOURCE_ID:
+			apply_bitmask_to_single_cell(pos, layer_ice, TileSkinData.grass_bitmask_repo, TileSkinData.ICE_SOURCE_ID)
 
 func _generer_nouvel_id() -> int:
 	var dir = DirAccess.open(DOSSIER_NIVEAUX)

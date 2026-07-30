@@ -6,7 +6,6 @@ const CONTROL_SLOT_SCENE = preload("res://Larchet/Menus/ControlsPage/Scenes/Cont
 @onready var colonne_droite: VBoxContainer = $MarginContainer/HBoxContainer/ColonneDroite
 
 @export var config_remap: ControlsConfig
-@onready var BuTToptions: Button = $ButOptions
 
 var is_remapping: bool = false
 var action_to_remap: String = ""

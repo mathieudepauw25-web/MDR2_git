@@ -8,7 +8,6 @@ class_name TitleScreen
 @onready var node_container_trophy: HBoxContainer = $CanvasLayer / HBoxContainer_trophy
 @onready var node_ui_menu_up_down: AudioStreamPlayer = $SFX / UI_menu_up_down
 @onready var node_ui_menu_click: AudioStreamPlayer = $SFX / UI_menu_click
-@onready var panel_options_2: Control = $CanvasLayer/MenuControl/Panel_options2
 
 
 @export var LeaderboardUsersScore1: PackedScene = preload("res://Interface/LaderboardLine.tscn")
@@ -24,7 +23,6 @@ func _ready() -> void :
 	GAMES.superdash_run = false
 	if GAMES.SteamisRunning:
 		GAMES.find_leaderboard("Highscore")
-	EVENTS.connect("close_option", _on_EVENTS_close_option)
 	EVENTS.connect("save", update_text)
 	Engine.time_scale = 1
 	EVENTS.emit_signal("starting")
@@ -204,9 +202,6 @@ func back_to_title_screen() -> void :
 	$MapViewControl / Icon_Gamepad.visible = false
 	$World / Grid.visible = false
 
-func _on_options_pressed(forced_close: bool = false) -> void :
-	panel_options_2.visible = !panel_options_2.visible
-	if forced_close: panel_options_2.visible = false
 
 func _on_quit_pressed() -> void :
 	get_tree().quit()
@@ -223,8 +218,6 @@ func _on_leaderboard_scores_downloaded(_message, _handle, result):
 		compteur += 1
 		if compteur >= 10: return
 
-func _on_EVENTS_close_option() -> void :
-	_on_options_pressed(true)
 
 
 func _on_start_focus_entered() -> void :
