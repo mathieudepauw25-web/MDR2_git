@@ -258,4 +258,4 @@ func _on_start_campagne_pressed() -> void:
 	Engine.time_scale = 1
 
 func _on_start_level_editor_pressed() -> void:
-	get_tree().change_scene_to_file("res://Larchet/LevelMaker/Scenes/Level_Editor.tscn")
+	get_tree().change_scene_to_file("res://Larchet/Menus/LevelEditor/Menu_Level_Editor.tscn")

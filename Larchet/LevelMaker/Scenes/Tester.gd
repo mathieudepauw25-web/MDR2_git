@@ -49,6 +49,7 @@ var active_persp_Wleft: TileMapLayer
 
 func _ready() -> void:
 	_init_active_layers()
+	effacer_tous_les_layers()
 	EVENTS.connect("create_floor_tile", _on_create_floor_tile)
 	EVENTS.connect("erase_floor_tile", _on_erase_floor_tile)
 
@@ -88,54 +89,47 @@ func generer_niveau(map_data: Dictionary) -> void:
 		for d in g_mod.get("is_dark", []):
 			custom_pattern[Vector2i(int(d[0]), int(d[1]))] = "_dark"
 	var cellules = map_data.get("cellules", {})
-	var cases_a_mettre_a_jour: Dictionary = {}
 	for item in cellules.get("herbe", []):
 		var pos = Vector2i(int(item[0]), int(item[1]))
 		var is_dark = item[2] if item.size() > 2 else false
 		cell_themes[pos] = "_dark" if is_dark else "_light"
 		layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0, 0))
-		cases_a_mettre_a_jour[pos] = true
 	for item in cellules.get("mur", []):
 		var pos = Vector2i(int(item[0]), int(item[1]))
 		layer_wall.set_cell(pos, TileSkinData.WALL_SOURCE_ID, Vector2i(0, 0))
-		cases_a_mettre_a_jour[pos] = true
 	for item in cellules.get("ice", []):
 		var pos = Vector2i(int(item[0]), int(item[1]))
 		layer_ice.set_cell(pos, TileSkinData.ICE_SOURCE_ID, Vector2i(0, 0))
 		layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0, 0))
 		cell_themes[pos] = "_light"
-		cases_a_mettre_a_jour[pos] = true
 	for item in cellules.get("transparent", []):
 		var pos = Vector2i(int(item[0]), int(item[1]))
 		cell_themes[pos] = "_trans"
 		layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0, 0))
-		cases_a_mettre_a_jour[pos] = true
 	for item in cellules.get("bridge", []):
 		var pos = Vector2i(int(item[0]), int(item[1]))
 		var is_vertical = item[2] if item.size() > 2 else false
 		cell_themes[pos] = "_bridge_v" if is_vertical else "_bridge_h"
 		layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0, 0))
-		cases_a_mettre_a_jour[pos] = true
 	for item in cellules.get("fragreen", []):
 		var pos = Vector2i(int(item[0]), int(item[1]))
 		_spawn_fragile(pos, "_fragreen")
-		cases_a_mettre_a_jour[pos] = true
 	for item in cellules.get("frawood", []):
 		var pos = Vector2i(int(item[0]), int(item[1]))
 		_spawn_fragile(pos, "_frawood")
-		cases_a_mettre_a_jour[pos] = true
 	for item in cellules.get("hidden", []):
 		var pos = Vector2i(int(item[0]), int(item[1]))
 		_spawn_hidden(pos, "_hidden")
-		cases_a_mettre_a_jour[pos] = true
-	for pos in cases_a_mettre_a_jour.keys():
-		if get_source_id(layer_wall, pos) == TileSkinData.WALL_SOURCE_ID:
-			apply_bitmask_to_single_cell(pos, layer_wall, TileSkinData.wall_bitmask_repo, TileSkinData.WALL_SOURCE_ID)
-		if get_source_id(layer_floor, pos) == TileSkinData.GRASS_SOURCE_ID:
-			apply_bitmask_to_single_cell(pos, layer_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
-		if get_source_id(layer_ice, pos) == TileSkinData.ICE_SOURCE_ID:
-			apply_bitmask_to_single_cell(pos, layer_ice, TileSkinData.grass_bitmask_repo, TileSkinData.ICE_SOURCE_ID)
+	rafraichir_autotiling_global()
 	_spawn_player(player_grid_pos)
+
+func rafraichir_autotiling_global() -> void:
+	for pos in layer_wall.get_used_cells():
+		apply_bitmask_to_single_cell(pos, layer_wall, TileSkinData.wall_bitmask_repo, TileSkinData.WALL_SOURCE_ID)
+	for pos in layer_floor.get_used_cells():
+		apply_bitmask_to_single_cell(pos, layer_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
+	for pos in layer_ice.get_used_cells():
+		apply_bitmask_to_single_cell(pos, layer_ice, TileSkinData.grass_bitmask_repo, TileSkinData.ICE_SOURCE_ID)
 
 func _nettoyer_niveau() -> void:
 	cell_themes.clear()
@@ -509,3 +503,22 @@ func _on_create_floor_tile(pos_globale: Vector2) -> void:
 func _on_erase_floor_tile(pos_globale: Vector2) -> void:
 	var grid_pos = layer_floor.local_to_map(pos_globale)
 	layer_floor.set_cell(grid_pos, -1)
+
+func effacer_tous_les_layers() -> void:
+	cell_themes.clear()
+	spawned_fragiles.clear()
+	spawned_hiddens.clear()
+	if is_instance_valid(player):
+		player.queue_free()
+		player = null
+	var tous_les_layers: Array[TileMapLayer] = [
+		layer_floor, layer_wall, layer_ice,
+		layer_persp_right, layer_persp_right_wall, layer_persp_Eright_wall,
+		layer_persp_right_ice, layer_persp_up, layer_persp_up_wall,
+		layer_persp_up_ice, layer_persp_Wright, layer_persp_Wdown,
+		layer_persp_Wleft, layer_fragile, layer_hidden]
+	for calque in tous_les_layers:
+		if calque != null:
+			calque.clear()
+			for enfant in calque.get_children():
+				enfant.free()

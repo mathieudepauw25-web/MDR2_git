@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://b576qlwtxmp8r"]
+
+[ext_resource type="Script" uid="uid://dvlgbwqg11c60" path="res://Larchet/Menus/LevelEditor/Menu_Level_Editor.gd" id="1_4p7vr"]
+[ext_resource type="LabelSettings" uid="uid://ct1olda2r36v8" path="res://Larchet/Menus/LabelFont.tres" id="2_c0k52"]
+
+[node name="Control" type="Control" unique_id=460800360]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4p7vr")
+
+[node name="New" type="Button" parent="." unique_id=1743309476]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Label" type="Label" parent="New" unique_id=145755350]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "New"
+label_settings = ExtResource("2_c0k52")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=858687509]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 304.0
+offset_bottom = 104.0
+alignment = 1

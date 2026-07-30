@@ -26,6 +26,10 @@ const PLAYER_SCENE = preload("res://Player/Player.tscn")
 const FRAGILE_SCENE = preload("res://Fragile/Fragile.tscn")
 const HIDDEN_SCENE = preload("res://Hidden/Hidden.tscn")
 const SCENE_TEST = preload("res://Larchet/LevelMaker/Scenes/Level_Editor_Tester.tscn")
+const DOSSIER_NIVEAUX: String = "res://Larchet/LevelMaker/Level_temp/"
+var current_level_id: int = -1
+var current_level_name: String = ""
+var current_file_path: String = ""
 var instance_scene_test: Node2D = null
 var player: Node2D = null
 var spawned_fragiles: Dictionary = {}
@@ -163,6 +167,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.keycode == KEY_SPACE and not event.echo:
 			refresh_all_grass()
+		if event.is_action_pressed("ui_cancel"):
+			queue_free()
+			get_tree().change_scene_to_file("res://Larchet/Menus/LevelEditor/Menu_Level_Editor.tscn")
 
 func paint_smart_tile(is_just_clicked: bool = false) -> void:
 	var mouse_pos = get_global_mouse_position()
@@ -771,8 +778,12 @@ func sauvegarder_niveau() -> void:
 	if not (layer_floor.get_cell_source_id(player_grid_pos) != -1 and not spawned_fragiles.has(player_grid_pos)):
 		print("Veuillez positionner le player sur une case stable")
 		return
+	if current_level_id == -1 or current_file_path == "":
+		_attribuer_nouveau_fichier()
 	var json_data = {
 		"global": {
+			"level_id": current_level_id,
+			"level_name": current_level_name,
 			"grass_mode": grass_mode,
 			"player_pos": [player_grid_pos.x, player_grid_pos.y],
 			"Tile_skin": current_skin_name
@@ -826,28 +837,143 @@ func sauvegarder_niveau() -> void:
 	if fragreen_list.size() > 0: cellules["fragreen"] = fragreen_list
 	if frawood_list.size() > 0: cellules["frawood"] = frawood_list
 	if hidden_list.size() > 0: cellules["hidden"] = hidden_list
-	JSONGestionnaire.sauvegarder_map("res://Larchet/LevelMaker/Level_temp/test.json", json_data)
+	JSONGestionnaire.sauvegarder_map(current_file_path, json_data)
+
+# ==============================================================================
+# --- GESTION DU TESTER & RECHARGEMENT DU NIVEAU DEPUIS LE JSON ---
+# ==============================================================================
 
 func lancer_scene_test() -> void:
 	sauvegarder_niveau()
 	self.visible = false
 	self.process_mode = Node.PROCESS_MODE_DISABLED
 	ui_layer.process_mode = Node.PROCESS_MODE_ALWAYS
-	if not is_instance_valid(instance_scene_test):
-		instance_scene_test = SCENE_TEST.instantiate()
-		get_tree().root.add_child(instance_scene_test)
+	if is_instance_valid(instance_scene_test):
+		instance_scene_test.free()
+	instance_scene_test = SCENE_TEST.instantiate()
+	get_tree().root.add_child(instance_scene_test)
 	instance_scene_test.visible = true
 	instance_scene_test.process_mode = Node.PROCESS_MODE_INHERIT
-	instance_scene_test.charger_et_generer("res://Levels/Level0.json")
+	instance_scene_test.charger_et_generer(current_file_path)
 
 func quitter_scene_test() -> void:
 	if is_instance_valid(instance_scene_test):
-		if instance_scene_test.has_method("_nettoyer_niveau"):
-			instance_scene_test._nettoyer_niveau()
-		instance_scene_test.visible = false
-		instance_scene_test.process_mode = Node.PROCESS_MODE_DISABLED
+		instance_scene_test.free()
+		instance_scene_test = null
 	self.visible = true
 	self.process_mode = Node.PROCESS_MODE_INHERIT
 	ui_layer.process_mode = Node.PROCESS_MODE_INHERIT
+	charger_editeur_depuis_json(current_file_path)
 	if camera != null:
 		camera.make_current()
+
+func effacer_tout_lediteur() -> void:
+	cell_themes.clear()
+	spawned_fragiles.clear()
+	spawned_hiddens.clear()
+	var tous_les_layers: Array[TileMapLayer] = [
+		layer_floor, layer_wall, layer_ice,
+		layer_persp_right, layer_persp_right_wall, layer_persp_Eright_wall,
+		layer_persp_right_ice, layer_persp_up, layer_persp_up_wall,
+		layer_persp_up_ice, layer_persp_Wright, layer_persp_Wdown,
+		layer_persp_Wleft, layer_fragile, layer_hidden
+	]
+	for calque in tous_les_layers:
+		if calque != null:
+			calque.clear()
+			for enfant in calque.get_children():
+				enfant.free()
+
+func charger_editeur_depuis_json(chemin_json: String) -> void:
+	current_file_path = chemin_json
+	var map_data = JSONGestionnaire.charger_map(chemin_json)
+	if not map_data.is_empty():
+		generer_editeur_depuis_data(map_data)
+
+func generer_editeur_depuis_data(map_data: Dictionary) -> void:
+	effacer_tout_lediteur()
+	var glob = map_data.get("global", {})
+	current_level_id = int(glob.get("level_id", 1))
+	current_level_name = str(glob.get("level_name", "Niveau " + str(current_level_id)))
+	grass_mode = int(glob.get("grass_mode", 1))
+	current_skin_name = str(glob.get("Tile_skin", "Normal"))
+	var p_pos = glob.get("player_pos", [0, 0])
+	var player_grid_pos = Vector2i(int(p_pos[0]), int(p_pos[1]))
+	if grass_mode == 3 and map_data.has("grass_modele") and pattern_window != null:
+		var g_mod = map_data["grass_modele"]
+		var t = g_mod.get("taille", [1, 1])
+		pattern_window.pattern_size = Vector2i(int(t[0]), int(t[1]))
+		pattern_window.custom_pattern.clear()
+		for d in g_mod.get("is_dark", []):
+			pattern_window.custom_pattern[Vector2i(int(d[0]), int(d[1]))] = "_dark"
+	var cellules = map_data.get("cellules", {})
+	for item in cellules.get("herbe", []):
+		var pos = Vector2i(int(item[0]), int(item[1]))
+		var is_dark = item[2] if item.size() > 2 else false
+		cell_themes[pos] = "_dark" if is_dark else "_light"
+		layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0, 0))
+	for item in cellules.get("mur", []):
+		var pos = Vector2i(int(item[0]), int(item[1]))
+		layer_wall.set_cell(pos, TileSkinData.WALL_SOURCE_ID, Vector2i(0, 0))
+	for item in cellules.get("ice", []):
+		var pos = Vector2i(int(item[0]), int(item[1]))
+		layer_ice.set_cell(pos, TileSkinData.ICE_SOURCE_ID, Vector2i(0, 0))
+		layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0, 0))
+		cell_themes[pos] = "_light"
+	for item in cellules.get("transparent", []):
+		var pos = Vector2i(int(item[0]), int(item[1]))
+		cell_themes[pos] = "_trans"
+		layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0, 0))
+	for item in cellules.get("bridge", []):
+		var pos = Vector2i(int(item[0]), int(item[1]))
+		var is_vertical = item[2] if item.size() > 2 else false
+		cell_themes[pos] = "_bridge_v" if is_vertical else "_bridge_h"
+		layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0, 0))
+	for item in cellules.get("fragreen", []):
+		var pos = Vector2i(int(item[0]), int(item[1]))
+		_spawn_fragile(pos, "_fragreen")
+	for item in cellules.get("frawood", []):
+		var pos = Vector2i(int(item[0]), int(item[1]))
+		_spawn_fragile(pos, "_frawood")
+	for item in cellules.get("hidden", []):
+		var pos = Vector2i(int(item[0]), int(item[1]))
+		_spawn_hidden(pos, "_hidden")
+	rafraichir_autotiling_global()
+	sprite_player.global_position = layer_floor.map_to_local(player_grid_pos) + Vector2(0, -2)
+
+func rafraichir_autotiling_global() -> void:
+	for pos in layer_wall.get_used_cells():
+		apply_bitmask_to_single_cell(pos, layer_wall, TileSkinData.wall_bitmask_repo, TileSkinData.WALL_SOURCE_ID)
+	for pos in layer_floor.get_used_cells():
+		apply_bitmask_to_single_cell(pos, layer_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
+	for pos in layer_ice.get_used_cells():
+		apply_bitmask_to_single_cell(pos, layer_ice, TileSkinData.grass_bitmask_repo, TileSkinData.ICE_SOURCE_ID)
+
+func _generer_nouvel_id() -> int:
+	var dir = DirAccess.open(DOSSIER_NIVEAUX)
+	if dir == null:
+		return 1
+	var id_max: int = 0
+	dir.list_dir_begin()
+	var fichier_nom = dir.get_next()
+	while fichier_nom != "":
+		if not dir.current_is_dir() and fichier_nom.ends_with(".json"):
+			var chemin_complet = DOSSIER_NIVEAUX + "/" + fichier_nom
+			var map_data = JSONGestionnaire.charger_map(chemin_complet)
+			if not map_data.is_empty() and map_data.has("global"):
+				var id_lu = int(map_data["global"].get("level_id", 0))
+				if id_lu > id_max:
+					id_max = id_lu
+		fichier_nom = dir.get_next()
+	dir.list_dir_end()
+	return id_max + 1
+
+func _attribuer_nouveau_fichier() -> void:
+	var nouvel_id: int = _generer_nouvel_id()
+	var chemin_test: String = DOSSIER_NIVEAUX + "niveau_" + str(nouvel_id) + ".json"
+	while FileAccess.file_exists(chemin_test):
+		nouvel_id += 1
+		chemin_test = DOSSIER_NIVEAUX + "niveau_" + str(nouvel_id) + ".json"
+	current_level_id = nouvel_id
+	current_level_name = "Niveau " + str(current_level_id)
+	current_file_path = chemin_test
