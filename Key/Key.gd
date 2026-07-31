@@ -3,7 +3,6 @@ class_name Keys
 
 @onready var node_map: TileMapLayer = %MAP
 
-@export var index_key: = 0
 @export var node_door: Area2D = self
 @export var move_speed: float = 0.7
 

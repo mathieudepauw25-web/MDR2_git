@@ -5,11 +5,12 @@ signal grass_mode_toggled(new_mode: int)
 signal mode3_toggled()
 
 @onready var lbl_coords: Label = $Coordonnees
-@onready var lbl_grass_mode: Label = $grass_mode/Label
-@onready var lbl_OL: Label = $Btn_Open_Locked/Label
-@onready var lbl_test: Label = $Btn_Test/Label
-@onready var lbl_move: Label = $Btn_Move/Label
-@onready var lbl_tester: Label = $Btn_Tester/Label
+@onready var lbl_grass_mode: Label = $UI_simplifier/grass_mode/Label
+@onready var lbl_OL: Label = $UI_simplifier/Btn_Open_Locked/Label
+@onready var lbl_test: Label = $UI_simplifier/Btn_Test/Label
+@onready var lbl_move: Label = $UI_simplifier/Btn_Move/Label
+@onready var lbl_tester: Label = $UI_simplifier/Btn_Tester/Label
+
 @onready var btn_grass_mode: Button = %grass_mode
 @onready var btn_mode3: Button = %Btn_Mode3
 @onready var btn_OL: Button = %Btn_Open_Locked
@@ -17,14 +18,28 @@ signal mode3_toggled()
 @onready var btn_save: Button = %Btn_Save
 @onready var btn_move: Button = %Btn_Move
 @onready var btn_tester: Button = %Btn_Tester
-@onready var btn_herbe = $PanelContainer/HBoxContainer/Btn_Herbe
-@onready var btn_mur = $PanelContainer/HBoxContainer/Btn_Mur
-@onready var btn_glace = $PanelContainer/HBoxContainer/Btn_Glace
-@onready var btn_transparent = $PanelContainer/HBoxContainer/Btn_Transparent
-@onready var btn_bridge = $PanelContainer/HBoxContainer/Btn_Bridge
-@onready var btn_fragile_green = $PanelContainer/HBoxContainer/Btn_Fragile_Green
-@onready var btn_fragile_wood = $PanelContainer/HBoxContainer/Btn_Fragile_Wood
-@onready var btn_hidden = $PanelContainer/HBoxContainer/Btn_Hidden
+
+@onready var btn_doors: Button = $Interactive/VBoxContainer/Btn_Doors
+@onready var btn_platforms: Button = $Interactive/VBoxContainer/Btn_Platforms
+@onready var btn_portals: Button = $Interactive/VBoxContainer/Btn_Portals
+
+@onready var property: PanelContainer = $Property
+@onready var doors: PanelContainer = $Property/Doors
+@onready var doors_spin_box: SpinBox = $Property/Doors/DoorsSpinBox
+@onready var platforms: PanelContainer = $Property/Platforms
+@onready var portals: PanelContainer = $Property/Portals
+@onready var select_out: Button = $Property/Portals/Select_Out
+
+@onready var selection: Panel = $Selection
+
+@onready var btn_herbe = $Floor/HBoxContainer/Btn_Herbe
+@onready var btn_mur = $Floor/HBoxContainer/Btn_Mur
+@onready var btn_glace = $Floor/HBoxContainer/Btn_Glace
+@onready var btn_transparent = $Floor/HBoxContainer/Btn_Transparent
+@onready var btn_bridge = $Floor/HBoxContainer/Btn_Bridge
+@onready var btn_fragile_green = $Floor/HBoxContainer/Btn_Fragile_Green
+@onready var btn_fragile_wood = $Floor/HBoxContainer/Btn_Fragile_Wood
+@onready var btn_hidden = $Floor/HBoxContainer/Btn_Hidden
 @onready var grid = $"../MAP_global/GridVisualizer"
 
 var grass_mode: int = 1
@@ -40,6 +55,9 @@ func _ready() -> void:
 	btn_fragile_green.button_group = brush_group
 	btn_fragile_wood.button_group = brush_group
 	btn_hidden.button_group = brush_group
+	btn_doors.button_group = brush_group
+	btn_platforms.button_group = brush_group
+	btn_portals.button_group = brush_group
 	btn_herbe.pressed.connect(func(): brush_selected.emit(TileSkinData.Brush.GRASS))
 	btn_mur.pressed.connect(func(): brush_selected.emit(TileSkinData.Brush.WALL))
 	btn_glace.pressed.connect(func(): brush_selected.emit(TileSkinData.Brush.ICE))
@@ -61,8 +79,11 @@ func _ready() -> void:
 
 func UI_visible() -> void:
 	for UI in self.get_children():
-			if UI != btn_test:
-				UI.visible = true
+			UI.visible = true
+			if UI == $UI_simplifier:
+				for btn in UI.get_children():
+					if btn != btn_test:
+						btn.visible = true
 
 func _on_grass_mode_pressed() -> void:
 	grass_mode = 1 if grass_mode == 3 else grass_mode + 1
@@ -93,15 +114,23 @@ func _on_test_pressed() -> void:
 	if lbl_test.text == ">":
 		lbl_test.text = "="
 		for UI in self.get_children():
-			if UI != btn_test:
+			if UI == $UI_simplifier:
+				for btn in UI.get_children():
+					if btn != btn_test:
+						btn.visible = false
+			else:
 				UI.visible = false
 		grid.visible = false
 		get_parent().play_map()
 	else:
 		lbl_test.text = ">"
 		for UI in self.get_children():
-			if UI != %PatternWindow and UI != btn_mode3:
+			if UI != %PatternWindow and UI != btn_mode3 and UI != $Selection:
 				UI.visible = true
+				if UI == $UI_simplifier:
+					for btn in UI.get_children():
+						if btn != btn_test:
+							btn.visible = true
 		if lbl_grass_mode.text == "3":
 			btn_mode3.visible = true
 		grid.visible = true
@@ -121,15 +150,23 @@ func _on_save_pressed() -> void:
 func _on_tester_pressed() -> void:
 	if lbl_tester.text == "T":
 		lbl_tester.text = "B"
-		for UI in get_children():
-			if UI != btn_tester:
+		for UI in self.get_children():
+			if UI == $UI_simplifier:
+				for btn in UI.get_children():
+					if btn != btn_tester:
+						btn.visible = false
+			else:
 				UI.visible = false
 		get_parent().lancer_scene_test()
 	else:
 		lbl_tester.text = "T"
 		for UI in get_children():
-			if UI != %PatternWindow and UI != btn_mode3:
+			if UI != %PatternWindow and UI != btn_mode3 and UI != $Selection:
 				UI.visible = true
+				if UI == $UI_simplifier:
+					for btn in UI.get_children():
+						if btn != btn_tester:
+							btn.visible = true
 		if lbl_grass_mode.text == "3":
 			btn_mode3.visible = true
 		get_parent().quitter_scene_test()

@@ -8683,6 +8683,8 @@
 	"global": {
 		"Tile_skin": "Normal",
 		"grass_mode": 2,
+		"level_id": 0,
+		"level_name": "Niveau 0",
 		"player_pos": [
 			0,
 			0
