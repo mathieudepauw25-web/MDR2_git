@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://cuwqsnrev27o7"]
+
+[ext_resource type="TileSet" uid="uid://bgadnt1ewk04o" path="res://New_Platform/Platform.tres" id="1_kjio0"]
+[ext_resource type="Script" uid="uid://bkhlyypd7v0lb" path="res://New_Platform/New_Platform.gd" id="1_ndomm"]
+[ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="2_3jqga"]
+[ext_resource type="AudioStream" uid="uid://cybujyeuqm7y6" path="res://Audio/SFX/Subtle_Slash_3.wav" id="3_3u6xf"]
+[ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="4_kvrkr"]
+[ext_resource type="AudioStream" uid="uid://cw7odxskbt4e" path="res://Audio/SFX/scoretick_01.mp3" id="5_w72vi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xplle"]
+atlas = ExtResource("2_3jqga")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jsb5o"]
+size = Vector2(10, 10)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3yd11"]
+font = ExtResource("4_kvrkr")
+outline_size = 5
+outline_color = Color(0.976471, 0.658824, 0, 1)
+shadow_size = 9
+shadow_color = Color(0, 0, 0, 0.415686)
+
+[node name="Platform_Way" type="TileMapLayer" unique_id=1909552875]
+
+[node name="V_Indicator" type="TileMapLayer" parent="." unique_id=939327121]
+tile_set = ExtResource("1_kjio0")
+
+[node name="H_Indicator" type="TileMapLayer" parent="." unique_id=935769425]
+tile_set = ExtResource("1_kjio0")
+
+[node name="D_Point" type="TileMapLayer" parent="." unique_id=251864943]
+tile_set = ExtResource("1_kjio0")
+
+[node name="New_Plateform" type="Area2D" parent="." unique_id=1027172106]
+collision_layer = 8
+collision_mask = 7
+script = ExtResource("1_ndomm")
+speed = 0.39
+
+[node name="Sprite2D" type="Sprite2D" parent="New_Plateform" unique_id=542577729]
+texture = SubResource("AtlasTexture_xplle")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="New_Plateform" unique_id=1531774804]
+shape = SubResource("RectangleShape2D_jsb5o")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="New_Plateform" unique_id=1513222148]
+stream = ExtResource("3_3u6xf")
+volume_db = -4.0
+pitch_scale = 2.0
+max_distance = 100.0
+bus = &"SFX"
+
+[node name="delay_platformflex" type="Timer" parent="New_Plateform" unique_id=274716138]
+wait_time = 1.2
+one_shot = true
+
+[node name="Label_platformFlex" type="Label" parent="New_Plateform" unique_id=1240015166]
+unique_name_in_owner = true
+visible = false
+z_index = 2
+offset_left = -50.0
+offset_right = 50.0
+offset_bottom = 14.0
+pivot_offset = Vector2(50, 8)
+text = "Speed Up"
+label_settings = SubResource("LabelSettings_3yd11")
+horizontal_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="New_Plateform" unique_id=2043280983]
+stream = ExtResource("5_w72vi")
+pitch_scale = 0.75
+
+[connection signal="area_entered" from="New_Plateform" to="New_Plateform" method="_on_area_entered"]
+[connection signal="area_exited" from="New_Plateform" to="New_Plateform" method="_on_area_exited"]
+[connection signal="timeout" from="New_Plateform/delay_platformflex" to="New_Plateform" method="_on_delay_platformflex_timeout"]
