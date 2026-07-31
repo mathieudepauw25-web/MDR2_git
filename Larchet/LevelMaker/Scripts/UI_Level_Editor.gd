@@ -19,6 +19,8 @@ signal mode3_toggled()
 @onready var btn_move: Button = %Btn_Move
 @onready var btn_tester: Button = %Btn_Tester
 
+@onready var ui_simplifier: Control = $UI_simplifier
+
 @onready var btn_doors: Button = $Interactive/VBoxContainer/Btn_Doors
 @onready var btn_platforms: Button = $Interactive/VBoxContainer/Btn_Platforms
 @onready var btn_portals: Button = $Interactive/VBoxContainer/Btn_Portals
@@ -58,16 +60,16 @@ func _ready() -> void:
 	btn_doors.button_group = brush_group
 	btn_platforms.button_group = brush_group
 	btn_portals.button_group = brush_group
-	btn_herbe.pressed.connect(func(): brush_selected.emit(TileSkinData.Brush.GRASS))
-	btn_mur.pressed.connect(func(): brush_selected.emit(TileSkinData.Brush.WALL))
-	btn_glace.pressed.connect(func(): brush_selected.emit(TileSkinData.Brush.ICE))
-	btn_transparent.pressed.connect(func(): brush_selected.emit(TileSkinData.Brush.TRANS))
-	btn_bridge.pressed.connect(func(): brush_selected.emit(TileSkinData.Brush.BRIDGE))
-	btn_fragile_green.pressed.connect(func(): brush_selected.emit(TileSkinData.Brush.FRAGREEN))
-	btn_fragile_wood.pressed.connect(func(): brush_selected.emit(TileSkinData.Brush.FRAWOOD))
-	btn_hidden.pressed.connect(func(): brush_selected.emit(TileSkinData.Brush.HIDDEN))
+	btn_herbe.pressed.connect(_selectionner_brush.bind(TileSkinData.Brush.GRASS))
+	btn_mur.pressed.connect(_selectionner_brush.bind(TileSkinData.Brush.WALL))
+	btn_glace.pressed.connect(_selectionner_brush.bind(TileSkinData.Brush.ICE))
+	btn_transparent.pressed.connect(_selectionner_brush.bind(TileSkinData.Brush.TRANS))
+	btn_bridge.pressed.connect(_selectionner_brush.bind(TileSkinData.Brush.BRIDGE))
+	btn_fragile_green.pressed.connect(_selectionner_brush.bind(TileSkinData.Brush.FRAGREEN))
+	btn_fragile_wood.pressed.connect(_selectionner_brush.bind(TileSkinData.Brush.FRAWOOD))
+	btn_hidden.pressed.connect(_selectionner_brush.bind(TileSkinData.Brush.HIDDEN))
 	btn_grass_mode.pressed.connect(_on_grass_mode_pressed)
-	btn_herbe.button_pressed = true
+	btn_herbe.set_pressed_no_signal(true)
 	if not btn_mode3.pressed.is_connected(_on_mode3_pressed):
 		btn_mode3.pressed.connect(_on_mode3_pressed)
 	btn_mode3.visible = false
@@ -76,14 +78,33 @@ func _ready() -> void:
 	btn_save.pressed.connect(_on_save_pressed)
 	btn_move.pressed.connect(_on_move_pressed)
 	btn_tester.pressed.connect(_on_tester_pressed)
+	btn_doors.pressed.connect(_on_doors_pressed)
+	btn_platforms.pressed.connect(_on_platforms_pressed)
+	btn_portals.pressed.connect(_on_portals_pressed)
 
-func UI_visible() -> void:
+func _selectionner_brush(brush_type: TileSkinData.Brush) -> void:
+	property.hide()
+	brush_selected.emit(brush_type)
+
+func UI_invisible(bout: Button) -> void:
 	for UI in self.get_children():
+		if UI == ui_simplifier:
+			for btn in UI.get_children():
+				if btn != bout:
+					btn.visible = false
+		else:
+			UI.visible = false
+
+func UI_visible(bout: Button) -> void:
+	for UI in self.get_children():
+		if UI != %PatternWindow and UI != selection and UI != property:
 			UI.visible = true
-			if UI == $UI_simplifier:
+			if UI == ui_simplifier:
 				for btn in UI.get_children():
-					if btn != btn_test:
+					if btn != bout and btn != btn_mode3:
 						btn.visible = true
+	if lbl_grass_mode.text == "3":
+		btn_mode3.visible = true
 
 func _on_grass_mode_pressed() -> void:
 	grass_mode = 1 if grass_mode == 3 else grass_mode + 1
@@ -112,29 +133,31 @@ func update_coords(x: int, y: int) -> void:
 
 func _on_test_pressed() -> void:
 	if lbl_test.text == ">":
+		if not get_parent()._is_player_stable():
+			print("Veuillez positionner le player sur une case stable")
+			return
 		lbl_test.text = "="
-		for UI in self.get_children():
-			if UI == $UI_simplifier:
-				for btn in UI.get_children():
-					if btn != btn_test:
-						btn.visible = false
-			else:
-				UI.visible = false
+		UI_invisible(btn_test)
 		grid.visible = false
 		get_parent().play_map()
 	else:
 		lbl_test.text = ">"
-		for UI in self.get_children():
-			if UI != %PatternWindow and UI != btn_mode3 and UI != $Selection:
-				UI.visible = true
-				if UI == $UI_simplifier:
-					for btn in UI.get_children():
-						if btn != btn_test:
-							btn.visible = true
-		if lbl_grass_mode.text == "3":
-			btn_mode3.visible = true
+		UI_visible(btn_test)
 		grid.visible = true
 		get_parent().back_to_editor()
+
+func _on_tester_pressed() -> void:
+	if lbl_tester.text == "T":
+		if not get_parent()._is_player_stable():
+			print("Veuillez positionner le player sur une case stable")
+			return
+		lbl_tester.text = "B"
+		UI_invisible(btn_tester)
+		get_parent().lancer_scene_test()
+	else:
+		lbl_tester.text = "T"
+		UI_visible(btn_tester)
+		get_parent().quitter_scene_test()
 
 func _on_move_pressed() -> void:
 	if lbl_move.text == "=":
@@ -147,26 +170,23 @@ func _on_move_pressed() -> void:
 func _on_save_pressed() -> void:
 	get_parent().sauvegarder_niveau()
 
-func _on_tester_pressed() -> void:
-	if lbl_tester.text == "T":
-		lbl_tester.text = "B"
-		for UI in self.get_children():
-			if UI == $UI_simplifier:
-				for btn in UI.get_children():
-					if btn != btn_tester:
-						btn.visible = false
-			else:
-				UI.visible = false
-		get_parent().lancer_scene_test()
-	else:
-		lbl_tester.text = "T"
-		for UI in get_children():
-			if UI != %PatternWindow and UI != btn_mode3 and UI != $Selection:
-				UI.visible = true
-				if UI == $UI_simplifier:
-					for btn in UI.get_children():
-						if btn != btn_tester:
-							btn.visible = true
-		if lbl_grass_mode.text == "3":
-			btn_mode3.visible = true
-		get_parent().quitter_scene_test()
+func _on_doors_pressed() -> void:
+	property.visible = true
+	for UI in property.get_children():
+		if UI != doors:
+			UI.visible = false
+	doors.visible = true
+
+func _on_platforms_pressed() -> void:
+	property.visible = true
+	for UI in property.get_children():
+		if UI != platforms:
+			UI.visible = false
+	platforms.visible = true
+
+func _on_portals_pressed() -> void:
+	property.visible = true
+	for UI in property.get_children():
+		if UI != portals:
+			UI.visible = false
+	portals.visible = true

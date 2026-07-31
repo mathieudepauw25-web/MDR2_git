@@ -82,7 +82,8 @@ func _ready() -> void:
 	pattern_window.main_node = self
 	pattern_window.hide()
 	if ui_layer.has_signal("brush_selected"):
-		ui_layer.brush_selected.connect(func(brush): current_brush = brush)
+		ui_layer.brush_selected.connect(func(brush):
+			current_brush = brush)
 	if ui_layer.has_signal("grass_mode_toggled"):
 		ui_layer.grass_mode_toggled.connect(func(mode):
 			grass_mode = mode
@@ -773,11 +774,13 @@ func _remove_hidden(grid_pos: Vector2i) -> void:
 		if layer_hidden != null:
 			layer_hidden.set_cell(grid_pos, -1)
 
+func _is_player_stable(case = layer_floor.local_to_map(sprite_player.global_position)) -> bool:
+	if layer_floor.get_cell_source_id(case) != -1 and not spawned_fragiles.has(case):
+		return true
+	return false
+
 func sauvegarder_niveau() -> void:
 	var player_grid_pos = layer_floor.local_to_map(sprite_player.global_position)
-	if not (layer_floor.get_cell_source_id(player_grid_pos) != -1 and not spawned_fragiles.has(player_grid_pos)):
-		print("Veuillez positionner le player sur une case stable")
-		return
 	if current_level_id == -1 or current_file_path == "":
 		_attribuer_nouveau_fichier()
 	var json_data = {
