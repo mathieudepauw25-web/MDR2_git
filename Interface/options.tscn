@@ -132,6 +132,7 @@ scale = Vector2(0.45, 0.45)
 focus_neighbor_left = NodePath("../Back")
 focus_neighbor_top = NodePath("../Back")
 focus_neighbor_bottom = NodePath("../HSlider_sound")
+mouse_force_pass_scroll_events = false
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_4f806")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_xwqlf")
 min_value = -21.0
@@ -170,6 +171,7 @@ scale = Vector2(0.4, 0.4)
 focus_neighbor_top = NodePath("../HSlider_music")
 focus_neighbor_right = NodePath("../Controle")
 focus_neighbor_bottom = NodePath("../CheckButton")
+mouse_force_pass_scroll_events = false
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_pmhmu")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_n8528")
 min_value = -21.0
@@ -210,7 +212,6 @@ focus_neighbor_right = NodePath("../Controle")
 theme_override_fonts/font = ExtResource("2_b5l1t")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/focus = SubResource("StyleBoxFlat_hr1ff")
-button_mask = 0
 alignment = 1
 
 [node name="Fullscreen" type="Label" parent="CheckButton" unique_id=1996404029]

@@ -51,6 +51,9 @@ func _ready() -> void:
 		
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("CancelAnimation") and AnimationStoped == false:
+		Stop_Animation()
+
+func Stop_Animation():
 		print("stooop")
 		AnimationStoped = true
 		tween.kill()
