@@ -15,18 +15,23 @@ extends Node2D
 @onready var layer_persp_Wdown: TileMapLayer = %TileMapLayer_perspective_water_down
 @onready var layer_persp_Wleft: TileMapLayer = %TileMapLayer_perspective_water_left
 @onready var layer_fragile: TileMapLayer = %tileMapLayer_fragile
-@onready var layer_hidden: TileMapLayer = %tileMapLayer_hidden # NOUVEAU LAYER
+@onready var layer_hidden: TileMapLayer = %tileMapLayer_hidden
+@onready var node_platforms: Node2D = %Platforms
 
 @onready var camera: Camera2D = $Camera2D
 @onready var ui_layer = $UI_Layer
 @onready var pattern_window: Window = %PatternWindow
 @onready var sprite_player = $Sprite_player
+@onready var selection: Panel = %Selection
 
 const PLAYER_SCENE = preload("res://Player/Player.tscn")
 const FRAGILE_SCENE = preload("res://Fragile/Fragile.tscn")
 const HIDDEN_SCENE = preload("res://Hidden/Hidden.tscn")
 const SCENE_TEST = preload("res://Larchet/LevelMaker/Scenes/Level_Editor_Tester.tscn")
+const PLATFORM_SCENE = preload("res://New_Platform/New_Platform.tscn")
 const DOSSIER_NIVEAUX: String = "res://Larchet/LevelMaker/Level_temp/"
+var spawned_platforms: Dictionary = {}
+var active_configured_platform: Node2D = null
 var current_level_id: int = -1
 var current_level_name: String = ""
 var current_file_path: String = ""
@@ -59,6 +64,12 @@ var current_skin_name: String = "Normal"
 var is_dragging_player: bool = false
 var is_moving: bool = false
 var player_drag_start_pos: Vector2 = Vector2.ZERO
+
+enum EditMode { FLOOR, INTERACTIVE }
+enum InteractiveType { NONE, DOOR, PLATFORM, PORTAL }
+
+var current_edit_mode: EditMode = EditMode.FLOOR
+var current_interactive_type: InteractiveType = InteractiveType.NONE
 
 func get_source_id(layer: TileMapLayer, cell_pos: Vector2i) -> int:
 	if layer == null: return -1
@@ -105,6 +116,16 @@ func _ready() -> void:
 	var player_area = sprite_player.get_node_or_null("Area2D")
 	if player_area:
 		player_area.input_event.connect(_on_player_area_input_event)
+	if ui_layer.has_signal("edit_mode_changed"):
+		ui_layer.edit_mode_changed.connect(func(mode): 
+			current_edit_mode = mode
+			if mode == EditMode.FLOOR:
+				_stop_configuring_interactive()
+		)
+	if ui_layer.has_signal("interactive_type_changed"):
+		ui_layer.interactive_type_changed.connect(func(type): 
+			current_interactive_type = type
+			_stop_configuring_interactive())
 
 func _process(_delta: float) -> void:
 	var center_pixel_pos = camera.global_position
@@ -142,6 +163,25 @@ func set_active_map(is_pattern: bool) -> void:
 		active_persp_Wdown = layer_persp_Wdown
 		active_persp_Wleft = layer_persp_Wleft
 
+func _is_cell_completely_empty(grid_pos: Vector2i, ignore_platforms: bool = false) -> bool:
+	if layer_floor.get_cell_source_id(grid_pos) != -1: return false
+	if layer_wall.get_cell_source_id(grid_pos) != -1: return false
+	if layer_ice.get_cell_source_id(grid_pos) != -1: return false
+	if spawned_fragiles.has(grid_pos): return false
+	if spawned_hiddens.has(grid_pos): return false
+	if not ignore_platforms and spawned_platforms.has(grid_pos): return false
+	return true
+
+func _get_platform_at(grid_pos: Vector2i) -> Node2D:
+	if spawned_platforms.has(grid_pos):
+		return spawned_platforms[grid_pos]
+	for plat in spawned_platforms.values():
+		if is_instance_valid(plat):
+			var plat_area = plat.get_node_or_null("New_Platform")
+			if plat_area != null and grid_pos in plat_area.way:
+				return plat
+	return null
+
 func refresh_all_grass() -> void:
 	var was_pattern = false
 	if pattern_window.m3_floor != null:
@@ -159,12 +199,26 @@ func _unhandled_input(event: InputEvent) -> void:
 		var is_left_clicking = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
 		var is_right_clicking = Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
 		var is_just_clicked = false
-		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			is_just_clicked = true
+		var is_right_just_clicked = false
+		if event is InputEventMouseButton:
+			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+				is_just_clicked = true
+			elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+				is_right_just_clicked = true
 		if is_left_clicking and not camera.is_panning:
-			paint_smart_tile(is_just_clicked)
+			var mouse_pos = get_global_mouse_position()
+			var grid_pos = layer_floor.local_to_map(mouse_pos)
+			if current_edit_mode == EditMode.FLOOR:
+				paint_smart_tile(is_just_clicked)
+			elif current_edit_mode == EditMode.INTERACTIVE:
+				_handle_interactive_click(grid_pos, is_just_clicked)
 		elif is_right_clicking and not camera.is_panning:
-			erase_all_layers()
+			var mouse_pos = get_global_mouse_position()
+			var grid_pos = layer_floor.local_to_map(mouse_pos)
+			if current_edit_mode == EditMode.FLOOR:
+				erase_all_layers()
+			elif current_edit_mode == EditMode.INTERACTIVE and is_right_just_clicked:
+				_handle_interactive_erase(grid_pos)
 	if event is InputEventKey:
 		if event.keycode == KEY_SPACE and not event.echo:
 			refresh_all_grass()
@@ -175,6 +229,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func paint_smart_tile(is_just_clicked: bool = false) -> void:
 	var mouse_pos = get_global_mouse_position()
 	var grid_pos = layer_floor.local_to_map(mouse_pos)
+	if _get_platform_at(grid_pos) != null:
+		return
 	var has_grass = layer_floor.get_cell_source_id(grid_pos) == TileSkinData.GRASS_SOURCE_ID
 	var has_wall = layer_wall.get_cell_source_id(grid_pos) == TileSkinData.WALL_SOURCE_ID
 	var has_ice = layer_ice.get_cell_source_id(grid_pos) == TileSkinData.ICE_SOURCE_ID
@@ -332,6 +388,8 @@ func _apply_brush_to_layer(grid_pos: Vector2i, target_layer: TileMapLayer, sourc
 
 func erase_all_layers(specific_pos = null) -> void:
 	var grid_pos = specific_pos if specific_pos != null else layer_wall.local_to_map(get_global_mouse_position())
+	if _get_platform_at(grid_pos) != null:
+		return
 	var has_wall = layer_wall.get_cell_source_id(grid_pos) == TileSkinData.WALL_SOURCE_ID
 	var has_ice = layer_ice.get_cell_source_id(grid_pos) == TileSkinData.ICE_SOURCE_ID
 	var has_grass = layer_floor.get_cell_source_id(grid_pos) == TileSkinData.GRASS_SOURCE_ID
@@ -659,9 +717,21 @@ func back_to_editor():
 	player.queue_free()
 	camera.make_current()
 	sprite_player.visible = true
-	for hidden_block in spawned_hiddens.values():
-		if is_instance_valid(hidden_block):
-			hidden_block.sprite.scale = Vector2.ONE
+	for grid_pos in spawned_fragiles.keys():
+		var fragile = spawned_fragiles[grid_pos]
+		if is_instance_valid(fragile) and fragile.has_method("reset_to_editor"):
+			fragile.reset_to_editor()
+		layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(14, 0))
+	for grid_pos in spawned_hiddens.keys():
+		var hidden_block = spawned_hiddens[grid_pos]
+		if is_instance_valid(hidden_block) and hidden_block.has_method("reset_to_editor"):
+			hidden_block.reset_to_editor()
+		layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(14, 0))
+	for plat_way_inst in spawned_platforms.values():
+		if is_instance_valid(plat_way_inst):
+			var plat_area = plat_way_inst.get_node_or_null("New_Platform") 
+			if plat_area != null and plat_area.has_method("reset_to_editor"):
+				plat_area.reset_to_editor()
 
 func _on_player_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and is_moving:
@@ -743,6 +813,7 @@ func _spawn_fragile(grid_pos: Vector2i, target_theme: String) -> void:
 		fragile.position = layer_fragile.map_to_local(grid_pos)
 		layer_fragile.add_child(fragile)
 		spawned_fragiles[grid_pos] = fragile
+		apply_skin_to_fragile(fragile)
 
 func _remove_fragile(grid_pos: Vector2i) -> void:
 	if spawned_fragiles.has(grid_pos):
@@ -765,6 +836,7 @@ func _spawn_hidden(grid_pos: Vector2i, target_theme: String) -> void:
 		layer_hidden.add_child(hidden_inst)
 		hidden_inst.sprite.scale = Vector2.ONE
 		spawned_hiddens[grid_pos] = hidden_inst
+		apply_skin_to_hidden(hidden_inst)
 
 func _remove_hidden(grid_pos: Vector2i) -> void:
 	if spawned_hiddens.has(grid_pos):
@@ -791,7 +863,8 @@ func sauvegarder_niveau() -> void:
 			"player_pos": [player_grid_pos.x, player_grid_pos.y],
 			"Tile_skin": current_skin_name
 		},
-		"cellules": {}
+		"cellules": {},
+		"Interactives": {}
 	}
 	if grass_mode == 3 and pattern_window != null:
 		var dark_cells = []
@@ -820,9 +893,14 @@ func sauvegarder_niveau() -> void:
 				"_trans": trans_list.append([pos.x, pos.y])
 				"_bridge_v": bridge_list.append([pos.x, pos.y, true])
 				"_bridge_h": bridge_list.append([pos.x, pos.y])
-				"_fragreen": fragreen_list.append([pos.x, pos.y])
-				"_frawood": frawood_list.append([pos.x, pos.y])
-				"_hidden": hidden_list.append([pos.x, pos.y])
+	for pos in spawned_fragiles.keys():
+		var theme = cell_themes.get(pos, "_fragreen")
+		if theme == "_frawood":
+			frawood_list.append([pos.x, pos.y])
+		else:
+			fragreen_list.append([pos.x, pos.y])
+	for pos in spawned_hiddens.keys():
+		hidden_list.append([pos.x, pos.y])
 	var used_wall = layer_wall.get_used_cells()
 	for pos in used_wall:
 		if layer_wall.get_cell_source_id(pos) == TileSkinData.WALL_SOURCE_ID:
@@ -840,6 +918,19 @@ func sauvegarder_niveau() -> void:
 	if fragreen_list.size() > 0: cellules["fragreen"] = fragreen_list
 	if frawood_list.size() > 0: cellules["frawood"] = frawood_list
 	if hidden_list.size() > 0: cellules["hidden"] = hidden_list
+	var platforms_list = []
+	for plat in spawned_platforms.values():
+		if is_instance_valid(plat):
+			var p_area = plat.get_node("New_Platform")
+			var path_coords = []
+			for cell in p_area.way:
+				path_coords.append([cell.x, cell.y])
+			if p_area.is_looping and p_area.way.size() > 0:
+				var first = p_area.way[0]
+				path_coords.append([first.x, first.y])
+			platforms_list.append(path_coords)
+	if platforms_list.size() > 0:
+		json_data["Interactives"]["Platforms"] = platforms_list
 	JSONGestionnaire.sauvegarder_map(current_file_path, json_data)
 
 # ==============================================================================
@@ -871,9 +962,14 @@ func quitter_scene_test() -> void:
 		camera.make_current()
 
 func effacer_tout_lediteur() -> void:
+	_stop_configuring_interactive()
 	cell_themes.clear()
 	spawned_fragiles.clear()
 	spawned_hiddens.clear()
+	spawned_platforms.clear()
+	if node_platforms != null:
+		for enfant in node_platforms.get_children():
+			enfant.free()
 	var tous_les_layers: Array[TileMapLayer] = [
 		layer_floor, layer_wall, layer_ice,
 		layer_persp_right, layer_persp_right_wall, layer_persp_Eright_wall,
@@ -899,6 +995,8 @@ func generer_editeur_depuis_data(map_data: Dictionary) -> void:
 	current_level_id = int(glob.get("level_id", 1))
 	current_level_name = str(glob.get("level_name", "Niveau " + str(current_level_id)))
 	grass_mode = int(glob.get("grass_mode", 1))
+	if ui_layer != null and ui_layer.has_method("sync_grass_mode"):
+		ui_layer.sync_grass_mode(grass_mode)
 	current_skin_name = str(glob.get("Tile_skin", "Normal"))
 	var p_pos = glob.get("player_pos", [0, 0])
 	var player_grid_pos = Vector2i(int(p_pos[0]), int(p_pos[1]))
@@ -941,6 +1039,20 @@ func generer_editeur_depuis_data(map_data: Dictionary) -> void:
 	for item in cellules.get("hidden", []):
 		var pos = Vector2i(int(item[0]), int(item[1]))
 		_spawn_hidden(pos, "_hidden")
+	var interactives = map_data.get("Interactives", {})
+	for plat_path in interactives.get("Platforms", []):
+		if plat_path.size() > 0:
+			var start_pos = Vector2i(int(plat_path[0][0]), int(plat_path[0][1]))
+			var plat_way_inst = PLATFORM_SCENE.instantiate()
+			plat_way_inst.position = Vector2.ZERO 
+			var platform_area = plat_way_inst.get_node("New_Platform")
+			platform_area.position = layer_floor.map_to_local(start_pos)
+			node_platforms.add_child(plat_way_inst) 
+			spawned_platforms[start_pos] = plat_way_inst
+			var restored_way: Array[Vector2i] = []
+			for coord in plat_path:
+				restored_way.append(Vector2i(int(coord[0]), int(coord[1])))
+			platform_area.set_way(restored_way)
 	rafraichir_autotiling_global()
 	sprite_player.global_position = layer_floor.map_to_local(player_grid_pos) + Vector2(0, -2)
 
@@ -995,3 +1107,98 @@ func _attribuer_nouveau_fichier() -> void:
 	current_level_id = nouvel_id
 	current_level_name = "Niveau " + str(current_level_id)
 	current_file_path = chemin_test
+
+# ==============================================================================
+# --- GESTION DES INTERACTIFS (PORTES, PLATEFORMES, PORTAILS) ---
+# ==============================================================================
+
+func _handle_interactive_click(grid_pos: Vector2i, is_just_clicked: bool) -> void:
+	match current_interactive_type:
+		InteractiveType.PLATFORM:
+			if active_configured_platform != null:
+				var has_handled_drag = _try_add_to_platform_path(grid_pos)
+				if not has_handled_drag and is_just_clicked:
+					_stop_configuring_interactive()
+					_handle_interactive_click(grid_pos, is_just_clicked)
+			else:
+				if is_just_clicked:
+					var clicked_plat = _get_platform_at(grid_pos)
+					if clicked_plat != null:
+						_start_configuring_platform(clicked_plat, grid_pos)
+					elif _is_cell_completely_empty(grid_pos):
+						_spawn_new_platform(grid_pos)
+		InteractiveType.DOOR:
+			pass
+		InteractiveType.PORTAL:
+			pass
+
+func _spawn_new_platform(grid_pos: Vector2i) -> void:
+	var plat_way_inst = PLATFORM_SCENE.instantiate()
+	plat_way_inst.position = Vector2.ZERO 
+	var platform_area = plat_way_inst.get_node("New_Platform")
+	platform_area.position = layer_floor.map_to_local(grid_pos)
+	node_platforms.add_child(plat_way_inst) 
+	spawned_platforms[grid_pos] = plat_way_inst
+	var initial_way: Array[Vector2i] = [grid_pos]
+	platform_area.set_way(initial_way)
+	_start_configuring_platform(plat_way_inst, grid_pos)
+
+func _start_configuring_platform(plat_way_inst: Node2D, clicked_pos: Vector2i) -> void:
+	active_configured_platform = plat_way_inst
+	var platform_area = plat_way_inst.get_node("New_Platform")
+	var start_cell = platform_area.way.front() if not platform_area.way.is_empty() else clicked_pos
+	selection.global_position = layer_floor.map_to_local(start_cell) - Vector2(8, 8) 
+	selection.visible = true
+
+func _try_add_to_platform_path(grid_pos: Vector2i) -> bool:
+	var platform_area = active_configured_platform.get_node("New_Platform")
+	if platform_area.is_looping: 
+		return true
+	var current_way = platform_area.way.duplicate()
+	if current_way.is_empty(): return true
+	var last_cell = current_way.back()
+	if grid_pos == last_cell: return true
+	var diff = abs(grid_pos - last_cell)
+	var is_adjacent = (diff.x == 1 and diff.y == 0) or (diff.x == 0 and diff.y == 1)
+	if is_adjacent:
+		if grid_pos == current_way.front():
+			if current_way.size() >= 3:
+				current_way.append(grid_pos)
+				platform_area.set_way(current_way)
+			return true
+		if _get_platform_at(grid_pos) == null and _is_cell_completely_empty(grid_pos, true):
+			current_way.append(grid_pos)
+			platform_area.set_way(current_way)
+		return true
+	else:
+		return false
+
+func _handle_interactive_erase(grid_pos: Vector2i) -> void:
+	match current_interactive_type:
+		InteractiveType.PLATFORM:
+			var plat = _get_platform_at(grid_pos)
+			if plat != null:
+				var platform_area = plat.get_node("New_Platform")
+				var current_way = platform_area.way.duplicate()
+				var index = current_way.find(grid_pos)
+				if index != -1:
+					if index == 0:
+						if active_configured_platform == plat:
+							_stop_configuring_interactive()
+						spawned_platforms.erase(grid_pos)
+						plat.queue_free()
+					else:
+						current_way.resize(index)
+						platform_area.is_looping = false 
+						platform_area.set_way(current_way)
+						if active_configured_platform != plat:
+							_start_configuring_platform(plat, current_way[0])
+		InteractiveType.DOOR:
+			pass
+		InteractiveType.PORTAL:
+			pass
+
+func _stop_configuring_interactive() -> void:
+	active_configured_platform = null
+	if selection != null:
+		selection.visible = false

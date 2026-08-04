@@ -9,17 +9,17 @@ class_name Fragile
 @export var delay_repop: = 4.0
 var link_player: Area2D = null
 var is_falling: = false
+var base_offset: Vector2 = Vector2.ZERO
 
 @warning_ignore("unused_signal")
 signal erase_floor_tile(v_global_position)
 
-func _ready() -> void:
-	call_deferred("_request_skin")
-
-func _request_skin() -> void:
-	var editor = get_tree().current_scene 
-	if editor and editor.has_method("apply_skin_to_fragile"):
-		editor.apply_skin_to_fragile(self)
+func reset_to_editor() -> void:
+	is_falling = false
+	node_timer_repop.stop()
+	node_animation_player.seek(0, true)
+	node_animation_player.stop()
+	sprite.position = base_offset
 
 func set_skin(base_texture: Texture2D, atlas_coords: Vector2i, true_square: bool) -> void:
 	var atlas = AtlasTexture.new()
@@ -27,10 +27,12 @@ func set_skin(base_texture: Texture2D, atlas_coords: Vector2i, true_square: bool
 	var start_x = atlas_coords.x * 16
 	if true_square:
 		atlas.region = Rect2(start_x, atlas_coords.y * 16, 16, 16)
-		sprite.position = Vector2(0,0)
+		base_offset = Vector2.ZERO
 	else:
-		atlas.region = Rect2(start_x, atlas_coords.y * 16 -1, 17, 17)
+		atlas.region = Rect2(start_x, atlas_coords.y * 16 - 1, 17, 17)
+		base_offset = Vector2(0.5, -0.5)
 	sprite.texture = atlas
+	sprite.position = base_offset
 
 func collapsing() -> void :
 	node_animation_player.play("Collapse")
@@ -58,6 +60,8 @@ func _on_area_exited(area: Area2D) -> void :
 func _on_animation_player_animation_finished(anim_name: StringName) -> void :
 	if anim_name == "Collapse":
 		fall()
+	elif anim_name == "Fall":
+		sprite.position = base_offset
 
 func _on_timer_repop_timeout() -> void :
 	EVENTS.emit_signal("create_floor_tile", global_position)

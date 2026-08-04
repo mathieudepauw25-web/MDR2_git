@@ -40,12 +40,11 @@ var teleport_immunity_frames: int = 0
 var node_map: TileMapLayer
 
 enum TileType{
-	FLOOR, 
-	WALL, 
-	ICE, 
-	PLATFORMWAY, 
-	FRAGILE, 
-	HIDDEN, 
+	FLOOR,
+	WALL,
+	ICE,
+	FRAGILE,
+	HIDDEN,
 }
 
 
@@ -278,11 +277,14 @@ func make_water_dash(v_global_destination) -> void :
 	EVENTS.emit_signal("waterDash", v_global_destination, direction)
 
 func tile_is_type(tile_type: int, tile_check: Vector2) -> bool:
-	var Stile_is_type = false
-	if node_map.get_child(tile_type).get_cell_source_id(tile_check) != -1:
-		Stile_is_type = true
-
-	return Stile_is_type
+	var target_layer: TileMapLayer = null
+	match tile_type:
+		TileType.FLOOR: target_layer = node_map.get_node_or_null("tileMapLayer_floor")
+		TileType.WALL: target_layer = node_map.get_node_or_null("tileMapLayer_wall")
+		TileType.ICE: target_layer = node_map.get_node_or_null("tileMapLayer_ice")
+	if target_layer != null and target_layer.get_cell_source_id(tile_check) != -1:
+		return true
+	return false
 
 func pok_a_wall(_destination: Vector2, speed_pok: float = 0.05, dashing: bool = false) -> void :
 	is_poking = true
@@ -301,8 +303,6 @@ func pok_a_wall(_destination: Vector2, speed_pok: float = 0.05, dashing: bool = 
 	if tween and tween.is_valid():
 		node_state_machine.set_state("Pok")
 
-
-
 func fall_into_pit(_destination: Vector2) -> void :
 	var current_tile = node_map.local_to_map(global_position)
 	var tile_is_hidden: = is_hidden_at(current_tile)
@@ -316,6 +316,14 @@ func fall_into_pit(_destination: Vector2) -> void :
 	if _destination != global_position:
 		tween.tween_property(self, "global_position", _destination, speed).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
 	tween.tween_property(self, "scale", Vector2.ZERO, 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	var safe_tile = node_map.local_to_map(previous_safe_place)
+	if is_hidden_at(safe_tile):
+		var hidden_layer = node_map.get_node_or_null("tileMapLayer_hidden")
+		if hidden_layer != null:
+			for child in hidden_layer.get_children():
+				if child is Hidden and node_map.local_to_map(child.global_position) == safe_tile:
+					child.pop()
+					break
 	tween.tween_property(self, "global_position", previous_safe_place, 0.1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(self, "scale", Vector2(1, 1), 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 
@@ -326,20 +334,25 @@ func fall_into_pit(_destination: Vector2) -> void :
 
 
 func snap_grid() -> void :
+	if not is_inside_tree() or is_queued_for_deletion(): return
+	if link_platform == null:
+		for area in get_overlapping_areas():
+			if area is New_Platform:
+				link_platform = area
+				break
 	if link_platform != null: return
 	if node_state_machine.current_state.name != "Idle": return
 	var player_tile = node_map.local_to_map(global_position)
-	var is_pit: = !tile_is_type(TileType.FLOOR, player_tile)
+	var is_hidden: = is_hidden_at(player_tile)
+	var is_pit: = !tile_is_type(TileType.FLOOR, player_tile) and not is_hidden
 	var is_fragile: = is_fragile_at(player_tile)
 	var is_ice: = tile_is_type(TileType.ICE, player_tile)
 	global_position = node_map.map_to_local(player_tile)
-	on_tile_ice = false
-	if is_ice:
-		on_tile_ice = true
+	on_tile_ice = is_ice
 	if is_pit:
 		fall_into_pit(global_position)
 		return
-	if is_fragile == false and on_tile_ice == false and not is_portal_at(player_tile):
+	if not is_fragile and not on_tile_ice and not is_portal_at(player_tile):
 		previous_safe_place = global_position
 
 func clean_buffer() -> void :
@@ -365,6 +378,8 @@ func launch_starting_signal() -> void :
 
 func _on_tween_finished() -> void :
 	is_poking = false
+	await get_tree().physics_frame
+	if not is_inside_tree(): return
 	node_state_machine.set_state("Idle")
 
 func _on_sliding_end() -> void :
@@ -380,14 +395,18 @@ func _on_state_machine_state_changed(_new_state: Variant) -> void :
 	snap_grid()
 
 func _on_area_entered(area: Area2D) -> void :
-	if area is Platform:
+	if area is New_Platform:
 		link_platform = area
 
 func _on_area_exited(area: Area2D) -> void :
-	if area is Platform:
+	if area is New_Platform:
 		link_platform = null
-		if node_state_machine.get_state_name() == "Idle":
-			snap_grid()
+		if link_platform == area:
+			link_platform = null
+			if not is_inside_tree() or is_queued_for_deletion():
+				return
+			if node_state_machine.get_state_name() == "Idle":
+				snap_grid()
 
 func _on_timer_first_move_timeout() -> void :
 	is_first_move = false
@@ -487,7 +506,7 @@ func _physics_process(_delta: float) -> void:
 		teleport_immunity_frames -= 1
 
 func is_fragile_at(tile_pos: Vector2i) -> bool:
-	var fragile_layer = node_map.get_child(TileType.FRAGILE)
+	var fragile_layer = node_map.get_node_or_null("tileMapLayer_fragile")
 	if fragile_layer != null:
 		for child in fragile_layer.get_children():
 			if child is Fragile and node_map.local_to_map(child.global_position) == tile_pos:
@@ -495,7 +514,7 @@ func is_fragile_at(tile_pos: Vector2i) -> bool:
 	return false
 
 func is_hidden_at(tile_pos: Vector2i) -> bool:
-	var hidden_layer = node_map.get_child(TileType.HIDDEN)
+	var hidden_layer = node_map.get_node_or_null("tileMapLayer_hidden")
 	if hidden_layer != null:
 		for child in hidden_layer.get_children():
 			if child is Hidden and node_map.local_to_map(child.global_position) == tile_pos:

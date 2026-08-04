@@ -6,9 +6,9 @@
 [ext_resource type="AudioStream" uid="uid://oep0gjf14iex" path="res://Audio/SFX/Cracking 2.mp3" id="4"]
 [ext_resource type="AudioStream" uid="uid://ctp3gx2j5ltma" path="res://Audio/SFX/drop_004.ogg" id="5"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_15vr8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wcvum"]
 atlas = ExtResource("2_yampb")
-region = Rect2(32, 0, 16, 16)
+region = Rect2(0, 47, 17, 17)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ws8rp"]
 size = Vector2(15, 15)
@@ -87,8 +87,7 @@ delay_repop = 1.5
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1103982618]
 unique_name_in_owner = true
-position = Vector2(0.5, -0.5)
-texture = SubResource("AtlasTexture_15vr8")
+texture = SubResource("AtlasTexture_wcvum")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1865424012]
 shape = SubResource("RectangleShape2D_ws8rp")

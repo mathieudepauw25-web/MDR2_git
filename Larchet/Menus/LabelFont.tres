@@ -3,5 +3,6 @@
 [ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="1_4f78u"]
 
 [resource]
+line_spacing = 0.0
 font = ExtResource("1_4f78u")
 font_size = 14

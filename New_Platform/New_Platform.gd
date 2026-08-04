@@ -20,6 +20,7 @@ var way: Array[Vector2i] = []
 var current_index: int = 0
 var is_moving_forward: bool = true
 var editor_initial_global_pos: Vector2
+var current_tween: Tween
 
 const plat_way: Dictionary = {
 	"D_A": Vector2i(2,1),
@@ -29,16 +30,11 @@ const plat_way: Dictionary = {
 	3: [Vector2i(1,1), Vector2i(1,0)],
 	4: [Vector2i(0,0), null],
 	5: [Vector2i(0,1), null],
-	6: [Vector2i(1,1), Vector2i(1,0)],
-	7: [Vector2i(0,1), Vector2i(1,0)],
+	6: [Vector2i(0,0), Vector2i(1,0)],
 	8: [null, Vector2i(3,0)],
 	9: [Vector2i(1,1), Vector2i(3,0)],
 	10: [null, Vector2i(2,0)],
-	11: [Vector2i(1,1), Vector2i(2,0)],
-	12: [Vector2i(0,0), Vector2i(1,0)],
-	13: [Vector2i(0,1), Vector2i(1,0)],
-	14: [Vector2i(0,0), Vector2i(3,0)],
-	15: [Vector2i(0,1), Vector2i(3,0)]
+	12: [Vector2i(0,0), Vector2i(3,0)],
 }
 
 func _ready() -> void:
@@ -56,6 +52,9 @@ func _ready() -> void:
 # ==========================================
 
 func set_way(new_way: Array[Vector2i]) -> void:
+	if new_way.size() > 1 and new_way.front() == new_way.back():
+		is_looping = true
+		new_way.pop_back()
 	way = new_way
 	is_looping = _check_loop_validity()
 	_draw_path_visuals()
@@ -113,14 +112,16 @@ func _draw_path_visuals() -> void:
 				d_point.set_cell(way.back(), 0, plat_way["D_A"])
 
 func move() -> void:
-	if not starting_signal or way.is_empty(): 
+	if not starting_signal or way.size() < 2: 
 		return
 	_calculate_next_index()
 	var next_cell = way[current_index]
-	var destination = platform_way.to_global(platform_way.map_to_local(next_cell))
-	var tween = create_tween()
-	tween.tween_property(self, "global_position", destination, speed).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
-	tween.connect("finished", _on_tween_finished)
+	var destination = v_indicator.to_global(v_indicator.map_to_local(next_cell))
+	if current_tween and current_tween.is_valid():
+		current_tween.kill()
+	current_tween = create_tween()
+	current_tween.tween_property(self, "global_position", destination, speed).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
+	current_tween.connect("finished", _on_tween_finished)
 	if destination != global_position:
 		$AudioStreamPlayer2D.play()
 
@@ -150,7 +151,10 @@ func reset_to_editor() -> void:
 	starting_signal = false
 	current_index = 0
 	is_moving_forward = true
-	global_position = editor_initial_global_pos
+	if current_tween and current_tween.is_valid():
+		current_tween.kill()
+	if way.size() > 0:
+		global_position = v_indicator.to_global(v_indicator.map_to_local(way[0]))
 	platformFlexEnd()
 
 # ==========================================
@@ -196,7 +200,7 @@ func _on_area_exited(area: Area2D) -> void:
 		platformFlexEnd()
 
 func _on_tween_finished() -> void:
-	global_position = platform_way.to_global(platform_way.map_to_local(way[current_index]))
+	global_position = v_indicator.to_global(v_indicator.map_to_local(way[current_index]))
 	move()
 
 func _on_EVENTS_starting() -> void:

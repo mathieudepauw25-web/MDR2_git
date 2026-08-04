@@ -16,14 +16,17 @@ extends Node2D
 @onready var layer_persp_Wleft: TileMapLayer = %TileMapLayer_perspective_water_left
 @onready var layer_fragile: TileMapLayer = %tileMapLayer_fragile
 @onready var layer_hidden: TileMapLayer = %tileMapLayer_hidden
+@onready var node_platforms: Node2D = %Platforms
 
 const PLAYER_SCENE = preload("res://Player/Player.tscn")
 const FRAGILE_SCENE = preload("res://Fragile/Fragile.tscn")
 const HIDDEN_SCENE = preload("res://Hidden/Hidden.tscn")
+const PLATFORM_SCENE = preload("res://New_Platform/New_Platform.tscn")
 
 var player: Node2D = null
 var spawned_fragiles: Dictionary = {}
 var spawned_hiddens: Dictionary = {}
+var spawned_platforms: Dictionary = {}
 
 var cell_themes: Dictionary = {}
 var grass_mode: int = 1
@@ -120,6 +123,20 @@ func generer_niveau(map_data: Dictionary) -> void:
 	for item in cellules.get("hidden", []):
 		var pos = Vector2i(int(item[0]), int(item[1]))
 		_spawn_hidden(pos, "_hidden")
+	var interactives = map_data.get("Interactives", {})
+	for plat_path in interactives.get("Platforms", []):
+		if plat_path.size() > 0:
+			var start_pos = Vector2i(int(plat_path[0][0]), int(plat_path[0][1]))
+			var plat_way_inst = PLATFORM_SCENE.instantiate()
+			plat_way_inst.position = Vector2.ZERO 
+			var platform_area = plat_way_inst.get_node("New_Platform")
+			platform_area.position = layer_floor.map_to_local(start_pos)
+			node_platforms.add_child(plat_way_inst) 
+			spawned_platforms[start_pos] = plat_way_inst
+			var restored_way: Array[Vector2i] = []
+			for coord in plat_path:
+				restored_way.append(Vector2i(int(coord[0]), int(coord[1])))
+			platform_area.set_way(restored_way)
 	rafraichir_autotiling_global()
 	_spawn_player(player_grid_pos)
 
@@ -164,6 +181,9 @@ func _nettoyer_niveau() -> void:
 				  layer_fragile, layer_hidden]
 	for l in layers:
 		if l != null: l.clear()
+	for plat in spawned_platforms.values():
+		if is_instance_valid(plat): plat.queue_free()
+	spawned_platforms.clear()
 
 func _spawn_player(grid_pos: Vector2i) -> void:
 	if PLAYER_SCENE == null: return
@@ -183,6 +203,7 @@ func _spawn_fragile(grid_pos: Vector2i, target_theme: String) -> void:
 		fragile.position = layer_fragile.map_to_local(grid_pos)
 		layer_fragile.add_child(fragile)
 		spawned_fragiles[grid_pos] = fragile
+		apply_skin_to_fragile(fragile)
 
 func _spawn_hidden(grid_pos: Vector2i, target_theme: String) -> void:
 	cell_themes[grid_pos] = target_theme
@@ -192,6 +213,7 @@ func _spawn_hidden(grid_pos: Vector2i, target_theme: String) -> void:
 		hidden_inst.position = layer_hidden.map_to_local(grid_pos)
 		layer_hidden.add_child(hidden_inst)
 		spawned_hiddens[grid_pos] = hidden_inst
+		apply_skin_to_hidden(hidden_inst)
 
 func apply_skin_to_fragile(fragile_node: Node2D) -> void:
 	if layer_fragile == null: return

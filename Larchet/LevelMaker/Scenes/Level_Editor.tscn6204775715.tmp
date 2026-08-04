@@ -26,7 +26,6 @@
 [ext_resource type="Script" uid="uid://cjhf8s8sjw6ej" path="res://Larchet/LevelMaker/Scripts/UI_Level_Editor.gd" id="14_2u0i6"]
 [ext_resource type="Texture2D" uid="uid://c3exwahivwsrs" path="res://Larchet/Skins/Sprites/L.All_V1.png" id="14_bkxf0"]
 [ext_resource type="Script" uid="uid://njtryytv6pqi" path="res://Larchet/LevelMaker/Scripts/Pattern_Window.gd" id="21_p2scg"]
-[ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="26_d5nb6"]
 
 [sub_resource type="TileSet" id="TileSet_meyyo"]
 
@@ -355,14 +354,6 @@ region = Rect2(3, 1, 10, 11)
 atlas = ExtResource("11_p4oi5")
 region = Rect2(64, 32, 16, 16)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13qdw"]
-draw_center = false
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(1, 0, 0, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phpmh"]
 bg_color = Color(0, 0.32156864, 0.5137255, 1)
 
@@ -409,10 +400,6 @@ region = Rect2(38, 63, 17, 17)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_13qdw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1lj4"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_wcvum"]
-font = ExtResource("26_d5nb6")
-font_size = 10
 
 [sub_resource type="Image" id="Image_wcvum"]
 data = {
@@ -1561,9 +1548,13 @@ LineEdit/styles/focus = SubResource("StyleBoxEmpty_l1erw")
 LineEdit/styles/normal = SubResource("StyleBoxEmpty_7vjj5")
 LineEdit/styles/read_only = SubResource("StyleBoxEmpty_dx0uh")
 
-[sub_resource type="LabelSettings" id="LabelSettings_mycqx"]
-font = ExtResource("26_d5nb6")
-font_size = 10
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13qdw"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrivr"]
 bg_color = Color(0.101960786, 0.5411765, 0.1764706, 1)
@@ -1690,7 +1681,7 @@ position = Vector2(8, 8)
 script = ExtResource("13_0a5d1")
 
 [node name="Sprite_player" type="Node2D" parent="." unique_id=1543727950]
-z_index = 5
+z_index = 6
 position = Vector2(8, 6)
 
 [node name="Area2D" type="Area2D" parent="Sprite_player" unique_id=186331306]
@@ -1706,16 +1697,6 @@ texture = SubResource("AtlasTexture_xrivr")
 [node name="Shadow" type="Sprite2D" parent="Sprite_player/Area2D" unique_id=976712032]
 position = Vector2(0, 6)
 texture = SubResource("AtlasTexture_bkxf0")
-
-[node name="Selection" type="Panel" parent="." unique_id=1370663450]
-unique_name_in_owner = true
-visible = false
-z_index = 10
-custom_minimum_size = Vector2(16, 16)
-offset_right = 16.0
-offset_bottom = 16.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_13qdw")
 
 [node name="UI_Layer" type="CanvasLayer" parent="." unique_id=1717558558]
 script = ExtResource("14_2u0i6")
@@ -2048,13 +2029,6 @@ visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_b1lj4")
 
-[node name="Title" type="Label" parent="UI_Layer/Property/Doors" unique_id=1492201205]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-text = "Configurating Doors"
-label_settings = SubResource("LabelSettings_wcvum")
-
 [node name="DoorsSpinBox" type="SpinBox" parent="UI_Layer/Property/Doors" unique_id=2108321396]
 custom_minimum_size = Vector2(12, 12)
 layout_mode = 2
@@ -2075,30 +2049,25 @@ visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_b1lj4")
 
-[node name="Title" type="Label" parent="UI_Layer/Property/Platforms" unique_id=2102675834]
+[node name="SpinBox" type="SpinBox" parent="UI_Layer/Property/Platforms" unique_id=598531032]
+custom_minimum_size = Vector2(12, 12)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-text = "Configurating Platforms"
-label_settings = SubResource("LabelSettings_wcvum")
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme = SubResource("Theme_coonu")
+max_value = 25.0
+alignment = 2
 
-[node name="Woop_indicator" type="Label" parent="UI_Layer/Property/Platforms" unique_id=200253409]
+[node name="Label" type="Label" parent="UI_Layer/Property/Platforms" unique_id=2102675834]
 layout_mode = 2
-size_flags_horizontal = 4
-text = "Indication boucle ou non"
-label_settings = SubResource("LabelSettings_mycqx")
+size_flags_horizontal = 0
+text = " Platforms"
+label_settings = ExtResource("14_0a5d1")
 
 [node name="Portals" type="PanelContainer" parent="UI_Layer/Property" unique_id=523639303]
 visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_b1lj4")
-
-[node name="Title" type="Label" parent="UI_Layer/Property/Portals" unique_id=780671232]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-text = "Configurating Portals"
-label_settings = SubResource("LabelSettings_wcvum")
 
 [node name="Select_Out" type="Button" parent="UI_Layer/Property/Portals" unique_id=1807100793]
 layout_mode = 2
@@ -2111,6 +2080,14 @@ text = "Select Exit Portal"
 label_settings = ExtResource("14_0a5d1")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Selection" type="Panel" parent="UI_Layer" unique_id=1370663450]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(16, 16)
+offset_right = 16.0
+offset_bottom = 16.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_13qdw")
 
 [node name="PatternWindow" type="Window" parent="UI_Layer" unique_id=1933626132]
 unique_name_in_owner = true

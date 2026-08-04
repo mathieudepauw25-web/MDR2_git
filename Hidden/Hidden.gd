@@ -34,6 +34,8 @@ func _on_area_entered(area: Area2D) -> void:
 
 func _on_area_exited(area: Area2D) -> void:
 	if area is Player:
+		if area.is_queued_for_deletion() or not is_inside_tree():
+			return
 		depop()
 
 func _on_EVENTS_hidden_tiles(reveal: bool = false) -> void:
@@ -47,3 +49,8 @@ func set_skin(base_texture: Texture2D, atlas_coords: Vector2i) -> void:
 	var start_y = atlas_coords.y * 16 -1
 	atlas.region = Rect2(start_x, start_y, 17, 17)
 	sprite.texture = atlas
+
+func reset_to_editor() -> void:
+	if active_tween and active_tween.is_valid():
+		active_tween.kill()
+	sprite.scale = Vector2.ONE
