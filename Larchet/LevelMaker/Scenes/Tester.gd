@@ -19,6 +19,7 @@ extends Node2D
 @onready var node_platforms: Node2D = %Platforms
 
 const PLAYER_SCENE = preload("res://Player/Player.tscn")
+const ARRIVAL_SCENE = preload("res://Arrival/Arrival.tscn")
 const FRAGILE_SCENE = preload("res://Fragile/Fragile.tscn")
 const HIDDEN_SCENE = preload("res://Hidden/Hidden.tscn")
 const PLATFORM_SCENE = preload("res://New_Platform/New_Platform.tscn")
@@ -80,6 +81,11 @@ func generer_niveau(map_data: Dictionary) -> void:
 	_nettoyer_niveau()
 	_init_active_layers()
 	var glob = map_data.get("global", {})
+	var a_pos = glob.get("arrival_pos", [0, 1])
+	var arrival_grid_pos = Vector2i(int(a_pos[0]), int(a_pos[1]))
+	var arrival_inst = ARRIVAL_SCENE.instantiate()
+	arrival_inst.position = layer_floor.map_to_local(arrival_grid_pos) + Vector2(0, -2)
+	add_child(arrival_inst)
 	grass_mode = int(glob.get("grass_mode", 1))
 	current_skin_name = str(glob.get("Tile_skin", "Normal"))
 	var p_pos = glob.get("player_pos", [0, 0])
@@ -124,7 +130,14 @@ func generer_niveau(map_data: Dictionary) -> void:
 		var pos = Vector2i(int(item[0]), int(item[1]))
 		_spawn_hidden(pos, "_hidden")
 	var interactives = map_data.get("Interactives", {})
-	for plat_path in interactives.get("Platforms", []):
+	for plat_data in interactives.get("Platforms", []):
+		var plat_path = []
+		var start_idx = 0
+		if typeof(plat_data) == TYPE_ARRAY:
+			plat_path = plat_data
+		elif typeof(plat_data) == TYPE_DICTIONARY:
+			plat_path = plat_data.get("path", [])
+			start_idx = int(plat_data.get("start", 0))
 		if plat_path.size() > 0:
 			var start_pos = Vector2i(int(plat_path[0][0]), int(plat_path[0][1]))
 			var plat_way_inst = PLATFORM_SCENE.instantiate()
@@ -136,7 +149,9 @@ func generer_niveau(map_data: Dictionary) -> void:
 			var restored_way: Array[Vector2i] = []
 			for coord in plat_path:
 				restored_way.append(Vector2i(int(coord[0]), int(coord[1])))
+			platform_area.start_index = start_idx
 			platform_area.set_way(restored_way)
+			platform_area.reset_to_editor()
 	rafraichir_autotiling_global()
 	_spawn_player(player_grid_pos)
 

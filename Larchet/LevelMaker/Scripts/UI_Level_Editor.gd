@@ -4,11 +4,9 @@ signal brush_selected(brush_type: TileSkinData.Brush)
 signal grass_mode_toggled(new_mode: int)
 signal mode3_toggled()
 
-# --- NOUVEAUX SIGNAUX POUR LES MODES ---
 signal edit_mode_changed(new_mode: EditMode)
 signal interactive_type_changed(new_type: InteractiveType)
 
-# --- DÉFINITION DES ÉTATS (MACHINE À ÉTATS) ---
 enum EditMode { FLOOR, INTERACTIVE }
 enum InteractiveType { NONE, DOOR, PLATFORM, PORTAL }
 
@@ -34,6 +32,8 @@ var current_interactive_type: InteractiveType = InteractiveType.NONE
 
 @onready var btn_doors: Button = $Interactive/VBoxContainer/Btn_Doors
 @onready var btn_platforms: Button = $Interactive/VBoxContainer/Btn_Platforms
+@onready var btn_inverser: Button = $Property/Platforms/Inverser
+@onready var lbl_inverser: Label = $Property/Platforms/Inverser/Label
 @onready var btn_portals: Button = $Interactive/VBoxContainer/Btn_Portals
 
 @onready var property: PanelContainer = $Property
@@ -91,6 +91,7 @@ func _ready() -> void:
 	btn_tester.pressed.connect(_on_tester_pressed)
 	btn_doors.pressed.connect(_on_doors_pressed)
 	btn_platforms.pressed.connect(_on_platforms_pressed)
+	btn_inverser.pressed.connect(_on_inverser_pressed)
 	btn_portals.pressed.connect(_on_portals_pressed)
 
 # ==========================================
@@ -233,3 +234,10 @@ func sync_grass_mode(loaded_mode: int) -> void:
 		btn_mode3.show()
 	else:
 		btn_mode3.hide()
+
+func _on_inverser_pressed() -> void:
+	if lbl_inverser.text == "-->":
+		lbl_inverser.text = "<--"
+	else:
+		lbl_inverser.text = "-->"
+	get_parent()._inverse_path()

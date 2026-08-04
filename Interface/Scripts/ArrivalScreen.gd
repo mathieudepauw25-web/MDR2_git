@@ -48,7 +48,7 @@ func _ready() -> void :
 	if GAMES.SteamisRunning:
 		if GAMES.superdash_run:
 			GAMES.BoardHandleName = "SuperDashHighscore"
-		GAMES.find_leaderboard(GAMES.BoardHandleName)
+		#GAMES.find_leaderboard(GAMES.BoardHandleName)
 
 	var tween = create_tween().set_parallel()
 	tween.tween_property(node_color_rect_up, "position", Vector2(0.0, -22.0), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)

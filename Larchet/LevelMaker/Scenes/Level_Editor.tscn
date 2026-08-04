@@ -355,6 +355,13 @@ region = Rect2(3, 1, 10, 11)
 atlas = ExtResource("11_p4oi5")
 region = Rect2(64, 32, 16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vd10"]
+atlas = ExtResource("11_p4oi5")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_13ofl"]
+size = Vector2(13, 13)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13qdw"]
 draw_center = false
 border_width_left = 1
@@ -1565,6 +1572,9 @@ LineEdit/styles/read_only = SubResource("StyleBoxEmpty_dx0uh")
 font = ExtResource("26_d5nb6")
 font_size = 10
 
+[sub_resource type="LabelSettings" id="LabelSettings_gd2gm"]
+font = ExtResource("26_d5nb6")
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrivr"]
 bg_color = Color(0.101960786, 0.5411765, 0.1764706, 1)
 
@@ -1706,6 +1716,20 @@ texture = SubResource("AtlasTexture_xrivr")
 [node name="Shadow" type="Sprite2D" parent="Sprite_player/Area2D" unique_id=976712032]
 position = Vector2(0, 6)
 texture = SubResource("AtlasTexture_bkxf0")
+
+[node name="Sprite_arrival" type="Node2D" parent="." unique_id=1118066174]
+z_index = 5
+position = Vector2(6, 7)
+
+[node name="Area2D" type="Area2D" parent="Sprite_arrival" unique_id=63169209]
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite_arrival/Area2D" unique_id=232828050]
+position = Vector2(0, -8)
+texture = SubResource("AtlasTexture_1vd10")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite_arrival/Area2D" unique_id=1393395867]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_13ofl")
 
 [node name="Selection" type="Panel" parent="." unique_id=1370663450]
 unique_name_in_owner = true
@@ -2083,10 +2107,25 @@ text = "Configurating Platforms"
 label_settings = SubResource("LabelSettings_wcvum")
 
 [node name="Woop_indicator" type="Label" parent="UI_Layer/Property/Platforms" unique_id=200253409]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Indication boucle ou non"
 label_settings = SubResource("LabelSettings_mycqx")
+
+[node name="Inverser" type="Button" parent="UI_Layer/Property/Platforms" unique_id=693592035]
+custom_minimum_size = Vector2(32, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="UI_Layer/Property/Platforms/Inverser" unique_id=379814030]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 16.0
+text = "-->"
+label_settings = SubResource("LabelSettings_gd2gm")
+horizontal_alignment = 1
 
 [node name="Portals" type="PanelContainer" parent="UI_Layer/Property" unique_id=523639303]
 visible = false

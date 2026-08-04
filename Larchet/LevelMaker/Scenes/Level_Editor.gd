@@ -21,15 +21,20 @@ extends Node2D
 @onready var camera: Camera2D = $Camera2D
 @onready var ui_layer = $UI_Layer
 @onready var pattern_window: Window = %PatternWindow
+
 @onready var sprite_player = $Sprite_player
+@onready var sprite_arrival = $Sprite_arrival
+
 @onready var selection: Panel = %Selection
 
 const PLAYER_SCENE = preload("res://Player/Player.tscn")
+const ARRIVAL_SCENE = preload("res://Arrival/Arrival.tscn")
 const FRAGILE_SCENE = preload("res://Fragile/Fragile.tscn")
 const HIDDEN_SCENE = preload("res://Hidden/Hidden.tscn")
 const SCENE_TEST = preload("res://Larchet/LevelMaker/Scenes/Level_Editor_Tester.tscn")
 const PLATFORM_SCENE = preload("res://New_Platform/New_Platform.tscn")
 const DOSSIER_NIVEAUX: String = "res://Larchet/LevelMaker/Level_temp/"
+
 var spawned_platforms: Dictionary = {}
 var active_configured_platform: Node2D = null
 var current_level_id: int = -1
@@ -37,6 +42,7 @@ var current_level_name: String = ""
 var current_file_path: String = ""
 var instance_scene_test: Node2D = null
 var player: Node2D = null
+var arrival_instance: Node2D = null
 var spawned_fragiles: Dictionary = {}
 var spawned_hiddens: Dictionary = {}
 
@@ -58,12 +64,21 @@ var is_repainting_theme: bool = false
 var current_target_theme: String = "_light"
 var cell_themes: Dictionary = {}
 
+var is_dragging_platform: bool = false
+var dragged_platform: Area2D = null
+var platform_drag_start_pos: Vector2 = Vector2.ZERO
+
 var grass_mode: int = 1
 var current_brush: TileSkinData.Brush = TileSkinData.Brush.GRASS
 var current_skin_name: String = "Normal"
+
 var is_dragging_player: bool = false
-var is_moving: bool = false
 var player_drag_start_pos: Vector2 = Vector2.ZERO
+
+var is_dragging_arrival: bool = false
+var arrival_drag_start_pos: Vector2 = Vector2.ZERO
+
+var is_moving: bool = false
 
 enum EditMode { FLOOR, INTERACTIVE }
 enum InteractiveType { NONE, DOOR, PLATFORM, PORTAL }
@@ -113,9 +128,22 @@ func _ready() -> void:
 			layer_wall.set_cell(grid_pos, -1)
 			layer_ice.set_cell(grid_pos, -1)
 			update_smart_area(grid_pos)
+	var default_arrival_pos = Vector2i(4, 0)
+	sprite_arrival.global_position = layer_floor.map_to_local(default_arrival_pos) + Vector2(0, -2)
+	for x in range(-1, 2):
+		for y in range(-1, 2):
+			var grid_pos = default_arrival_pos + Vector2i(x, y)
+			cell_themes[grid_pos] = "_light"
+			layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
+			layer_wall.set_cell(grid_pos, -1)
+			layer_ice.set_cell(grid_pos, -1)
+			update_smart_area(grid_pos)
 	var player_area = sprite_player.get_node_or_null("Area2D")
 	if player_area:
 		player_area.input_event.connect(_on_player_area_input_event)
+	var arrival_area = sprite_arrival.get_node_or_null("Area2D")
+	if arrival_area:
+		arrival_area.input_event.connect(_on_arrival_area_input_event)
 	if ui_layer.has_signal("edit_mode_changed"):
 		ui_layer.edit_mode_changed.connect(func(mode): 
 			current_edit_mode = mode
@@ -164,6 +192,10 @@ func set_active_map(is_pattern: bool) -> void:
 		active_persp_Wleft = layer_persp_Wleft
 
 func _is_cell_completely_empty(grid_pos: Vector2i, ignore_platforms: bool = false) -> bool:
+	var player_pos = layer_floor.local_to_map(sprite_player.global_position)
+	var arrival_pos = layer_floor.local_to_map(sprite_arrival.global_position)
+	if grid_pos == player_pos or grid_pos == arrival_pos:
+		return false
 	if layer_floor.get_cell_source_id(grid_pos) != -1: return false
 	if layer_wall.get_cell_source_id(grid_pos) != -1: return false
 	if layer_ice.get_cell_source_id(grid_pos) != -1: return false
@@ -173,8 +205,6 @@ func _is_cell_completely_empty(grid_pos: Vector2i, ignore_platforms: bool = fals
 	return true
 
 func _get_platform_at(grid_pos: Vector2i) -> Node2D:
-	if spawned_platforms.has(grid_pos):
-		return spawned_platforms[grid_pos]
 	for plat in spawned_platforms.values():
 		if is_instance_valid(plat):
 			var plat_area = plat.get_node_or_null("New_Platform")
@@ -230,6 +260,9 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 	var mouse_pos = get_global_mouse_position()
 	var grid_pos = layer_floor.local_to_map(mouse_pos)
 	if _get_platform_at(grid_pos) != null:
+		return
+	var arrival_pos = layer_floor.local_to_map(sprite_arrival.global_position)
+	if grid_pos == arrival_pos and current_brush != TileSkinData.Brush.GRASS:
 		return
 	var has_grass = layer_floor.get_cell_source_id(grid_pos) == TileSkinData.GRASS_SOURCE_ID
 	var has_wall = layer_wall.get_cell_source_id(grid_pos) == TileSkinData.WALL_SOURCE_ID
@@ -389,6 +422,9 @@ func _apply_brush_to_layer(grid_pos: Vector2i, target_layer: TileMapLayer, sourc
 func erase_all_layers(specific_pos = null) -> void:
 	var grid_pos = specific_pos if specific_pos != null else layer_wall.local_to_map(get_global_mouse_position())
 	if _get_platform_at(grid_pos) != null:
+		return
+	var arrival_pos = layer_floor.local_to_map(sprite_arrival.global_position)
+	if grid_pos == arrival_pos:
 		return
 	var has_wall = layer_wall.get_cell_source_id(grid_pos) == TileSkinData.WALL_SOURCE_ID
 	var has_ice = layer_ice.get_cell_source_id(grid_pos) == TileSkinData.ICE_SOURCE_ID
@@ -706,6 +742,13 @@ func play_map():
 	player.z_index = 5
 	add_child(player)
 	sprite_player.visible = false
+	sprite_arrival.visible = false 
+	arrival_instance = ARRIVAL_SCENE.instantiate()
+	arrival_instance.position = sprite_arrival.global_position
+	add_child(arrival_instance)
+	sprite_arrival.visible = false
+	var arrival_grid_pos = layer_floor.local_to_map(sprite_arrival.global_position)
+	update_smart_area(arrival_grid_pos)
 	var player_camera = player.get_node_or_null("Camera2D")
 	if player_camera != null:
 		player_camera.make_current()
@@ -714,9 +757,12 @@ func play_map():
 			hidden_block.sprite.scale = Vector2.ZERO
 
 func back_to_editor():
+	get_tree().call_group("UI_Arrival", "queue_free")
 	player.queue_free()
+	arrival_instance.queue_free()
 	camera.make_current()
 	sprite_player.visible = true
+	sprite_arrival.visible = true 
 	for grid_pos in spawned_fragiles.keys():
 		var fragile = spawned_fragiles[grid_pos]
 		if is_instance_valid(fragile) and fragile.has_method("reset_to_editor"):
@@ -740,6 +786,13 @@ func _on_player_area_input_event(_viewport: Node, event: InputEvent, _shape_idx:
 			player_drag_start_pos = sprite_player.global_position
 			get_viewport().set_input_as_handled()
 
+func _on_arrival_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and is_moving:
+		if event.pressed:
+			is_dragging_arrival = true
+			arrival_drag_start_pos = sprite_arrival.global_position
+			get_viewport().set_input_as_handled()
+
 func _input(event: InputEvent) -> void:
 	if is_dragging_player:
 		if event is InputEventMouseMotion:
@@ -750,14 +803,58 @@ func _input(event: InputEvent) -> void:
 				is_dragging_player = false
 				snap_player_to_grid()
 				get_viewport().set_input_as_handled()
+	if is_dragging_arrival:
+		if event is InputEventMouseMotion:
+			sprite_arrival.global_position = get_global_mouse_position()
+			get_viewport().set_input_as_handled()
+		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+			if not event.pressed:
+				is_dragging_arrival = false
+				snap_arrival_to_grid()
+				get_viewport().set_input_as_handled()
+	if is_dragging_platform and is_instance_valid(dragged_platform):
+		if event is InputEventMouseMotion:
+			dragged_platform.global_position = get_global_mouse_position()
+			get_viewport().set_input_as_handled()
+		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+			if not event.pressed:
+				is_dragging_platform = false
+				var drop_grid_pos = layer_floor.local_to_map(dragged_platform.global_position)
+				if not dragged_platform.try_set_start_pos(drop_grid_pos):
+					dragged_platform.global_position = platform_drag_start_pos
+				else:
+					if selection != null and active_configured_platform == dragged_platform.get_parent():
+						selection.global_position = layer_floor.map_to_local(drop_grid_pos) - Vector2(8, 8)
+				if active_configured_platform == dragged_platform.get_parent():
+					selection.visible = true
+				dragged_platform = null
+				get_viewport().set_input_as_handled()
+
+func generate_grass_under(pos: Vector2i) -> void:
+	_remove_fragile(pos)
+	_remove_hidden(pos)
+	layer_ice.set_cell(pos, -1)
+	cell_themes[pos] = "_light"
+	layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
+	update_smart_area(pos)
 
 func snap_player_to_grid() -> void:
 	var grid_pos = layer_floor.local_to_map(sprite_player.global_position)
+	var arrival_pos = layer_floor.local_to_map(sprite_arrival.global_position)
 	var has_floor = layer_floor.get_cell_source_id(grid_pos) != -1 and not spawned_fragiles.has(grid_pos)
-	if has_floor:
+	if has_floor and grid_pos != arrival_pos and _get_platform_at(grid_pos) == null:
 		sprite_player.global_position = layer_floor.map_to_local(grid_pos) + Vector2(0, -2)
 	else:
 		sprite_player.global_position = player_drag_start_pos
+
+func snap_arrival_to_grid() -> void:
+	var grid_pos = layer_floor.local_to_map(sprite_arrival.global_position)
+	var player_pos = layer_floor.local_to_map(sprite_player.global_position)
+	if grid_pos != player_pos and _get_platform_at(grid_pos) == null:
+		sprite_arrival.global_position = layer_floor.map_to_local(grid_pos) + Vector2(0, -2)
+		generate_grass_under(grid_pos)
+	else:
+		sprite_arrival.global_position = arrival_drag_start_pos
 
 func apply_skin_to_fragile(fragile_node: Node2D) -> void:
 	if layer_fragile == null: return
@@ -853,6 +950,7 @@ func _is_player_stable(case = layer_floor.local_to_map(sprite_player.global_posi
 
 func sauvegarder_niveau() -> void:
 	var player_grid_pos = layer_floor.local_to_map(sprite_player.global_position)
+	var arrival_grid_pos = layer_floor.local_to_map(sprite_arrival.global_position)
 	if current_level_id == -1 or current_file_path == "":
 		_attribuer_nouveau_fichier()
 	var json_data = {
@@ -861,6 +959,7 @@ func sauvegarder_niveau() -> void:
 			"level_name": current_level_name,
 			"grass_mode": grass_mode,
 			"player_pos": [player_grid_pos.x, player_grid_pos.y],
+			"arrival_pos": [arrival_grid_pos.x, arrival_grid_pos.y],
 			"Tile_skin": current_skin_name
 		},
 		"cellules": {},
@@ -928,7 +1027,9 @@ func sauvegarder_niveau() -> void:
 			if p_area.is_looping and p_area.way.size() > 0:
 				var first = p_area.way[0]
 				path_coords.append([first.x, first.y])
-			platforms_list.append(path_coords)
+			platforms_list.append({
+				"path": path_coords,
+				"start": p_area.start_index})
 	if platforms_list.size() > 0:
 		json_data["Interactives"]["Platforms"] = platforms_list
 	JSONGestionnaire.sauvegarder_map(current_file_path, json_data)
@@ -951,6 +1052,7 @@ func lancer_scene_test() -> void:
 	instance_scene_test.charger_et_generer(current_file_path)
 
 func quitter_scene_test() -> void:
+	get_tree().call_group("UI_Arrival", "queue_free")
 	if is_instance_valid(instance_scene_test):
 		instance_scene_test.free()
 		instance_scene_test = null
@@ -1000,6 +1102,8 @@ func generer_editeur_depuis_data(map_data: Dictionary) -> void:
 	current_skin_name = str(glob.get("Tile_skin", "Normal"))
 	var p_pos = glob.get("player_pos", [0, 0])
 	var player_grid_pos = Vector2i(int(p_pos[0]), int(p_pos[1]))
+	var a_pos = glob.get("arrival_pos", [4, 0])
+	var arrival_grid_pos = Vector2i(int(a_pos[0]), int(a_pos[1]))
 	if grass_mode == 3 and map_data.has("grass_modele") and pattern_window != null:
 		var g_mod = map_data["grass_modele"]
 		var t = g_mod.get("taille", [1, 1])
@@ -1040,7 +1144,14 @@ func generer_editeur_depuis_data(map_data: Dictionary) -> void:
 		var pos = Vector2i(int(item[0]), int(item[1]))
 		_spawn_hidden(pos, "_hidden")
 	var interactives = map_data.get("Interactives", {})
-	for plat_path in interactives.get("Platforms", []):
+	for plat_data in interactives.get("Platforms", []):
+		var plat_path = []
+		var start_idx = 0
+		if typeof(plat_data) == TYPE_ARRAY:
+			plat_path = plat_data
+		elif typeof(plat_data) == TYPE_DICTIONARY:
+			plat_path = plat_data.get("path", [])
+			start_idx = int(plat_data.get("start", 0))
 		if plat_path.size() > 0:
 			var start_pos = Vector2i(int(plat_path[0][0]), int(plat_path[0][1]))
 			var plat_way_inst = PLATFORM_SCENE.instantiate()
@@ -1052,9 +1163,12 @@ func generer_editeur_depuis_data(map_data: Dictionary) -> void:
 			var restored_way: Array[Vector2i] = []
 			for coord in plat_path:
 				restored_way.append(Vector2i(int(coord[0]), int(coord[1])))
+			platform_area.start_index = start_idx
 			platform_area.set_way(restored_way)
+			platform_area.reset_to_editor()
 	rafraichir_autotiling_global()
 	sprite_player.global_position = layer_floor.map_to_local(player_grid_pos) + Vector2(0, -2)
+	sprite_arrival.global_position = layer_floor.map_to_local(arrival_grid_pos) + Vector2(0, -2)
 
 func rafraichir_autotiling_global() -> void:
 	var toutes_les_cases: Dictionary = {}
@@ -1115,18 +1229,29 @@ func _attribuer_nouveau_fichier() -> void:
 func _handle_interactive_click(grid_pos: Vector2i, is_just_clicked: bool) -> void:
 	match current_interactive_type:
 		InteractiveType.PLATFORM:
+			if is_just_clicked:
+				var clicked_plat = _get_platform_at(grid_pos)
+				if active_configured_platform != null and clicked_plat == active_configured_platform:
+					var plat_area = active_configured_platform.get_node("New_Platform")
+					if grid_pos == plat_area.way[plat_area.start_index]:
+						is_dragging_platform = true
+						dragged_platform = plat_area
+						platform_drag_start_pos = plat_area.global_position
+						if selection != null:
+							selection.visible = false
+						return
+				if clicked_plat != null and clicked_plat != active_configured_platform:
+					_start_configuring_platform(clicked_plat, grid_pos)
+					return
+				if active_configured_platform == null and _is_cell_completely_empty(grid_pos):
+					_spawn_new_platform(grid_pos)
+					return
 			if active_configured_platform != null:
 				var has_handled_drag = _try_add_to_platform_path(grid_pos)
 				if not has_handled_drag and is_just_clicked:
 					_stop_configuring_interactive()
 					_handle_interactive_click(grid_pos, is_just_clicked)
-			else:
-				if is_just_clicked:
-					var clicked_plat = _get_platform_at(grid_pos)
-					if clicked_plat != null:
-						_start_configuring_platform(clicked_plat, grid_pos)
-					elif _is_cell_completely_empty(grid_pos):
-						_spawn_new_platform(grid_pos)
+					
 		InteractiveType.DOOR:
 			pass
 		InteractiveType.PORTAL:
@@ -1146,28 +1271,48 @@ func _spawn_new_platform(grid_pos: Vector2i) -> void:
 func _start_configuring_platform(plat_way_inst: Node2D, clicked_pos: Vector2i) -> void:
 	active_configured_platform = plat_way_inst
 	var platform_area = plat_way_inst.get_node("New_Platform")
-	var start_cell = platform_area.way.front() if not platform_area.way.is_empty() else clicked_pos
+	var start_cell = clicked_pos
+	if not platform_area.way.is_empty():
+		start_cell = platform_area.way[platform_area.start_index]
 	selection.global_position = layer_floor.map_to_local(start_cell) - Vector2(8, 8) 
 	selection.visible = true
 
 func _try_add_to_platform_path(grid_pos: Vector2i) -> bool:
 	var platform_area = active_configured_platform.get_node("New_Platform")
-	if platform_area.is_looping: 
-		return true
+	if platform_area.is_looping: return true
 	var current_way = platform_area.way.duplicate()
 	if current_way.is_empty(): return true
-	var last_cell = current_way.back()
-	if grid_pos == last_cell: return true
-	var diff = abs(grid_pos - last_cell)
-	var is_adjacent = (diff.x == 1 and diff.y == 0) or (diff.x == 0 and diff.y == 1)
-	if is_adjacent:
-		if grid_pos == current_way.front():
-			if current_way.size() >= 3:
-				current_way.append(grid_pos)
+	var front_cell = current_way.front()
+	var back_cell = current_way.back()
+	var diff_ends = abs(front_cell - back_cell)
+	var ends_are_adjacent = (diff_ends.x == 1 and diff_ends.y == 0) or (diff_ends.x == 0 and diff_ends.y == 1)
+	if grid_pos in current_way:
+		if current_way.size() >= 3 and ends_are_adjacent:
+			if (grid_pos == back_cell and platform_area.last_modified_end == 0) or (grid_pos == front_cell and platform_area.last_modified_end == 1):
+				current_way.append(front_cell)
 				platform_area.set_way(current_way)
-			return true
+				return true
+		return true
+	var diff_front = abs(grid_pos - front_cell)
+	var diff_back = abs(grid_pos - back_cell)
+	var adj_front = (diff_front.x == 1 and diff_front.y == 0) or (diff_front.x == 0 and diff_front.y == 1)
+	var adj_back = (diff_back.x == 1 and diff_back.y == 0) or (diff_back.x == 0 and diff_back.y == 1)
+	if adj_front or adj_back:
 		if _get_platform_at(grid_pos) == null and _is_cell_completely_empty(grid_pos, true):
-			current_way.append(grid_pos)
+			var insert_at_back = false
+			if adj_front and adj_back:
+				insert_at_back = (platform_area.last_modified_end == 1)
+			elif adj_back:
+				insert_at_back = true
+			else:
+				insert_at_back = false
+			if insert_at_back:
+				current_way.append(grid_pos)
+				platform_area.last_modified_end = 1
+			else:
+				current_way.push_front(grid_pos)
+				platform_area.last_modified_end = 0
+				platform_area.start_index += 1 
 			platform_area.set_way(current_way)
 		return true
 	else:
@@ -1182,21 +1327,45 @@ func _handle_interactive_erase(grid_pos: Vector2i) -> void:
 				var current_way = platform_area.way.duplicate()
 				var index = current_way.find(grid_pos)
 				if index != -1:
-					if index == 0:
+					if index == platform_area.start_index:
 						if active_configured_platform == plat:
 							_stop_configuring_interactive()
-						spawned_platforms.erase(grid_pos)
+						var key_to_remove = null
+						for k in spawned_platforms:
+							if spawned_platforms[k] == plat:
+								key_to_remove = k
+								break
+						if key_to_remove != null:
+							spawned_platforms.erase(key_to_remove)
 						plat.queue_free()
-					else:
+						return
+					if platform_area.is_looping:
+						var new_way: Array[Vector2i] = []
+						for i in range(1, current_way.size()):
+							var w_idx = (index + i) % current_way.size()
+							new_way.append(current_way[w_idx])
+						var old_plat_pos = current_way[platform_area.start_index]
+						current_way = new_way
+						platform_area.start_index = current_way.find(old_plat_pos)
+					elif index > platform_area.start_index:
 						current_way.resize(index)
-						platform_area.is_looping = false 
-						platform_area.set_way(current_way)
-						if active_configured_platform != plat:
-							_start_configuring_platform(plat, current_way[0])
+					elif index < platform_area.start_index:
+						current_way = current_way.slice(index + 1)
+						platform_area.start_index -= (index + 1)
+					platform_area.is_looping = false
+					platform_area.set_way(current_way)
+					platform_area.reset_to_editor()
+					if active_configured_platform != plat:
+						_start_configuring_platform(plat, current_way[platform_area.start_index])
 		InteractiveType.DOOR:
 			pass
 		InteractiveType.PORTAL:
 			pass
+
+func _inverse_path() -> void:
+	if active_configured_platform != null:
+		var p_area = active_configured_platform.get_node("New_Platform")
+		p_area.reverse_path()
 
 func _stop_configuring_interactive() -> void:
 	active_configured_platform = null

@@ -55,12 +55,12 @@ func _ready() -> void :
 	SteamisRunning = Steam.isSteamRunning()
 
 	handles_count = 0
-	if SteamisRunning:
+	'''if SteamisRunning:
 		var id = Steam.getSteamID()
 		var steam_name = Steam.getFriendPersonaName(id)
 		print("STEAM Username: ", str(steam_name))
 
-		init_leaderboards_handles()
+		init_leaderboards_handles()'''
 
 	verify_save_directory(SAVE_DIR)
 	Engine.time_scale = game_time_scale
@@ -90,16 +90,16 @@ func init_leaderboards_handles() -> void :
 		0: BoardHandleName = "Highscore"
 		1: BoardHandleName = "SuperDashHighscore"
 		2: BoardHandleName = "PlatformFlex"
-	find_leaderboard(BoardHandleName)
+	#find_leaderboard(BoardHandleName)
 
 func init_leaderboards_handles_completed() -> void :
 	BoardHandleName = "Highscore"
-	find_leaderboard(BoardHandleName)
+	#find_leaderboard(BoardHandleName)
 
-func find_leaderboard(leaderboard_name: String = "Highscore") -> void :
+'''func find_leaderboard(leaderboard_name: String = "Highscore") -> void :
 	if SteamisRunning:
 		Steam.findLeaderboard(leaderboard_name)
-		print("find_leaderboard() : ", leaderboard_name)
+		print("find_leaderboard() : ", leaderboard_name)'''
 
 func verify_save_directory(path: String) -> void :
 	DirAccess.make_dir_absolute(path)

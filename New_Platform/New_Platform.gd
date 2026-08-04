@@ -16,7 +16,9 @@ var starting_signal = false
 var link_player: Area2D = null
 var platform_flex: int = 0
 
+var start_index: int = 0
 var way: Array[Vector2i] = []
+var last_modified_end: int = 1
 var current_index: int = 0
 var is_moving_forward: bool = true
 var editor_initial_global_pos: Vector2
@@ -67,7 +69,6 @@ func _check_loop_validity() -> bool:
 	var diff = abs(first_cell - last_cell)
 	if (diff.x == 1 and diff.y == 0) or (diff.x == 0 and diff.y == 1):
 		return true
-	print("Veuillez placer les cases de départ et d'arrivée côte à côte pour boucler")
 	return false
 
 func _draw_path_visuals() -> void:
@@ -105,7 +106,7 @@ func _draw_path_visuals() -> void:
 				h_indicator.set_cell(cell, 0, data[1])
 	if way.size() > 0:
 		if is_looping:
-			d_point.set_cell(way.front(), 0, plat_way["B"])
+			d_point.set_cell(way[start_index], 0, plat_way["B"])
 		else:
 			d_point.set_cell(way.front(), 0, plat_way["D_A"])
 			if way.size() > 1:
@@ -149,12 +150,13 @@ func _calculate_next_index() -> void:
 
 func reset_to_editor() -> void:
 	starting_signal = false
-	current_index = 0
+	current_index = start_index 
 	is_moving_forward = true
 	if current_tween and current_tween.is_valid():
 		current_tween.kill()
 	if way.size() > 0:
-		global_position = v_indicator.to_global(v_indicator.map_to_local(way[0]))
+		global_position = v_indicator.to_global(v_indicator.map_to_local(way[start_index])) # <-- NOUVEAU
+	_draw_path_visuals()
 	platformFlexEnd()
 
 # ==========================================
@@ -201,6 +203,10 @@ func _on_area_exited(area: Area2D) -> void:
 
 func _on_tween_finished() -> void:
 	global_position = v_indicator.to_global(v_indicator.map_to_local(way[current_index]))
+	if not is_looping and (current_index == 0 or current_index == way.size() - 1):
+		await get_tree().create_timer(speed).timeout
+		if not is_inside_tree() or starting_signal == false:
+			return
 	move()
 
 func _on_EVENTS_starting() -> void:
@@ -215,3 +221,20 @@ func _on_EVENTS_door2() -> void:
 
 func _on_delay_platformflex_timeout() -> void:
 	platformFlexEnd()
+
+func try_set_start_pos(grid_pos: Vector2i) -> bool:
+	var idx = way.find(grid_pos)
+	if idx != -1:
+		start_index = idx
+		if is_looping:
+			_draw_path_visuals()
+		reset_to_editor()
+		return true
+	return false
+
+func reverse_path() -> void:
+	if way.size() <= 1: return
+	way.reverse()
+	start_index = (way.size() - 1) - start_index
+	_draw_path_visuals()
+	reset_to_editor()
