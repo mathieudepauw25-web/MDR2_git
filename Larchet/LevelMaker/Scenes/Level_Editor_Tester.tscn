@@ -434,9 +434,6 @@ tile_set = SubResource("TileSet_u4bx6")
 
 [node name="Interactive" type="Node2D" parent="MAP_global/MAP" unique_id=2088532032]
 
-[node name="Keys" type="Node2D" parent="MAP_global/MAP/Interactive" unique_id=1812879958]
-unique_name_in_owner = true
-
 [node name="Doors" type="Node2D" parent="MAP_global/MAP/Interactive" unique_id=1111475144]
 unique_name_in_owner = true
 
