@@ -12,8 +12,8 @@ region = Rect2(0, 0, 16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qjtbi"]
 size = Vector2(10, 10)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ovy8j"]
-size = Vector2(16, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ipej7"]
+size = Vector2(30, 30)
 
 [sub_resource type="MeshTexture" id="MeshTexture_gkkpt"]
 
@@ -47,8 +47,8 @@ position = Vector2(0, 16)
 
 [node name="DetectShow" type="Area2D" parent="." unique_id=1772017690]
 
-[node name="range_show" type="CollisionShape2D" parent="DetectShow" unique_id=1574698695]
-shape = SubResource("RectangleShape2D_ovy8j")
+[node name="range_show" type="CollisionShape2D" parent="DetectShow" unique_id=1985341136]
+shape = SubResource("RectangleShape2D_ipej7")
 
 [node name="Bulle" type="TextureRect" parent="DetectShow" unique_id=419931613]
 unique_name_in_owner = true

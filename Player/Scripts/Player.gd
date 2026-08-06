@@ -285,7 +285,7 @@ func tile_is_type(tile_type: int, tile_check: Vector2) -> bool:
 	if target_layer != null and target_layer.get_cell_source_id(tile_check) != -1:
 		return true
 	if tile_type == TileType.WALL:
-		if is_arrival_at(tile_check):
+		if is_arrival_at(tile_check) or is_door_at(tile_check):
 			return true
 	return false
 
@@ -528,4 +528,10 @@ func is_hidden_at(tile_pos: Vector2i) -> bool:
 		for child in hidden_layer.get_children():
 			if child is Hidden and node_map.local_to_map(child.global_position) == tile_pos:
 				return true
+	return false
+
+func is_door_at(tile_pos: Vector2i) -> bool:
+	for door in get_tree().get_nodes_in_group("Doors"):
+		if node_map.local_to_map(door.global_position) == tile_pos:
+			return true
 	return false

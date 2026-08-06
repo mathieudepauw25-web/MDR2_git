@@ -8,23 +8,44 @@ class_name New_Door
 @onready var nb_keys: Label = %nb_keys
 
 @export var index_door: = 0
-
 @export var position_show: = Vector2(-11.0, -20.0)
 @export var position_hide: = Vector2(-11.0, -6.0)
+@export var debug_keys_coords: Array[Vector2] = [] 
 
-var nb_keys_needed: = 0
+var nb_keys_needed: = 1
 var nb_key: = 0
 var player_in_range: = false
 
 func _ready() -> void :
 	var door_tile = node_map.local_to_map(global_position)
 	global_position = node_map.map_to_local(door_tile)
-	var all_keys = find_children("*", "Keys")
-	nb_keys_needed = all_keys.size()
+	if not debug_keys_coords.is_empty():
+		generate_keys(debug_keys_coords)
 	node_bulle.position = position_hide
 	node_bulle.scale = Vector2.ZERO
 	node_bulle.visible = false
 	node_label.text = str(nb_key)
+	nb_keys.text = str(nb_keys_needed)
+
+func generate_keys(coords_list: Array) -> void:
+	if coords_list.is_empty():
+		return
+	var keys_container = get_node_or_null("Keys")
+	var existing_keys = keys_container.get_children()
+	var base_key: Keys = null
+	for child in existing_keys:
+		if child is Keys:
+			base_key = child
+			break
+	var door_tile = node_map.local_to_map(global_position)
+	var first_key_tile = door_tile + Vector2i(coords_list[0].x, coords_list[0].y)
+	base_key.global_position = node_map.map_to_local(first_key_tile)
+	for i in range(1, coords_list.size()):
+		var new_key = base_key.duplicate()
+		keys_container.add_child(new_key)
+		var key_tile = door_tile + Vector2i(coords_list[i].x, coords_list[i].y)
+		new_key.global_position = node_map.map_to_local(key_tile)
+	nb_keys_needed = coords_list.size()
 	nb_keys.text = str(nb_keys_needed)
 
 func open_door() -> void :

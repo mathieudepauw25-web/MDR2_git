@@ -2,7 +2,7 @@ extends Area2D
 class_name Keys
 
 var node_map: TileMapLayer = null
-var node_door: Door = null
+var node_door: New_Door = null
 
 @export var move_speed: float = 0.7
 
@@ -15,7 +15,7 @@ var player_entered: Area2D = null
 
 func _ready() -> void :
 	var intermediate_node = get_parent()
-	if intermediate_node != null and intermediate_node.get_parent() is Door:
+	if intermediate_node != null and intermediate_node.get_parent() is New_Door:
 		node_door = intermediate_node.get_parent()
 		if not node_door.is_node_ready():
 			await node_door.ready
@@ -41,12 +41,11 @@ func check_player_grab() -> void :
 		tween.tween_property(self, "global_position", node_door.global_position, move_speed).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 		tween.tween_property(self, "rotation", 180, 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 		tween.tween_property(self, "scale", Vector2(0.9, 0.9), 0.5).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_ELASTIC)
+		tween.chain().tween_callback(self.queue_free)
 	else:
 		queue_free()
 
 func _on_area_entered(area: Area2D) -> void :
-	if area is Door:
-		queue_free()
 	if area is Player:
 		player_entered = area
 
