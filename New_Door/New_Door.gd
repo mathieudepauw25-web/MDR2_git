@@ -17,8 +17,7 @@ var nb_key: = 0
 var player_in_range: = false
 
 func _ready() -> void :
-	var door_tile = node_map.local_to_map(global_position)
-	global_position = node_map.map_to_local(door_tile)
+	add_to_group("Doors")
 	if not debug_keys_coords.is_empty():
 		generate_keys(debug_keys_coords)
 	node_bulle.position = position_hide
@@ -50,8 +49,7 @@ func generate_keys(coords_list: Array) -> void:
 
 func open_door() -> void :
 	print(self.name + " Open")
-	var tile_to_erase: = node_map.local_to_map(global_position)
-	node_tile_map_layer_wall.erase_cell(tile_to_erase)
+	node_tile_map_layer_wall.erase_cell(node_map.local_to_map(global_position))
 	if index_door == 2:
 		EVENTS.emit_signal("door2")
 	queue_free()
@@ -63,7 +61,7 @@ func gain_key() -> void :
 		open_door()
 
 func _on_area_entered(area: Area2D) -> void :
-	if area is Keys:
+	if area is Keys and area.node_door == self:
 		gain_key()
 
 func _on_detect_show_area_entered(area: Area2D) -> void :

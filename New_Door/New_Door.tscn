@@ -41,9 +41,10 @@ shape = SubResource("RectangleShape2D_qjtbi")
 metadata/_edit_lock_ = true
 
 [node name="Keys" type="Node2D" parent="." unique_id=1596528300]
-position = Vector2(0, 16)
+position = Vector2(32, 32)
 
 [node name="Key1" parent="Keys" unique_id=1284258192 instance=ExtResource("3_ipej7")]
+position = Vector2(-32, -16)
 
 [node name="DetectShow" type="Area2D" parent="." unique_id=1772017690]
 
