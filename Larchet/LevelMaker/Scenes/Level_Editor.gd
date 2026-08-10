@@ -33,10 +33,13 @@ const FRAGILE_SCENE = preload("res://Fragile/Fragile.tscn")
 const HIDDEN_SCENE = preload("res://Hidden/Hidden.tscn")
 const SCENE_TEST = preload("res://Larchet/LevelMaker/Scenes/Level_Editor_Tester.tscn")
 const PLATFORM_SCENE = preload("res://New_Platform/New_Platform.tscn")
-const DOSSIER_NIVEAUX: String = "res://Larchet/LevelMaker/Level_temp/"
+const DOOR_SCENE = preload("res://New_Door/New_Door.tscn") 
 
 var spawned_platforms: Dictionary = {}
 var active_configured_platform: Node2D = null
+var active_configured_door: New_Door = null
+var active_configured_key: Keys = null
+
 var current_level_id: int = -1
 var current_level_name: String = ""
 var current_file_path: String = ""
@@ -68,6 +71,11 @@ var is_dragging_platform: bool = false
 var dragged_platform: Area2D = null
 var platform_drag_start_pos: Vector2 = Vector2.ZERO
 
+var is_dragging_door: bool = false
+var door_drag_start_pos: Vector2 = Vector2.ZERO
+var is_dragging_key: bool = false
+var key_drag_start_pos: Vector2 = Vector2.ZERO
+
 var grass_mode: int = 1
 var current_brush: TileSkinData.Brush = TileSkinData.Brush.GRASS
 var current_skin_name: String = "Normal"
@@ -86,24 +94,6 @@ enum InteractiveType { NONE, DOOR, PLATFORM, PORTAL }
 var current_edit_mode: EditMode = EditMode.FLOOR
 var current_interactive_type: InteractiveType = InteractiveType.NONE
 
-func get_source_id(layer: TileMapLayer, cell_pos: Vector2i) -> int:
-	if layer == null: return -1
-	return layer.get_cell_source_id(cell_pos)
-
-func get_atlas_coords(layer: TileMapLayer, cell_pos: Vector2i) -> Vector2i:
-	if layer == null: return Vector2i(-1, -1)
-	return layer.get_cell_atlas_coords(cell_pos)
-
-func get_skin_element(prefix: String, key: String, theme: String = "") -> Variant:
-	if not TileSkinData.SKINS.has(current_skin_name): return null
-	var skin = TileSkinData.SKINS[current_skin_name]
-	var prefix_key = prefix + "_" + key if prefix != "" else key
-	if skin.has(prefix_key + theme): return skin[prefix_key + theme]
-	if skin.has(prefix_key): return skin[prefix_key]
-	if skin.has(key + theme): return skin[key + theme]
-	if skin.has(key): return skin[key]
-	return null
-
 func _ready() -> void:
 	pattern_window.main_node = self
 	pattern_window.hide()
@@ -114,7 +104,7 @@ func _ready() -> void:
 		ui_layer.grass_mode_toggled.connect(func(mode):
 			grass_mode = mode
 			if grass_mode != 3: pattern_window.hide()
-			refresh_all_grass())
+			$TileManager.refresh_all_grass())
 	if ui_layer.has_signal("mode3_toggled"):
 		ui_layer.mode3_toggled.connect(func():
 			pattern_window.visible = not pattern_window.visible
@@ -127,7 +117,7 @@ func _ready() -> void:
 			layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 			layer_wall.set_cell(grid_pos, -1)
 			layer_ice.set_cell(grid_pos, -1)
-			update_smart_area(grid_pos)
+			$TileManager.update_smart_area(grid_pos)
 	var default_arrival_pos = Vector2i(4, 0)
 	sprite_arrival.global_position = layer_floor.map_to_local(default_arrival_pos) + Vector2(0, -2)
 	for x in range(-1, 2):
@@ -137,7 +127,7 @@ func _ready() -> void:
 			layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 			layer_wall.set_cell(grid_pos, -1)
 			layer_ice.set_cell(grid_pos, -1)
-			update_smart_area(grid_pos)
+			$TileManager.update_smart_area(grid_pos)
 	var player_area = sprite_player.get_node_or_null("Area2D")
 	if player_area:
 		player_area.input_event.connect(_on_player_area_input_event)
@@ -156,10 +146,27 @@ func _ready() -> void:
 			_stop_configuring_interactive())
 
 func _process(_delta: float) -> void:
+	# --- Force Godot à redessiner les lignes en continu ---
+	queue_redraw()
+	# ------------------------------------------------------
 	var center_pixel_pos = camera.global_position
 	var center_grid_pos = layer_floor.local_to_map(center_pixel_pos)
 	if ui_layer.has_method("update_coords"):
 		ui_layer.update_coords(center_grid_pos.x, center_grid_pos.y)
+
+# ==============================================================================
+# --- TRACÉ DES LIGNES (DOOR / KEYS) ---
+# ==============================================================================
+func _draw() -> void:
+	# On ne dessine pas en mode Test ou si on n'est pas sur le bon outil
+	if player != null or instance_scene_test != null: return
+	if current_edit_mode != EditMode.INTERACTIVE or current_interactive_type != InteractiveType.DOOR: return
+	
+	for door in get_tree().get_nodes_in_group("Doors"):
+		var keys_container = door.get_node_or_null("Keys")
+		if keys_container:
+			for key in keys_container.get_children():
+				draw_line(door.global_position, key.global_position, Color(1, 0.8, 0, 0.6), 2.0)
 
 func set_active_map(is_pattern: bool) -> void:
 	if is_pattern:
@@ -191,37 +198,6 @@ func set_active_map(is_pattern: bool) -> void:
 		active_persp_Wdown = layer_persp_Wdown
 		active_persp_Wleft = layer_persp_Wleft
 
-func _is_cell_completely_empty(grid_pos: Vector2i, ignore_platforms: bool = false) -> bool:
-	var player_pos = layer_floor.local_to_map(sprite_player.global_position)
-	var arrival_pos = layer_floor.local_to_map(sprite_arrival.global_position)
-	if grid_pos == player_pos or grid_pos == arrival_pos:
-		return false
-	if layer_floor.get_cell_source_id(grid_pos) != -1: return false
-	if layer_wall.get_cell_source_id(grid_pos) != -1: return false
-	if layer_ice.get_cell_source_id(grid_pos) != -1: return false
-	if spawned_fragiles.has(grid_pos): return false
-	if spawned_hiddens.has(grid_pos): return false
-	if not ignore_platforms and spawned_platforms.has(grid_pos): return false
-	return true
-
-func _get_platform_at(grid_pos: Vector2i) -> Node2D:
-	for plat in spawned_platforms.values():
-		if is_instance_valid(plat):
-			var plat_area = plat.get_node_or_null("New_Platform")
-			if plat_area != null and grid_pos in plat_area.way:
-				return plat
-	return null
-
-func refresh_all_grass() -> void:
-	var was_pattern = false
-	if pattern_window.m3_floor != null:
-		was_pattern = (active_floor == pattern_window.m3_floor)
-	set_active_map(false)
-	var used_cells = layer_floor.get_used_cells()
-	for cell in used_cells:
-		apply_bitmask_to_single_cell(cell, layer_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
-	set_active_map(was_pattern)
-
 func _unhandled_input(event: InputEvent) -> void:
 	if is_moving:
 		return
@@ -239,502 +215,22 @@ func _unhandled_input(event: InputEvent) -> void:
 			var mouse_pos = get_global_mouse_position()
 			var grid_pos = layer_floor.local_to_map(mouse_pos)
 			if current_edit_mode == EditMode.FLOOR:
-				paint_smart_tile(is_just_clicked)
+				if has_node("TileManager"): $TileManager.paint_smart_tile(is_just_clicked)
 			elif current_edit_mode == EditMode.INTERACTIVE:
-				_handle_interactive_click(grid_pos, is_just_clicked)
+				if has_node("InteractiveManager"): $InteractiveManager._handle_interactive_click(grid_pos, is_just_clicked)
 		elif is_right_clicking and not camera.is_panning:
 			var mouse_pos = get_global_mouse_position()
 			var grid_pos = layer_floor.local_to_map(mouse_pos)
 			if current_edit_mode == EditMode.FLOOR:
-				erase_all_layers()
+				if has_node("TileManager"): $TileManager.erase_all_layers()
 			elif current_edit_mode == EditMode.INTERACTIVE and is_right_just_clicked:
-				_handle_interactive_erase(grid_pos)
+				if has_node("InteractiveManager"): $InteractiveManager._handle_interactive_erase(grid_pos)
 	if event is InputEventKey:
 		if event.keycode == KEY_SPACE and not event.echo:
-			refresh_all_grass()
+			$TileManager.refresh_all_grass()
 		if event.is_action_pressed("ui_cancel"):
 			queue_free()
 			get_tree().change_scene_to_file("res://Larchet/Menus/LevelEditor/Menu_Level_Editor.tscn")
-
-func paint_smart_tile(is_just_clicked: bool = false) -> void:
-	var mouse_pos = get_global_mouse_position()
-	var grid_pos = layer_floor.local_to_map(mouse_pos)
-	if _get_platform_at(grid_pos) != null:
-		return
-	var arrival_pos = layer_floor.local_to_map(sprite_arrival.global_position)
-	if grid_pos == arrival_pos and current_brush != TileSkinData.Brush.GRASS:
-		return
-	var has_grass = layer_floor.get_cell_source_id(grid_pos) == TileSkinData.GRASS_SOURCE_ID
-	var has_wall = layer_wall.get_cell_source_id(grid_pos) == TileSkinData.WALL_SOURCE_ID
-	var has_ice = layer_ice.get_cell_source_id(grid_pos) == TileSkinData.ICE_SOURCE_ID
-	var is_empty = not has_wall and not has_ice and not has_grass
-	var current_theme = cell_themes.get(grid_pos, "")
-	var is_trans = current_theme == "_trans"
-	var is_bridge = current_theme == "_bridge_v" or current_theme == "_bridge_h"
-	var is_fragreen = current_theme == "_fragreen"
-	var is_frawood = current_theme == "_frawood"
-	var is_hidden = current_theme == "_hidden"
-	
-	if ui_layer.get("is_locked") and ui_layer.is_locked:
-		match current_brush:
-			TileSkinData.Brush.GRASS:
-				if not is_empty and not (has_grass and not is_trans and not is_bridge and not has_ice and not is_fragreen and not is_frawood and not is_hidden): return
-			TileSkinData.Brush.TRANS:
-				if not is_empty and not is_trans: return
-			TileSkinData.Brush.BRIDGE:
-				if not is_empty and not is_bridge: return
-			TileSkinData.Brush.WALL:
-				if not is_empty and not has_wall: return
-			TileSkinData.Brush.ICE:
-				if not is_empty and not has_ice: return
-			TileSkinData.Brush.FRAGREEN:
-				if not is_empty and not is_fragreen: return
-			TileSkinData.Brush.FRAWOOD:
-				if not is_empty and not is_frawood: return
-			TileSkinData.Brush.HIDDEN:
-				if not is_empty and not is_hidden: return
-				
-	match current_brush:
-		TileSkinData.Brush.HIDDEN:
-			if current_theme != "_hidden":
-				_spawn_hidden(grid_pos, "_hidden")
-				update_smart_area(grid_pos)
-				
-		TileSkinData.Brush.FRAGREEN, TileSkinData.Brush.FRAWOOD:
-			var target_theme = "_fragreen" if current_brush == TileSkinData.Brush.FRAGREEN else "_frawood"
-			if current_theme != target_theme:
-				_spawn_fragile(grid_pos, target_theme)
-				update_smart_area(grid_pos)
-				
-		TileSkinData.Brush.GRASS:
-			var is_real_grass = has_grass and not is_trans and not is_bridge and not has_ice and not is_fragreen and not is_frawood and not is_hidden
-			if is_just_clicked:
-				if is_trans or is_bridge or is_fragreen or is_frawood or is_hidden:
-					is_repainting_theme = false
-					_remove_fragile(grid_pos) # Nettoyage
-					_remove_hidden(grid_pos)
-					cell_themes[grid_pos] = "_light"
-					layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
-					layer_wall.set_cell(grid_pos, -1)
-					layer_ice.set_cell(grid_pos, -1)
-					update_smart_area(grid_pos)
-				elif is_real_grass:
-					is_repainting_theme = true
-					var current_grass_theme = cell_themes.get(grid_pos, "_light")
-					current_target_theme = "_dark" if current_grass_theme == "_light" else "_light"
-					cell_themes[grid_pos] = current_target_theme
-					update_smart_area(grid_pos)
-				else:
-					is_repainting_theme = false
-					_remove_fragile(grid_pos)
-					_remove_hidden(grid_pos)
-					cell_themes[grid_pos] = "_light"
-					layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
-					layer_wall.set_cell(grid_pos, -1)
-					layer_ice.set_cell(grid_pos, -1)
-					update_smart_area(grid_pos)
-			else:
-				if is_repainting_theme:
-					if is_real_grass and cell_themes.get(grid_pos, "_light") != current_target_theme:
-						cell_themes[grid_pos] = current_target_theme
-						update_smart_area(grid_pos)
-				else:
-					if not is_real_grass:
-						_remove_fragile(grid_pos)
-						_remove_hidden(grid_pos)
-						cell_themes[grid_pos] = "_light"
-						layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
-						layer_wall.set_cell(grid_pos, -1)
-						layer_ice.set_cell(grid_pos, -1)
-						update_smart_area(grid_pos)
-						
-		TileSkinData.Brush.ICE:
-			if layer_ice.get_cell_source_id(grid_pos) != TileSkinData.ICE_SOURCE_ID:
-				_remove_fragile(grid_pos)
-				_remove_hidden(grid_pos)
-				apply_custom_cell(layer_ice, grid_pos, TileSkinData.ICE_SOURCE_ID, get_tile_variation(grid_pos, get_skin_element("", "ice"), "ice"))
-				layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
-				if not cell_themes.has(grid_pos) or is_fragreen or is_frawood or is_trans or is_bridge or is_hidden:
-					cell_themes[grid_pos] = "_light"
-				layer_wall.set_cell(grid_pos, -1)
-				update_smart_area(grid_pos)
-				
-		TileSkinData.Brush.WALL:
-			if layer_wall.get_cell_source_id(grid_pos) != TileSkinData.WALL_SOURCE_ID:
-				_remove_fragile(grid_pos)
-				_remove_hidden(grid_pos)
-				layer_wall.set_cell(grid_pos, TileSkinData.WALL_SOURCE_ID, Vector2i(0, 0))
-				layer_floor.set_cell(grid_pos, -1)
-				layer_ice.set_cell(grid_pos, -1)
-				cell_themes.erase(grid_pos)
-				update_smart_area(grid_pos)
-				
-		TileSkinData.Brush.TRANS:
-			if current_theme != "_trans":
-				_remove_fragile(grid_pos)
-				_remove_hidden(grid_pos)
-				cell_themes[grid_pos] = "_trans"
-				layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
-				layer_wall.set_cell(grid_pos, -1)
-				layer_ice.set_cell(grid_pos, -1)
-				update_smart_area(grid_pos)
-				
-		TileSkinData.Brush.BRIDGE:
-			if is_just_clicked:
-				if is_bridge:
-					is_repainting_theme = true
-					current_target_theme = "_bridge_h" if current_theme == "_bridge_v" else "_bridge_v"
-					cell_themes[grid_pos] = current_target_theme
-					update_smart_area(grid_pos)
-				else:
-					is_repainting_theme = false
-					_remove_fragile(grid_pos)
-					_remove_hidden(grid_pos)
-					cell_themes[grid_pos] = "_bridge_h"
-					layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
-					layer_wall.set_cell(grid_pos, -1)
-					layer_ice.set_cell(grid_pos, -1)
-					update_smart_area(grid_pos)
-			else:
-				if is_repainting_theme:
-					if is_bridge and current_theme != current_target_theme:
-						cell_themes[grid_pos] = current_target_theme
-						update_smart_area(grid_pos)
-				else:
-					if not is_bridge:
-						_remove_fragile(grid_pos)
-						_remove_hidden(grid_pos)
-						cell_themes[grid_pos] = "_bridge_h"
-						layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
-						layer_wall.set_cell(grid_pos, -1)
-						layer_ice.set_cell(grid_pos, -1)
-						update_smart_area(grid_pos)
-
-func _apply_brush_to_layer(grid_pos: Vector2i, target_layer: TileMapLayer, source_id: int) -> void:
-	if source_id == TileSkinData.GRASS_SOURCE_ID:
-		target_layer.set_cell(grid_pos, source_id, Vector2i(0,0))
-		layer_ice.set_cell(grid_pos, -1)
-	else:
-		apply_custom_cell(target_layer, grid_pos, source_id, get_tile_variation(grid_pos, get_skin_element("", "ice"), "ice"))
-		layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
-	layer_wall.set_cell(grid_pos, -1)
-
-func erase_all_layers(specific_pos = null) -> void:
-	var grid_pos = specific_pos if specific_pos != null else layer_wall.local_to_map(get_global_mouse_position())
-	if _get_platform_at(grid_pos) != null:
-		return
-	var arrival_pos = layer_floor.local_to_map(sprite_arrival.global_position)
-	if grid_pos == arrival_pos:
-		return
-	var has_wall = layer_wall.get_cell_source_id(grid_pos) == TileSkinData.WALL_SOURCE_ID
-	var has_ice = layer_ice.get_cell_source_id(grid_pos) == TileSkinData.ICE_SOURCE_ID
-	var has_grass = layer_floor.get_cell_source_id(grid_pos) == TileSkinData.GRASS_SOURCE_ID
-	var current_theme = cell_themes.get(grid_pos, "")
-	var is_trans = current_theme == "_trans"
-	var is_bridge = current_theme == "_bridge_v" or current_theme == "_bridge_h"
-	var is_fragreen = current_theme == "_fragreen"
-	var is_frawood = current_theme == "_frawood"
-	var is_hidden = current_theme == "_hidden"
-	
-	if ui_layer.get("is_locked") and ui_layer.is_locked:
-		var matches_selection = false
-		match current_brush:
-			TileSkinData.Brush.GRASS:
-				matches_selection = (has_grass and not is_trans and not is_bridge and not has_ice and not is_fragreen and not is_frawood and not is_hidden)
-			TileSkinData.Brush.TRANS:
-				matches_selection = is_trans
-			TileSkinData.Brush.BRIDGE:
-				matches_selection = is_bridge
-			TileSkinData.Brush.WALL:
-				matches_selection = has_wall
-			TileSkinData.Brush.ICE:
-				matches_selection = has_ice
-			TileSkinData.Brush.FRAGREEN:
-				matches_selection = is_fragreen
-			TileSkinData.Brush.FRAWOOD:
-				matches_selection = is_frawood
-			TileSkinData.Brush.HIDDEN:
-				matches_selection = is_hidden
-		if not matches_selection:
-			return
-			
-	cell_themes.erase(grid_pos)
-	layer_floor.set_cell(grid_pos, -1)
-	layer_wall.set_cell(grid_pos, -1)
-	layer_ice.set_cell(grid_pos, -1)
-	_remove_fragile(grid_pos)
-	_remove_hidden(grid_pos)
-	update_smart_area(grid_pos)
-
-func update_smart_area(cell_pos: Vector2i, is_pattern: bool = false) -> void:
-	set_active_map(is_pattern)
-	var layers_to_clear = [active_persp_up, active_persp_up_wall, active_persp_up_ice, active_persp_right, active_persp_right_wall, active_persp_Eright_wall, active_persp_right_ice, active_persp_Wright, active_persp_Wdown, active_persp_Wleft]
-	for x in range(-2, 3):
-		for y in range(-2, 3):
-			var target_cell = cell_pos + Vector2i(x, y)
-			for l in layers_to_clear:
-				if l != null: l.set_cell(target_cell, -1)
-	for x in range(-3, 4):
-		for y in range(-3, 4):
-			var target_cell = cell_pos + Vector2i(x, y)
-			if get_source_id(active_wall, target_cell) == TileSkinData.WALL_SOURCE_ID:
-				apply_bitmask_to_single_cell(target_cell, active_wall, TileSkinData.wall_bitmask_repo, TileSkinData.WALL_SOURCE_ID)
-			if get_source_id(active_floor, target_cell) == TileSkinData.GRASS_SOURCE_ID:
-				apply_bitmask_to_single_cell(target_cell, active_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
-			if get_source_id(active_ice, target_cell) == TileSkinData.ICE_SOURCE_ID:
-				apply_bitmask_to_single_cell(target_cell, active_ice, TileSkinData.grass_bitmask_repo, TileSkinData.ICE_SOURCE_ID)
-	if is_pattern: set_active_map(false)
-
-func is_grass_or_ice(pos: Vector2i) -> bool:
-	if active_floor == layer_floor:
-		var theme = cell_themes.get(pos)
-		if theme == "_trans" or theme == "_bridge_v" or theme == "_bridge_h" or theme == "_frawood" or theme == "_fragreen" or theme == "_hidden":
-			return false
-	return get_source_id(active_floor, pos) == TileSkinData.GRASS_SOURCE_ID
-
-func get_grass_theme(cell_pos: Vector2i) -> String:
-	if active_floor == layer_floor:
-		var theme = cell_themes.get(cell_pos)
-		if theme == "_trans" or theme == "_bridge_v" or theme == "_bridge_h" or theme == "_fragreen" or theme == "_frawood" or theme == "_hidden":
-			return theme
-	if pattern_window.m3_floor != null and active_floor == pattern_window.m3_floor:
-		return pattern_window.pattern_cell_themes.get(cell_pos, "_light")
-	match grass_mode:
-		1: return cell_themes.get(cell_pos, "_light")
-		2: return "_light" if posmod(cell_pos.x + cell_pos.y, 2) == 0 else "_dark"
-		3:
-			if pattern_window.custom_pattern.is_empty():
-				return "_light"
-			var px = posmod(cell_pos.x, pattern_window.pattern_size.x)
-			var py = posmod(cell_pos.y, pattern_window.pattern_size.y)
-			return pattern_window.custom_pattern.get(Vector2i(px, py), "_light")
-	return "_light"
-
-func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo: Dictionary, source_id: int) -> void:
-	if layer == null: return
-	var theme = get_grass_theme(cell_pos)
-	
-	if source_id == TileSkinData.GRASS_SOURCE_ID:
-		if theme == "_fragreen" or theme == "_frawood" or theme == "_hidden":
-			apply_custom_cell(layer, cell_pos, source_id, Vector2i(14, 0)) 
-			return
-		elif theme == "_trans":
-			var trans_key = "visible_transparent" if Input.is_key_pressed(KEY_SPACE) else "transparent"
-			var trans_atlas = get_tile_variation(cell_pos, get_skin_element("", trans_key), trans_key)
-			apply_custom_cell(layer, cell_pos, source_id, trans_atlas)
-			return
-		elif theme == "_bridge_v" or theme == "_bridge_h":
-			var bridge_key = theme.substr(1) 
-			var bridge_atlas = get_tile_variation(cell_pos, get_skin_element("", bridge_key), bridge_key)
-			apply_custom_cell(layer, cell_pos, source_id, bridge_atlas)
-			return
-	var score : int = 0
-	if source_id == TileSkinData.WALL_SOURCE_ID:
-		if is_tile_connected(layer, cell_pos + Vector2i.UP, source_id):    score += 1
-		if is_tile_connected(layer, cell_pos + Vector2i.RIGHT, source_id): score += 2
-		if is_tile_connected(layer, cell_pos + Vector2i.DOWN, source_id):  score += 4
-		if is_tile_connected(layer, cell_pos + Vector2i.LEFT, source_id) or is_grass_or_ice(cell_pos + Vector2i.LEFT):  score += 8
-	else:
-		if is_tile_connected(layer, cell_pos + Vector2i.UP, source_id):    score += 1
-		if is_tile_connected(layer, cell_pos + Vector2i.RIGHT, source_id): score += 2
-		if is_tile_connected(layer, cell_pos + Vector2i.DOWN, source_id):  score += 4
-		if is_tile_connected(layer, cell_pos + Vector2i.LEFT, source_id):  score += 8
-	var main_theme_key = "dark" if theme == "_dark" else "light"
-	if source_id == TileSkinData.GRASS_SOURCE_ID:
-		var main_atlas = get_tile_variation(cell_pos, get_skin_element("floor", main_theme_key), main_theme_key)
-		apply_custom_cell(layer, cell_pos, source_id, main_atlas)
-	elif source_id == TileSkinData.ICE_SOURCE_ID:
-		apply_custom_cell(layer, cell_pos, source_id, get_tile_variation(cell_pos, get_skin_element("", "ice"), "ice"))
-		var border_source_id = TileSkinData.GRASS_SOURCE_ID
-		var no_up = get_source_id(active_ice, cell_pos + Vector2i.UP) != TileSkinData.ICE_SOURCE_ID and get_source_id(active_wall, cell_pos + Vector2i.UP) != TileSkinData.WALL_SOURCE_ID
-		var no_right = get_source_id(active_ice, cell_pos + Vector2i.RIGHT) != TileSkinData.ICE_SOURCE_ID and get_source_id(active_wall, cell_pos + Vector2i.RIGHT) != TileSkinData.WALL_SOURCE_ID
-		var no_up_right = get_source_id(active_ice, cell_pos + Vector2i(1, -1)) != TileSkinData.ICE_SOURCE_ID and get_source_id(active_wall, cell_pos + Vector2i(1, -1)) != TileSkinData.WALL_SOURCE_ID
-		if no_up: apply_custom_cell(active_persp_up_ice, cell_pos + Vector2i.UP, border_source_id, get_tile_variation(cell_pos, get_skin_element("up_ice", "normal_ice"), "up_ice"))
-		if no_right: apply_custom_cell(active_persp_right_ice, cell_pos + Vector2i.RIGHT, border_source_id, get_tile_variation(cell_pos, get_skin_element("right_ice", "ice"), "right_ice"))
-		if no_up and no_right and no_up_right: apply_custom_cell(active_persp_up_ice, cell_pos + Vector2i(1, -1), border_source_id, get_tile_variation(cell_pos, get_skin_element("up_ice", "E_ice"), "up_ice_E"))
-	if repo.has(score):
-		var variations = repo[score]
-		var pseudo_rand = posmod(hash(cell_pos), variations.size())
-		var tile_data = variations[pseudo_rand].duplicate(true)
-		var border_source_id = source_id
-		if source_id == TileSkinData.ICE_SOURCE_ID:
-			border_source_id = TileSkinData.GRASS_SOURCE_ID
-		if source_id == TileSkinData.WALL_SOURCE_ID and tile_data.has("main") and tile_data["main"] != null:
-			var data = tile_data["main"]
-			if typeof(data) == TYPE_DICTIONARY:
-				for offset in data:
-					var final_atlas = get_tile_variation(cell_pos, get_skin_element("wall", str(data[offset])), "main_" + str(offset))
-					apply_custom_cell(layer, cell_pos + offset, source_id, final_atlas)
-			else:
-				var final_atlas = get_tile_variation(cell_pos, get_skin_element("wall", str(data)), "main")
-				apply_custom_cell(layer, cell_pos, source_id, final_atlas)
-		var process_water_right = func(w_data):
-			var has_solid_right = get_source_id(active_wall, cell_pos + Vector2i.RIGHT) == TileSkinData.WALL_SOURCE_ID or is_grass_or_ice(cell_pos + Vector2i.RIGHT)
-			if has_solid_right: return 
-			var blocked_eright_wall = (
-				get_source_id(active_wall, cell_pos + Vector2i.RIGHT) == TileSkinData.WALL_SOURCE_ID or
-				is_grass_or_ice(cell_pos + Vector2i.RIGHT) or
-				get_source_id(active_wall, cell_pos + Vector2i.DOWN) == TileSkinData.WALL_SOURCE_ID or
-				is_grass_or_ice(cell_pos + Vector2i.DOWN) or
-				get_source_id(active_wall, cell_pos + Vector2i(1, 1)) == TileSkinData.WALL_SOURCE_ID or
-				is_grass_or_ice(cell_pos + Vector2i(1, 1)))
-			if typeof(w_data) == TYPE_DICTIONARY:
-				for offset in w_data:
-					var tex = str(w_data[offset])
-					if tex == "Eright_wall" and blocked_eright_wall: continue
-					var target_pos = cell_pos + offset
-					if tex == "normal":
-						var coords_above = get_atlas_coords(active_persp_Wright, target_pos + Vector2i.UP)
-						tex = "full" if (coords_above.y == 2 or coords_above.y == 3) else "mini"
-					var final_atlas = get_skin_element("water_right", tex, theme)
-					apply_custom_cell(active_persp_Wright, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "water_right_" + str(offset)))
-			else:
-				var tex = str(w_data)
-				if not (tex == "Eright_wall" and blocked_eright_wall):
-					var target_pos = cell_pos + Vector2i.RIGHT
-					if tex == "normal":
-						var coords_above = get_atlas_coords(active_persp_Wright, target_pos + Vector2i.UP)
-						tex = "full" if (coords_above.y == 2 or coords_above.y == 3) else "mini"
-					var final_atlas = get_skin_element("water_right", tex, theme)
-					apply_custom_cell(active_persp_Wright, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "water_right"))
-
-		if tile_data.has("persp_down_water") and tile_data["persp_down_water"] != null:
-			var data = tile_data["persp_down_water"]
-			if typeof(data) == TYPE_DICTIONARY:
-				for offset in data:
-					var final_atlas = get_skin_element("water_down", str(data[offset]), theme)
-					apply_custom_cell(active_persp_Wdown, cell_pos + offset, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_down_water_" + str(offset)))
-			else:
-				var final_atlas = get_skin_element("water_down", str(data), theme)
-				apply_custom_cell(active_persp_Wdown, cell_pos + Vector2i.DOWN, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_down_water"))
-
-		if source_id != TileSkinData.ICE_SOURCE_ID and tile_data.has("persp_up") and tile_data["persp_up"] != null:
-			var data = tile_data["persp_up"]
-			var no_up = not is_tile_connected(layer, cell_pos + Vector2i.UP, source_id)
-			var no_right = not is_tile_connected(layer, cell_pos + Vector2i.RIGHT, source_id)
-			var no_up_right = not is_tile_connected(layer, cell_pos + Vector2i(1, -1), source_id)
-			if no_up and no_right and no_up_right:
-				if typeof(data) != TYPE_DICTIONARY:
-					if data == "normal": data = { Vector2i(0, -1): "normal", Vector2i(1, -1): "E" }
-			if typeof(data) == TYPE_DICTIONARY:
-				for offset in data:
-					var final_atlas = get_skin_element("up", str(data[offset]), theme)
-					apply_custom_cell(active_persp_up, cell_pos + offset, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_up_" + str(offset)))
-			else:
-				var final_atlas = get_skin_element("up", str(data), theme)
-				apply_custom_cell(active_persp_up, cell_pos + Vector2i.UP, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_up"))
-
-		if tile_data.has("persp_left_water") and tile_data["persp_left_water"] != null:
-			var data = tile_data["persp_left_water"]
-			var forbid_eleft = (source_id == TileSkinData.WALL_SOURCE_ID and is_grass_or_ice(cell_pos + Vector2i.DOWN))
-			if is_tile_connected(layer, cell_pos + Vector2i(-1, -1), source_id):
-				if typeof(data) == TYPE_DICTIONARY:
-					var modified_data = data.duplicate()
-					for offset in modified_data:
-						if str(modified_data[offset]) == "full": modified_data[offset] = "mini"
-					data = modified_data
-				else:
-					if str(data) == "full": data = "mini"
-			var has_down_left = is_tile_connected(layer, cell_pos + Vector2i(-1, 1), source_id)
-			if (has_down_left or forbid_eleft) and typeof(data) == TYPE_DICTIONARY:
-				var modified_data = data.duplicate()
-				var keys_to_erase = []
-				for offset in modified_data:
-					if str(modified_data[offset]) == "Eleft": keys_to_erase.append(offset)
-				for k in keys_to_erase: modified_data.erase(k)
-				data = modified_data
-			if typeof(data) == TYPE_DICTIONARY:
-				for offset in data:
-					var tex = str(data[offset])
-					var target_pos = cell_pos + offset
-					if tex == "mini" or tex == "full":
-						var coords_above = get_atlas_coords(active_persp_Wleft, target_pos + Vector2i.UP)
-						tex = "full" if (coords_above.y == 2 or coords_above.y == 3) else "mini"
-					var final_atlas = get_skin_element("water_left", tex, theme)
-					apply_custom_cell(active_persp_Wleft, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_left_water_" + str(offset)))
-			else:
-				var tex = str(data)
-				var target_pos = cell_pos + Vector2i.LEFT
-				if tex == "mini" or tex == "full":
-					var coords_above = get_atlas_coords(active_persp_Wleft, target_pos + Vector2i.UP)
-					tex = "full" if (coords_above.y == 2 or coords_above.y == 3) else "mini"
-				var final_atlas = get_skin_element("water_left", tex, theme)
-				apply_custom_cell(active_persp_Wleft, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_left_water"))
-
-		if tile_data.has("persp_right") and tile_data["persp_right"] != null:
-			var data = tile_data["persp_right"]
-			process_water_right.call(data)
-			if source_id != TileSkinData.ICE_SOURCE_ID:
-				if typeof(data) == TYPE_DICTIONARY:
-					for offset in data:
-						var final_atlas = get_skin_element("right", str(data[offset]), theme)
-						apply_custom_cell(active_persp_right, cell_pos + offset, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_right_" + str(offset)))
-				else:
-					var final_atlas = get_skin_element("right", str(data), theme)
-					apply_custom_cell(active_persp_right, cell_pos + Vector2i.RIGHT, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_right"))
-
-		if tile_data.has("persp_right_wall") and tile_data["persp_right_wall"] != null:
-			var data = tile_data["persp_right_wall"]
-			process_water_right.call(data)
-			var forbid_eright_wall = (source_id == TileSkinData.WALL_SOURCE_ID and is_grass_or_ice(cell_pos + Vector2i.DOWN))
-			var has_down_right = is_tile_connected(layer, cell_pos + Vector2i(1, 1), source_id)
-			var has_grass_down_right = (source_id == TileSkinData.WALL_SOURCE_ID and is_grass_or_ice(cell_pos + Vector2i(1, 1)))
-			if (has_down_right or forbid_eright_wall or has_grass_down_right) and typeof(data) == TYPE_DICTIONARY:
-				var modified_data = data.duplicate()
-				var keys_to_erase = []
-				for offset in modified_data:
-					if str(modified_data[offset]) == "Eright_wall": keys_to_erase.append(offset)
-				for k in keys_to_erase: modified_data.erase(k)
-				data = modified_data
-			if typeof(data) == TYPE_DICTIONARY:
-				for offset in data:
-					var tex = str(data[offset])
-					var final_atlas = get_skin_element("right_wall", tex, theme)
-					var target_pos = cell_pos + offset
-					if tex == "Eright_wall":
-						apply_custom_cell(active_persp_Eright_wall, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_Eright_wall_" + str(offset)))
-					else:
-						apply_custom_cell(active_persp_right_wall, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_right_wall_" + str(offset)))
-			else:
-				var tex = str(data)
-				var final_atlas = get_skin_element("right_wall", tex, theme)
-				var target_pos = cell_pos + Vector2i.RIGHT
-				if tex == "Eright_wall":
-					apply_custom_cell(active_persp_Eright_wall, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_Eright_wall"))
-				else:
-					apply_custom_cell(active_persp_right_wall, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_right_wall"))
-
-		if tile_data.has("persp_up_wall") and tile_data["persp_up_wall"] != null:
-			var data = tile_data["persp_up_wall"]
-			if typeof(data) == TYPE_DICTIONARY:
-				for offset in data:
-					var final_atlas = get_skin_element("up_wall", str(data[offset]), theme)
-					apply_custom_cell(active_persp_up_wall, cell_pos + offset, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_up_wall_" + str(offset)))
-			else:
-				var final_atlas = get_skin_element("up_wall", str(data), theme)
-				apply_custom_cell(active_persp_up_wall, cell_pos + Vector2i.UP, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_up_wall"))
-
-func get_tile_variation(cell_pos: Vector2i, data_source: Variant, layer_type: String) -> Variant:
-	if typeof(data_source) != TYPE_ARRAY: return data_source
-	var base_hash = hash(cell_pos)
-	var seed_offset = hash(layer_type)
-	var rand_idx = posmod(base_hash + seed_offset, data_source.size())
-	return data_source[rand_idx]
-
-func apply_custom_cell(layer: TileMapLayer, target_pos: Vector2i, default_source_id: int, atlas_data: Variant) -> void:
-	if layer == null: return
-	if atlas_data == null or typeof(atlas_data) == TYPE_STRING: return
-	var final_source_id = default_source_id
-	var final_coords = atlas_data
-	if typeof(atlas_data) == TYPE_VECTOR3I:
-		final_coords = Vector2i(atlas_data.x, atlas_data.y)
-		final_source_id = atlas_data.z
-	layer.set_cell(target_pos, final_source_id, final_coords)
-
-func is_tile_connected(layer: TileMapLayer, pos: Vector2i, base_source_id: int) -> bool:
-	if base_source_id == TileSkinData.GRASS_SOURCE_ID or base_source_id == TileSkinData.ICE_SOURCE_ID:
-		return is_grass_or_ice(pos) or get_source_id(active_wall, pos) == TileSkinData.WALL_SOURCE_ID
-	return get_source_id(layer, pos) == base_source_id
 
 func play_map():
 	player = PLAYER_SCENE.instantiate()
@@ -748,7 +244,7 @@ func play_map():
 	add_child(arrival_instance)
 	sprite_arrival.visible = false
 	var arrival_grid_pos = layer_floor.local_to_map(sprite_arrival.global_position)
-	update_smart_area(arrival_grid_pos)
+	$TileManager.update_smart_area(arrival_grid_pos)
 	var player_camera = player.get_node_or_null("Camera2D")
 	if player_camera != null:
 		player_camera.make_current()
@@ -793,77 +289,22 @@ func _on_arrival_area_input_event(_viewport: Node, event: InputEvent, _shape_idx
 			arrival_drag_start_pos = sprite_arrival.global_position
 			get_viewport().set_input_as_handled()
 
+# ==============================================================================
+# --- GESTION DES DÉPLACEMENTS (GLISSER-DÉPOSER INTERACTIFS) ---
+# ==============================================================================
 func _input(event: InputEvent) -> void:
-	if is_dragging_player:
-		if event is InputEventMouseMotion:
-			sprite_player.global_position = get_global_mouse_position()
-			get_viewport().set_input_as_handled()
-		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-			if not event.pressed:
-				is_dragging_player = false
-				snap_player_to_grid()
-				get_viewport().set_input_as_handled()
-	if is_dragging_arrival:
-		if event is InputEventMouseMotion:
-			sprite_arrival.global_position = get_global_mouse_position()
-			get_viewport().set_input_as_handled()
-		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-			if not event.pressed:
-				is_dragging_arrival = false
-				snap_arrival_to_grid()
-				get_viewport().set_input_as_handled()
-	if is_dragging_platform and is_instance_valid(dragged_platform):
-		if event is InputEventMouseMotion:
-			dragged_platform.global_position = get_global_mouse_position()
-			get_viewport().set_input_as_handled()
-		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-			if not event.pressed:
-				is_dragging_platform = false
-				var drop_grid_pos = layer_floor.local_to_map(dragged_platform.global_position)
-				if not dragged_platform.try_set_start_pos(drop_grid_pos):
-					dragged_platform.global_position = platform_drag_start_pos
-				else:
-					if selection != null and active_configured_platform == dragged_platform.get_parent():
-						selection.global_position = layer_floor.map_to_local(drop_grid_pos) - Vector2(8, 8)
-				if active_configured_platform == dragged_platform.get_parent():
-					selection.visible = true
-				dragged_platform = null
-				get_viewport().set_input_as_handled()
+	if has_node("InteractiveManager"):
+		$InteractiveManager.handle_drag_input(event)
 
-func generate_grass_under(pos: Vector2i) -> void:
-	_remove_fragile(pos)
-	_remove_hidden(pos)
-	layer_ice.set_cell(pos, -1)
-	cell_themes[pos] = "_light"
-	layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
-	update_smart_area(pos)
-
-func snap_player_to_grid() -> void:
-	var grid_pos = layer_floor.local_to_map(sprite_player.global_position)
-	var arrival_pos = layer_floor.local_to_map(sprite_arrival.global_position)
-	var has_floor = layer_floor.get_cell_source_id(grid_pos) != -1 and not spawned_fragiles.has(grid_pos)
-	if has_floor and grid_pos != arrival_pos and _get_platform_at(grid_pos) == null:
-		sprite_player.global_position = layer_floor.map_to_local(grid_pos) + Vector2(0, -2)
-	else:
-		sprite_player.global_position = player_drag_start_pos
-
-func snap_arrival_to_grid() -> void:
-	var grid_pos = layer_floor.local_to_map(sprite_arrival.global_position)
-	var player_pos = layer_floor.local_to_map(sprite_player.global_position)
-	if grid_pos != player_pos and _get_platform_at(grid_pos) == null:
-		sprite_arrival.global_position = layer_floor.map_to_local(grid_pos) + Vector2(0, -2)
-		generate_grass_under(grid_pos)
-	else:
-		sprite_arrival.global_position = arrival_drag_start_pos
-
+# ... [Garder apply_skin_to_fragile / hidden, spawn / remove fragiles et hiddens, is_player_stable INTACTS] ...
 func apply_skin_to_fragile(fragile_node: Node2D) -> void:
 	if layer_fragile == null: return
 	var grid_pos = layer_fragile.local_to_map(fragile_node.position)
 	var theme = cell_themes.get(grid_pos, "_fragreen")
 	var skin_key = "fragile_wood" if theme == "_frawood" else "fragile_dark"
-	var skin_data = get_skin_element("", skin_key, "")
+	var skin_data = $TileManager.get_skin_element("", skin_key, "")
 	if skin_data == null: return
-	var atlas_data = get_tile_variation(grid_pos, skin_data, skin_key)
+	var atlas_data = $TileManager.get_tile_variation(grid_pos, skin_data, skin_key)
 	var final_coords: Vector2i
 	var final_source_id: int = TileSkinData.GRASS_SOURCE_ID 
 	if typeof(atlas_data) == TYPE_VECTOR3I:
@@ -883,9 +324,9 @@ func apply_skin_to_hidden(hidden_node: Node2D) -> void:
 	if layer_hidden == null: return
 	var grid_pos = layer_hidden.local_to_map(hidden_node.position)
 	var skin_key = "hidden"
-	var skin_data = get_skin_element("", skin_key, "")
+	var skin_data = $TileManager.get_skin_element("", skin_key, "")
 	if skin_data == null: return
-	var atlas_data = get_tile_variation(grid_pos, skin_data, skin_key)
+	var atlas_data = $TileManager.get_tile_variation(grid_pos, skin_data, skin_key)
 	var final_coords: Vector2i
 	var final_source_id: int = TileSkinData.GRASS_SOURCE_ID
 	if typeof(atlas_data) == TYPE_VECTOR3I:
@@ -948,92 +389,6 @@ func _is_player_stable(case = layer_floor.local_to_map(sprite_player.global_posi
 		return true
 	return false
 
-func sauvegarder_niveau() -> void:
-	var player_grid_pos = layer_floor.local_to_map(sprite_player.global_position)
-	var arrival_grid_pos = layer_floor.local_to_map(sprite_arrival.global_position)
-	if current_level_id == -1 or current_file_path == "":
-		_attribuer_nouveau_fichier()
-	var json_data = {
-		"global": {
-			"level_id": current_level_id,
-			"level_name": current_level_name,
-			"grass_mode": grass_mode,
-			"player_pos": [player_grid_pos.x, player_grid_pos.y],
-			"arrival_pos": [arrival_grid_pos.x, arrival_grid_pos.y],
-			"Tile_skin": current_skin_name
-		},
-		"cellules": {},
-		"Interactives": {}
-	}
-	if grass_mode == 3 and pattern_window != null:
-		var dark_cells = []
-		for p in pattern_window.custom_pattern:
-			if pattern_window.custom_pattern[p] == "_dark":
-				dark_cells.append([p.x, p.y])
-		json_data["grass_modele"] = {
-			"taille": [pattern_window.pattern_size.x, pattern_window.pattern_size.y],
-			"is_dark": dark_cells
-		}
-	var herbe_list = []
-	var mur_list = []
-	var ice_list = []
-	var trans_list = []
-	var bridge_list = []
-	var fragreen_list = []
-	var frawood_list = []
-	var hidden_list = []
-	var used_floor = layer_floor.get_used_cells()
-	for pos in used_floor:
-		if layer_floor.get_cell_source_id(pos) == TileSkinData.GRASS_SOURCE_ID:
-			var theme = cell_themes.get(pos, "_light")
-			match theme:
-				"_dark": herbe_list.append([pos.x, pos.y, true])
-				"_light": herbe_list.append([pos.x, pos.y])
-				"_trans": trans_list.append([pos.x, pos.y])
-				"_bridge_v": bridge_list.append([pos.x, pos.y, true])
-				"_bridge_h": bridge_list.append([pos.x, pos.y])
-	for pos in spawned_fragiles.keys():
-		var theme = cell_themes.get(pos, "_fragreen")
-		if theme == "_frawood":
-			frawood_list.append([pos.x, pos.y])
-		else:
-			fragreen_list.append([pos.x, pos.y])
-	for pos in spawned_hiddens.keys():
-		hidden_list.append([pos.x, pos.y])
-	var used_wall = layer_wall.get_used_cells()
-	for pos in used_wall:
-		if layer_wall.get_cell_source_id(pos) == TileSkinData.WALL_SOURCE_ID:
-			mur_list.append([pos.x, pos.y])
-	var used_ice = layer_ice.get_used_cells()
-	for pos in used_ice:
-		if layer_ice.get_cell_source_id(pos) == TileSkinData.ICE_SOURCE_ID:
-			ice_list.append([pos.x, pos.y])
-	var cellules = json_data["cellules"]
-	if herbe_list.size() > 0: cellules["herbe"] = herbe_list
-	if mur_list.size() > 0: cellules["mur"] = mur_list
-	if ice_list.size() > 0: cellules["ice"] = ice_list
-	if trans_list.size() > 0: cellules["transparent"] = trans_list
-	if bridge_list.size() > 0: cellules["bridge"] = bridge_list
-	if fragreen_list.size() > 0: cellules["fragreen"] = fragreen_list
-	if frawood_list.size() > 0: cellules["frawood"] = frawood_list
-	if hidden_list.size() > 0: cellules["hidden"] = hidden_list
-	var platforms_list = []
-	for plat in spawned_platforms.values():
-		if is_instance_valid(plat):
-			var p_area = plat.get_node("New_Platform")
-			var path_coords = []
-			for cell in p_area.way:
-				path_coords.append([cell.x, cell.y])
-			if p_area.is_looping and p_area.way.size() > 0:
-				var first = p_area.way[0]
-				path_coords.append([first.x, first.y])
-			platforms_list.append({
-				"path": path_coords,
-				"start": p_area.start_index})
-	if platforms_list.size() > 0:
-		json_data["Interactives"]["Platforms"] = platforms_list
-	JSONGestionnaire.sauvegarder_map(current_file_path, json_data)
-
 # ==============================================================================
 # --- GESTION DU TESTER & RECHARGEMENT DU NIVEAU DEPUIS LE JSON ---
 # ==============================================================================
@@ -1063,311 +418,32 @@ func quitter_scene_test() -> void:
 	if camera != null:
 		camera.make_current()
 
-func effacer_tout_lediteur() -> void:
-	_stop_configuring_interactive()
-	cell_themes.clear()
-	spawned_fragiles.clear()
-	spawned_hiddens.clear()
-	spawned_platforms.clear()
-	if node_platforms != null:
-		for enfant in node_platforms.get_children():
-			enfant.free()
-	var tous_les_layers: Array[TileMapLayer] = [
-		layer_floor, layer_wall, layer_ice,
-		layer_persp_right, layer_persp_right_wall, layer_persp_Eright_wall,
-		layer_persp_right_ice, layer_persp_up, layer_persp_up_wall,
-		layer_persp_up_ice, layer_persp_Wright, layer_persp_Wdown,
-		layer_persp_Wleft, layer_fragile, layer_hidden
-	]
-	for calque in tous_les_layers:
-		if calque != null:
-			calque.clear()
-			for enfant in calque.get_children():
-				enfant.free()
+func sauvegarder_niveau() -> void:
+	if has_node("SaveLoadManager"):
+		$SaveLoadManager.sauvegarder_niveau()
 
 func charger_editeur_depuis_json(chemin_json: String) -> void:
-	current_file_path = chemin_json
-	var map_data = JSONGestionnaire.charger_map(chemin_json)
-	if not map_data.is_empty():
-		generer_editeur_depuis_data(map_data)
-
-func generer_editeur_depuis_data(map_data: Dictionary) -> void:
-	effacer_tout_lediteur()
-	var glob = map_data.get("global", {})
-	current_level_id = int(glob.get("level_id", 1))
-	current_level_name = str(glob.get("level_name", "Niveau " + str(current_level_id)))
-	grass_mode = int(glob.get("grass_mode", 1))
-	if ui_layer != null and ui_layer.has_method("sync_grass_mode"):
-		ui_layer.sync_grass_mode(grass_mode)
-	current_skin_name = str(glob.get("Tile_skin", "Normal"))
-	var p_pos = glob.get("player_pos", [0, 0])
-	var player_grid_pos = Vector2i(int(p_pos[0]), int(p_pos[1]))
-	var a_pos = glob.get("arrival_pos", [4, 0])
-	var arrival_grid_pos = Vector2i(int(a_pos[0]), int(a_pos[1]))
-	if grass_mode == 3 and map_data.has("grass_modele") and pattern_window != null:
-		var g_mod = map_data["grass_modele"]
-		var t = g_mod.get("taille", [1, 1])
-		pattern_window.pattern_size = Vector2i(int(t[0]), int(t[1]))
-		pattern_window.custom_pattern.clear()
-		for d in g_mod.get("is_dark", []):
-			pattern_window.custom_pattern[Vector2i(int(d[0]), int(d[1]))] = "_dark"
-	var cellules = map_data.get("cellules", {})
-	for item in cellules.get("herbe", []):
-		var pos = Vector2i(int(item[0]), int(item[1]))
-		var is_dark = item[2] if item.size() > 2 else false
-		cell_themes[pos] = "_dark" if is_dark else "_light"
-		layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0, 0))
-	for item in cellules.get("mur", []):
-		var pos = Vector2i(int(item[0]), int(item[1]))
-		layer_wall.set_cell(pos, TileSkinData.WALL_SOURCE_ID, Vector2i(0, 0))
-	for item in cellules.get("ice", []):
-		var pos = Vector2i(int(item[0]), int(item[1]))
-		layer_ice.set_cell(pos, TileSkinData.ICE_SOURCE_ID, Vector2i(0, 0))
-		layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0, 0))
-		cell_themes[pos] = "_light"
-	for item in cellules.get("transparent", []):
-		var pos = Vector2i(int(item[0]), int(item[1]))
-		cell_themes[pos] = "_trans"
-		layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0, 0))
-	for item in cellules.get("bridge", []):
-		var pos = Vector2i(int(item[0]), int(item[1]))
-		var is_vertical = item[2] if item.size() > 2 else false
-		cell_themes[pos] = "_bridge_v" if is_vertical else "_bridge_h"
-		layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0, 0))
-	for item in cellules.get("fragreen", []):
-		var pos = Vector2i(int(item[0]), int(item[1]))
-		_spawn_fragile(pos, "_fragreen")
-	for item in cellules.get("frawood", []):
-		var pos = Vector2i(int(item[0]), int(item[1]))
-		_spawn_fragile(pos, "_frawood")
-	for item in cellules.get("hidden", []):
-		var pos = Vector2i(int(item[0]), int(item[1]))
-		_spawn_hidden(pos, "_hidden")
-	var interactives = map_data.get("Interactives", {})
-	for plat_data in interactives.get("Platforms", []):
-		var plat_path = []
-		var start_idx = 0
-		if typeof(plat_data) == TYPE_ARRAY:
-			plat_path = plat_data
-		elif typeof(plat_data) == TYPE_DICTIONARY:
-			plat_path = plat_data.get("path", [])
-			start_idx = int(plat_data.get("start", 0))
-		if plat_path.size() > 0:
-			var start_pos = Vector2i(int(plat_path[0][0]), int(plat_path[0][1]))
-			var plat_way_inst = PLATFORM_SCENE.instantiate()
-			plat_way_inst.position = Vector2.ZERO 
-			var platform_area = plat_way_inst.get_node("New_Platform")
-			platform_area.position = layer_floor.map_to_local(start_pos)
-			node_platforms.add_child(plat_way_inst) 
-			spawned_platforms[start_pos] = plat_way_inst
-			var restored_way: Array[Vector2i] = []
-			for coord in plat_path:
-				restored_way.append(Vector2i(int(coord[0]), int(coord[1])))
-			platform_area.start_index = start_idx
-			platform_area.set_way(restored_way)
-			platform_area.reset_to_editor()
-	rafraichir_autotiling_global()
-	sprite_player.global_position = layer_floor.map_to_local(player_grid_pos) + Vector2(0, -2)
-	sprite_arrival.global_position = layer_floor.map_to_local(arrival_grid_pos) + Vector2(0, -2)
-
-func rafraichir_autotiling_global() -> void:
-	var toutes_les_cases: Dictionary = {}
-	for pos in layer_wall.get_used_cells():
-		toutes_les_cases[pos] = true
-	for pos in layer_floor.get_used_cells():
-		toutes_les_cases[pos] = true
-	for pos in layer_ice.get_used_cells():
-		toutes_les_cases[pos] = true
-	var liste_triee: Array[Vector2i] = []
-	for pos in toutes_les_cases.keys():
-		liste_triee.append(pos)
-	liste_triee.sort_custom(func(a: Vector2i, b: Vector2i) -> bool:
-		if a.y == b.y:
-			return a.x < b.x
-		return a.y < b.y)
-	for pos in liste_triee:
-		if get_source_id(layer_wall, pos) == TileSkinData.WALL_SOURCE_ID:
-			apply_bitmask_to_single_cell(pos, layer_wall, TileSkinData.wall_bitmask_repo, TileSkinData.WALL_SOURCE_ID)
-		if get_source_id(layer_floor, pos) == TileSkinData.GRASS_SOURCE_ID:
-			apply_bitmask_to_single_cell(pos, layer_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
-		if get_source_id(layer_ice, pos) == TileSkinData.ICE_SOURCE_ID:
-			apply_bitmask_to_single_cell(pos, layer_ice, TileSkinData.grass_bitmask_repo, TileSkinData.ICE_SOURCE_ID)
-
-func _generer_nouvel_id() -> int:
-	var dir = DirAccess.open(DOSSIER_NIVEAUX)
-	if dir == null:
-		return 1
-	var id_max: int = 0
-	dir.list_dir_begin()
-	var fichier_nom = dir.get_next()
-	while fichier_nom != "":
-		if not dir.current_is_dir() and fichier_nom.ends_with(".json"):
-			var chemin_complet = DOSSIER_NIVEAUX + "/" + fichier_nom
-			var map_data = JSONGestionnaire.charger_map(chemin_complet)
-			if not map_data.is_empty() and map_data.has("global"):
-				var id_lu = int(map_data["global"].get("level_id", 0))
-				if id_lu > id_max:
-					id_max = id_lu
-		fichier_nom = dir.get_next()
-	dir.list_dir_end()
-	return id_max + 1
-
-func _attribuer_nouveau_fichier() -> void:
-	var nouvel_id: int = _generer_nouvel_id()
-	var chemin_test: String = DOSSIER_NIVEAUX + "niveau_" + str(nouvel_id) + ".json"
-	while FileAccess.file_exists(chemin_test):
-		nouvel_id += 1
-		chemin_test = DOSSIER_NIVEAUX + "niveau_" + str(nouvel_id) + ".json"
-	current_level_id = nouvel_id
-	current_level_name = "Niveau " + str(current_level_id)
-	current_file_path = chemin_test
+	if has_node("SaveLoadManager"):
+		$SaveLoadManager.charger_editeur_depuis_json(chemin_json)
 
 # ==============================================================================
 # --- GESTION DES INTERACTIFS (PORTES, PLATEFORMES, PORTAILS) ---
 # ==============================================================================
 
-func _handle_interactive_click(grid_pos: Vector2i, is_just_clicked: bool) -> void:
-	match current_interactive_type:
-		InteractiveType.PLATFORM:
-			if is_just_clicked:
-				var clicked_plat = _get_platform_at(grid_pos)
-				if active_configured_platform != null and clicked_plat == active_configured_platform:
-					var plat_area = active_configured_platform.get_node("New_Platform")
-					if grid_pos == plat_area.way[plat_area.start_index]:
-						is_dragging_platform = true
-						dragged_platform = plat_area
-						platform_drag_start_pos = plat_area.global_position
-						if selection != null:
-							selection.visible = false
-						return
-				if clicked_plat != null and clicked_plat != active_configured_platform:
-					_start_configuring_platform(clicked_plat, grid_pos)
-					return
-				if active_configured_platform == null and _is_cell_completely_empty(grid_pos):
-					_spawn_new_platform(grid_pos)
-					return
-			if active_configured_platform != null:
-				var has_handled_drag = _try_add_to_platform_path(grid_pos)
-				if not has_handled_drag and is_just_clicked:
-					_stop_configuring_interactive()
-					_handle_interactive_click(grid_pos, is_just_clicked)
-					
-		InteractiveType.DOOR:
-			pass
-		InteractiveType.PORTAL:
-			pass
+func _is_cell_completely_empty(grid_pos: Vector2i, ignore_platforms: bool = false) -> bool:
+	if has_node("InteractiveManager"):
+		return $InteractiveManager._is_cell_completely_empty(grid_pos, ignore_platforms)
+	return false
 
-func _spawn_new_platform(grid_pos: Vector2i) -> void:
-	var plat_way_inst = PLATFORM_SCENE.instantiate()
-	plat_way_inst.position = Vector2.ZERO 
-	var platform_area = plat_way_inst.get_node("New_Platform")
-	platform_area.position = layer_floor.map_to_local(grid_pos)
-	node_platforms.add_child(plat_way_inst) 
-	spawned_platforms[grid_pos] = plat_way_inst
-	var initial_way: Array[Vector2i] = [grid_pos]
-	platform_area.set_way(initial_way)
-	_start_configuring_platform(plat_way_inst, grid_pos)
-
-func _start_configuring_platform(plat_way_inst: Node2D, clicked_pos: Vector2i) -> void:
-	active_configured_platform = plat_way_inst
-	var platform_area = plat_way_inst.get_node("New_Platform")
-	var start_cell = clicked_pos
-	if not platform_area.way.is_empty():
-		start_cell = platform_area.way[platform_area.start_index]
-	selection.global_position = layer_floor.map_to_local(start_cell) - Vector2(8, 8) 
-	selection.visible = true
-
-func _try_add_to_platform_path(grid_pos: Vector2i) -> bool:
-	var platform_area = active_configured_platform.get_node("New_Platform")
-	if platform_area.is_looping: return true
-	var current_way = platform_area.way.duplicate()
-	if current_way.is_empty(): return true
-	var front_cell = current_way.front()
-	var back_cell = current_way.back()
-	var diff_ends = abs(front_cell - back_cell)
-	var ends_are_adjacent = (diff_ends.x == 1 and diff_ends.y == 0) or (diff_ends.x == 0 and diff_ends.y == 1)
-	if grid_pos in current_way:
-		if current_way.size() >= 3 and ends_are_adjacent:
-			if (grid_pos == back_cell and platform_area.last_modified_end == 0) or (grid_pos == front_cell and platform_area.last_modified_end == 1):
-				current_way.append(front_cell)
-				platform_area.set_way(current_way)
-				return true
-		return true
-	var diff_front = abs(grid_pos - front_cell)
-	var diff_back = abs(grid_pos - back_cell)
-	var adj_front = (diff_front.x == 1 and diff_front.y == 0) or (diff_front.x == 0 and diff_front.y == 1)
-	var adj_back = (diff_back.x == 1 and diff_back.y == 0) or (diff_back.x == 0 and diff_back.y == 1)
-	if adj_front or adj_back:
-		if _get_platform_at(grid_pos) == null and _is_cell_completely_empty(grid_pos, true):
-			var insert_at_back = false
-			if adj_front and adj_back:
-				insert_at_back = (platform_area.last_modified_end == 1)
-			elif adj_back:
-				insert_at_back = true
-			else:
-				insert_at_back = false
-			if insert_at_back:
-				current_way.append(grid_pos)
-				platform_area.last_modified_end = 1
-			else:
-				current_way.push_front(grid_pos)
-				platform_area.last_modified_end = 0
-				platform_area.start_index += 1 
-			platform_area.set_way(current_way)
-		return true
-	else:
-		return false
-
-func _handle_interactive_erase(grid_pos: Vector2i) -> void:
-	match current_interactive_type:
-		InteractiveType.PLATFORM:
-			var plat = _get_platform_at(grid_pos)
-			if plat != null:
-				var platform_area = plat.get_node("New_Platform")
-				var current_way = platform_area.way.duplicate()
-				var index = current_way.find(grid_pos)
-				if index != -1:
-					if index == platform_area.start_index:
-						if active_configured_platform == plat:
-							_stop_configuring_interactive()
-						var key_to_remove = null
-						for k in spawned_platforms:
-							if spawned_platforms[k] == plat:
-								key_to_remove = k
-								break
-						if key_to_remove != null:
-							spawned_platforms.erase(key_to_remove)
-						plat.queue_free()
-						return
-					if platform_area.is_looping:
-						var new_way: Array[Vector2i] = []
-						for i in range(1, current_way.size()):
-							var w_idx = (index + i) % current_way.size()
-							new_way.append(current_way[w_idx])
-						var old_plat_pos = current_way[platform_area.start_index]
-						current_way = new_way
-						platform_area.start_index = current_way.find(old_plat_pos)
-					elif index > platform_area.start_index:
-						current_way.resize(index)
-					elif index < platform_area.start_index:
-						current_way = current_way.slice(index + 1)
-						platform_area.start_index -= (index + 1)
-					platform_area.is_looping = false
-					platform_area.set_way(current_way)
-					platform_area.reset_to_editor()
-					if active_configured_platform != plat:
-						_start_configuring_platform(plat, current_way[platform_area.start_index])
-		InteractiveType.DOOR:
-			pass
-		InteractiveType.PORTAL:
-			pass
-
-func _inverse_path() -> void:
-	if active_configured_platform != null:
-		var p_area = active_configured_platform.get_node("New_Platform")
-		p_area.reverse_path()
+func _get_platform_at(grid_pos: Vector2i) -> Node2D:
+	if has_node("InteractiveManager"):
+		return $InteractiveManager._get_platform_at(grid_pos)
+	return null
 
 func _stop_configuring_interactive() -> void:
-	active_configured_platform = null
-	if selection != null:
-		selection.visible = false
+	if has_node("InteractiveManager"):
+		$InteractiveManager._stop_configuring_interactive()
+
+func _inverse_path() -> void:
+	if has_node("InteractiveManager"):
+		$InteractiveManager._inverse_path()

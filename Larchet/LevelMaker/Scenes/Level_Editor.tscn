@@ -27,6 +27,9 @@
 [ext_resource type="Texture2D" uid="uid://c3exwahivwsrs" path="res://Larchet/Skins/Sprites/L.All_V1.png" id="14_bkxf0"]
 [ext_resource type="Script" uid="uid://njtryytv6pqi" path="res://Larchet/LevelMaker/Scripts/Pattern_Window.gd" id="21_p2scg"]
 [ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="26_d5nb6"]
+[ext_resource type="Script" uid="uid://c8c87ogy7gk7c" path="res://Larchet/LevelMaker/Scripts/Tile_Manager.gd" id="28_66o5d"]
+[ext_resource type="Script" uid="uid://wotj3lgptxep" path="res://Larchet/LevelMaker/Scripts/Interactive_Manager.gd" id="29_yj0sr"]
+[ext_resource type="Script" uid="uid://c1hu0xlx2gr5g" path="res://Larchet/LevelMaker/Scripts/Save_Load_Manager.gd" id="30_02jk3"]
 
 [sub_resource type="TileSet" id="TileSet_meyyo"]
 
@@ -361,24 +364,6 @@ region = Rect2(16, 0, 16, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_13ofl"]
 size = Vector2(13, 13)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_13ofl"]
-atlas = ExtResource("11_p4oi5")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_66o5d"]
-size = Vector2(15, 13)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yj0sr"]
-atlas = ExtResource("11_p4oi5")
-region = Rect2(0, 32, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_02jk3"]
-atlas = ExtResource("11_p4oi5")
-region = Rect2(0, 16, 16, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_u7mg5"]
-size = Vector2(11, 11)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13qdw"]
 draw_center = false
@@ -1600,6 +1585,15 @@ bg_color = Color(0.101960786, 0.5411765, 0.1764706, 1)
 y_sort_enabled = true
 script = ExtResource("1_rgpot")
 
+[node name="TileManager" type="Node2D" parent="." unique_id=1068638127]
+script = ExtResource("28_66o5d")
+
+[node name="InteractiveManager" type="Node2D" parent="." unique_id=1122427039]
+script = ExtResource("29_yj0sr")
+
+[node name="SaveLoadManager" type="Node2D" parent="." unique_id=406449561]
+script = ExtResource("30_02jk3")
+
 [node name="MAP_global" type="Node2D" parent="." unique_id=1035934058]
 y_sort_enabled = true
 
@@ -1703,6 +1697,7 @@ unique_name_in_owner = true
 
 [node name="Platforms" type="Node2D" parent="MAP_global/MAP/Interactive" unique_id=120368979]
 unique_name_in_owner = true
+z_index = 1
 
 [node name="Portals" type="Node2D" parent="MAP_global/MAP/Interactive" unique_id=85663793]
 unique_name_in_owner = true
@@ -1745,36 +1740,6 @@ texture = SubResource("AtlasTexture_1vd10")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite_arrival/Area2D" unique_id=1393395867]
 position = Vector2(0.5, -0.5)
 shape = SubResource("RectangleShape2D_13ofl")
-
-[node name="Sprite_doors" type="Node2D" parent="." unique_id=1128786588]
-z_index = 5
-position = Vector2(7, 7)
-
-[node name="Area2D" type="Area2D" parent="Sprite_doors" unique_id=1534419008]
-
-[node name="Sprite2D" type="Sprite2D" parent="Sprite_doors/Area2D" unique_id=1086009513]
-texture = SubResource("AtlasTexture_13ofl")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite_doors/Area2D" unique_id=67786777]
-position = Vector2(0.5, -1.5)
-shape = SubResource("RectangleShape2D_66o5d")
-
-[node name="Sprite_keys" type="Node2D" parent="." unique_id=1851770511]
-z_index = 5
-position = Vector2(7, 7)
-
-[node name="Area2D" type="Area2D" parent="Sprite_keys" unique_id=311988906]
-
-[node name="Shadow" type="Sprite2D" parent="Sprite_keys/Area2D" unique_id=1275002680]
-position = Vector2(0, 1)
-texture = SubResource("AtlasTexture_yj0sr")
-
-[node name="sprite_on" type="Sprite2D" parent="Sprite_keys/Area2D" unique_id=283672368]
-texture = SubResource("AtlasTexture_02jk3")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite_keys/Area2D" unique_id=1279073004]
-position = Vector2(0.5, -2.5)
-shape = SubResource("RectangleShape2D_u7mg5")
 
 [node name="Selection" type="Panel" parent="." unique_id=1370663450]
 unique_name_in_owner = true
@@ -2111,9 +2076,9 @@ offset_left = 240.0
 offset_top = 88.0
 offset_right = 320.0
 offset_bottom = 136.0
+mouse_filter = 2
 
 [node name="Doors" type="PanelContainer" parent="UI_Layer/Property" unique_id=1585367742]
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_b1lj4")
 
@@ -2133,15 +2098,15 @@ theme = SubResource("Theme_coonu")
 max_value = 25.0
 alignment = 2
 
-[node name="Label" type="Label" parent="UI_Layer/Property/Doors" unique_id=456911085]
+[node name="Button" type="Button" parent="UI_Layer/Property/Doors" unique_id=1233969550]
 layout_mode = 2
-size_flags_horizontal = 0
-text = " NB Keys :"
-label_settings = ExtResource("14_0a5d1")
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="Platforms" type="PanelContainer" parent="UI_Layer/Property" unique_id=257637396]
 visible = false
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_b1lj4")
 
 [node name="Title" type="Label" parent="UI_Layer/Property/Platforms" unique_id=2102675834]

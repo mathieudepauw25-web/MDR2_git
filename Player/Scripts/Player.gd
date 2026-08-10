@@ -284,6 +284,9 @@ func tile_is_type(tile_type: int, tile_check: Vector2) -> bool:
 		TileType.ICE: target_layer = node_map.get_node_or_null("tileMapLayer_ice")
 	if target_layer != null and target_layer.get_cell_source_id(tile_check) != -1:
 		return true
+	if tile_type == TileType.FLOOR:
+		if target_layer.get_cell_source_id(tile_check) != -1:
+			return true
 	if tile_type == TileType.WALL:
 		if is_arrival_at(tile_check) or is_door_at(tile_check):
 			return true

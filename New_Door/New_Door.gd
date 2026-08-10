@@ -29,23 +29,65 @@ func _ready() -> void :
 func generate_keys(coords_list: Array) -> void:
 	if coords_list.is_empty():
 		return
+	debug_keys_coords.clear() 
 	var keys_container = get_node_or_null("Keys")
-	var existing_keys = keys_container.get_children()
-	var base_key: Keys = null
-	for child in existing_keys:
-		if child is Keys:
-			base_key = child
-			break
+	var base_key: Keys = keys_container.get_children()[0]
 	var door_tile = node_map.local_to_map(global_position)
-	var first_key_tile = door_tile + Vector2i(coords_list[0].x, coords_list[0].y)
-	base_key.global_position = node_map.map_to_local(first_key_tile)
+	var first_key_coord = Vector2i(coords_list[0].x, coords_list[0].y)
+	base_key.global_position = node_map.map_to_local(door_tile + first_key_coord)
+	debug_keys_coords.append(first_key_coord)
 	for i in range(1, coords_list.size()):
-		var new_key = base_key.duplicate()
-		keys_container.add_child(new_key)
-		var key_tile = door_tile + Vector2i(coords_list[i].x, coords_list[i].y)
-		new_key.global_position = node_map.map_to_local(key_tile)
-	nb_keys_needed = coords_list.size()
+		generate_one_key(Vector2i(coords_list[i].x, coords_list[i].y))
+	update_key_display()
+
+func generate_one_key(coord: Vector2i):
+	var keys_container = get_node_or_null("Keys")
+	var base_key: Keys = keys_container.get_children()[0]
+	var new_key = base_key.duplicate()
+	keys_container.add_child(new_key)
+	var key_tile = node_map.local_to_map(global_position) + Vector2i(coord.x, coord.y)
+	new_key.global_position = node_map.map_to_local(key_tile)
+	debug_keys_coords.append(coord)
+	update_key_display()
+
+func update_key_display() -> void:
+	nb_keys_needed = debug_keys_coords.size()
 	nb_keys.text = str(nb_keys_needed)
+
+func can_place_door_or_key(tile_pos: Vector2i) -> bool:
+	var layer_floor = node_map.get_node_or_null("tileMapLayer_floor")
+	if layer_floor == null or layer_floor.get_cell_source_id(tile_pos) == -1:
+		return false
+	var player = get_node_or_null("%Player")
+	if player and node_map.local_to_map(player.global_position) == tile_pos:
+		return false
+	for arrival in get_tree().get_nodes_in_group("Arrival"):
+		if node_map.local_to_map(arrival.global_position) == tile_pos:
+			return false
+	var interactives = get_tree().get_nodes_in_group("Doors") + get_tree().get_nodes_in_group("Platforms")
+	for node in interactives:
+		if node_map.local_to_map(node.global_position) == tile_pos:
+			return false
+		if node is New_Door:
+			var keys_container = node.get_node_or_null("Keys")
+			if keys_container:
+				for key in keys_container.get_children():
+					if node_map.local_to_map(key.global_position) == tile_pos:
+						return false
+	return true
+
+func get_nearest_valid_tile(start_tile: Vector2i) -> Vector2i:
+	var max_radius: = 10
+	for r in range(1, max_radius):
+		for x in range(-r, r + 1):
+			for y in range(-r, r + 1):
+				if abs(x) == r or abs(y) == r:
+					var check_tile = start_tile + Vector2i(x, y)
+					if can_place_door_or_key(check_tile):
+						return check_tile
+	return start_tile
+
+# ----- Fonctionnement -----
 
 func open_door() -> void :
 	print(self.name + " Open")
