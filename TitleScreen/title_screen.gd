@@ -21,8 +21,8 @@ const MAIN_THEME = preload("res://Audio/Music/Sketchbook 2024-10-14.ogg")
 func _ready() -> void :
 	$CanvasLayer/BlackScreen.visible = true
 	GAMES.superdash_run = false
-	if GAMES.SteamisRunning:
-		GAMES.find_leaderboard("Highscore")
+	#if GAMES.SteamisRunning:
+	#	GAMES.find_leaderboard("Highscore")
 	EVENTS.connect("save", update_text)
 	Engine.time_scale = 1
 	EVENTS.emit_signal("starting")

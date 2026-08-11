@@ -101,7 +101,16 @@ func sauvegarder_niveau() -> void:
 				
 	if platforms_list.size() > 0:
 		json_data["Interactives"]["Platforms"] = platforms_list
-		
+	var doors_list = []
+	for door in get_tree().get_nodes_in_group("Doors"):
+		var door_data_list = []
+		for coord in door.debug_keys_coords:
+			door_data_list.append([int(coord.x), int(coord.y)])
+		var door_pos = main.layer_floor.local_to_map(door.global_position)
+		door_data_list.append([int(door_pos.x), int(door_pos.y)])
+		doors_list.append(door_data_list)
+	if doors_list.size() > 0:
+		json_data["Interactives"]["Doors"] = doors_list
 	JSONGestionnaire.sauvegarder_map(main.current_file_path, json_data)
 
 func charger_editeur_depuis_json(chemin_json: String) -> void:
@@ -228,7 +237,20 @@ func generer_editeur_depuis_data(map_data: Dictionary) -> void:
 			platform_area.start_index = start_idx
 			platform_area.set_way(restored_way)
 			platform_area.reset_to_editor()
-			
+	var doors_data = interactives.get("Doors", [])
+	for door_list in doors_data:
+		if typeof(door_list) == TYPE_ARRAY and door_list.size() > 0:
+			var d_pos = door_list.back()
+			var door_grid_pos = Vector2i(int(d_pos[0]), int(d_pos[1]))
+			var keys_coords: Array[Vector2] = []
+			for i in range(door_list.size() - 1):
+				var k_pos = door_list[i]
+				keys_coords.append(Vector2(int(k_pos[0]), int(k_pos[1])))
+			var new_door = main.DOOR_SCENE.instantiate()
+			if not keys_coords.is_empty():
+				new_door.debug_keys_coords = keys_coords
+			main.map_node.add_child(new_door)
+			new_door.global_position = main.layer_floor.map_to_local(door_grid_pos)
 	main.get_node("TileManager").rafraichir_autotiling_global()
 	main.sprite_player.global_position = main.layer_floor.map_to_local(player_grid_pos) + Vector2(0, -2)
 	main.sprite_arrival.global_position = main.layer_floor.map_to_local(arrival_grid_pos) + Vector2(0, -2)

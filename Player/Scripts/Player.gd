@@ -288,8 +288,7 @@ func tile_is_type(tile_type: int, tile_check: Vector2) -> bool:
 		if is_arrival_at(tile_check) or is_door_at(tile_check):
 			return true
 	if tile_type == TileType.FLOOR:
-		if tile_is_type(TileType.WALL, tile_check):
-			return true
+		return tile_is_type(TileType.WALL, tile_check)
 	return false
 
 func is_arrival_at(tile_pos: Vector2i) -> bool:

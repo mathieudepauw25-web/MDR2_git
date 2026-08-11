@@ -289,6 +289,7 @@ func generate_grass_under(pos: Vector2i) -> void:
 	main._remove_fragile(pos)
 	main._remove_hidden(pos)
 	main.layer_ice.set_cell(pos, -1)
+	main.layer_wall.set_cell(pos, -1)
 	main.cell_themes[pos] = "_light"
 	main.layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 	update_smart_area(pos)

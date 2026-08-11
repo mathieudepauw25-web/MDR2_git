@@ -1,8 +1,9 @@
 extends Area2D
 class_name New_Door
 
-@onready var node_map: TileMapLayer = %MAP
-@onready var node_tile_map_layer_wall: TileMapLayer = %tileMapLayer_wall
+var node_map: TileMapLayer
+var node_tile_map_layer_wall: TileMapLayer
+
 @onready var node_bulle: TextureRect = %Bulle
 @onready var node_label: Label = %Label
 @onready var nb_keys: Label = %nb_keys
@@ -16,8 +17,22 @@ var nb_keys_needed: = 1
 var nb_key: = 0
 var player_in_range: = false
 
+func _init_maps() -> void:
+	if node_map != null and node_tile_map_layer_wall != null:
+		return
+	var root = get_tree().current_scene
+	node_map = root.find_child("tileMapLayer_floor", true, false)
+	if node_map == null:
+		node_map = root.find_child("MAP", true, false)
+	node_tile_map_layer_wall = root.find_child("tileMapLayer_wall", true, false)
+
 func _ready() -> void :
 	add_to_group("Doors")
+	_init_maps()
+	var keys_container = get_node_or_null("Keys")
+	if keys_container:
+		keys_container.set_as_top_level(true)
+		keys_container.global_position = Vector2.ZERO
 	if not debug_keys_coords.is_empty():
 		generate_keys(debug_keys_coords)
 	node_bulle.position = position_hide
@@ -29,24 +44,27 @@ func _ready() -> void :
 func generate_keys(coords_list: Array) -> void:
 	if coords_list.is_empty():
 		return
+	_init_maps()
+	var safe_coords = coords_list.duplicate()
 	debug_keys_coords.clear() 
 	var keys_container = get_node_or_null("Keys")
+	if keys_container == null or keys_container.get_child_count() == 0:
+		return
 	var base_key: Keys = keys_container.get_children()[0]
-	var door_tile = node_map.local_to_map(global_position)
-	var first_key_coord = Vector2i(coords_list[0].x, coords_list[0].y)
-	base_key.global_position = node_map.map_to_local(door_tile + first_key_coord)
+	var first_key_coord = Vector2i(safe_coords[0].x, safe_coords[0].y)
+	base_key.global_position = node_map.map_to_local(first_key_coord)
 	debug_keys_coords.append(first_key_coord)
-	for i in range(1, coords_list.size()):
-		generate_one_key(Vector2i(coords_list[i].x, coords_list[i].y))
+	for i in range(1, safe_coords.size()):
+		generate_one_key(Vector2i(safe_coords[i].x, safe_coords[i].y))
 	update_key_display()
 
 func generate_one_key(coord: Vector2i):
+	_init_maps()
 	var keys_container = get_node_or_null("Keys")
 	var base_key: Keys = keys_container.get_children()[0]
 	var new_key = base_key.duplicate()
 	keys_container.add_child(new_key)
-	var key_tile = node_map.local_to_map(global_position) + Vector2i(coord.x, coord.y)
-	new_key.global_position = node_map.map_to_local(key_tile)
+	new_key.global_position = node_map.map_to_local(coord)
 	debug_keys_coords.append(coord)
 	update_key_display()
 
@@ -54,44 +72,12 @@ func update_key_display() -> void:
 	nb_keys_needed = debug_keys_coords.size()
 	nb_keys.text = str(nb_keys_needed)
 
-func can_place_door_or_key(tile_pos: Vector2i) -> bool:
-	var layer_floor = node_map.get_node_or_null("tileMapLayer_floor")
-	if layer_floor == null or layer_floor.get_cell_source_id(tile_pos) == -1:
-		return false
-	var player = get_node_or_null("%Player")
-	if player and node_map.local_to_map(player.global_position) == tile_pos:
-		return false
-	for arrival in get_tree().get_nodes_in_group("Arrival"):
-		if node_map.local_to_map(arrival.global_position) == tile_pos:
-			return false
-	var interactives = get_tree().get_nodes_in_group("Doors") + get_tree().get_nodes_in_group("Platforms")
-	for node in interactives:
-		if node_map.local_to_map(node.global_position) == tile_pos:
-			return false
-		if node is New_Door:
-			var keys_container = node.get_node_or_null("Keys")
-			if keys_container:
-				for key in keys_container.get_children():
-					if node_map.local_to_map(key.global_position) == tile_pos:
-						return false
-	return true
-
-func get_nearest_valid_tile(start_tile: Vector2i) -> Vector2i:
-	var max_radius: = 10
-	for r in range(1, max_radius):
-		for x in range(-r, r + 1):
-			for y in range(-r, r + 1):
-				if abs(x) == r or abs(y) == r:
-					var check_tile = start_tile + Vector2i(x, y)
-					if can_place_door_or_key(check_tile):
-						return check_tile
-	return start_tile
-
 # ----- Fonctionnement -----
 
 func open_door() -> void :
 	print(self.name + " Open")
-	node_tile_map_layer_wall.erase_cell(node_map.local_to_map(global_position))
+	if node_tile_map_layer_wall != null:
+		node_tile_map_layer_wall.erase_cell(node_map.local_to_map(global_position))
 	if index_door == 2:
 		EVENTS.emit_signal("door2")
 	queue_free()
@@ -103,8 +89,9 @@ func gain_key() -> void :
 		open_door()
 
 func _on_area_entered(area: Area2D) -> void :
-	if area is Keys and area.node_door == self:
+	if area is Keys and area.node_door == self and area.collected:
 		gain_key()
+		area.queue_free()
 
 func _on_detect_show_area_entered(area: Area2D) -> void :
 	if area is Player:

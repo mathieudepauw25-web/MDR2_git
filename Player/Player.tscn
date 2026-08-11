@@ -572,8 +572,9 @@ texture = SubResource("AtlasTexture_jt7i3")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=562986644]
 light_mask = 0
 sprite_frames = ExtResource("3_vtj8b")
-animation = &"Original"
+animation = &"Locked"
 autoplay = "Original"
+frame_progress = 0.4815744
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=769996215]
 unique_name_in_owner = true

@@ -180,9 +180,12 @@ func _clear_and_redraw_pattern_visuals() -> void:
 	for pos in pattern_cell_themes.keys():
 		m3_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 	main_node.set_active_map(true)
-	for pos in pattern_cell_themes.keys():
-		main_node.apply_bitmask_to_single_cell(pos, m3_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
-	for pos in pattern_cell_themes.keys():
-		main_node.apply_bitmask_to_single_cell(pos, m3_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
+	var tile_manager = main_node.get_node_or_null("TileManager")
+	if tile_manager:
+		for pos in pattern_cell_themes.keys():
+			tile_manager.apply_bitmask_to_single_cell(pos, m3_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
+		for pos in pattern_cell_themes.keys():
+			tile_manager.apply_bitmask_to_single_cell(pos, m3_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
 	main_node.set_active_map(false)
-	main_node.refresh_all_grass()
+	if tile_manager:
+		tile_manager.refresh_all_grass()

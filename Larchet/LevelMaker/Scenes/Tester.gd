@@ -23,6 +23,7 @@ const ARRIVAL_SCENE = preload("res://Arrival/Arrival.tscn")
 const FRAGILE_SCENE = preload("res://Fragile/Fragile.tscn")
 const HIDDEN_SCENE = preload("res://Hidden/Hidden.tscn")
 const PLATFORM_SCENE = preload("res://New_Platform/New_Platform.tscn")
+const DOOR_SCENE = preload("res://New_Door/New_Door.tscn")
 
 var player: Node2D = null
 var spawned_fragiles: Dictionary = {}
@@ -152,6 +153,20 @@ func generer_niveau(map_data: Dictionary) -> void:
 			platform_area.start_index = start_idx
 			platform_area.set_way(restored_way)
 			platform_area.reset_to_editor()
+	var doors_data = interactives.get("Doors", [])
+	for door_list in doors_data:
+		if typeof(door_list) == TYPE_ARRAY and door_list.size() > 0:
+			var d_pos = door_list.back()
+			var door_grid_pos = Vector2i(int(d_pos[0]), int(d_pos[1]))
+			var keys_coords: Array[Vector2] = []
+			for i in range(door_list.size() - 1):
+				var k_pos = door_list[i]
+				keys_coords.append(Vector2(int(k_pos[0]), int(k_pos[1])))
+			var new_door = DOOR_SCENE.instantiate()
+			if not keys_coords.is_empty():
+				new_door.debug_keys_coords = keys_coords
+			map_node.add_child(new_door)
+			new_door.global_position = layer_floor.map_to_local(door_grid_pos)
 	rafraichir_autotiling_global()
 	_spawn_player(player_grid_pos)
 

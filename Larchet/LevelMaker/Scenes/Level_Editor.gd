@@ -75,6 +75,12 @@ var is_dragging_door: bool = false
 var door_drag_start_pos: Vector2 = Vector2.ZERO
 var is_dragging_key: bool = false
 var key_drag_start_pos: Vector2 = Vector2.ZERO
+var door_was_already_selected: bool = false
+var lines_drawer: Node2D
+var is_pressing_door: bool = false
+var is_pressing_key: bool = false
+var drag_start_mouse_pos: Vector2 = Vector2.ZERO
+var temp_doors_save: Array = []
 
 var grass_mode: int = 1
 var current_brush: TileSkinData.Brush = TileSkinData.Brush.GRASS
@@ -95,6 +101,10 @@ var current_edit_mode: EditMode = EditMode.FLOOR
 var current_interactive_type: InteractiveType = InteractiveType.NONE
 
 func _ready() -> void:
+	lines_drawer = Node2D.new()
+	lines_drawer.z_index = 100
+	add_child(lines_drawer)
+	lines_drawer.draw.connect(_on_lines_drawer_draw)
 	pattern_window.main_node = self
 	pattern_window.hide()
 	if ui_layer.has_signal("brush_selected"):
@@ -146,27 +156,28 @@ func _ready() -> void:
 			_stop_configuring_interactive())
 
 func _process(_delta: float) -> void:
-	# --- Force Godot à redessiner les lignes en continu ---
 	queue_redraw()
-	# ------------------------------------------------------
+	if lines_drawer:
+		lines_drawer.queue_redraw()
 	var center_pixel_pos = camera.global_position
 	var center_grid_pos = layer_floor.local_to_map(center_pixel_pos)
 	if ui_layer.has_method("update_coords"):
 		ui_layer.update_coords(center_grid_pos.x, center_grid_pos.y)
+	if player == null and instance_scene_test == null:
+		_gerer_animations_cles(false)
 
 # ==============================================================================
 # --- TRACÉ DES LIGNES (DOOR / KEYS) ---
 # ==============================================================================
-func _draw() -> void:
-	# On ne dessine pas en mode Test ou si on n'est pas sur le bon outil
+
+func _on_lines_drawer_draw() -> void:
 	if player != null or instance_scene_test != null: return
 	if current_edit_mode != EditMode.INTERACTIVE or current_interactive_type != InteractiveType.DOOR: return
-	
 	for door in get_tree().get_nodes_in_group("Doors"):
 		var keys_container = door.get_node_or_null("Keys")
 		if keys_container:
 			for key in keys_container.get_children():
-				draw_line(door.global_position, key.global_position, Color(1, 0.8, 0, 0.6), 2.0)
+				lines_drawer.draw_line(door.global_position, key.global_position, Color(1, 0.8, 0, 0.6), 2.0)
 
 func set_active_map(is_pattern: bool) -> void:
 	if is_pattern:
@@ -232,6 +243,20 @@ func _unhandled_input(event: InputEvent) -> void:
 			queue_free()
 			get_tree().change_scene_to_file("res://Larchet/Menus/LevelEditor/Menu_Level_Editor.tscn")
 
+func _gerer_animations_cles(jouer: bool) -> void:
+	for door in get_tree().get_nodes_in_group("Doors"):
+		var keys_container = door.get_node_or_null("Keys")
+		if keys_container:
+			for key in keys_container.get_children():
+				var anim_sprite = key.get_node_or_null("AnimatedSprite2D")
+				if anim_sprite:
+					if jouer: anim_sprite.play()
+					else: anim_sprite.pause()
+				var anim_player = key.get_node_or_null("AnimationPlayer")
+				if anim_player:
+					if jouer: anim_player.play()
+					else: anim_player.pause()
+
 func play_map():
 	player = PLAYER_SCENE.instantiate()
 	player.position = sprite_player.global_position
@@ -244,18 +269,28 @@ func play_map():
 	add_child(arrival_instance)
 	sprite_arrival.visible = false
 	var arrival_grid_pos = layer_floor.local_to_map(sprite_arrival.global_position)
-	$TileManager.update_smart_area(arrival_grid_pos)
+	if has_node("TileManager"): $TileManager.update_smart_area(arrival_grid_pos)
 	var player_camera = player.get_node_or_null("Camera2D")
 	if player_camera != null:
 		player_camera.make_current()
 	for hidden_block in spawned_hiddens.values():
 		if is_instance_valid(hidden_block):
 			hidden_block.sprite.scale = Vector2.ZERO
+	temp_doors_save.clear()
+	for door in get_tree().get_nodes_in_group("Doors"):
+		var keys_rel: Array[Vector2] = []
+		for coord in door.debug_keys_coords:
+			keys_rel.append(Vector2(coord.x, coord.y))
+		temp_doors_save.append({
+			"pos": layer_floor.local_to_map(door.global_position),
+			"keys": keys_rel
+		})
+	_gerer_animations_cles(true)
 
 func back_to_editor():
 	get_tree().call_group("UI_Arrival", "queue_free")
-	player.queue_free()
-	arrival_instance.queue_free()
+	if player: player.queue_free()
+	if arrival_instance: arrival_instance.queue_free()
 	camera.make_current()
 	sprite_player.visible = true
 	sprite_arrival.visible = true 
@@ -274,6 +309,15 @@ func back_to_editor():
 			var plat_area = plat_way_inst.get_node_or_null("New_Platform") 
 			if plat_area != null and plat_area.has_method("reset_to_editor"):
 				plat_area.reset_to_editor()
+	for door in get_tree().get_nodes_in_group("Doors"):
+		door.queue_free()
+	for data in temp_doors_save:
+		var new_door = DOOR_SCENE.instantiate()
+		if not data["keys"].is_empty():
+			new_door.debug_keys_coords = data["keys"]
+		map_node.add_child(new_door)
+		new_door.global_position = layer_floor.map_to_local(data["pos"])
+	temp_doors_save.clear()
 
 func _on_player_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and is_moving:

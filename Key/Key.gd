@@ -41,7 +41,6 @@ func check_player_grab() -> void :
 		tween.tween_property(self, "global_position", node_door.global_position, move_speed).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 		tween.tween_property(self, "rotation", 180, 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 		tween.tween_property(self, "scale", Vector2(0.9, 0.9), 0.5).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_ELASTIC)
-		tween.chain().tween_callback(self.queue_free)
 	else:
 		queue_free()
 
