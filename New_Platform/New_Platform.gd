@@ -9,7 +9,6 @@ class_name New_Platform
 @onready var d_point: TileMapLayer = $"../D_Point"
 
 @export var speed: float
-@export var wait_porte2: bool = false
 @export var is_looping: bool = false
 
 var starting_signal = false
@@ -23,6 +22,10 @@ var current_index: int = 0
 var is_moving_forward: bool = true
 var editor_initial_global_pos: Vector2
 var current_tween: Tween
+
+var is_linked_to_door: bool = false
+var linked_door_node: Node2D = null
+var linked_door_pos: Vector2i = Vector2i.ZERO
 
 const plat_way: Dictionary = {
 	"D_A": Vector2i(2,1),
@@ -40,9 +43,9 @@ const plat_way: Dictionary = {
 }
 
 func _ready() -> void:
+	add_to_group("LinkedPlatforms")
 	EVENTS.connect("starting", _on_EVENTS_starting)
-	EVENTS.connect("door2", _on_EVENTS_door2)
-	EVENTS.connect("superdash_run", _on_EVENTS_door2)
+	EVENTS.connect("superdash_run", _on_superdash_run) # Redirigé proprement
 	label_platform_flex.visible = false
 	randomize()
 	$AudioStreamPlayer2D.pitch_scale = randf_range(1.75, 2.25)
@@ -210,12 +213,12 @@ func _on_tween_finished() -> void:
 	move()
 
 func _on_EVENTS_starting() -> void:
-	if wait_porte2 == false:
+	if not is_linked_to_door:
 		starting_signal = true
 		move()
 
-func _on_EVENTS_door2() -> void:
-	if wait_porte2 == true && starting_signal == false:
+func _on_superdash_run() -> void:
+	if is_linked_to_door and not starting_signal:
 		starting_signal = true
 		move()
 
@@ -238,3 +241,12 @@ func reverse_path() -> void:
 	start_index = (way.size() - 1) - start_index
 	_draw_path_visuals()
 	reset_to_editor()
+
+func check_door_opened(door_pos: Vector2i) -> void:
+	if is_linked_to_door:
+		if linked_door_pos == door_pos:
+			starting_signal = true
+			move()
+		elif linked_door_node == null and linked_door_pos == door_pos:
+			starting_signal = true
+			move()

@@ -167,6 +167,9 @@ func generer_niveau(map_data: Dictionary) -> void:
 				new_door.debug_keys_coords = keys_coords
 			map_node.add_child(new_door)
 			new_door.global_position = layer_floor.map_to_local(door_grid_pos)
+	var signals = map_data.get("Signals", {})
+	if signals.has("DoorPlatform"):
+		call_deferred("_restaurer_liens_tester", signals["DoorPlatform"])
 	rafraichir_autotiling_global()
 	_spawn_player(player_grid_pos)
 
@@ -590,3 +593,33 @@ func effacer_tous_les_layers() -> void:
 			calque.clear()
 			for enfant in calque.get_children():
 				enfant.free()
+
+func _restaurer_liens_tester(door_platform_list: Array) -> void:
+	for link_list in door_platform_list:
+		if link_list.size() < 2: continue
+		var door_coords = link_list.back()
+		var door_pos = Vector2i(int(door_coords[0]), int(door_coords[1]))
+		var door_node = _get_door_at_tester(door_pos)
+		if door_node != null:
+			for i in range(link_list.size() - 1):
+				var plat_coords = link_list[i]
+				var plat_pos = Vector2i(int(plat_coords[0]), int(plat_coords[1]))
+				var plat_area = _get_platform_at_tester(plat_pos)
+				if plat_area != null:
+					plat_area.is_linked_to_door = true
+					plat_area.linked_door_node = door_node
+					plat_area.linked_door_pos = door_pos
+
+func _get_door_at_tester(grid_pos: Vector2i) -> Node2D:
+	for door in get_tree().get_nodes_in_group("Doors"):
+		if layer_floor.local_to_map(door.global_position) == grid_pos:
+			return door
+	return null
+
+func _get_platform_at_tester(grid_pos: Vector2i) -> Node2D:
+	for plat_wrapper in spawned_platforms.values():
+		if is_instance_valid(plat_wrapper):
+			var plat_area = plat_wrapper.get_node_or_null("New_Platform")
+			if plat_area != null and grid_pos in plat_area.way:
+				return plat_area
+	return null

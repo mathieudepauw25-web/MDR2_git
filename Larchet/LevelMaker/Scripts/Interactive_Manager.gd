@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 class_name InteractiveManager
 
 @onready var main = get_parent()
@@ -14,6 +14,7 @@ func _is_cell_completely_empty(grid_pos: Vector2i, ignore_platforms: bool = fals
 	if main.spawned_fragiles.has(grid_pos): return false
 	if main.spawned_hiddens.has(grid_pos): return false
 	if not ignore_platforms and main.spawned_platforms.has(grid_pos): return false
+	if _get_door_at(grid_pos) != null: return false
 	return true
 
 func _get_platform_at(grid_pos: Vector2i) -> Node2D:
@@ -108,6 +109,21 @@ func _spawn_new_platform(grid_pos: Vector2i) -> void:
 	_start_configuring_platform(plat_way_inst, grid_pos)
 
 func _handle_interactive_click(grid_pos: Vector2i, is_just_clicked: bool) -> void:
+	if is_just_clicked and main.ui_layer.get("is_linking_doors") and main.ui_layer.is_linking_doors:
+		var clicked_plat = _get_platform_at(grid_pos)
+		if clicked_plat != null:
+			if is_instance_valid(main.active_configured_door):
+				var plat_area = clicked_plat.get_node("New_Platform")
+				var door_pos = main.layer_floor.local_to_map(main.active_configured_door.global_position)
+				if plat_area.is_linked_to_door and plat_area.linked_door_pos == door_pos:
+					plat_area.is_linked_to_door = false
+					plat_area.linked_door_pos = Vector2i.ZERO
+				else:
+					plat_area.is_linked_to_door = true
+					plat_area.linked_door_pos = door_pos
+			return
+		elif _get_door_at(grid_pos) == null and _get_key_at(grid_pos).is_empty():
+			return
 	match main.current_interactive_type:
 		main.InteractiveType.PLATFORM:
 			if is_just_clicked:
@@ -136,8 +152,9 @@ func _handle_interactive_click(grid_pos: Vector2i, is_just_clicked: bool) -> voi
 			if is_just_clicked:
 				var clicked_door = _get_door_at(grid_pos)
 				var clicked_key_info = _get_key_at(grid_pos)
-				
 				if not clicked_key_info.is_empty():
+					if main.ui_layer.has_method("desactiver_door_linker"):
+						main.ui_layer.desactiver_door_linker()
 					main.active_configured_door = clicked_key_info[0]
 					main.active_configured_key = clicked_key_info[1]
 					main.is_dragging_key = true
@@ -146,8 +163,10 @@ func _handle_interactive_click(grid_pos: Vector2i, is_just_clicked: bool) -> voi
 						main.selection.global_position = main.layer_floor.map_to_local(grid_pos) - Vector2(8, 8)
 						main.selection.visible = true
 					return
-					
 				if clicked_door != null:
+					if main.active_configured_door != clicked_door:
+						if main.ui_layer.has_method("desactiver_door_linker"):
+							main.ui_layer.desactiver_door_linker()
 					main.door_was_already_selected = (main.active_configured_door == clicked_door)
 					main.active_configured_door = clicked_door
 					main.active_configured_key = null
@@ -157,12 +176,11 @@ func _handle_interactive_click(grid_pos: Vector2i, is_just_clicked: bool) -> voi
 						main.selection.global_position = main.layer_floor.map_to_local(grid_pos) - Vector2(8, 8)
 						main.selection.visible = true
 					return
-					
-				# Remplacé : si la case est libre, on crée la porte n'importe quand !
 				if can_place_door_or_key(grid_pos):
+					if main.ui_layer.has_method("desactiver_door_linker"):
+						main.ui_layer.desactiver_door_linker()
 					_spawn_new_door(grid_pos)
 					return
-					
 		main.InteractiveType.PORTAL:
 			pass
 
@@ -383,3 +401,36 @@ func snap_arrival_to_grid() -> void:
 			main.get_node("TileManager").generate_grass_under(grid_pos)
 	else:
 		main.sprite_arrival.global_position = main.arrival_drag_start_pos
+
+# ==========================================
+# DESSIN DES LIENS (LINKER MODE)
+# ==========================================
+
+func _ready() -> void:
+	z_index = 100
+
+func _process(_delta: float) -> void:
+	queue_redraw()
+
+func _draw() -> void:
+	if not main.ui_layer.get("is_linking_doors") or not main.ui_layer.is_linking_doors:
+		return
+	var link_color = Color(0.8, 0.2, 0.8, 0.8)
+	var line_width = 3.0
+	for plat in main.spawned_platforms.values():
+		if is_instance_valid(plat):
+			var plat_area = plat.get_node_or_null("New_Platform")
+			if plat_area != null and plat_area.get("is_linked_to_door"):
+				var start_pos = to_local(plat_area.global_position)
+				var end_pos = Vector2.ZERO
+				var should_draw = false
+				if is_instance_valid(plat_area.linked_door_node):
+					end_pos = to_local(plat_area.linked_door_node.global_position)
+					should_draw = true
+				elif plat_area.linked_door_pos != Vector2i.ZERO:
+					end_pos = to_local(main.layer_floor.map_to_local(plat_area.linked_door_pos))
+					should_draw = true
+				if should_draw:
+					draw_line(start_pos, end_pos, link_color, line_width)
+					draw_circle(start_pos, 4.0, link_color)
+					draw_circle(end_pos, 4.0, link_color)

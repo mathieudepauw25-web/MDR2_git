@@ -81,6 +81,7 @@ var is_pressing_door: bool = false
 var is_pressing_key: bool = false
 var drag_start_mouse_pos: Vector2 = Vector2.ZERO
 var temp_doors_save: Array = []
+var temp_signals_save: Array = []
 
 var grass_mode: int = 1
 var current_brush: TileSkinData.Brush = TileSkinData.Brush.GRASS
@@ -258,6 +259,7 @@ func _gerer_animations_cles(jouer: bool) -> void:
 					else: anim_player.pause()
 
 func play_map():
+	temp_signals_save = build_signals_array()
 	player = PLAYER_SCENE.instantiate()
 	player.position = sprite_player.global_position
 	player.z_index = 5
@@ -317,6 +319,7 @@ func back_to_editor():
 			new_door.debug_keys_coords = data["keys"]
 		map_node.add_child(new_door)
 		new_door.global_position = layer_floor.map_to_local(data["pos"])
+	restore_signals_from_array(temp_signals_save)
 	temp_doors_save.clear()
 
 func _on_player_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
@@ -491,3 +494,42 @@ func _stop_configuring_interactive() -> void:
 func _inverse_path() -> void:
 	if has_node("InteractiveManager"):
 		$InteractiveManager._inverse_path()
+
+func build_signals_array() -> Array:
+	var door_platform_list = []
+	for door in get_tree().get_nodes_in_group("Doors"):
+		if door.is_queued_for_deletion(): continue
+		var d_pos = layer_floor.local_to_map(door.global_position)
+		var current_link = []
+		for plat in spawned_platforms.values():
+			if is_instance_valid(plat):
+				var plat_area = plat.get_node_or_null("New_Platform")
+				if plat_area and plat_area.is_linked_to_door:
+					if plat_area.linked_door_pos == d_pos:
+						var p_pos = plat_area.way[0]
+						current_link.append([p_pos.x, p_pos.y])
+		if not current_link.is_empty():
+			current_link.append([d_pos.x, d_pos.y])
+			door_platform_list.append(current_link)
+	return door_platform_list
+
+func restore_signals_from_array(door_platform_list: Array) -> void:
+	for link_list in door_platform_list:
+		if link_list.size() < 2: continue
+		var door_coords = link_list.back()
+		var door_pos = Vector2i(int(door_coords[0]), int(door_coords[1]))
+		var door_node = null
+		if has_node("InteractiveManager"):
+			door_node = $InteractiveManager._get_door_at(door_pos) 
+		for i in range(link_list.size() - 1):
+			var plat_coords = link_list[i]
+			var plat_pos = Vector2i(int(plat_coords[0]), int(plat_coords[1]))
+			var plat_node = null
+			if has_node("InteractiveManager"):
+				plat_node = $InteractiveManager._get_platform_at(plat_pos)
+			if plat_node != null:
+				var plat_area = plat_node.get_node("New_Platform")
+				plat_area.is_linked_to_door = true
+				plat_area.linked_door_pos = door_pos
+				if door_node != null:
+					plat_area.linked_door_node = door_node

@@ -534,6 +534,8 @@ func is_hidden_at(tile_pos: Vector2i) -> bool:
 
 func is_door_at(tile_pos: Vector2i) -> bool:
 	for door in get_tree().get_nodes_in_group("Doors"):
+		if door.is_queued_for_deletion() or not door.is_visible_in_tree():
+			continue
 		if node_map.local_to_map(door.global_position) == tile_pos:
 			return true
 	return false

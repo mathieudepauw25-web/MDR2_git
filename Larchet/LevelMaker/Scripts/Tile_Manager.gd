@@ -135,6 +135,8 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 				update_smart_area(grid_pos)
 				
 		TileSkinData.Brush.WALL:
+			if _is_protected_entity_at(grid_pos):
+				return
 			if main.layer_wall.get_cell_source_id(grid_pos) != TileSkinData.WALL_SOURCE_ID:
 				main._remove_fragile(grid_pos)
 				main._remove_hidden(grid_pos)
@@ -196,6 +198,8 @@ func _apply_brush_to_layer(grid_pos: Vector2i, target_layer: TileMapLayer, sourc
 
 func erase_all_layers(specific_pos = null) -> void:
 	var grid_pos = specific_pos if specific_pos != null else main.layer_wall.local_to_map(main.get_global_mouse_position())
+	if _is_protected_entity_at(grid_pos):
+		return
 	if main._get_platform_at(grid_pos) != null:
 		return
 	var arrival_pos = main.layer_floor.local_to_map(main.sprite_arrival.global_position)
@@ -546,3 +550,19 @@ func rafraichir_autotiling_global() -> void:
 			apply_bitmask_to_single_cell(pos, main.layer_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
 		if get_source_id(main.layer_ice, pos) == TileSkinData.ICE_SOURCE_ID:
 			apply_bitmask_to_single_cell(pos, main.layer_ice, TileSkinData.grass_bitmask_repo, TileSkinData.ICE_SOURCE_ID)
+
+func _is_protected_entity_at(grid_pos: Vector2i) -> bool:
+	var player_pos = main.layer_floor.local_to_map(main.sprite_player.global_position)
+	if grid_pos == player_pos:
+		return true
+	for door in get_tree().get_nodes_in_group("Doors"):
+		if door.is_queued_for_deletion():
+			continue
+		if main.layer_floor.local_to_map(door.global_position) == grid_pos:
+			return true
+		var keys_container = door.get_node_or_null("Keys")
+		if keys_container:
+			for key in keys_container.get_children():
+				if not key.is_queued_for_deletion() and main.layer_floor.local_to_map(key.global_position) == grid_pos:
+					return true
+	return false

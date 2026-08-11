@@ -6,6 +6,7 @@ signal mode3_toggled()
 
 signal edit_mode_changed(new_mode: EditMode)
 signal interactive_type_changed(new_type: InteractiveType)
+signal door_linker_toggled(is_active: bool)
 
 enum EditMode { FLOOR, INTERACTIVE }
 enum InteractiveType { NONE, DOOR, PLATFORM, PORTAL }
@@ -16,6 +17,7 @@ var current_interactive_type: InteractiveType = InteractiveType.NONE
 @onready var lbl_coords: Label = $Coordonnees
 @onready var lbl_grass_mode: Label = $UI_simplifier/grass_mode/Label
 @onready var lbl_OL: Label = $UI_simplifier/Btn_Open_Locked/Label
+@onready var lbl_door_linker: Label = $Property/Doors/Btn_Door_Linker/Label
 @onready var lbl_test: Label = $UI_simplifier/Btn_Test/Label
 @onready var lbl_move: Label = $UI_simplifier/Btn_Move/Label
 @onready var lbl_tester: Label = $UI_simplifier/Btn_Tester/Label
@@ -23,6 +25,7 @@ var current_interactive_type: InteractiveType = InteractiveType.NONE
 @onready var btn_grass_mode: Button = %grass_mode
 @onready var btn_mode3: Button = %Btn_Mode3
 @onready var btn_OL: Button = %Btn_Open_Locked
+@onready var btn_door_linker: Button = %Btn_Door_Linker
 @onready var btn_test: Button = %Btn_Test
 @onready var btn_save: Button = %Btn_Save
 @onready var btn_move: Button = %Btn_Move
@@ -38,7 +41,6 @@ var current_interactive_type: InteractiveType = InteractiveType.NONE
 
 @onready var property: PanelContainer = $Property
 @onready var doors: PanelContainer = $Property/Doors
-@onready var doors_spin_box: SpinBox = $Property/Doors/DoorsSpinBox
 @onready var platforms: PanelContainer = $Property/Platforms
 @onready var portals: PanelContainer = $Property/Portals
 @onready var select_out: Button = $Property/Portals/Select_Out
@@ -57,6 +59,7 @@ var current_interactive_type: InteractiveType = InteractiveType.NONE
 
 var grass_mode: int = 1
 var is_locked: bool = false
+var is_linking_doors: bool = false
 
 func _ready() -> void:
 	var brush_group = ButtonGroup.new()
@@ -85,6 +88,7 @@ func _ready() -> void:
 	btn_mode3.visible = false
 	
 	btn_OL.pressed.connect(_on_OL_pressed)
+	btn_door_linker.pressed.connect((_on_linker_pressed))
 	btn_test.pressed.connect(_on_test_pressed)
 	btn_save.pressed.connect(_on_save_pressed)
 	btn_move.pressed.connect(_on_move_pressed)
@@ -95,10 +99,20 @@ func _ready() -> void:
 	btn_portals.pressed.connect(_on_portals_pressed)
 
 # ==========================================
+# NOUVEAU : DÉSACTIVATION DU LINKER
+# ==========================================
+func desactiver_door_linker() -> void:
+	if is_linking_doors:
+		is_linking_doors = false
+		lbl_door_linker.text = "L"
+		door_linker_toggled.emit(false)
+
+# ==========================================
 # GESTION DES MODES D'ÉDITION
 # ==========================================
 
 func _selectionner_brush(brush_type: TileSkinData.Brush) -> void:
+	desactiver_door_linker()
 	property.hide()
 	current_edit_mode = EditMode.FLOOR
 	current_interactive_type = InteractiveType.NONE
@@ -122,6 +136,7 @@ func _on_doors_pressed() -> void:
 	doors.visible = true
 
 func _on_platforms_pressed() -> void:
+	desactiver_door_linker()
 	_set_interactive_mode(InteractiveType.PLATFORM)
 	property.visible = true
 	for UI in property.get_children():
@@ -130,6 +145,7 @@ func _on_platforms_pressed() -> void:
 	platforms.visible = true
 
 func _on_portals_pressed() -> void:
+	desactiver_door_linker()
 	_set_interactive_mode(InteractiveType.PORTAL)
 	property.visible = true
 	for UI in property.get_children():
@@ -179,6 +195,14 @@ func _on_OL_pressed() -> void:
 		lbl_OL.text = "L"
 		is_locked = true
 
+func _on_linker_pressed() -> void:
+	is_linking_doors = !is_linking_doors
+	if is_linking_doors:
+		lbl_door_linker.text = "I"
+	else:
+		lbl_door_linker.text = "L"
+	door_linker_toggled.emit(is_linking_doors)
+
 func _on_mode3_pressed() -> void:
 	mode3_toggled.emit()
 	btn_herbe.button_pressed = true
@@ -188,6 +212,7 @@ func update_coords(x: int, y: int) -> void:
 	lbl_coords.text = "X: %d, Y: %d" % [x, y]
 
 func _on_test_pressed() -> void:
+	desactiver_door_linker()
 	if lbl_test.text == ">":
 		if not get_parent()._is_player_stable():
 			print("Veuillez positionner le player sur une case stable")
@@ -204,6 +229,7 @@ func _on_test_pressed() -> void:
 		get_parent().back_to_editor()
 
 func _on_tester_pressed() -> void:
+	desactiver_door_linker()
 	if lbl_tester.text == "T":
 		if not get_parent()._is_player_stable():
 			print("Veuillez positionner le player sur une case stable")

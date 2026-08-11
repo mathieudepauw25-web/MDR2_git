@@ -8,7 +8,6 @@ var node_tile_map_layer_wall: TileMapLayer
 @onready var node_label: Label = %Label
 @onready var nb_keys: Label = %nb_keys
 
-@export var index_door: = 0
 @export var position_show: = Vector2(-11.0, -20.0)
 @export var position_hide: = Vector2(-11.0, -6.0)
 @export var debug_keys_coords: Array[Vector2] = [] 
@@ -75,11 +74,10 @@ func update_key_display() -> void:
 # ----- Fonctionnement -----
 
 func open_door() -> void :
-	print(self.name + " Open")
 	if node_tile_map_layer_wall != null:
 		node_tile_map_layer_wall.erase_cell(node_map.local_to_map(global_position))
-	if index_door == 2:
-		EVENTS.emit_signal("door2")
+	var my_pos = node_map.local_to_map(global_position)
+	get_tree().call_group("LinkedPlatforms", "check_door_opened", my_pos)
 	queue_free()
 
 func gain_key() -> void :
