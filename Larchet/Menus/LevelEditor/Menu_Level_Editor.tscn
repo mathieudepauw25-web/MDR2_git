@@ -26,6 +26,21 @@ label_settings = ExtResource("2_c0k52")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Delete" type="Button" parent="." unique_id=1793962586]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 40.0
+offset_bottom = 55.0
+
+[node name="Label" type="Label" parent="Delete" unique_id=1079756201]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Select"
+label_settings = ExtResource("2_c0k52")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=858687509]
 layout_mode = 0
 offset_left = 16.0

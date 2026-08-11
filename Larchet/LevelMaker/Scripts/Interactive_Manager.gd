@@ -396,7 +396,7 @@ func snap_arrival_to_grid() -> void:
 	var grid_pos = main.layer_floor.local_to_map(main.sprite_arrival.global_position)
 	var player_pos = main.layer_floor.local_to_map(main.sprite_player.global_position)
 	if grid_pos != player_pos and _get_platform_at(grid_pos) == null:
-		main.sprite_arrival.global_position = main.layer_floor.map_to_local(grid_pos) + Vector2(0, -2)
+		main.sprite_arrival.global_position = main.layer_floor.map_to_local(grid_pos)
 		if main.has_node("TileManager"):
 			main.get_node("TileManager").generate_grass_under(grid_pos)
 	else:

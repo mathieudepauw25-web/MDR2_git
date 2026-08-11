@@ -262,7 +262,7 @@ func generer_editeur_depuis_data(map_data: Dictionary) -> void:
 		main.call_deferred("restore_signals_from_array", signals["DoorPlatform"])
 	main.get_node("TileManager").rafraichir_autotiling_global()
 	main.sprite_player.global_position = main.layer_floor.map_to_local(player_grid_pos) + Vector2(0, -2)
-	main.sprite_arrival.global_position = main.layer_floor.map_to_local(arrival_grid_pos) + Vector2(0, -2)
+	main.sprite_arrival.global_position = main.layer_floor.map_to_local(arrival_grid_pos)
 
 func _generer_nouvel_id() -> int:
 	var dir = DirAccess.open(DOSSIER_NIVEAUX)

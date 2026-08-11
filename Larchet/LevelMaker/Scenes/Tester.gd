@@ -85,7 +85,7 @@ func generer_niveau(map_data: Dictionary) -> void:
 	var a_pos = glob.get("arrival_pos", [0, 1])
 	var arrival_grid_pos = Vector2i(int(a_pos[0]), int(a_pos[1]))
 	var arrival_inst = ARRIVAL_SCENE.instantiate()
-	arrival_inst.position = layer_floor.map_to_local(arrival_grid_pos) + Vector2(0, -2)
+	arrival_inst.position = layer_floor.map_to_local(arrival_grid_pos)
 	add_child(arrival_inst)
 	grass_mode = int(glob.get("grass_mode", 1))
 	current_skin_name = str(glob.get("Tile_skin", "Normal"))

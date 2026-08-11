@@ -6,11 +6,15 @@ const LEVEL_EDITOR_SCENE = preload("res://Larchet/LevelMaker/Scenes/Level_Editor
 @export var dossier_niveaux: String = "res://Larchet/LevelMaker/Level_temp/"
 
 @onready var btn_new: Button = $New 
+@onready var btn_delete: Button = $Delete
+@onready var lbl_delete: Label = $Delete/Label
 @onready var hbox: HBoxContainer = $HBoxContainer
 
+var for_delete: bool = false
+
 func _ready() -> void:
-	if btn_new != null:
-		btn_new.pressed.connect(_on_btn_new_pressed)
+	btn_new.pressed.connect(_on_btn_new_pressed)
+	btn_delete.pressed.connect(_on_btn_delete_pressed)
 	generer_liste_niveaux()
 
 func generer_liste_niveaux() -> void:
@@ -18,7 +22,6 @@ func generer_liste_niveaux() -> void:
 		enfant.queue_free()
 	var dir = DirAccess.open(dossier_niveaux)
 	if dir == null:
-		print("Dossier introuvable : ", dossier_niveaux)
 		return
 	dir.list_dir_begin()
 	var fichier_nom = dir.get_next()
@@ -43,7 +46,16 @@ func _creer_bouton_niveau(chemin_json: String, index_fallback: int) -> void:
 		label_enfant.text = nom_niveau
 	else:
 		bouton_instance.text = nom_niveau
-	bouton_instance.pressed.connect(func(): _lancer_editeur(chemin_json))
+	bouton_instance.pressed.connect(func(): _on_level_button_pressed(chemin_json))
+
+func _on_level_button_pressed(chemin_json: String) -> void:
+	if for_delete:
+		var err = DirAccess.remove_absolute(chemin_json)
+		if err == OK:
+			print("Niveau supprimé avec succès : ", chemin_json)
+			generer_liste_niveaux() 
+	else:
+		_lancer_editeur(chemin_json)
 
 func _on_btn_new_pressed() -> void:
 	_lancer_editeur("")
@@ -61,3 +73,10 @@ func _lancer_editeur(chemin_json: String) -> void:
 		editeur_instance.current_level_id = -1
 		editeur_instance.current_file_path = ""
 		editeur_instance.current_level_name = ""
+
+func _on_btn_delete_pressed() -> void:
+	for_delete = !for_delete
+	if for_delete:
+		lbl_delete.text = "Delete"
+	else:
+		lbl_delete.text = "Select"

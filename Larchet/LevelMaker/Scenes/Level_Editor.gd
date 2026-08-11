@@ -130,7 +130,7 @@ func _ready() -> void:
 			layer_ice.set_cell(grid_pos, -1)
 			$TileManager.update_smart_area(grid_pos)
 	var default_arrival_pos = Vector2i(4, 0)
-	sprite_arrival.global_position = layer_floor.map_to_local(default_arrival_pos) + Vector2(0, -2)
+	sprite_arrival.global_position = layer_floor.map_to_local(default_arrival_pos)
 	for x in range(-1, 2):
 		for y in range(-1, 2):
 			var grid_pos = default_arrival_pos + Vector2i(x, y)
@@ -261,15 +261,16 @@ func _gerer_animations_cles(jouer: bool) -> void:
 func play_map():
 	temp_signals_save = build_signals_array()
 	player = PLAYER_SCENE.instantiate()
-	player.position = sprite_player.global_position
+	var p_grid = layer_floor.local_to_map(sprite_player.global_position)
+	player.global_position = layer_floor.map_to_local(p_grid) + Vector2(0, -2)
 	player.z_index = 5
 	add_child(player)
 	sprite_player.visible = false
 	sprite_arrival.visible = false 
 	arrival_instance = ARRIVAL_SCENE.instantiate()
-	arrival_instance.position = sprite_arrival.global_position
+	var a_grid = layer_floor.local_to_map(sprite_arrival.global_position)
+	arrival_instance.global_position = layer_floor.map_to_local(a_grid) + Vector2(0, -2)
 	add_child(arrival_instance)
-	sprite_arrival.visible = false
 	var arrival_grid_pos = layer_floor.local_to_map(sprite_arrival.global_position)
 	if has_node("TileManager"): $TileManager.update_smart_area(arrival_grid_pos)
 	var player_camera = player.get_node_or_null("Camera2D")
