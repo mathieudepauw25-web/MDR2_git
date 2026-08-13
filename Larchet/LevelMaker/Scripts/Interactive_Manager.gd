@@ -15,6 +15,22 @@ func _is_cell_completely_empty(grid_pos: Vector2i, ignore_platforms: bool = fals
 	if main.spawned_hiddens.has(grid_pos): return false
 	if not ignore_platforms and main.spawned_platforms.has(grid_pos): return false
 	if _get_door_at(grid_pos) != null: return false
+	if _get_portal_at(grid_pos) != null: return false
+	return true
+
+func can_place_portal(grid_pos: Vector2i) -> bool:
+	if main.layer_wall.get_cell_source_id(grid_pos) != -1: return false
+	var player_pos = main.layer_floor.local_to_map(main.sprite_player.global_position)
+	var arrival_pos = main.layer_floor.local_to_map(main.sprite_arrival.global_position)
+	if grid_pos == player_pos or grid_pos == arrival_pos: return false
+	if main.spawned_fragiles.has(grid_pos): return false
+	if main.spawned_hiddens.has(grid_pos): return false
+	if _get_platform_at(grid_pos) != null: return false
+	if _get_door_at(grid_pos) != null: return false
+	if not _get_key_at(grid_pos).is_empty(): return false
+	var portal = _get_portal_at(grid_pos)
+	if portal != null and portal != main.active_configured_portal:
+		return false
 	return true
 
 func _get_platform_at(grid_pos: Vector2i) -> Node2D:
@@ -35,6 +51,8 @@ func can_place_door_or_key(tile_pos: Vector2i) -> bool:
 	if a_pos == tile_pos:
 		return false
 	if _get_platform_at(tile_pos) != null:
+		return false
+	if _get_portal_at(tile_pos) != null:
 		return false
 	for door in get_tree().get_nodes_in_group("Doors"):
 		if door != main.active_configured_door or not main.is_dragging_door:
@@ -108,6 +126,55 @@ func _spawn_new_platform(grid_pos: Vector2i) -> void:
 	platform_area.set_way(initial_way)
 	_start_configuring_platform(plat_way_inst, grid_pos)
 
+func _get_portal_at(grid_pos: Vector2i) -> Node2D:
+	for portal in get_tree().get_nodes_in_group("Portals"):
+		if main.layer_floor.local_to_map(portal.global_position) == grid_pos:
+			return portal
+	return null
+
+func get_nearest_valid_portal_tile(start_tile: Vector2i) -> Vector2i:
+	var adjacents = [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
+	for dir in adjacents:
+		var check_tile = start_tile + dir
+		if can_place_portal(check_tile):
+			return check_tile
+	var diagonales = [Vector2i(-1, -1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(1, 1)]
+	for dir in diagonales:
+		var check_tile = start_tile + dir
+		if can_place_portal(check_tile):
+			return check_tile
+	var max_radius: = 10
+	for r in range(2, max_radius):
+		for x in range(-r, r + 1):
+			for y in range(-r, r + 1):
+				if abs(x) == r or abs(y) == r:
+					var check_tile = start_tile + Vector2i(x, y)
+					if can_place_portal(check_tile):
+						return check_tile
+	return start_tile
+
+func _spawn_new_portal(grid_pos: Vector2i) -> void:
+	var is_first = get_tree().get_nodes_in_group("Portals").is_empty()
+	var new_portal = main.PORTAL_SCENE.instantiate()
+	main.map_node.add_child(new_portal)
+	new_portal.global_position = main.layer_floor.map_to_local(grid_pos)
+	main.active_configured_portal = new_portal
+	if is_first:
+		var second_pos = get_nearest_valid_portal_tile(grid_pos)
+		if second_pos != grid_pos:
+			var second_portal = main.PORTAL_SCENE.instantiate()
+			main.map_node.add_child(second_portal)
+			second_portal.global_position = main.layer_floor.map_to_local(second_pos)
+			new_portal.target_portal_pos = second_pos
+			new_portal.target_portal_node = second_portal
+			new_portal.target_portal = second_portal
+			second_portal.target_portal_pos = grid_pos
+			second_portal.target_portal_node = new_portal
+			second_portal.target_portal = new_portal
+	if main.selection:
+		main.selection.global_position = main.layer_floor.map_to_local(grid_pos) - Vector2(8, 8)
+		main.selection.visible = true
+
 func _handle_interactive_click(grid_pos: Vector2i, is_just_clicked: bool) -> void:
 	if is_just_clicked and main.ui_layer.get("is_linking_doors") and main.ui_layer.is_linking_doors:
 		var clicked_plat = _get_platform_at(grid_pos)
@@ -124,6 +191,15 @@ func _handle_interactive_click(grid_pos: Vector2i, is_just_clicked: bool) -> voi
 			return
 		elif _get_door_at(grid_pos) == null and _get_key_at(grid_pos).is_empty():
 			return
+	if is_just_clicked and main.ui_layer.get("is_linking_portals") and main.ui_layer.is_linking_portals:
+		var clicked_portal = _get_portal_at(grid_pos)
+		if clicked_portal != null and main.active_configured_portal != null and clicked_portal != main.active_configured_portal:
+			main.active_configured_portal.target_portal_pos = main.layer_floor.local_to_map(clicked_portal.global_position)
+			main.active_configured_portal.target_portal_node = clicked_portal
+			main.active_configured_portal.target_portal = clicked_portal
+			if main.ui_layer.has_method("desactiver_portal_linker"):
+				main.ui_layer.desactiver_portal_linker()
+		return
 	match main.current_interactive_type:
 		main.InteractiveType.PLATFORM:
 			if is_just_clicked:
@@ -182,7 +258,23 @@ func _handle_interactive_click(grid_pos: Vector2i, is_just_clicked: bool) -> voi
 					_spawn_new_door(grid_pos)
 					return
 		main.InteractiveType.PORTAL:
-			pass
+			if is_just_clicked:
+				var clicked_portal = _get_portal_at(grid_pos)
+				if clicked_portal != null:
+					if main.ui_layer.has_method("desactiver_portal_linker"):
+						main.ui_layer.desactiver_portal_linker()
+					main.active_configured_portal = clicked_portal
+					main.is_dragging_portal = true
+					main.portal_drag_start_pos = clicked_portal.global_position
+					if main.selection:
+						main.selection.global_position = main.layer_floor.map_to_local(grid_pos) - Vector2(8, 8)
+						main.selection.visible = true
+					return
+				if can_place_portal(grid_pos):
+					if main.ui_layer.has_method("desactiver_portal_linker"):
+						main.ui_layer.desactiver_portal_linker()
+					_spawn_new_portal(grid_pos)
+					return
 
 func handle_drag_input(event: InputEvent) -> void:
 	if main.is_dragging_player:
@@ -220,7 +312,6 @@ func handle_drag_input(event: InputEvent) -> void:
 					main.selection.visible = true
 				main.dragged_platform = null
 				main.get_viewport().set_input_as_handled()
-				
 	if main.is_dragging_door and is_instance_valid(main.active_configured_door):
 		if event is InputEventMouseMotion:
 			main.active_configured_door.global_position = main.get_global_mouse_position()
@@ -241,7 +332,6 @@ func handle_drag_input(event: InputEvent) -> void:
 				if main.selection:
 					main.selection.global_position = main.active_configured_door.global_position - Vector2(8, 8)
 				main.get_viewport().set_input_as_handled()
-				
 	if main.is_dragging_key and is_instance_valid(main.active_configured_key):
 		if event is InputEventMouseMotion:
 			main.active_configured_key.global_position = main.get_global_mouse_position()
@@ -249,18 +339,29 @@ func handle_drag_input(event: InputEvent) -> void:
 		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 			if not event.pressed:
 				var drop_grid_pos = main.layer_floor.local_to_map(main.active_configured_key.global_position)
-				
-				# LA CORRECTION : Pareil ici, avant d'arrêter le drag
 				if can_place_door_or_key(drop_grid_pos):
 					main.active_configured_key.global_position = main.layer_floor.map_to_local(drop_grid_pos)
 				else:
 					main.active_configured_key.global_position = main.key_drag_start_pos
-					
 				main.is_dragging_key = false
-				
 				if main.selection:
 					main.selection.global_position = main.active_configured_key.global_position - Vector2(8, 8)
 				update_door_keys_array(main.active_configured_door)
+				main.get_viewport().set_input_as_handled()
+	if main.is_dragging_portal and is_instance_valid(main.active_configured_portal):
+		if event is InputEventMouseMotion:
+			main.active_configured_portal.global_position = main.get_global_mouse_position()
+			main.get_viewport().set_input_as_handled()
+		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+			if not event.pressed:
+				var drop_grid_pos = main.layer_floor.local_to_map(main.active_configured_portal.global_position)
+				if can_place_portal(drop_grid_pos):
+					main.active_configured_portal.global_position = main.layer_floor.map_to_local(drop_grid_pos)
+				else:
+					main.active_configured_portal.global_position = main.portal_drag_start_pos
+				main.is_dragging_portal = false
+				if main.selection:
+					main.selection.global_position = main.active_configured_portal.global_position - Vector2(8, 8)
 				main.get_viewport().set_input_as_handled()
 
 func _handle_interactive_erase(grid_pos: Vector2i) -> void:
@@ -312,14 +413,22 @@ func _handle_interactive_erase(grid_pos: Vector2i) -> void:
 					key.queue_free()
 					call_deferred("update_door_keys_array", door)
 				return
-				
 			var clicked_door = _get_door_at(grid_pos)
 			if clicked_door != null:
 				if main.active_configured_door == clicked_door:
 					_stop_configuring_interactive()
 				clicked_door.queue_free()
 		main.InteractiveType.PORTAL:
-			pass
+			var clicked_portal = _get_portal_at(grid_pos)
+			if clicked_portal != null:
+				if main.active_configured_portal == clicked_portal:
+					_stop_configuring_interactive()
+				for p in get_tree().get_nodes_in_group("Portals"):
+					if p.get("target_portal_node") == clicked_portal:
+						p.target_portal_node = null
+						p.target_portal_pos = Vector2i.ZERO
+						p.target_portal = null
+				clicked_portal.queue_free()
 
 func _start_configuring_platform(plat_way_inst: Node2D, clicked_pos: Vector2i) -> void:
 	main.active_configured_platform = plat_way_inst
@@ -380,6 +489,7 @@ func _stop_configuring_interactive() -> void:
 	main.active_configured_platform = null
 	main.active_configured_door = null
 	main.active_configured_key = null
+	main.active_configured_portal = null
 	if main.selection != null:
 		main.selection.visible = false
 
@@ -388,7 +498,7 @@ func snap_player_to_grid() -> void:
 	var arrival_pos = main.layer_floor.local_to_map(main.sprite_arrival.global_position)
 	var has_floor = main.layer_floor.get_cell_source_id(grid_pos) != -1 and not main.spawned_fragiles.has(grid_pos)
 	if has_floor and grid_pos != arrival_pos and _get_platform_at(grid_pos) == null:
-		main.sprite_player.global_position = main.layer_floor.map_to_local(grid_pos) + Vector2(0, -2)
+		main.sprite_player.global_position = main.layer_floor.map_to_local(grid_pos) + Vector2(0, -1.5)
 	else:
 		main.sprite_player.global_position = main.player_drag_start_pos
 
@@ -413,24 +523,55 @@ func _process(_delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	if not main.ui_layer.get("is_linking_doors") or not main.ui_layer.is_linking_doors:
-		return
-	var link_color = Color(0.8, 0.2, 0.8, 0.8)
-	var line_width = 3.0
-	for plat in main.spawned_platforms.values():
-		if is_instance_valid(plat):
-			var plat_area = plat.get_node_or_null("New_Platform")
-			if plat_area != null and plat_area.get("is_linked_to_door"):
-				var start_pos = to_local(plat_area.global_position)
-				var end_pos = Vector2.ZERO
-				var should_draw = false
-				if is_instance_valid(plat_area.linked_door_node):
-					end_pos = to_local(plat_area.linked_door_node.global_position)
-					should_draw = true
-				elif plat_area.linked_door_pos != Vector2i.ZERO:
-					end_pos = to_local(main.layer_floor.map_to_local(plat_area.linked_door_pos))
-					should_draw = true
-				if should_draw:
-					draw_line(start_pos, end_pos, link_color, line_width)
-					draw_circle(start_pos, 4.0, link_color)
-					draw_circle(end_pos, 4.0, link_color)
+	if main.ui_layer.get("is_linking_doors") and main.ui_layer.is_linking_doors:
+		var link_color = Color(0.8, 0.2, 0.8, 0.8)
+		var line_width = 3.0
+		for plat in main.spawned_platforms.values():
+			if is_instance_valid(plat):
+				var plat_area = plat.get_node_or_null("New_Platform")
+				if plat_area != null and plat_area.get("is_linked_to_door"):
+					var start_pos = to_local(plat_area.global_position)
+					var end_pos = Vector2.ZERO
+					var should_draw = false
+					if is_instance_valid(plat_area.linked_door_node):
+						end_pos = to_local(plat_area.linked_door_node.global_position)
+						should_draw = true
+					elif plat_area.linked_door_pos != Vector2i.ZERO:
+						end_pos = to_local(main.layer_floor.map_to_local(plat_area.linked_door_pos))
+						should_draw = true
+					if should_draw:
+						draw_line(start_pos, end_pos, link_color, line_width)
+						draw_circle(start_pos, 4.0, link_color)
+						draw_circle(end_pos, 4.0, link_color)
+	if main.current_interactive_type == main.InteractiveType.PORTAL:
+		var portal_color = Color(0.9, 0.6, 0.2, 0.9)
+		var line_width = 2.0
+		var circle_radius = 4.0 / 3.0
+		for portal in get_tree().get_nodes_in_group("Portals"):
+			var target = portal.get("target_portal_node")
+			var should_draw = false
+			var end_pos = Vector2.ZERO
+			if is_instance_valid(target):
+				end_pos = to_local(target.global_position)
+				should_draw = true
+			elif portal.get("target_portal_pos") != null and portal.target_portal_pos != Vector2i.ZERO:
+				end_pos = to_local(main.layer_floor.map_to_local(portal.target_portal_pos))
+				should_draw = true
+			if should_draw:
+				var start_pos = to_local(portal.global_position)
+				draw_line(start_pos, end_pos, portal_color, line_width)
+				draw_circle(start_pos, circle_radius, portal_color)
+				draw_circle(end_pos, circle_radius, portal_color)
+				_draw_arrow_head(start_pos, end_pos, portal_color, 8.0)
+
+func _draw_arrow_head(start_pos: Vector2, end_pos: Vector2, color: Color, size: float) -> void:
+	if start_pos.distance_to(end_pos) < 2.0: return 
+	var direction = (end_pos - start_pos).normalized()
+	var third_point = start_pos + (end_pos - start_pos) / 3.0
+	var tip = third_point + direction * (size / 2.0)
+	var p1 = tip - direction * size + direction.orthogonal() * (size / 1.5)
+	var p2 = tip - direction * size - direction.orthogonal() * (size / 1.5)
+	var arrow_color = color.darkened(0.2)
+	var line_width = 2.0
+	draw_line(tip, p1, arrow_color, line_width)
+	draw_line(tip, p2, arrow_color, line_width)

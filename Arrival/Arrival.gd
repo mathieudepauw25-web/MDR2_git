@@ -5,6 +5,8 @@ var arrival: = false
 var arrivalScreen: PackedScene = preload("res://Interface/ArrivalScreen.tscn")
 
 func _ready() -> void:
+	if not area_entered.is_connected(_on_area_entered):
+		area_entered.connect(_on_area_entered)
 	add_to_group("Arrival")
 
 func _on_area_entered(area: Area2D) -> void :

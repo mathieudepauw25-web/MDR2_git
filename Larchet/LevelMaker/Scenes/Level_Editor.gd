@@ -16,6 +16,7 @@ extends Node2D
 @onready var layer_persp_Wleft: TileMapLayer = %TileMapLayer_perspective_water_left
 @onready var layer_fragile: TileMapLayer = %tileMapLayer_fragile
 @onready var layer_hidden: TileMapLayer = %tileMapLayer_hidden
+@onready var layer_deco: TileMapLayer = %tileMapLayer_deco
 @onready var node_platforms: Node2D = %Platforms
 
 @onready var camera: Camera2D = $Camera2D
@@ -34,11 +35,13 @@ const HIDDEN_SCENE = preload("res://Hidden/Hidden.tscn")
 const SCENE_TEST = preload("res://Larchet/LevelMaker/Scenes/Level_Editor_Tester.tscn")
 const PLATFORM_SCENE = preload("res://New_Platform/New_Platform.tscn")
 const DOOR_SCENE = preload("res://New_Door/New_Door.tscn") 
+const PORTAL_SCENE = preload("res://Larchet/Objet/Portal/Portal.tscn")
 
 var spawned_platforms: Dictionary = {}
 var active_configured_platform: Node2D = null
 var active_configured_door: New_Door = null
 var active_configured_key: Keys = null
+var active_configured_portal: Node2D = null
 
 var current_level_id: int = -1
 var current_level_name: String = ""
@@ -83,9 +86,14 @@ var drag_start_mouse_pos: Vector2 = Vector2.ZERO
 var temp_doors_save: Array = []
 var temp_signals_save: Array = []
 
+var is_dragging_portal: bool = false
+var portal_drag_start_pos: Vector2 = Vector2.ZERO
+
 var grass_mode: int = 1
 var current_brush: TileSkinData.Brush = TileSkinData.Brush.GRASS
 var current_skin_name: String = "Normal"
+var current_deco_category: String = "flower"
+var current_deco_index: int = 0
 
 var is_dragging_player: bool = false
 var player_drag_start_pos: Vector2 = Vector2.ZERO
@@ -155,6 +163,7 @@ func _ready() -> void:
 		ui_layer.interactive_type_changed.connect(func(type): 
 			current_interactive_type = type
 			_stop_configuring_interactive())
+	_update_deco_ui()
 
 func _process(_delta: float) -> void:
 	queue_redraw()
@@ -234,15 +243,24 @@ func _unhandled_input(event: InputEvent) -> void:
 			var mouse_pos = get_global_mouse_position()
 			var grid_pos = layer_floor.local_to_map(mouse_pos)
 			if current_edit_mode == EditMode.FLOOR:
-				if has_node("TileManager"): $TileManager.erase_all_layers()
+				if has_node("TileManager"): $TileManager.erase_all_layers(null, is_right_just_clicked)
 			elif current_edit_mode == EditMode.INTERACTIVE and is_right_just_clicked:
 				if has_node("InteractiveManager"): $InteractiveManager._handle_interactive_erase(grid_pos)
-	if event is InputEventKey:
-		if event.keycode == KEY_SPACE and not event.echo:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_SPACE:
 			$TileManager.refresh_all_grass()
-		if event.is_action_pressed("ui_cancel"):
+		elif event.is_action_pressed("ui_cancel"):
 			queue_free()
 			get_tree().change_scene_to_file("res://Larchet/Menus/LevelEditor/Menu_Level_Editor.tscn")
+		elif current_edit_mode == EditMode.FLOOR and current_brush == TileSkinData.Brush.DECO:
+			if event.keycode == KEY_RIGHT:
+				_cycle_deco_category(1)
+			elif event.keycode == KEY_LEFT:
+				_cycle_deco_category(-1)
+			elif event.keycode == KEY_UP:
+				_cycle_deco_index(1)
+			elif event.keycode == KEY_DOWN:
+				_cycle_deco_index(-1)
 
 func _gerer_animations_cles(jouer: bool) -> void:
 	for door in get_tree().get_nodes_in_group("Doors"):
@@ -262,14 +280,14 @@ func play_map():
 	temp_signals_save = build_signals_array()
 	player = PLAYER_SCENE.instantiate()
 	var p_grid = layer_floor.local_to_map(sprite_player.global_position)
-	player.global_position = layer_floor.map_to_local(p_grid) + Vector2(0, -2)
+	player.global_position = layer_floor.map_to_local(p_grid) + Vector2(0, -1.5)
 	player.z_index = 5
 	add_child(player)
 	sprite_player.visible = false
 	sprite_arrival.visible = false 
 	arrival_instance = ARRIVAL_SCENE.instantiate()
 	var a_grid = layer_floor.local_to_map(sprite_arrival.global_position)
-	arrival_instance.global_position = layer_floor.map_to_local(a_grid) + Vector2(0, -2)
+	arrival_instance.global_position = layer_floor.map_to_local(a_grid) + Vector2(0, -1.5)
 	add_child(arrival_instance)
 	var arrival_grid_pos = layer_floor.local_to_map(sprite_arrival.global_position)
 	if has_node("TileManager"): $TileManager.update_smart_area(arrival_grid_pos)
@@ -344,7 +362,6 @@ func _input(event: InputEvent) -> void:
 	if has_node("InteractiveManager"):
 		$InteractiveManager.handle_drag_input(event)
 
-# ... [Garder apply_skin_to_fragile / hidden, spawn / remove fragiles et hiddens, is_player_stable INTACTS] ...
 func apply_skin_to_fragile(fragile_node: Node2D) -> void:
 	if layer_fragile == null: return
 	var grid_pos = layer_fragile.local_to_map(fragile_node.position)
@@ -534,3 +551,22 @@ func restore_signals_from_array(door_platform_list: Array) -> void:
 				plat_area.linked_door_pos = door_pos
 				if door_node != null:
 					plat_area.linked_door_node = door_node
+
+func _cycle_deco_category(direction: int) -> void:
+	var categories = ["flower", "rock", "plant", "arrow"]
+	var idx = categories.find(current_deco_category)
+	idx = posmod(idx + direction, categories.size())
+	current_deco_category = categories[idx]
+	current_deco_index = 0
+	_update_deco_ui()
+
+func _cycle_deco_index(direction: int) -> void:
+	var max_size = 4 
+	if current_deco_category == "arrow": max_size = 4
+	current_deco_index = posmod(current_deco_index + direction, max_size)
+	_update_deco_ui()
+
+func _update_deco_ui() -> void:
+	if has_node("TileManager") and ui_layer.has_method("update_deco_icon"):
+		var coords = $TileManager.get_deco_atlas_coords(current_deco_category, current_deco_index)
+		ui_layer.update_deco_icon(coords)

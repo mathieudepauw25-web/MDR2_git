@@ -4,7 +4,7 @@ class_name Secret
 @export var index_star: = 0
 @export var secret_data: Resource = null: set = set_secret_data
 @onready var node_sprite_2d: Sprite2D = %Sprite2D2
-@onready var node_map: TileMapLayer = %MAP
+@onready var node_map: TileMapLayer = $"../.."
 @onready var node_animation_player: AnimationPlayer = %AnimationPlayer
 @onready var node_cpu_particles_2d: CPUParticles2D = %CPUParticles2D
 @onready var node_point_light_2d: PointLight2D = %PointLight2D

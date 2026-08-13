@@ -389,23 +389,6 @@ stream_1/volume = -4.75
 stream_2/stream = ExtResource("20")
 stream_2/volume = -9.94
 
-[sub_resource type="LabelSettings" id="LabelSettings_22cg1"]
-font = ExtResource("21")
-font_color = Color(0.943525, 0.856988, 0.589854, 1)
-outline_size = 4
-outline_color = Color(0.270588, 0.239216, 0.298039, 1)
-
-[sub_resource type="Gradient" id="Gradient_8s6eu"]
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_d30jc"]
-gradient = SubResource("Gradient_8s6eu")
-width = 16
-height = 16
-fill = 1
-fill_from = Vector2(0.568376, 0.508547)
-fill_to = Vector2(0.123932, 0.709402)
-
 [sub_resource type="LabelSettings" id="LabelSettings_kopvp"]
 font = ExtResource("21")
 outline_size = 2
@@ -560,21 +543,25 @@ animations = [{
 }]
 
 [node name="Player" type="Area2D" unique_id=1490852818]
+z_index = 5
+y_sort_enabled = true
 collision_mask = 14
 script = ExtResource("1")
 buffer_timing = 0.4
 timming_first_move = 0.25
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=573894578]
+y_sort_enabled = true
 position = Vector2(0, 4)
 texture = SubResource("AtlasTexture_jt7i3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=562986644]
 light_mask = 0
+y_sort_enabled = true
 sprite_frames = ExtResource("3_vtj8b")
-animation = &"Locked"
+animation = &"Original"
 autoplay = "Original"
-frame_progress = 0.4815744
+frame_progress = 0.1673735
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=769996215]
 unique_name_in_owner = true
@@ -594,6 +581,7 @@ randomStrength = 10.0
 
 [node name="StateMachine" type="Node2D" parent="." unique_id=404827063]
 unique_name_in_owner = true
+y_sort_enabled = true
 script = ExtResource("4")
 
 [node name="Idle" type="Node" parent="StateMachine" unique_id=1245054119]
@@ -658,6 +646,8 @@ libraries/ = SubResource("AnimationLibrary_po7rf")
 [node name="ParticuleDash" type="CPUParticles2D" parent="." unique_id=339537732]
 unique_name_in_owner = true
 show_behind_parent = true
+z_index = 5
+y_sort_enabled = true
 emitting = false
 amount = 15
 texture = SubResource("AtlasTexture_d47mi")
@@ -668,6 +658,8 @@ color_ramp = SubResource("Gradient_jpx4n")
 
 [node name="ParticlesSuperdash" type="GPUParticles2D" parent="." unique_id=1408278161]
 show_behind_parent = true
+z_index = 5
+y_sort_enabled = true
 emitting = false
 amount = 40
 amount_ratio = 0.4
@@ -684,6 +676,8 @@ unique_name_in_owner = true
 visible = false
 modulate = Color(1, 1, 1, 0.721569)
 show_behind_parent = true
+z_index = 5
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_nvttr")
 animation = &"dashUD"
 frame = 6
@@ -692,8 +686,10 @@ offset = Vector2(-8, -10)
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1015705659]
 show_behind_parent = true
+y_sort_enabled = true
 color = Color(1, 1, 1, 0.392157)
 energy = 1.66
+range_z_max = 5
 texture = SubResource("GradientTexture2D_ume3d")
 
 [node name="SFX" type="Node" parent="." unique_id=851893198]
@@ -740,70 +736,6 @@ unique_name_in_owner = true
 stream = ExtResource("22_rqaa0")
 
 [node name="NEUTRAL_PARENT" type="Node" parent="." unique_id=2139188805]
-
-[node name="Label_key_collect2" type="Control" parent="NEUTRAL_PARENT" unique_id=93854202]
-unique_name_in_owner = true
-visible = false
-light_mask = 2
-visibility_layer = 2
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -90.0
-offset_right = -160.0
-offset_bottom = -90.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label_key_collect" type="Label" parent="NEUTRAL_PARENT/Label_key_collect2" unique_id=1526571157]
-unique_name_in_owner = true
-layout_mode = 0
-offset_right = 14.0
-offset_bottom = 14.0
-pivot_offset = Vector2(13, 7)
-text = "1
-"
-label_settings = SubResource("LabelSettings_22cg1")
-horizontal_alignment = 1
-metadata/_edit_lock_ = true
-
-[node name="Label_key_collect_on" type="Label" parent="NEUTRAL_PARENT/Label_key_collect2" unique_id=1045630676]
-unique_name_in_owner = true
-modulate = Color(0.847059, 0.682353, 0.00784314, 1)
-layout_mode = 0
-offset_left = 6.0
-offset_right = 20.0
-offset_bottom = 14.0
-pivot_offset = Vector2(7, 7)
-text = "/
-"
-label_settings = SubResource("LabelSettings_22cg1")
-horizontal_alignment = 1
-metadata/_edit_lock_ = true
-
-[node name="Label_key_need" type="Label" parent="NEUTRAL_PARENT/Label_key_collect2" unique_id=770257111]
-unique_name_in_owner = true
-modulate = Color(0.847059, 0.682353, 0.00784314, 1)
-layout_mode = 0
-offset_left = 12.0
-offset_right = 26.0
-offset_bottom = 14.0
-pivot_offset = Vector2(1, 7)
-text = "2
-"
-label_settings = SubResource("LabelSettings_22cg1")
-horizontal_alignment = 1
-metadata/_edit_lock_ = true
-
-[node name="PointLight2D" type="PointLight2D" parent="NEUTRAL_PARENT/Label_key_collect2" unique_id=1297554963]
-light_mask = 2
-visibility_layer = 0
-position = Vector2(13, 7)
-texture = SubResource("GradientTexture2D_d30jc")
 
 [node name="Visual_start" type="Node2D" parent="." unique_id=404197647]
 unique_name_in_owner = true
@@ -1019,8 +951,6 @@ frame = 19
 frame_progress = 1.0
 metadata/_edit_lock_ = true
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="area_exited" from="." to="." method="_on_area_exited"]
 [connection signal="state_changed" from="StateMachine" to="." method="_on_state_machine_state_changed"]
 [connection signal="timeout" from="Timer_first_move" to="." method="_on_timer_first_move_timeout"]
 [connection signal="timeout" from="Timer_pok" to="." method="_on_timer_pok_timeout"]

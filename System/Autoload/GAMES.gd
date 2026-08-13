@@ -239,11 +239,11 @@ func update_best_time(global_time: float) -> void :
 		game_data.previous_best_time = game_data.best_global_time
 		game_data.best_global_time = global_time
 
-	if SteamisRunning:
+	#if SteamisRunning:
 
 
-		Steam.uploadLeaderboardScore(int(game_data.best_global_time * 1000), true, PackedInt32Array(), GAMES.leaderboard_handles["Highscore"])
-		print("Upload best time on Steam for leaderboard : ", BoardHandleName)
+		#Steam.uploadLeaderboardScore(int(game_data.best_global_time * 1000), true, PackedInt32Array(), GAMES.leaderboard_handles["Highscore"])
+		#print("Upload best time on Steam for leaderboard : ", BoardHandleName)
 
 	if floori(global_time) < 60 * 7: unlock_succes(1)
 	if floori(global_time) < 60 * 3 + 30: unlock_succes(2)

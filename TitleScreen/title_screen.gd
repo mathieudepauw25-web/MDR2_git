@@ -26,7 +26,7 @@ func _ready() -> void :
 	EVENTS.connect("save", update_text)
 	Engine.time_scale = 1
 	EVENTS.emit_signal("starting")
-	EVENTS.emit_signal("door2")
+	get_tree().call_group("LinkedPlatforms", "force_start")
 	#$CanvasLayer / TimerBest.visible = true
 	$CanvasLayer / Label_version.text = str(ProjectSettings.get_setting("application/config/version"))
 	check_completion()

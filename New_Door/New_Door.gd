@@ -14,6 +14,7 @@ var node_tile_map_layer_wall: TileMapLayer
 
 var nb_keys_needed: = 1
 var nb_key: = 0
+var keys_grabbed: = 0
 var player_in_range: = false
 
 func _init_maps() -> void:
@@ -28,6 +29,14 @@ func _init_maps() -> void:
 func _ready() -> void :
 	add_to_group("Doors")
 	_init_maps()
+	if not area_entered.is_connected(_on_area_entered):
+		area_entered.connect(_on_area_entered)
+	var detect_area = get_node_or_null("DetectShow") 
+	if detect_area != null:
+		if not detect_area.area_entered.is_connected(_on_detect_show_area_entered):
+			detect_area.area_entered.connect(_on_detect_show_area_entered)
+		if not detect_area.area_exited.is_connected(_on_detect_show_area_exited):
+			detect_area.area_exited.connect(_on_detect_show_area_exited)
 	var keys_container = get_node_or_null("Keys")
 	if keys_container:
 		keys_container.set_as_top_level(true)

@@ -2,17 +2,29 @@ extends Area2D
 class_name Fragile
 
 @onready var node_animation_player: AnimationPlayer = %AnimationPlayer
-@onready var node_tile_map_layer_floor: TileMapLayer = owner
 @onready var node_timer_repop: Timer = %Timer_repop
 @onready var sprite: Sprite2D = %Sprite2D
 
 @export var delay_repop: = 4.0
+@export var saved_texture: Texture2D
+@export var saved_atlas_coords: Vector2i
+@export var saved_true_square: bool
+@export var is_skin_saved: bool = false
+
 var link_player: Area2D = null
 var is_falling: = false
 var base_offset: Vector2 = Vector2.ZERO
 
 @warning_ignore("unused_signal")
 signal erase_floor_tile(v_global_position)
+
+func _ready() -> void:
+	if not area_entered.is_connected(_on_area_entered):
+		area_entered.connect(_on_area_entered)
+	if not area_exited.is_connected(_on_area_exited):
+		area_exited.connect(_on_area_exited)
+	if is_skin_saved and saved_texture != null:
+		set_skin(saved_texture, saved_atlas_coords, saved_true_square)
 
 func reset_to_editor() -> void:
 	is_falling = false
@@ -33,6 +45,10 @@ func set_skin(base_texture: Texture2D, atlas_coords: Vector2i, true_square: bool
 		base_offset = Vector2(0.5, -0.5)
 	sprite.texture = atlas
 	sprite.position = base_offset
+	saved_texture = base_texture
+	saved_atlas_coords = atlas_coords
+	saved_true_square = true_square
+	is_skin_saved = true
 
 func collapsing() -> void :
 	node_animation_player.play("Collapse")

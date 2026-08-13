@@ -1,6 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://c4uw1sar467f8"]
+[gd_scene format=3 uid="uid://c4uw1sar467f8"]
 
-[ext_resource type="Script" path="res://Door/Door.gd" id="1"]
+[ext_resource type="Script" uid="uid://bsuhcbxdfapch" path="res://Door/Door.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="2"]
 [ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="3"]
 
@@ -26,25 +26,25 @@ font_color = Color(0.943525, 0.856988, 0.589854, 1)
 outline_size = 4
 outline_color = Color(0.270588, 0.239216, 0.298039, 1)
 
-[node name="Door" type="Area2D"]
+[node name="Door" type="Area2D" unique_id=1667296857]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1")
 position_show = Vector2(-11, -17)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1414960840]
 texture = SubResource("AtlasTexture_xe8jc")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1113046340]
 shape = SubResource("RectangleShape2D_qjtbi")
 metadata/_edit_lock_ = true
 
-[node name="DetectShow" type="Area2D" parent="."]
+[node name="DetectShow" type="Area2D" parent="." unique_id=60924107]
 
-[node name="range_show" type="CollisionShape2D" parent="DetectShow"]
+[node name="range_show" type="CollisionShape2D" parent="DetectShow" unique_id=721185724]
 shape = SubResource("RectangleShape2D_ovy8j")
 
-[node name="Bulle" type="TextureRect" parent="DetectShow"]
+[node name="Bulle" type="TextureRect" parent="DetectShow" unique_id=1225188251]
 unique_name_in_owner = true
 offset_left = -18.0
 offset_top = -17.0
@@ -53,8 +53,8 @@ offset_bottom = -4.0
 pivot_offset = Vector2(13, 6)
 texture = SubResource("MeshTexture_gkkpt")
 
-[node name="IconKey" type="TextureRect" parent="DetectShow/Bulle"]
-layout_mode = 2
+[node name="IconKey" type="TextureRect" parent="DetectShow/Bulle" unique_id=108225706]
+layout_mode = 0
 offset_left = -1.0
 offset_top = 3.0
 offset_right = 15.0
@@ -62,9 +62,9 @@ offset_bottom = 19.0
 texture = SubResource("AtlasTexture_f3w0x")
 metadata/_edit_lock_ = true
 
-[node name="on" type="Label" parent="DetectShow/Bulle"]
+[node name="on" type="Label" parent="DetectShow/Bulle" unique_id=165723638]
 modulate = Color(0.847059, 0.682353, 0.00784314, 1)
-layout_mode = 2
+layout_mode = 0
 offset_left = 21.0
 offset_top = -1.0
 offset_right = 27.0
@@ -74,10 +74,10 @@ text = "/
 label_settings = SubResource("LabelSettings_dl0pj")
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="DetectShow/Bulle"]
+[node name="Label2" type="Label" parent="DetectShow/Bulle" unique_id=1579188108]
 unique_name_in_owner = true
 modulate = Color(0.847059, 0.682353, 0.00784314, 1)
-layout_mode = 2
+layout_mode = 0
 offset_left = 22.0
 offset_top = -1.0
 offset_right = 38.0
@@ -87,9 +87,9 @@ text = "2
 label_settings = SubResource("LabelSettings_dl0pj")
 horizontal_alignment = 1
 
-[node name="Label" type="Label" parent="DetectShow/Bulle"]
+[node name="Label" type="Label" parent="DetectShow/Bulle" unique_id=574686339]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 0
 offset_left = 15.0
 offset_top = -1.0
 offset_right = 21.0

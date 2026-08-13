@@ -16,6 +16,7 @@ extends Node2D
 @onready var layer_persp_Wleft: TileMapLayer = %TileMapLayer_perspective_water_left
 @onready var layer_fragile: TileMapLayer = %tileMapLayer_fragile
 @onready var layer_hidden: TileMapLayer = %tileMapLayer_hidden
+@onready var layer_deco: TileMapLayer = %tileMapLayer_deco
 @onready var node_platforms: Node2D = %Platforms
 
 const PLAYER_SCENE = preload("res://Player/Player.tscn")
@@ -24,6 +25,7 @@ const FRAGILE_SCENE = preload("res://Fragile/Fragile.tscn")
 const HIDDEN_SCENE = preload("res://Hidden/Hidden.tscn")
 const PLATFORM_SCENE = preload("res://New_Platform/New_Platform.tscn")
 const DOOR_SCENE = preload("res://New_Door/New_Door.tscn")
+const PORTAL_SCENE = preload("res://Larchet/Objet/Portal/Portal.tscn") # Adapte le chemin si nécessaire
 
 var player: Node2D = null
 var spawned_fragiles: Dictionary = {}
@@ -85,8 +87,10 @@ func generer_niveau(map_data: Dictionary) -> void:
 	var a_pos = glob.get("arrival_pos", [0, 1])
 	var arrival_grid_pos = Vector2i(int(a_pos[0]), int(a_pos[1]))
 	var arrival_inst = ARRIVAL_SCENE.instantiate()
+	arrival_inst.name = "Arrival_Instance"
 	arrival_inst.position = layer_floor.map_to_local(arrival_grid_pos)
 	add_child(arrival_inst)
+	arrival_inst.owner = self
 	grass_mode = int(glob.get("grass_mode", 1))
 	current_skin_name = str(glob.get("Tile_skin", "Normal"))
 	var p_pos = glob.get("player_pos", [0, 0])
@@ -130,6 +134,26 @@ func generer_niveau(map_data: Dictionary) -> void:
 	for item in cellules.get("hidden", []):
 		var pos = Vector2i(int(item[0]), int(item[1]))
 		_spawn_hidden(pos, "_hidden")
+	var deco_dict = get_skin_element("", "deco")
+	var cat_names = ["flower", "rock", "plant", "arrow"]
+	for item in cellules.get("deco", []):
+		var pos = Vector2i(int(item[0][0]), int(item[0][1]))
+		var cat_idx = int(item[1][0])
+		var sub_idx = int(item[1][1])
+		if typeof(deco_dict) == TYPE_DICTIONARY and cat_idx >= 0 and cat_idx < cat_names.size():
+			var cat_name = cat_names[cat_idx]
+			var atlas_coords = Vector3i(-1, -1, -1)
+			if cat_name == "arrow":
+				var theme = cell_themes.get(pos, "_light")
+				var sub_cat = "arrow_dark" if theme == "_dark" else "arrow_light"
+				if deco_dict.has("arrow") and deco_dict["arrow"].has(sub_cat):
+					if deco_dict["arrow"][sub_cat].size() > sub_idx:
+						atlas_coords = deco_dict["arrow"][sub_cat][sub_idx]
+			else:
+				if deco_dict.has(cat_name) and deco_dict[cat_name].size() > sub_idx:
+					atlas_coords = deco_dict[cat_name][sub_idx]
+			if atlas_coords.x != -1:
+				layer_deco.set_cell(pos, atlas_coords.z, Vector2i(atlas_coords.x, atlas_coords.y))
 	var interactives = map_data.get("Interactives", {})
 	for plat_data in interactives.get("Platforms", []):
 		var plat_path = []
@@ -142,11 +166,13 @@ func generer_niveau(map_data: Dictionary) -> void:
 		if plat_path.size() > 0:
 			var start_pos = Vector2i(int(plat_path[0][0]), int(plat_path[0][1]))
 			var plat_way_inst = PLATFORM_SCENE.instantiate()
+			plat_way_inst.name = "Platform_%d_%d" % [start_pos.x, start_pos.y]
 			plat_way_inst.position = Vector2.ZERO 
+			node_platforms.add_child(plat_way_inst) 
+			plat_way_inst.owner = self
+			spawned_platforms[start_pos] = plat_way_inst
 			var platform_area = plat_way_inst.get_node("New_Platform")
 			platform_area.position = layer_floor.map_to_local(start_pos)
-			node_platforms.add_child(plat_way_inst) 
-			spawned_platforms[start_pos] = plat_way_inst
 			var restored_way: Array[Vector2i] = []
 			for coord in plat_path:
 				restored_way.append(Vector2i(int(coord[0]), int(coord[1])))
@@ -163,10 +189,35 @@ func generer_niveau(map_data: Dictionary) -> void:
 				var k_pos = door_list[i]
 				keys_coords.append(Vector2(int(k_pos[0]), int(k_pos[1])))
 			var new_door = DOOR_SCENE.instantiate()
+			new_door.name = "Door_%d_%d" % [door_grid_pos.x, door_grid_pos.y]
 			if not keys_coords.is_empty():
 				new_door.debug_keys_coords = keys_coords
 			map_node.add_child(new_door)
+			new_door.owner = self
 			new_door.global_position = layer_floor.map_to_local(door_grid_pos)
+			if not keys_coords.is_empty():
+				new_door.debug_keys_coords = keys_coords
+	var portals_data = interactives.get("Portals", [])
+	var spawned_portals_dict = {}
+	for p_data in portals_data:
+		if p_data.size() == 2:
+			var p_pos1 = Vector2i(int(p_data[0][0]), int(p_data[0][1]))
+			var new_portal = PORTAL_SCENE.instantiate()
+			new_portal.name = "Portal_%d_%d" % [p_pos1.x, p_pos1.y]
+			map_node.add_child(new_portal)
+			new_portal.owner = self
+			new_portal.global_position = layer_floor.map_to_local(p_pos1)
+			spawned_portals_dict[p_pos1] = new_portal
+	for p_data in portals_data:
+		if p_data.size() == 2:
+			var p_pos2 = Vector2i(int(p_data[0][0]), int(p_data[0][1]))
+			var t_pos = Vector2i(int(p_data[1][0]), int(p_data[1][1]))
+			if spawned_portals_dict.has(p_pos2) and spawned_portals_dict.has(t_pos):
+				var portal = spawned_portals_dict[p_pos2]
+				var target = spawned_portals_dict[t_pos]
+				portal.target_portal_pos = t_pos
+				portal.target_portal_node = target
+				portal.target_portal = target
 	var signals = map_data.get("Signals", {})
 	if signals.has("DoorPlatform"):
 		call_deferred("_restaurer_liens_tester", signals["DoorPlatform"])
@@ -211,19 +262,23 @@ func _nettoyer_niveau() -> void:
 	var layers = [layer_floor, layer_wall, layer_ice, layer_persp_right, layer_persp_right_wall, 
 				  layer_persp_Eright_wall, layer_persp_right_ice, layer_persp_up, layer_persp_up_wall, 
 				  layer_persp_up_ice, layer_persp_Wright, layer_persp_Wdown, layer_persp_Wleft, 
-				  layer_fragile, layer_hidden]
+				  layer_fragile, layer_hidden, layer_deco]
 	for l in layers:
 		if l != null: l.clear()
 	for plat in spawned_platforms.values():
 		if is_instance_valid(plat): plat.queue_free()
 	spawned_platforms.clear()
+	for portal in get_tree().get_nodes_in_group("Portals"):
+		portal.queue_free()
 
 func _spawn_player(grid_pos: Vector2i) -> void:
 	if PLAYER_SCENE == null: return
 	player = PLAYER_SCENE.instantiate()
-	player.position = layer_floor.map_to_local(grid_pos) + Vector2(0, -2)
+	player.name = "Player_Instance"
+	player.position = layer_floor.map_to_local(grid_pos) + Vector2(0, -1.5)
 	player.z_index = 5
 	add_child(player)
+	player.owner = self
 	var player_camera = player.get_node_or_null("Camera2D")
 	if player_camera != null:
 		player_camera.make_current()
@@ -233,8 +288,10 @@ func _spawn_fragile(grid_pos: Vector2i, target_theme: String) -> void:
 	layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(14, 0))
 	if layer_fragile != null:
 		var fragile = FRAGILE_SCENE.instantiate()
+		fragile.name = "Fragile_%d_%d" % [grid_pos.x, grid_pos.y]
 		fragile.position = layer_fragile.map_to_local(grid_pos)
 		layer_fragile.add_child(fragile)
+		fragile.owner = self
 		spawned_fragiles[grid_pos] = fragile
 		apply_skin_to_fragile(fragile)
 
@@ -243,8 +300,10 @@ func _spawn_hidden(grid_pos: Vector2i, target_theme: String) -> void:
 	layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(14, 0))
 	if layer_hidden != null:
 		var hidden_inst = HIDDEN_SCENE.instantiate()
+		hidden_inst.name = "Hidden_%d_%d" % [grid_pos.x, grid_pos.y]
 		hidden_inst.position = layer_hidden.map_to_local(grid_pos)
 		layer_hidden.add_child(hidden_inst)
+		hidden_inst.owner = self
 		spawned_hiddens[grid_pos] = hidden_inst
 		apply_skin_to_hidden(hidden_inst)
 
@@ -353,7 +412,6 @@ func is_tile_connected(layer: TileMapLayer, pos: Vector2i, base_source_id: int) 
 func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo: Dictionary, source_id: int) -> void:
 	if layer == null: return
 	var theme = get_grass_theme(cell_pos)
-	
 	if source_id == TileSkinData.GRASS_SOURCE_ID:
 		if theme == "_fragreen" or theme == "_frawood" or theme == "_hidden":
 			apply_custom_cell(layer, cell_pos, source_id, Vector2i(14, 0))
@@ -367,7 +425,6 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 			var bridge_atlas = get_tile_variation(cell_pos, get_skin_element("", bridge_key), bridge_key)
 			apply_custom_cell(layer, cell_pos, source_id, bridge_atlas)
 			return
-			
 	var score : int = 0
 	if source_id == TileSkinData.WALL_SOURCE_ID:
 		if is_tile_connected(layer, cell_pos + Vector2i.UP, source_id):    score += 1
@@ -379,7 +436,6 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 		if is_tile_connected(layer, cell_pos + Vector2i.RIGHT, source_id): score += 2
 		if is_tile_connected(layer, cell_pos + Vector2i.DOWN, source_id):  score += 4
 		if is_tile_connected(layer, cell_pos + Vector2i.LEFT, source_id):  score += 8
-		
 	var main_theme_key = "dark" if theme == "_dark" else "light"
 	if source_id == TileSkinData.GRASS_SOURCE_ID:
 		var main_atlas = get_tile_variation(cell_pos, get_skin_element("floor", main_theme_key), main_theme_key)
@@ -393,7 +449,6 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 		if no_up: apply_custom_cell(active_persp_up_ice, cell_pos + Vector2i.UP, border_source_id, get_tile_variation(cell_pos, get_skin_element("up_ice", "normal_ice"), "up_ice"))
 		if no_right: apply_custom_cell(active_persp_right_ice, cell_pos + Vector2i.RIGHT, border_source_id, get_tile_variation(cell_pos, get_skin_element("right_ice", "ice"), "right_ice"))
 		if no_up and no_right and no_up_right: apply_custom_cell(active_persp_up_ice, cell_pos + Vector2i(1, -1), border_source_id, get_tile_variation(cell_pos, get_skin_element("up_ice", "E_ice"), "up_ice_E"))
-		
 	if repo.has(score):
 		var variations = repo[score]
 		var pseudo_rand = posmod(hash(cell_pos), variations.size())
@@ -401,7 +456,6 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 		var border_source_id = source_id
 		if source_id == TileSkinData.ICE_SOURCE_ID:
 			border_source_id = TileSkinData.GRASS_SOURCE_ID
-			
 		if source_id == TileSkinData.WALL_SOURCE_ID and tile_data.has("main") and tile_data["main"] != null:
 			var data = tile_data["main"]
 			if typeof(data) == TYPE_DICTIONARY:
@@ -411,7 +465,6 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 			else:
 				var final_atlas = get_tile_variation(cell_pos, get_skin_element("wall", str(data)), "main")
 				apply_custom_cell(layer, cell_pos, source_id, final_atlas)
-				
 		var process_water_right = func(w_data):
 			var has_solid_right = get_source_id(active_wall, cell_pos + Vector2i.RIGHT) == TileSkinData.WALL_SOURCE_ID or is_grass_or_ice(cell_pos + Vector2i.RIGHT)
 			if has_solid_right: return 
@@ -441,7 +494,6 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 						tex = "full" if (coords_above.y == 2 or coords_above.y == 3) else "mini"
 					var final_atlas = get_skin_element("water_right", tex, theme)
 					apply_custom_cell(active_persp_Wright, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "water_right"))
-
 		if tile_data.has("persp_down_water") and tile_data["persp_down_water"] != null:
 			var data = tile_data["persp_down_water"]
 			if typeof(data) == TYPE_DICTIONARY:
@@ -451,7 +503,6 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 			else:
 				var final_atlas = get_skin_element("water_down", str(data), theme)
 				apply_custom_cell(active_persp_Wdown, cell_pos + Vector2i.DOWN, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_down_water"))
-
 		if source_id != TileSkinData.ICE_SOURCE_ID and tile_data.has("persp_up") and tile_data["persp_up"] != null:
 			var data = tile_data["persp_up"]
 			var no_up = not is_tile_connected(layer, cell_pos + Vector2i.UP, source_id)
@@ -467,7 +518,6 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 			else:
 				var final_atlas = get_skin_element("up", str(data), theme)
 				apply_custom_cell(active_persp_up, cell_pos + Vector2i.UP, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_up"))
-
 		if tile_data.has("persp_left_water") and tile_data["persp_left_water"] != null:
 			var data = tile_data["persp_left_water"]
 			var forbid_eleft = (source_id == TileSkinData.WALL_SOURCE_ID and is_grass_or_ice(cell_pos + Vector2i.DOWN))
@@ -504,7 +554,6 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 					tex = "full" if (coords_above.y == 2 or coords_above.y == 3) else "mini"
 				var final_atlas = get_skin_element("water_left", tex, theme)
 				apply_custom_cell(active_persp_Wleft, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_left_water"))
-
 		if tile_data.has("persp_right") and tile_data["persp_right"] != null:
 			var data = tile_data["persp_right"]
 			process_water_right.call(data)
@@ -516,7 +565,6 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 				else:
 					var final_atlas = get_skin_element("right", str(data), theme)
 					apply_custom_cell(active_persp_right, cell_pos + Vector2i.RIGHT, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_right"))
-
 		if tile_data.has("persp_right_wall") and tile_data["persp_right_wall"] != null:
 			var data = tile_data["persp_right_wall"]
 			process_water_right.call(data)
@@ -547,7 +595,6 @@ func apply_bitmask_to_single_cell(cell_pos: Vector2i, layer: TileMapLayer, repo:
 					apply_custom_cell(active_persp_Eright_wall, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_Eright_wall"))
 				else:
 					apply_custom_cell(active_persp_right_wall, target_pos, border_source_id, get_tile_variation(cell_pos, final_atlas, "persp_right_wall"))
-
 		if tile_data.has("persp_up_wall") and tile_data["persp_up_wall"] != null:
 			var data = tile_data["persp_up_wall"]
 			if typeof(data) == TYPE_DICTIONARY:
@@ -587,12 +634,14 @@ func effacer_tous_les_layers() -> void:
 		layer_persp_right, layer_persp_right_wall, layer_persp_Eright_wall,
 		layer_persp_right_ice, layer_persp_up, layer_persp_up_wall,
 		layer_persp_up_ice, layer_persp_Wright, layer_persp_Wdown,
-		layer_persp_Wleft, layer_fragile, layer_hidden]
+		layer_persp_Wleft, layer_fragile, layer_hidden, layer_deco]
 	for calque in tous_les_layers:
 		if calque != null:
 			calque.clear()
 			for enfant in calque.get_children():
 				enfant.free()
+	for portal in get_tree().get_nodes_in_group("Portals"):
+		portal.queue_free()
 
 func _restaurer_liens_tester(door_platform_list: Array) -> void:
 	for link_list in door_platform_list:
@@ -623,3 +672,75 @@ func _get_platform_at_tester(grid_pos: Vector2i) -> Node2D:
 			if plat_area != null and grid_pos in plat_area.way:
 				return plat_area
 	return null
+
+'''
+# ==============================================================================
+# --- EXPORTATION EN SCÈNE AUTONOME (.tscn) ---
+# ==============================================================================
+
+var _chemins_originaux: Dictionary = {}
+
+func exporter_en_tscn(nom_fichier: String = "Niveau_Exporte") -> void:
+	print("Préparation de l'exportation...")
+	
+	# On mémorise les chemins pour les restaurer après l'export
+	var chemins_restaures = {}
+	
+	# 1. On "aplatit" la MAP pour sauver les TileMapLayers (évite l'erreur Fragile)
+	var sous_map = map_node.get_node_or_null("MAP")
+	if sous_map and sous_map.scene_file_path != "":
+		chemins_restaures[sous_map] = sous_map.scene_file_path
+		sous_map.scene_file_path = ""
+		
+	# 2. On "aplatit" LES PLATEFORMES pour forcer Godot à sauver les rails dessinés !
+	if node_platforms:
+		for plat in node_platforms.get_children():
+			if plat.scene_file_path != "":
+				chemins_restaures[plat] = plat.scene_file_path
+				plat.scene_file_path = ""
+				
+	# 3. On traverse l'arbre pour tout sécuriser
+	_assigner_owner_recursive(self, self)
+	
+	# 4. Retrait temporaire du script du testeur
+	var script_actuel = self.get_script()
+	self.set_script(null)
+	
+	# 5. Création et sauvegarde de la scène finale
+	var packed_scene = PackedScene.new()
+	var resultat = packed_scene.pack(self)
+	
+	if resultat == OK:
+		var chemin_sauvegarde = "res://Larchet/LevelMaker/Level_temp/" + nom_fichier + ".tscn"
+		var err = ResourceSaver.save(packed_scene, chemin_sauvegarde)
+		if err == OK:
+			print("✅ NIVEAU EXPORTÉ AVEC SUCCÈS : ", chemin_sauvegarde)
+		else:
+			print("❌ Erreur lors de l'écriture du fichier : ", err)
+	else:
+		print("❌ Erreur lors du packing de la scène : ", resultat)
+		
+	# 6. Restauration de l'état du testeur pour continuer de jouer sans bugs
+	self.set_script(script_actuel)
+	for noeud in chemins_restaures:
+		if is_instance_valid(noeud):
+			noeud.scene_file_path = chemins_restaures[noeud]
+
+func _assigner_owner_recursive(noeud: Node, nouveau_proprio: Node) -> void:
+	if noeud != nouveau_proprio:
+		noeud.owner = nouveau_proprio
+		
+	# La fonction va désormais rentrer dans la MAP et les Plateformes car on a vidé 
+	# leur scene_file_path, mais elle s'arrêtera sagement devant le Joueur, les Portes, etc.
+	if noeud.scene_file_path == "" or noeud == nouveau_proprio:
+		for enfant in noeud.get_children():
+			_assigner_owner_recursive(enfant, nouveau_proprio)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_F12:
+			var nom_propre = "Map_Exportee"
+			if editeur_parent != null and editeur_parent.current_level_name != "":
+				nom_propre = editeur_parent.current_level_name.replace(" ", "_")
+			exporter_en_tscn(nom_propre)
+'''

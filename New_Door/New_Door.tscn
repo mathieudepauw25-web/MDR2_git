@@ -55,6 +55,7 @@ shape = SubResource("RectangleShape2D_ipej7")
 
 [node name="Bulle" type="TextureRect" parent="DetectShow" unique_id=419931613]
 unique_name_in_owner = true
+z_index = 15
 offset_left = -18.0
 offset_top = -17.0
 offset_right = 20.0
@@ -107,7 +108,3 @@ text = "1
 "
 label_settings = SubResource("LabelSettings_dl0pj")
 horizontal_alignment = 1
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="area_entered" from="DetectShow" to="." method="_on_detect_show_area_entered"]
-[connection signal="area_exited" from="DetectShow" to="." method="_on_detect_show_area_exited"]

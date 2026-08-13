@@ -6,9 +6,6 @@ class_name Player
 @onready var node_timer_first_move: Timer = %Timer_first_move
 @onready var node_timer_pok: Timer = %Timer_pok
 @onready var node_smoke: AnimatedSprite2D = %Smoke
-@onready var node_grp_label_key_collect: Control = %Label_key_collect2
-@onready var node_label_key_collect: Label = %Label_key_collect
-@onready var node_label_key_need: Label = %Label_key_need
 @onready var node_visual_start: Node2D = %Visual_start
 
 @export var buffer_timing: float = 0.5
@@ -49,15 +46,18 @@ enum TileType{
 
 
 func _ready() -> void:
+	if not area_entered.is_connected(_on_area_entered):
+		area_entered.connect(_on_area_entered)
+	if not area_exited.is_connected(_on_area_exited):
+		area_exited.connect(_on_area_exited)
 	var parent = get_parent()
 	if parent != null and parent.has_node("MAP"):
 		node_map = parent.get_node("MAP")
 	elif parent != null and parent.find_child("MAP", true, false) != null:
 		node_map = parent.find_child("MAP", true, false)
 	else:
-		node_map = get_node("%MAP")    
+		node_map = get_node("%MAP")
 	EVENTS.connect("arrival", _on_EVENTS_arrival)
-	EVENTS.connect("collect_key", _on_EVENTS_collect_key)
 	snap_grid()
 	if not (parent != null and parent.name == "LevelEditor"):
 		show_game_input()
@@ -79,23 +79,19 @@ func _process(_delta: float) -> void :
 	if Input.is_action_just_pressed("dash_up"): add_buffer_dash("dash_up")
 	if Input.is_action_just_pressed("dash_left"): add_buffer_dash("dash_left")
 	if Input.is_action_just_pressed("dash_down"): add_buffer_dash("dash_down")
-
 	match node_state_machine.current_state.name:
 		"Idle":
 			if tile_is_type(TileType.ICE, node_map.local_to_map(global_position)) and direction != Vector2.ZERO:
 				slide(direction)
 				return
-
 			if buffer_move != "":
 				direction = get_input_direction(buffer_move)
 				move(direction)
 			elif buffer_dash != "":
 				direction = get_input_direction(buffer_dash)
 				dash(direction)
-
 			if link_platform != null:
 				global_position = link_platform.global_position
-
 		"Move":
 			pass
 		"Slide":
@@ -104,14 +100,12 @@ func _process(_delta: float) -> void :
 			else:
 				node_state_machine.set_state("Idle")
 
-
 func add_buffer_move(input: String) -> void :
 	if buffer_dash != "": return
 	if Engine.time_scale == 0: return
 	launch_starting_signal()
 	buffer_move = input
 	$buffer_move.start(buffer_timing)
-
 
 func add_buffer_dash(input: String) -> void :
 	if Engine.time_scale == 0: return
@@ -120,7 +114,6 @@ func add_buffer_dash(input: String) -> void :
 	buffer_dash = input
 	$buffer_dash.start(buffer_timing)
 
-
 func delete_buffer_move() -> void :
 	if buffer_move == "": return
 	buffer_move = ""
@@ -128,7 +121,6 @@ func delete_buffer_move() -> void :
 func delete_buffer_dash() -> void :
 	if buffer_dash == "": return
 	buffer_dash = ""
-
 
 func show_game_input() -> void :
 	var nb_gamepad = Input.get_connected_joypads().size()
@@ -172,7 +164,6 @@ func move(_direction: Vector2, stats_increase: = true) -> void :
 	var tile_destination = node_map.local_to_map(destination)
 	var destination_is_wall: = tile_is_type(TileType.WALL, tile_destination)
 	var destination_is_ice: = tile_is_type(TileType.ICE, tile_destination)
-
 	if destination_is_wall:
 		var destination_wall: = global_position + _direction * (16 - 9)
 		pok_a_wall(destination_wall)
@@ -182,14 +173,11 @@ func move(_direction: Vector2, stats_increase: = true) -> void :
 		if on_tile_ice == true:
 			slide(direction)
 			return
-
 	var tween = get_new_tween()
 	tween.tween_property(self, "global_position", destination, speed).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
 	tween.connect("finished", _on_tween_finished)
-
 	if is_first_move:
 		node_timer_first_move.start(timming_first_move)
-
 	node_state_machine.set_state("Move")
 
 func dash(_direction: Vector2, remaining_tiles: int = 0) -> void :
@@ -200,7 +188,6 @@ func dash(_direction: Vector2, remaining_tiles: int = 0) -> void :
 	var dash_factor: int = 4
 	var index_repeat: int = 0
 	var portal_step: int = 999
-	
 	if remaining_tiles > 0:
 		dash_factor = remaining_tiles
 	else:
@@ -239,13 +226,11 @@ func dash(_direction: Vector2, remaining_tiles: int = 0) -> void :
 				make_water_dash(destination)
 		if destination_is_ice:
 			on_tile_ice = true
-
 	var final_speed_dash: float = speed_dash
 	if superdash: final_speed_dash += 0.05
 	var tween = get_new_tween()
 	tween.tween_property(self, "global_position", destination, final_speed_dash).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween.connect("finished", _on_tween_finished)
-
 	node_state_machine.set_state("Dash")
 
 func slide(_direction: Vector2) -> void :
@@ -255,7 +240,6 @@ func slide(_direction: Vector2) -> void :
 	var tile_destination = node_map.local_to_map(destination)
 	var destination_is_wall: = tile_is_type(TileType.WALL, tile_destination)
 	var destination_is_not_ice: = !tile_is_type(TileType.ICE, tile_destination)
-
 	if destination_is_wall:
 		destination = global_position + _direction * (16 - 9)
 		pok_a_wall(destination)
@@ -265,12 +249,10 @@ func slide(_direction: Vector2) -> void :
 		move(_direction, false)
 		return
 	else: on_tile_ice = true
-
 	var tween = get_new_tween()
 	tween.tween_property(self, "global_position", destination, speed_on_ice).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_LINEAR)
 	tween.connect("finished", _on_sliding_end)
 	sliding = true
-
 	node_state_machine.set_state("Slide")
 
 func make_water_dash(v_global_destination) -> void :
@@ -307,7 +289,6 @@ func pok_a_wall(_destination: Vector2, speed_pok: float = 0.05, dashing: bool = 
 		tween.tween_property(self, "global_position", _destination, speed_pok).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(self, "global_position", previous_position, 0.2).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween.connect("finished", _on_tween_finished)
-
 	direction = Vector2.ZERO
 	await get_tree().create_timer(speed_pok - 0.03).timeout
 	await get_tree().process_frame
@@ -315,8 +296,7 @@ func pok_a_wall(_destination: Vector2, speed_pok: float = 0.05, dashing: bool = 
 		node_state_machine.set_state("Pok")
 
 func fall_into_pit(_destination: Vector2) -> void :
-	var current_tile = node_map.local_to_map(global_position)
-	var tile_is_hidden: = is_hidden_at(current_tile)
+	var tile_is_hidden: = is_hidden_at(node_map.local_to_map(global_position))
 	if tile_is_hidden: return
 	EVENTS.emit_signal("player_fall")
 	direction = Vector2.ZERO
@@ -337,12 +317,9 @@ func fall_into_pit(_destination: Vector2) -> void :
 					break
 	tween.tween_property(self, "global_position", previous_safe_place, 0.1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(self, "scale", Vector2(1, 1), 0.1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
-
 	tween.connect("finished", _on_tween_finished)
 	EVENTS.emit_signal("splash", global_position)
-
 	node_state_machine.set_state("Fall")
-
 
 func snap_grid() -> void :
 	if not is_inside_tree() or is_queued_for_deletion(): return
@@ -376,7 +353,6 @@ func check_pressed_input() -> void :
 		if Input.is_action_pressed("move_up"): add_buffer_move("move_up")
 		if Input.is_action_pressed("move_left"): add_buffer_move("move_left")
 		if Input.is_action_pressed("move_down"): add_buffer_move("move_down")
-
 		if buffer_move == "" and buffer_dash == "":
 			is_first_move = true
 
@@ -385,7 +361,6 @@ func launch_starting_signal() -> void :
 		starting_signal = true
 		EVENTS.emit_signal("starting")
 		node_visual_start.visible = false
-
 
 func _on_tween_finished() -> void :
 	is_poking = false
@@ -426,27 +401,8 @@ func _on_timer_first_move_timeout() -> void :
 func _on_EVENTS_arrival() -> void :
 	arrival = true
 
-func _on_EVENTS_collect_key(nb_key: int, nb_key_need: int) -> void :
-	node_label_key_collect.text = str(nb_key)
-	node_label_key_need.text = str(nb_key_need)
-	var tile_position: = node_map.local_to_map(global_position)
-	var pickup_position: = node_map.map_to_local(tile_position)
-	pickup_position -= Vector2(12.0, 12.0)
-	node_grp_label_key_collect.visible = true
-	node_grp_label_key_collect.global_position = pickup_position
-	node_grp_label_key_collect.scale = Vector2.ZERO
-	var tween = create_tween()
-
-	tween.tween_property(node_grp_label_key_collect, "scale", Vector2.ONE * 1, 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BOUNCE)
-	tween.tween_property(node_grp_label_key_collect, "scale", Vector2.ZERO, 0.7).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_ELASTIC)
-
-	await tween.finished
-	node_grp_label_key_collect.visible = false
-
-
 func _on_smoke_animation_finished() -> void :
 	node_smoke.visible = false
-
 
 func _on_inaction_timeout() -> void :
 	EVENTS.emit_signal("player_inaction")

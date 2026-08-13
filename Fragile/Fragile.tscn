@@ -118,7 +118,5 @@ pitch_scale = 0.4
 max_distance = 100.0
 bus = &"SFX"
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="area_exited" from="." to="." method="_on_area_exited"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="Timer_repop" to="." method="_on_timer_repop_timeout"]

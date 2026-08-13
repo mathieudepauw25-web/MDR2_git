@@ -71,6 +71,4 @@ horizontal_alignment = 1
 stream = ExtResource("5_w72vi")
 pitch_scale = 0.75
 
-[connection signal="area_entered" from="New_Platform" to="New_Platform" method="_on_area_entered"]
-[connection signal="area_exited" from="New_Platform" to="New_Platform" method="_on_area_exited"]
 [connection signal="timeout" from="New_Platform/delay_platformflex" to="New_Platform" method="_on_delay_platformflex_timeout"]

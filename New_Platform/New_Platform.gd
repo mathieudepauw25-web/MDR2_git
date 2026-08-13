@@ -10,22 +10,21 @@ class_name New_Platform
 
 @export var speed: float
 @export var is_looping: bool = false
+@export var is_linked_to_door: bool = false
+@export var linked_door_node: Node2D = null
+@export var start_index: int = 0
+@export var way: Array[Vector2i] = []
+@export var linked_door_pos: Vector2i = Vector2i.ZERO
 
 var starting_signal = false
 var link_player: Area2D = null
 var platform_flex: int = 0
 
-var start_index: int = 0
-var way: Array[Vector2i] = []
 var last_modified_end: int = 1
 var current_index: int = 0
 var is_moving_forward: bool = true
 var editor_initial_global_pos: Vector2
 var current_tween: Tween
-
-var is_linked_to_door: bool = false
-var linked_door_node: Node2D = null
-var linked_door_pos: Vector2i = Vector2i.ZERO
 
 const plat_way: Dictionary = {
 	"D_A": Vector2i(2,1),
@@ -43,14 +42,21 @@ const plat_way: Dictionary = {
 }
 
 func _ready() -> void:
+	if not area_entered.is_connected(_on_area_entered):
+		area_entered.connect(_on_area_entered)
+	if not area_exited.is_connected(_on_area_exited):
+		area_exited.connect(_on_area_exited)
 	add_to_group("LinkedPlatforms")
 	EVENTS.connect("starting", _on_EVENTS_starting)
-	EVENTS.connect("superdash_run", _on_superdash_run) # Redirigé proprement
+	EVENTS.connect("superdash_run", _on_superdash_run)
 	label_platform_flex.visible = false
 	randomize()
 	$AudioStreamPlayer2D.pitch_scale = randf_range(1.75, 2.25)
 	editor_initial_global_pos = global_position
 	is_looping = _check_loop_validity()
+	#label_platform_flex.visible = true
+	if way.size() > 0:
+		reset_to_editor()
 
 # ==========================================
 # GESTION DU DÉPLACEMENT ET DE L'AFFICHAGE
@@ -189,9 +195,9 @@ func platformFlexCombo() -> void:
 func platformFlexEnd() -> void:
 	label_platform_flex.visible = false
 	Engine.time_scale = 1
-	if GAMES.SteamisRunning && platform_flex >= 3:
-		var score: int = platform_flex
-		Steam.uploadLeaderboardScore(score, true, PackedInt32Array(), GAMES.leaderboard_handles["PlatformFlex"])
+	#if GAMES.SteamisRunning && platform_flex >= 3:
+		#var score: int = platform_flex
+		#Steam.uploadLeaderboardScore(score, true, PackedInt32Array(), GAMES.leaderboard_handles["PlatformFlex"])
 	if platform_flex > 0:
 		platform_flex = 0
 
@@ -221,6 +227,10 @@ func _on_superdash_run() -> void:
 	if is_linked_to_door and not starting_signal:
 		starting_signal = true
 		move()
+
+func force_start() -> void:
+	starting_signal = true
+	move()
 
 func _on_delay_platformflex_timeout() -> void:
 	platformFlexEnd()

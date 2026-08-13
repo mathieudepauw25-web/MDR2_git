@@ -7,6 +7,7 @@ signal mode3_toggled()
 signal edit_mode_changed(new_mode: EditMode)
 signal interactive_type_changed(new_type: InteractiveType)
 signal door_linker_toggled(is_active: bool)
+signal portal_linker_toggled(is_active: bool)
 
 enum EditMode { FLOOR, INTERACTIVE }
 enum InteractiveType { NONE, DOOR, PLATFORM, PORTAL }
@@ -17,7 +18,6 @@ var current_interactive_type: InteractiveType = InteractiveType.NONE
 @onready var lbl_coords: Label = $Coordonnees
 @onready var lbl_grass_mode: Label = $UI_simplifier/grass_mode/Label
 @onready var lbl_OL: Label = $UI_simplifier/Btn_Open_Locked/Label
-@onready var lbl_door_linker: Label = $Property/Doors/Btn_Door_Linker/Label
 @onready var lbl_test: Label = $UI_simplifier/Btn_Test/Label
 @onready var lbl_move: Label = $UI_simplifier/Btn_Move/Label
 @onready var lbl_tester: Label = $UI_simplifier/Btn_Tester/Label
@@ -25,7 +25,6 @@ var current_interactive_type: InteractiveType = InteractiveType.NONE
 @onready var btn_grass_mode: Button = %grass_mode
 @onready var btn_mode3: Button = %Btn_Mode3
 @onready var btn_OL: Button = %Btn_Open_Locked
-@onready var btn_door_linker: Button = %Btn_Door_Linker
 @onready var btn_test: Button = %Btn_Test
 @onready var btn_save: Button = %Btn_Save
 @onready var btn_move: Button = %Btn_Move
@@ -37,13 +36,16 @@ var current_interactive_type: InteractiveType = InteractiveType.NONE
 @onready var btn_platforms: Button = $Interactive/VBoxContainer/Btn_Platforms
 @onready var btn_inverser: Button = $Property/Platforms/Inverser
 @onready var lbl_inverser: Label = $Property/Platforms/Inverser/Label
+@onready var btn_door_linker: Button = %Btn_Door_Linker
+@onready var lbl_door_linker: Label = $Property/Doors/Btn_Door_Linker/Label
+@onready var btn_portal_exit: Button = $Property/Portals/Btn_Portal_Exit
+@onready var lbl_portal_exit: Label = $Property/Portals/Btn_Portal_Exit/Label
 @onready var btn_portals: Button = $Interactive/VBoxContainer/Btn_Portals
 
 @onready var property: PanelContainer = $Property
 @onready var doors: PanelContainer = $Property/Doors
 @onready var platforms: PanelContainer = $Property/Platforms
 @onready var portals: PanelContainer = $Property/Portals
-@onready var select_out: Button = $Property/Portals/Select_Out
 
 @onready var selection: Panel = %Selection
 
@@ -55,17 +57,19 @@ var current_interactive_type: InteractiveType = InteractiveType.NONE
 @onready var btn_fragile_green = $Floor/HBoxContainer/Btn_Fragile_Green
 @onready var btn_fragile_wood = $Floor/HBoxContainer/Btn_Fragile_Wood
 @onready var btn_hidden = $Floor/HBoxContainer/Btn_Hidden
+@onready var btn_deco: Button = $Btn_Deco
 @onready var grid = $"../MAP_global/GridVisualizer"
 
 var grass_mode: int = 1
 var is_locked: bool = false
 var is_linking_doors: bool = false
+var is_linking_portals: bool = false
 
 func _ready() -> void:
 	var brush_group = ButtonGroup.new()
 	var tous_les_outils = [
 		btn_herbe, btn_mur, btn_glace, btn_transparent, btn_bridge,
-		btn_fragile_green, btn_fragile_wood, btn_hidden,
+		btn_fragile_green, btn_fragile_wood, btn_hidden, btn_deco,
 		btn_doors, btn_platforms, btn_portals
 	]
 	for btn in tous_les_outils:
@@ -80,6 +84,7 @@ func _ready() -> void:
 	btn_fragile_green.pressed.connect(_selectionner_brush.bind(TileSkinData.Brush.FRAGREEN))
 	btn_fragile_wood.pressed.connect(_selectionner_brush.bind(TileSkinData.Brush.FRAWOOD))
 	btn_hidden.pressed.connect(_selectionner_brush.bind(TileSkinData.Brush.HIDDEN))
+	btn_deco.pressed.connect(_selectionner_brush.bind(TileSkinData.Brush.DECO))
 	btn_grass_mode.pressed.connect(_on_grass_mode_pressed)
 	btn_herbe.set_pressed_no_signal(true)
 	
@@ -97,6 +102,10 @@ func _ready() -> void:
 	btn_platforms.pressed.connect(_on_platforms_pressed)
 	btn_inverser.pressed.connect(_on_inverser_pressed)
 	btn_portals.pressed.connect(_on_portals_pressed)
+	btn_portal_exit.pressed.connect(_on_portal_exit_pressed)
+	
+	if btn_deco.icon is AtlasTexture:
+		btn_deco.icon = btn_deco.icon.duplicate()
 
 # ==========================================
 # NOUVEAU : DÉSACTIVATION DU LINKER
@@ -107,12 +116,27 @@ func desactiver_door_linker() -> void:
 		lbl_door_linker.text = "L"
 		door_linker_toggled.emit(false)
 
+func desactiver_portal_linker() -> void:
+	if is_linking_portals:
+		is_linking_portals = false
+		lbl_portal_exit.text = "Select Exit Portal"
+		portal_linker_toggled.emit(false)
+
+func _on_portal_exit_pressed() -> void:
+	is_linking_portals = !is_linking_portals
+	if is_linking_portals:
+		lbl_portal_exit.text = "For Select Exit"
+	else:
+		lbl_portal_exit.text = "Select Exit Portal"
+	portal_linker_toggled.emit(is_linking_portals)
+
 # ==========================================
 # GESTION DES MODES D'ÉDITION
 # ==========================================
 
 func _selectionner_brush(brush_type: TileSkinData.Brush) -> void:
 	desactiver_door_linker()
+	desactiver_portal_linker()
 	property.hide()
 	current_edit_mode = EditMode.FLOOR
 	current_interactive_type = InteractiveType.NONE
@@ -128,6 +152,7 @@ func _set_interactive_mode(type: InteractiveType) -> void:
 	interactive_type_changed.emit(current_interactive_type)
 
 func _on_doors_pressed() -> void:
+	desactiver_portal_linker()
 	_set_interactive_mode(InteractiveType.DOOR)
 	property.visible = true
 	for UI in property.get_children():
@@ -137,6 +162,7 @@ func _on_doors_pressed() -> void:
 
 func _on_platforms_pressed() -> void:
 	desactiver_door_linker()
+	desactiver_portal_linker()
 	_set_interactive_mode(InteractiveType.PLATFORM)
 	property.visible = true
 	for UI in property.get_children():
@@ -146,6 +172,7 @@ func _on_platforms_pressed() -> void:
 
 func _on_portals_pressed() -> void:
 	desactiver_door_linker()
+	desactiver_portal_linker()
 	_set_interactive_mode(InteractiveType.PORTAL)
 	property.visible = true
 	for UI in property.get_children():
@@ -213,6 +240,7 @@ func update_coords(x: int, y: int) -> void:
 
 func _on_test_pressed() -> void:
 	desactiver_door_linker()
+	desactiver_portal_linker()
 	if lbl_test.text == ">":
 		if not get_parent()._is_player_stable():
 			print("Veuillez positionner le player sur une case stable")
@@ -230,6 +258,7 @@ func _on_test_pressed() -> void:
 
 func _on_tester_pressed() -> void:
 	desactiver_door_linker()
+	desactiver_portal_linker()
 	if lbl_tester.text == "T":
 		if not get_parent()._is_player_stable():
 			print("Veuillez positionner le player sur une case stable")
@@ -267,3 +296,8 @@ func _on_inverser_pressed() -> void:
 	else:
 		lbl_inverser.text = "-->"
 	get_parent()._inverse_path()
+
+func update_deco_icon(coords: Vector2i) -> void:
+	if coords.x == -1: return
+	if btn_deco.icon is AtlasTexture:
+		btn_deco.icon.region = Rect2(coords.x * 16, coords.y * 16, 16, 16)

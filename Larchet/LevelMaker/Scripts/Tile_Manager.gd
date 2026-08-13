@@ -2,6 +2,7 @@ extends Node
 class_name TileManager
 
 @onready var main = get_parent()
+var is_erasing_deco_only: bool = false
 
 func get_source_id(layer: TileMapLayer, cell_pos: Vector2i) -> int:
 	if layer == null: return -1
@@ -92,12 +93,14 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 					main.layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 					main.layer_wall.set_cell(grid_pos, -1)
 					main.layer_ice.set_cell(grid_pos, -1)
+					_update_arrow_color(grid_pos, "_light")
 					update_smart_area(grid_pos)
 				elif is_real_grass:
 					main.is_repainting_theme = true
 					var current_grass_theme = main.cell_themes.get(grid_pos, "_light")
 					main.current_target_theme = "_dark" if current_grass_theme == "_light" else "_light"
 					main.cell_themes[grid_pos] = main.current_target_theme
+					_update_arrow_color(grid_pos, main.current_target_theme)
 					update_smart_area(grid_pos)
 				else:
 					main.is_repainting_theme = false
@@ -107,11 +110,13 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 					main.layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 					main.layer_wall.set_cell(grid_pos, -1)
 					main.layer_ice.set_cell(grid_pos, -1)
+					_update_arrow_color(grid_pos, "_light")
 					update_smart_area(grid_pos)
 			else:
 				if main.is_repainting_theme:
 					if is_real_grass and main.cell_themes.get(grid_pos, "_light") != main.current_target_theme:
 						main.cell_themes[grid_pos] = main.current_target_theme
+						_update_arrow_color(grid_pos, main.current_target_theme)
 						update_smart_area(grid_pos)
 				else:
 					if not is_real_grass:
@@ -121,6 +126,7 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 						main.layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 						main.layer_wall.set_cell(grid_pos, -1)
 						main.layer_ice.set_cell(grid_pos, -1)
+						_update_arrow_color(grid_pos, "_light")
 						update_smart_area(grid_pos)
 						
 		TileSkinData.Brush.ICE:
@@ -132,6 +138,7 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 				if not main.cell_themes.has(grid_pos) or is_fragreen or is_frawood or is_trans or is_bridge or is_hidden:
 					main.cell_themes[grid_pos] = "_light"
 				main.layer_wall.set_cell(grid_pos, -1)
+				main.layer_deco.set_cell(grid_pos, -1)
 				update_smart_area(grid_pos)
 				
 		TileSkinData.Brush.WALL:
@@ -143,6 +150,7 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 				main.layer_wall.set_cell(grid_pos, TileSkinData.WALL_SOURCE_ID, Vector2i(0, 0))
 				main.layer_floor.set_cell(grid_pos, -1)
 				main.layer_ice.set_cell(grid_pos, -1)
+				main.layer_deco.set_cell(grid_pos, -1)
 				main.cell_themes.erase(grid_pos)
 				update_smart_area(grid_pos)
 				
@@ -154,6 +162,7 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 				main.layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 				main.layer_wall.set_cell(grid_pos, -1)
 				main.layer_ice.set_cell(grid_pos, -1)
+				main.layer_deco.set_cell(grid_pos, -1)
 				update_smart_area(grid_pos)
 				
 		TileSkinData.Brush.BRIDGE:
@@ -171,6 +180,7 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 					main.layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 					main.layer_wall.set_cell(grid_pos, -1)
 					main.layer_ice.set_cell(grid_pos, -1)
+					main.layer_deco.set_cell(grid_pos, -1)
 					update_smart_area(grid_pos)
 			else:
 				if main.is_repainting_theme:
@@ -185,7 +195,17 @@ func paint_smart_tile(is_just_clicked: bool = false) -> void:
 						main.layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 						main.layer_wall.set_cell(grid_pos, -1)
 						main.layer_ice.set_cell(grid_pos, -1)
+						main.layer_deco.set_cell(grid_pos, -1)
 						update_smart_area(grid_pos)
+		TileSkinData.Brush.DECO:
+			if is_just_clicked:
+				var current_map_coords = main.layer_deco.get_cell_atlas_coords(grid_pos)
+				if current_map_coords != Vector2i(-1, -1):
+					var expected_data = _get_current_deco_atlas_data(grid_pos)
+					if expected_data.x != -1 and current_map_coords == Vector2i(expected_data.x, expected_data.y):
+						main._cycle_deco_category(1)
+			if has_grass and not is_trans and not is_bridge and not is_fragreen and not is_frawood and not is_hidden:
+				_apply_deco(grid_pos)
 
 func _apply_brush_to_layer(grid_pos: Vector2i, target_layer: TileMapLayer, source_id: int) -> void:
 	if source_id == TileSkinData.GRASS_SOURCE_ID:
@@ -196,15 +216,16 @@ func _apply_brush_to_layer(grid_pos: Vector2i, target_layer: TileMapLayer, sourc
 		main.layer_floor.set_cell(grid_pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 	main.layer_wall.set_cell(grid_pos, -1)
 
-func erase_all_layers(specific_pos = null) -> void:
-	var grid_pos = specific_pos if specific_pos != null else main.layer_wall.local_to_map(main.get_global_mouse_position())
-	if _is_protected_entity_at(grid_pos):
-		return
-	if main._get_platform_at(grid_pos) != null:
-		return
-	var arrival_pos = main.layer_floor.local_to_map(main.sprite_arrival.global_position)
-	if grid_pos == arrival_pos:
-		return
+func erase_all_layers(specific_pos = null, is_just_clicked: bool = false) -> void:
+	var grid_pos = specific_pos if specific_pos != null else main.layer_floor.local_to_map(main.get_global_mouse_position())
+	var has_deco = false
+	if main.layer_deco != null:
+		has_deco = (main.layer_deco.get_cell_source_id(grid_pos) != -1)
+	if is_just_clicked:
+		if main.current_brush == TileSkinData.Brush.DECO and has_deco:
+			is_erasing_deco_only = true
+		else:
+			is_erasing_deco_only = false
 	var has_wall = main.layer_wall.get_cell_source_id(grid_pos) == TileSkinData.WALL_SOURCE_ID
 	var has_ice = main.layer_ice.get_cell_source_id(grid_pos) == TileSkinData.ICE_SOURCE_ID
 	var has_grass = main.layer_floor.get_cell_source_id(grid_pos) == TileSkinData.GRASS_SOURCE_ID
@@ -214,7 +235,6 @@ func erase_all_layers(specific_pos = null) -> void:
 	var is_fragreen = current_theme == "_fragreen"
 	var is_frawood = current_theme == "_frawood"
 	var is_hidden = current_theme == "_hidden"
-	
 	if main.ui_layer.get("is_locked") and main.ui_layer.is_locked:
 		var matches_selection = false
 		match main.current_brush:
@@ -234,13 +254,26 @@ func erase_all_layers(specific_pos = null) -> void:
 				matches_selection = is_frawood
 			TileSkinData.Brush.HIDDEN:
 				matches_selection = is_hidden
+			TileSkinData.Brush.DECO:
+				matches_selection = has_deco
 		if not matches_selection:
 			return
-			
+	if is_erasing_deco_only or main.current_brush == TileSkinData.Brush.DECO:
+		if has_deco:
+			main.layer_deco.set_cell(grid_pos, -1)
+		return
+	if _is_protected_entity_at(grid_pos):
+		return
+	if main._get_platform_at(grid_pos) != null:
+		return
+	var arrival_pos = main.layer_floor.local_to_map(main.sprite_arrival.global_position)
+	if grid_pos == arrival_pos:
+		return
 	main.cell_themes.erase(grid_pos)
 	main.layer_floor.set_cell(grid_pos, -1)
 	main.layer_wall.set_cell(grid_pos, -1)
 	main.layer_ice.set_cell(grid_pos, -1)
+	main.layer_deco.set_cell(grid_pos, -1)
 	main._remove_fragile(grid_pos)
 	main._remove_hidden(grid_pos)
 	update_smart_area(grid_pos)
@@ -295,6 +328,7 @@ func generate_grass_under(pos: Vector2i) -> void:
 	main.layer_ice.set_cell(pos, -1)
 	main.layer_wall.set_cell(pos, -1)
 	main.cell_themes[pos] = "_light"
+	_update_arrow_color(pos, "_light")
 	main.layer_floor.set_cell(pos, TileSkinData.GRASS_SOURCE_ID, Vector2i(0,0))
 	update_smart_area(pos)
 
@@ -566,3 +600,51 @@ func _is_protected_entity_at(grid_pos: Vector2i) -> bool:
 				if not key.is_queued_for_deletion() and main.layer_floor.local_to_map(key.global_position) == grid_pos:
 					return true
 	return false
+
+func _get_current_deco_atlas_data(grid_pos: Vector2i) -> Vector3i:
+	var cat = main.current_deco_category
+	var idx = main.current_deco_index
+	var theme = get_grass_theme(grid_pos) 
+	var deco_dict = get_skin_element("", "deco")
+	if typeof(deco_dict) == TYPE_DICTIONARY:
+		if cat == "arrow":
+			var sub_cat = "arrow_dark" if theme == "_dark" else "arrow_light"
+			if deco_dict.has("arrow") and deco_dict["arrow"].has(sub_cat):
+				if deco_dict["arrow"][sub_cat].size() > idx:
+					return deco_dict["arrow"][sub_cat][idx]
+		else:
+			if deco_dict.has(cat):
+				if deco_dict[cat].size() > idx:
+					return deco_dict[cat][idx]
+	return Vector3i(-1, -1, -1)
+
+func _apply_deco(grid_pos: Vector2i) -> void:
+	if main.layer_deco == null: return
+	var atlas_coords = _get_current_deco_atlas_data(grid_pos)
+	if atlas_coords.x != -1:
+		main.layer_deco.set_cell(grid_pos, atlas_coords.z, Vector2i(atlas_coords.x, atlas_coords.y))
+
+func _update_arrow_color(grid_pos: Vector2i, new_theme: String) -> void:
+	if main.layer_deco == null: return
+	var current_coords = main.layer_deco.get_cell_atlas_coords(grid_pos)
+	if current_coords == Vector2i(-1, -1): return # Pas de déco sur cette case
+	var source_id = main.layer_deco.get_cell_source_id(grid_pos)
+	if current_coords.y == 3 and new_theme == "_light":
+		main.layer_deco.set_cell(grid_pos, source_id, Vector2i(current_coords.x, 4))
+	elif current_coords.y == 4 and new_theme == "_dark":
+		main.layer_deco.set_cell(grid_pos, source_id, Vector2i(current_coords.x, 3))
+
+func get_deco_atlas_coords(cat: String, idx: int) -> Vector2i:
+	var deco_dict = get_skin_element("", "deco")
+	if typeof(deco_dict) == TYPE_DICTIONARY:
+		if cat == "arrow":
+			if deco_dict.has("arrow") and deco_dict["arrow"].has("arrow_dark"):
+				var arr = deco_dict["arrow"]["arrow_dark"]
+				if arr.size() > idx:
+					return Vector2i(arr[idx].x, arr[idx].y)
+		else:
+			if deco_dict.has(cat):
+				var arr = deco_dict[cat]
+				if arr.size() > idx:
+					return Vector2i(arr[idx].x, arr[idx].y)
+	return Vector2i(-1, -1)

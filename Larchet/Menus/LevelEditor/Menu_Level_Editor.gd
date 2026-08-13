@@ -80,3 +80,7 @@ func _on_btn_delete_pressed() -> void:
 		lbl_delete.text = "Delete"
 	else:
 		lbl_delete.text = "Select"
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().change_scene_to_file("res://TitleScreen/TitleScreen.tscn")

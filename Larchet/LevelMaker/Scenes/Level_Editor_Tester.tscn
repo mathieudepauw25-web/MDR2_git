@@ -7,14 +7,11 @@
 [ext_resource type="TileSet" uid="uid://cdepjsmuhlqw4" path="res://Larchet/LevelMaker/TileMapLayer/normal_water.tres" id="4_215ju"]
 [ext_resource type="Script" uid="uid://fqxvmanr1e2a" path="res://World/Map.gd" id="5_ws7rn"]
 [ext_resource type="Texture2D" uid="uid://b7vn244bxiavw" path="res://World/Sprites/tileset_ICE.png" id="6_lsw7r"]
-[ext_resource type="Texture2D" uid="uid://c3ltsogceht5k" path="res://World/Sprites/tileset_PLATFORMWAY.png" id="7_6sfsa"]
 [ext_resource type="PackedScene" uid="uid://jsa83e1ucxbb" path="res://Fragile/Fragile.tscn" id="8_op0bn"]
 [ext_resource type="Texture2D" uid="uid://bswlaatnlxwn6" path="res://Larchet/Sprites/L.tileset_FRAGILE.png" id="9_c1v7p"]
 [ext_resource type="PackedScene" uid="uid://dtv8pwu0e5vjp" path="res://Hidden/Hidden.tscn" id="10_0gexs"]
 [ext_resource type="Texture2D" uid="uid://b3csi3ttrhear" path="res://World/Sprites/Tileset_FLOOR.png" id="11_wakx5"]
-[ext_resource type="Texture2D" uid="uid://dit87l100xwoa" path="res://World/Sprites/grid tileset.png" id="12_e3w03"]
-[ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="13_p4lce"]
-[ext_resource type="Texture2D" uid="uid://djfkt322s75xs" path="res://World/Sprites/tileset_DECO.png" id="14_apu2b"]
+[ext_resource type="TileSet" uid="uid://chdumrrdoisyu" path="res://Larchet/LevelMaker/TileMapLayer/Deco.tres" id="12_37h2u"]
 
 [sub_resource type="TileSet" id="TileSet_wdswg"]
 
@@ -28,18 +25,6 @@ texture = ExtResource("6_lsw7r")
 
 [sub_resource type="TileSet" id="TileSet_1008p"]
 sources/2 = SubResource("TileSetAtlasSource_h3xsp")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5x2jj"]
-texture = ExtResource("7_6sfsa")
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_jmev0"]
-sources/0 = SubResource("TileSetAtlasSource_5x2jj")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_215ju"]
 resource_name = "Fragile"
@@ -158,180 +143,6 @@ texture = ExtResource("11_wakx5")
 sources/0 = SubResource("TileSetScenesCollectionSource_lsw7r")
 sources/2 = SubResource("TileSetAtlasSource_6sfsa")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_op0bn"]
-texture = ExtResource("12_e3w03")
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-5:0/0 = 0
-6:0/0 = 0
-7:0/0 = 0
-8:0/0 = 0
-9:0/0 = 0
-10:0/0 = 0
-11:0/0 = 0
-12:0/0 = 0
-13:0/0 = 0
-14:0/0 = 0
-15:0/0 = 0
-16:0/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-4:1/0 = 0
-5:1/0 = 0
-6:1/0 = 0
-7:1/0 = 0
-8:1/0 = 0
-9:1/0 = 0
-10:1/0 = 0
-11:1/0 = 0
-12:1/0 = 0
-13:1/0 = 0
-14:1/0 = 0
-15:1/0 = 0
-16:1/0 = 0
-17:1/0 = 0
-18:1/0 = 0
-19:1/0 = 0
-20:1/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-4:2/0 = 0
-5:2/0 = 0
-6:2/0 = 0
-7:2/0 = 0
-8:2/0 = 0
-17:2/0 = 0
-18:2/0 = 0
-19:2/0 = 0
-20:2/0 = 0
-1:3/0 = 0
-2:3/0 = 0
-3:3/0 = 0
-4:3/0 = 0
-5:3/0 = 0
-6:3/0 = 0
-7:3/0 = 0
-8:3/0 = 0
-9:3/0 = 0
-14:3/0 = 0
-17:3/0 = 0
-18:3/0 = 0
-19:3/0 = 0
-20:3/0 = 0
-1:4/0 = 0
-2:4/0 = 0
-3:4/0 = 0
-4:4/0 = 0
-5:4/0 = 0
-6:4/0 = 0
-7:4/0 = 0
-8:4/0 = 0
-9:4/0 = 0
-10:4/0 = 0
-11:4/0 = 0
-12:4/0 = 0
-13:4/0 = 0
-14:4/0 = 0
-17:4/0 = 0
-18:4/0 = 0
-19:4/0 = 0
-20:4/0 = 0
-1:5/0 = 0
-2:5/0 = 0
-3:5/0 = 0
-4:5/0 = 0
-5:5/0 = 0
-6:5/0 = 0
-7:5/0 = 0
-8:5/0 = 0
-17:5/0 = 0
-18:5/0 = 0
-19:5/0 = 0
-20:5/0 = 0
-1:6/0 = 0
-2:6/0 = 0
-3:6/0 = 0
-4:6/0 = 0
-5:6/0 = 0
-6:6/0 = 0
-7:6/0 = 0
-8:6/0 = 0
-17:6/0 = 0
-18:6/0 = 0
-1:7/0 = 0
-2:7/0 = 0
-3:7/0 = 0
-4:7/0 = 0
-5:7/0 = 0
-6:7/0 = 0
-7:7/0 = 0
-8:7/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c1v7p"]
-texture = ExtResource("13_p4lce")
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-5:0/0 = 0
-6:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-4:1/0 = 0
-5:1/0 = 0
-6:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-3:2/0 = 0
-4:2/0 = 0
-5:2/0 = 0
-6:2/0 = 0
-1:3/0 = 0
-2:3/0 = 0
-3:3/0 = 0
-5:3/0 = 0
-6:3/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0gexs"]
-texture = ExtResource("14_apu2b")
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-4:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-4:2/0 = 0
-0:3/0 = 0
-1:3/0 = 0
-2:3/0 = 0
-3:3/0 = 0
-4:3/0 = 0
-0:4/0 = 0
-1:4/0 = 0
-2:4/0 = 0
-3:4/0 = 0
-4:4/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_u4bx6"]
-sources/0 = SubResource("TileSetAtlasSource_op0bn")
-sources/1 = SubResource("TileSetAtlasSource_c1v7p")
-sources/3 = SubResource("TileSetAtlasSource_0gexs")
-
 [node name="Tester" type="Node2D" unique_id=637677221]
 y_sort_enabled = true
 script = ExtResource("1_h3xsp")
@@ -413,9 +224,6 @@ unique_name_in_owner = true
 z_index = 2
 tile_set = SubResource("TileSet_1008p")
 
-[node name="tileMapLayer_platformway" type="TileMapLayer" parent="MAP_global/MAP" unique_id=464763371]
-tile_set = SubResource("TileSet_jmev0")
-
 [node name="tileMapLayer_fragile" type="TileMapLayer" parent="MAP_global/MAP" unique_id=463669601]
 unique_name_in_owner = true
 z_index = 2
@@ -426,11 +234,10 @@ unique_name_in_owner = true
 z_index = 2
 tile_set = SubResource("TileSet_ok7gt")
 
-[node name="TileMapLayer_deco" type="TileMapLayer" parent="MAP_global/MAP" unique_id=459263005]
-tile_set = SubResource("TileSet_u4bx6")
-
-[node name="TileMapLayer_deco2" type="TileMapLayer" parent="MAP_global/MAP" unique_id=938168622]
-tile_set = SubResource("TileSet_u4bx6")
+[node name="tileMapLayer_deco" type="TileMapLayer" parent="MAP_global/MAP" unique_id=459263005]
+unique_name_in_owner = true
+z_index = 3
+tile_set = ExtResource("12_37h2u")
 
 [node name="Interactive" type="Node2D" parent="MAP_global/MAP" unique_id=2088532032]
 
