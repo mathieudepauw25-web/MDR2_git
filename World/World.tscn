@@ -332,14 +332,6 @@ layout_mode = 2
 [node name="InputVisuel" parent="CanvasLayer" unique_id=1382761861 instance=ExtResource("34")]
 position = Vector2(302, 162)
 
-[node name="Player" parent="." unique_id=76718737 instance=ExtResource("35")]
-z_index = 5
-position = Vector2(8, 8)
-buffer_timing = 0.5
-
-[node name="Arrival" parent="." unique_id=2049405105 instance=ExtResource("36")]
-position = Vector2(-296, 136)
-
 [node name="SplashFactory" type="Node" parent="." unique_id=893051065]
 script = ExtResource("37")
 
@@ -361,6 +353,13 @@ superdash = true
 
 [node name="MAP_global" type="Node2D" parent="." unique_id=931504490]
 y_sort_enabled = true
+
+[node name="Player" parent="MAP_global" unique_id=76718737 instance=ExtResource("35")]
+position = Vector2(8, 8)
+buffer_timing = 0.5
+
+[node name="Arrival" parent="MAP_global" unique_id=2049405105 instance=ExtResource("36")]
+position = Vector2(-296, 136)
 
 [node name="Perspective" type="TileMapLayer" parent="MAP_global" unique_id=289419468]
 y_sort_enabled = true

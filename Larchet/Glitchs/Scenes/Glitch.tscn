@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://b2nme3ay6m3ho"]
+
+[ext_resource type="Script" uid="uid://dy2l6gjdbv36p" path="res://Larchet/Glitchs/Scripts/Glitch.gd" id="1_q1nu8"]
+[ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="2_f458k"]
+[ext_resource type="Texture2D" uid="uid://eifya83p24wo" path="res://Player/Sprites/dashFULL.png" id="2_lpqrk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgu8v"]
+atlas = ExtResource("2_lpqrk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aul27"]
+atlas = ExtResource("2_f458k")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_buskd"]
+size = Vector2(16, 16)
+
+[sub_resource type="Gradient" id="Gradient_7owrj"]
+offsets = PackedFloat32Array(0, 0.1125, 0.804167, 1)
+colors = PackedColorArray(0.0588235, 0.0588235, 0.0588235, 0, 0.905882, 0.756863, 0, 1, 1, 1, 1, 0.588235, 1, 1, 1, 0)
+
+[node name="Glitch" type="Area2D" unique_id=1284258192]
+light_mask = 0
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_q1nu8")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=510462554]
+texture = SubResource("AtlasTexture_jgu8v")
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1827391745]
+visible = false
+position = Vector2(0, 5)
+texture = SubResource("AtlasTexture_aul27")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=670387716]
+shape = SubResource("RectangleShape2D_buskd")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=2011855097]
+unique_name_in_owner = true
+visible = false
+amount = 15
+lifetime = 8.0
+speed_scale = 30.0
+emission_shape = 1
+emission_sphere_radius = 8.0
+gravity = Vector2(0, 0)
+color_ramp = SubResource("Gradient_7owrj")

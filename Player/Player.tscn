@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dmpwd36rn8bsn" path="res://Player/Scripts/Player.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="2"]
+[ext_resource type="Script" uid="uid://b4wdupl8tfwv8" path="res://Player/Scripts/Gestionnaire_Glitch.gd" id="2_ww5s2"]
 [ext_resource type="Script" uid="uid://bf175tb5pwgxg" path="res://System/camera.gd" id="3"]
 [ext_resource type="SpriteFrames" uid="uid://xkd8aoa58mvt" path="res://Larchet/Skins/Animations/AnimationSkins.tres" id="3_vtj8b"]
 [ext_resource type="Script" uid="uid://ch4u2vjoe2itc" path="res://System/StateMachine.gd" id="4"]
@@ -40,6 +41,8 @@
 [ext_resource type="Texture2D" uid="uid://d0wlglrlf6tdy" path="res://Interface/Sprites/tile_0086.png" id="36"]
 [ext_resource type="Texture2D" uid="uid://cefgakl5qfc7b" path="res://Interface/Sprites/tile_0155.png" id="37"]
 [ext_resource type="Texture2D" uid="uid://bmur6sjbi38n" path="res://VFX/Sprites/Buff n Debuff P1 06.png" id="38"]
+[ext_resource type="Script" uid="uid://cx4idww4fos3h" path="res://Player/Scripts/UI_Glitchs.gd" id="41_7w4lt"]
+[ext_resource type="LabelSettings" uid="uid://ct1olda2r36v8" path="res://Larchet/Menus/LabelFont.tres" id="41_o1b5h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jt7i3"]
 atlas = ExtResource("2")
@@ -542,6 +545,24 @@ animations = [{
 "speed": 45.0
 }]
 
+[sub_resource type="LabelSettings" id="LabelSettings_mycqx"]
+paragraph_spacing = 3.0
+font = ExtResource("21")
+font_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mycqx"]
+bg_color = Color(0, 0.5223318, 0.15419123, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(2.117753e-06, 0.64336455, 0.19686764, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+corner_detail = 20
+
 [node name="Player" type="Area2D" unique_id=1490852818]
 z_index = 5
 y_sort_enabled = true
@@ -549,6 +570,9 @@ collision_mask = 14
 script = ExtResource("1")
 buffer_timing = 0.4
 timming_first_move = 0.25
+
+[node name="Node2D" type="Node2D" parent="." unique_id=581306430]
+script = ExtResource("2_ww5s2")
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=573894578]
 y_sort_enabled = true
@@ -561,7 +585,7 @@ y_sort_enabled = true
 sprite_frames = ExtResource("3_vtj8b")
 animation = &"Original"
 autoplay = "Original"
-frame_progress = 0.1673735
+frame_progress = 0.5681713
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=769996215]
 unique_name_in_owner = true
@@ -950,6 +974,64 @@ sprite_frames = SubResource("SpriteFrames_76rpr")
 frame = 19
 frame_progress = 1.0
 metadata/_edit_lock_ = true
+
+[node name="UI_Glitchs" type="CanvasLayer" parent="." unique_id=1065437539]
+script = ExtResource("41_7w4lt")
+
+[node name="Glitchs" type="Control" parent="UI_Glitchs" unique_id=1784952515]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_lock_ = true
+
+[node name="Description" type="PanelContainer" parent="UI_Glitchs/Glitchs" unique_id=2047998960]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 149.0
+offset_right = 150.0
+offset_bottom = 171.0
+
+[node name="Label" type="Label" parent="UI_Glitchs/Glitchs/Description" unique_id=1953687625]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Mini Dash / Touche d'interaction puis dash :
+Téléporte le personnage 2 cases en avant"
+label_settings = SubResource("LabelSettings_mycqx")
+
+[node name="Glitch_Indicator" type="Panel" parent="UI_Glitchs/Glitchs" unique_id=1147441191]
+layout_mode = 0
+offset_top = 140.0
+offset_right = 40.0
+offset_bottom = 180.0
+mouse_default_cursor_shape = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mycqx")
+
+[node name="Glitch_Sprite" type="TextureRect" parent="UI_Glitchs/Glitchs/Glitch_Indicator" unique_id=983401972]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ID_Temporaire" type="Label" parent="UI_Glitchs/Glitchs/Glitch_Indicator" unique_id=320606864]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = ExtResource("41_o1b5h")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="state_changed" from="StateMachine" to="." method="_on_state_machine_state_changed"]
 [connection signal="timeout" from="Timer_first_move" to="." method="_on_timer_first_move_timeout"]
