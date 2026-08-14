@@ -70,7 +70,9 @@ func _ready() -> void:
 	var tous_les_outils = [
 		btn_herbe, btn_mur, btn_glace, btn_transparent, btn_bridge,
 		btn_fragile_green, btn_fragile_wood, btn_hidden, btn_deco,
-		btn_doors, btn_platforms, btn_portals
+		btn_doors, btn_platforms, btn_portals,
+		btn_grass_mode, btn_mode3, btn_OL, btn_test,
+		btn_save, btn_move, btn_tester
 	]
 	for btn in tous_les_outils:
 		btn.button_group = brush_group

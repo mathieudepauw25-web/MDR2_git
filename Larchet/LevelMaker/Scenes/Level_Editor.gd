@@ -246,21 +246,22 @@ func _unhandled_input(event: InputEvent) -> void:
 				if has_node("TileManager"): $TileManager.erase_all_layers(null, is_right_just_clicked)
 			elif current_edit_mode == EditMode.INTERACTIVE and is_right_just_clicked:
 				if has_node("InteractiveManager"): $InteractiveManager._handle_interactive_erase(grid_pos)
-	if event is InputEventKey and event.pressed and not event.echo:
+	if event is InputEventKey and not event.echo:
 		if event.keycode == KEY_SPACE:
 			$TileManager.refresh_all_grass()
-		elif event.is_action_pressed("ui_cancel"):
-			queue_free()
-			get_tree().change_scene_to_file("res://Larchet/Menus/LevelEditor/Menu_Level_Editor.tscn")
-		elif current_edit_mode == EditMode.FLOOR and current_brush == TileSkinData.Brush.DECO:
-			if event.keycode == KEY_RIGHT:
-				_cycle_deco_category(1)
-			elif event.keycode == KEY_LEFT:
-				_cycle_deco_category(-1)
-			elif event.keycode == KEY_UP:
-				_cycle_deco_index(1)
-			elif event.keycode == KEY_DOWN:
-				_cycle_deco_index(-1)
+		elif event.pressed:
+			if event.is_action_pressed("ui_cancel"):
+				queue_free()
+				get_tree().change_scene_to_file("res://Larchet/Menus/LevelEditor/Menu_Level_Editor.tscn")
+			elif current_edit_mode == EditMode.FLOOR and current_brush == TileSkinData.Brush.DECO:
+				if event.keycode == KEY_RIGHT:
+					_cycle_deco_category(1)
+				elif event.keycode == KEY_LEFT:
+					_cycle_deco_category(-1)
+				elif event.keycode == KEY_UP:
+					_cycle_deco_index(1)
+				elif event.keycode == KEY_DOWN:
+					_cycle_deco_index(-1)
 
 func _gerer_animations_cles(jouer: bool) -> void:
 	for door in get_tree().get_nodes_in_group("Doors"):
