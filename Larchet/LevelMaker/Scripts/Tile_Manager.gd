@@ -599,6 +599,11 @@ func _is_protected_entity_at(grid_pos: Vector2i) -> bool:
 			for key in keys_container.get_children():
 				if not key.is_queued_for_deletion() and main.layer_floor.local_to_map(key.global_position) == grid_pos:
 					return true
+	for portal in get_tree().get_nodes_in_group("Portals"):
+		if portal.is_queued_for_deletion():
+			continue
+		if main.layer_floor.local_to_map(portal.global_position) == grid_pos:
+			return true
 	return false
 
 func _get_current_deco_atlas_data(grid_pos: Vector2i) -> Vector3i:

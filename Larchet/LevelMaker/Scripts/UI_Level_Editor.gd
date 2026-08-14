@@ -71,7 +71,7 @@ func _ready() -> void:
 		btn_herbe, btn_mur, btn_glace, btn_transparent, btn_bridge,
 		btn_fragile_green, btn_fragile_wood, btn_hidden, btn_deco,
 		btn_doors, btn_platforms, btn_portals,
-		btn_grass_mode, btn_mode3, btn_OL, btn_test,
+		btn_grass_mode, btn_mode3, btn_test,
 		btn_save, btn_move, btn_tester
 	]
 	for btn in tous_les_outils:
@@ -112,6 +112,13 @@ func _ready() -> void:
 # ==========================================
 # NOUVEAU : DÉSACTIVATION DU LINKER
 # ==========================================
+
+func desactiver_move_mode() -> void:
+	if lbl_move.text == "M":
+		lbl_move.text = "="
+		$"..".is_moving = false
+		btn_move.set_pressed_no_signal(false)
+
 func desactiver_door_linker() -> void:
 	if is_linking_doors:
 		is_linking_doors = false
@@ -139,6 +146,7 @@ func _on_portal_exit_pressed() -> void:
 func _selectionner_brush(brush_type: TileSkinData.Brush) -> void:
 	desactiver_door_linker()
 	desactiver_portal_linker()
+	desactiver_move_mode()
 	property.hide()
 	current_edit_mode = EditMode.FLOOR
 	current_interactive_type = InteractiveType.NONE
@@ -155,6 +163,7 @@ func _set_interactive_mode(type: InteractiveType) -> void:
 
 func _on_doors_pressed() -> void:
 	desactiver_portal_linker()
+	desactiver_move_mode()
 	_set_interactive_mode(InteractiveType.DOOR)
 	property.visible = true
 	for UI in property.get_children():
@@ -165,6 +174,7 @@ func _on_doors_pressed() -> void:
 func _on_platforms_pressed() -> void:
 	desactiver_door_linker()
 	desactiver_portal_linker()
+	desactiver_move_mode()
 	_set_interactive_mode(InteractiveType.PLATFORM)
 	property.visible = true
 	for UI in property.get_children():
@@ -175,6 +185,7 @@ func _on_platforms_pressed() -> void:
 func _on_portals_pressed() -> void:
 	desactiver_door_linker()
 	desactiver_portal_linker()
+	desactiver_move_mode()
 	_set_interactive_mode(InteractiveType.PORTAL)
 	property.visible = true
 	for UI in property.get_children():
