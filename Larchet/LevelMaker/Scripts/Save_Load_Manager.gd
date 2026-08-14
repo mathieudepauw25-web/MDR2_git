@@ -150,6 +150,11 @@ func sauvegarder_niveau() -> void:
 		if signals_data.size() > 0:
 			json_data["Signals"]["DoorPlatform"] = signals_data
 	JSONGestionnaire.sauvegarder_map(main.current_file_path, json_data)
+	var backup_dir = "user://Levels/"
+	if not DirAccess.dir_exists_absolute(backup_dir):
+		DirAccess.make_dir_recursive_absolute(backup_dir)
+	var nom_fichier = main.current_file_path.get_file()
+	JSONGestionnaire.sauvegarder_map(backup_dir + nom_fichier, json_data)
 
 func generer_editeur_depuis_data(map_data: Dictionary) -> void:
 	effacer_tout_lediteur()
