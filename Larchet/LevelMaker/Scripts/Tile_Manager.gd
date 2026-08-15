@@ -30,6 +30,7 @@ func refresh_all_grass() -> void:
 	var used_cells = main.layer_floor.get_used_cells()
 	for cell in used_cells:
 		apply_bitmask_to_single_cell(cell, main.layer_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
+		_update_arrow_color(cell, get_grass_theme(cell))
 	main.set_active_map(was_pattern)
 
 func paint_smart_tile(is_just_clicked: bool = false) -> void:
