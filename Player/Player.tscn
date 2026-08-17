@@ -564,14 +564,14 @@ corner_radius_bottom_left = 50
 corner_detail = 20
 
 [node name="Player" type="Area2D" unique_id=1490852818]
-z_index = 5
+z_index = 10
 y_sort_enabled = true
 collision_mask = 14
 script = ExtResource("1")
 buffer_timing = 0.4
 timming_first_move = 0.25
 
-[node name="Node2D" type="Node2D" parent="." unique_id=581306430]
+[node name="Gestionnaire_Glitch" type="Node2D" parent="." unique_id=581306430]
 script = ExtResource("2_ww5s2")
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=573894578]

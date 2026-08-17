@@ -276,7 +276,7 @@ func _spawn_player(grid_pos: Vector2i) -> void:
 	player = PLAYER_SCENE.instantiate()
 	player.name = "Player_Instance"
 	player.position = layer_floor.map_to_local(grid_pos) + Vector2(0, -1.5)
-	player.z_index = 5
+	#player.z_index = 10
 	add_child(player)
 	player.owner = self
 	var player_camera = player.get_node_or_null("Camera2D")

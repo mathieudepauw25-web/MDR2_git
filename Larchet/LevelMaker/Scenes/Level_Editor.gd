@@ -282,7 +282,7 @@ func play_map():
 	player = PLAYER_SCENE.instantiate()
 	var p_grid = layer_floor.local_to_map(sprite_player.global_position)
 	player.global_position = layer_floor.map_to_local(p_grid) + Vector2(0, -1.5)
-	player.z_index = 5
+	#player.z_index = 10
 	add_child(player)
 	sprite_player.visible = false
 	sprite_arrival.visible = false 

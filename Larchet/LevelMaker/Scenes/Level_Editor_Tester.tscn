@@ -13,9 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://b3csi3ttrhear" path="res://World/Sprites/Tileset_FLOOR.png" id="11_wakx5"]
 [ext_resource type="TileSet" uid="uid://chdumrrdoisyu" path="res://Larchet/LevelMaker/TileMapLayer/Deco.tres" id="12_37h2u"]
 
-[sub_resource type="TileSet" id="TileSet_wdswg"]
+[sub_resource type="TileSet" id="TileSet_37h2u"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h3xsp"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_frrsd"]
 texture = ExtResource("6_lsw7r")
 0:0/0 = 0
 1:0/0 = 0
@@ -23,14 +23,14 @@ texture = ExtResource("6_lsw7r")
 0:1/0 = 0
 1:1/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_1008p"]
-sources/2 = SubResource("TileSetAtlasSource_h3xsp")
+[sub_resource type="TileSet" id="TileSet_tnv3u"]
+sources/2 = SubResource("TileSetAtlasSource_frrsd")
 
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_215ju"]
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_6dyvu"]
 resource_name = "Fragile"
 scenes/1/scene = ExtResource("8_op0bn")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ws7rn"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h3xsp"]
 texture = ExtResource("9_c1v7p")
 0:0/0 = 0
 1:0/0 = 0
@@ -42,15 +42,15 @@ texture = ExtResource("9_c1v7p")
 1:2/0 = 0
 1:3/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_lrbi2"]
-sources/0 = SubResource("TileSetScenesCollectionSource_215ju")
-sources/4 = SubResource("TileSetAtlasSource_ws7rn")
+[sub_resource type="TileSet" id="TileSet_5x2jj"]
+sources/0 = SubResource("TileSetScenesCollectionSource_6dyvu")
+sources/4 = SubResource("TileSetAtlasSource_h3xsp")
 
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_lsw7r"]
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_215ju"]
 resource_name = "Hidden"
 scenes/1/scene = ExtResource("10_0gexs")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6sfsa"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ws7rn"]
 texture = ExtResource("11_wakx5")
 1:0/0 = 0
 2:0/0 = 0
@@ -139,9 +139,9 @@ texture = ExtResource("11_wakx5")
 12:7/0 = 0
 13:7/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_ok7gt"]
-sources/0 = SubResource("TileSetScenesCollectionSource_lsw7r")
-sources/2 = SubResource("TileSetAtlasSource_6sfsa")
+[sub_resource type="TileSet" id="TileSet_lsw7r"]
+sources/0 = SubResource("TileSetScenesCollectionSource_215ju")
+sources/2 = SubResource("TileSetAtlasSource_ws7rn")
 
 [node name="Tester" type="Node2D" unique_id=637677221]
 y_sort_enabled = true
@@ -150,102 +150,103 @@ script = ExtResource("1_h3xsp")
 [node name="MAP_global" type="Node2D" parent="." unique_id=627662809]
 y_sort_enabled = true
 
-[node name="Perspective" type="TileMapLayer" parent="MAP_global" unique_id=1979195109]
+[node name="Perspective" type="TileMapLayer" parent="MAP_global" unique_id=1380085754]
 y_sort_enabled = true
 
-[node name="TileMapLayer_perspective_right" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=362191059]
-unique_name_in_owner = true
-z_index = 2
-tile_set = ExtResource("1_6dyvu")
-
-[node name="TileMapLayer_perspective_right_wall" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=1905315918]
+[node name="TileMapLayer_perspective_right" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=1038477704]
 unique_name_in_owner = true
 z_index = 4
-tile_set = ExtResource("2_h3xsp")
-
-[node name="TileMapLayer_perspective_Eright_wall" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=224255202]
-unique_name_in_owner = true
-z_index = 1
-tile_set = ExtResource("2_h3xsp")
-
-[node name="TileMapLayer_perspective_right_ice" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=1446053670]
-unique_name_in_owner = true
-z_index = 3
-tile_set = ExtResource("3_5x2jj")
-
-[node name="TileMapLayer_perspective_up" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=856400146]
-unique_name_in_owner = true
-z_index = 2
 tile_set = ExtResource("1_6dyvu")
 
-[node name="TileMapLayer_perspective_up_wall" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=238026314]
+[node name="TileMapLayer_perspective_right_wall" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=1045407770]
+unique_name_in_owner = true
+z_index = 8
+tile_set = ExtResource("2_h3xsp")
+
+[node name="TileMapLayer_perspective_Eright_wall" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=1037574103]
+unique_name_in_owner = true
+z_index = 2
+tile_set = ExtResource("2_h3xsp")
+
+[node name="TileMapLayer_perspective_right_ice" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=1388244920]
 unique_name_in_owner = true
 z_index = 6
-tile_set = ExtResource("2_h3xsp")
-
-[node name="TileMapLayer_perspective_up_ice" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=796852889]
-unique_name_in_owner = true
-z_index = 3
 tile_set = ExtResource("3_5x2jj")
 
-[node name="TileMapLayer_perspective_water_right" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=1622588481]
+[node name="TileMapLayer_perspective_up" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=247137476]
 unique_name_in_owner = true
-z_index = 1
-tile_set = ExtResource("4_215ju")
-
-[node name="TileMapLayer_perspective_water_down" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=276782410]
-unique_name_in_owner = true
-tile_set = ExtResource("4_215ju")
-
-[node name="TileMapLayer_perspective_water_left" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=1957002821]
-unique_name_in_owner = true
-tile_set = ExtResource("4_215ju")
-
-[node name="MAP" type="TileMapLayer" parent="MAP_global" unique_id=868766188]
-unique_name_in_owner = true
-y_sort_enabled = true
-tile_set = SubResource("TileSet_wdswg")
-script = ExtResource("5_ws7rn")
-
-[node name="tileMapLayer_floor" type="TileMapLayer" parent="MAP_global/MAP" unique_id=652285317]
-unique_name_in_owner = true
-z_index = 2
+z_index = 5
 tile_set = ExtResource("1_6dyvu")
 
-[node name="tileMapLayer_wall" type="TileMapLayer" parent="MAP_global/MAP" unique_id=737694089]
+[node name="TileMapLayer_perspective_up_wall" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=1288916167]
+unique_name_in_owner = true
+z_index = 17
+tile_set = ExtResource("2_h3xsp")
+
+[node name="TileMapLayer_perspective_up_ice" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=1459098134]
+unique_name_in_owner = true
+z_index = 6
+tile_set = ExtResource("3_5x2jj")
+
+[node name="TileMapLayer_perspective_water_right" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=1300756914]
+unique_name_in_owner = true
+z_index = 2
+tile_set = ExtResource("4_215ju")
+
+[node name="TileMapLayer_perspective_water_down" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=1830089044]
+unique_name_in_owner = true
+tile_set = ExtResource("4_215ju")
+
+[node name="TileMapLayer_perspective_water_left" type="TileMapLayer" parent="MAP_global/Perspective" unique_id=344805215]
+unique_name_in_owner = true
+tile_set = ExtResource("4_215ju")
+
+[node name="MAP" type="TileMapLayer" parent="MAP_global" unique_id=1627706468]
+unique_name_in_owner = true
+y_sort_enabled = true
+tile_set = SubResource("TileSet_37h2u")
+script = ExtResource("5_ws7rn")
+
+[node name="tileMapLayer_floor" type="TileMapLayer" parent="MAP_global/MAP" unique_id=872606850]
+unique_name_in_owner = true
+z_index = 4
+tile_set = ExtResource("1_6dyvu")
+
+[node name="tileMapLayer_wall" type="TileMapLayer" parent="MAP_global/MAP" unique_id=1812436003]
 unique_name_in_owner = true
 light_mask = 0
-z_index = 5
+z_index = 16
 y_sort_enabled = true
 tile_set = ExtResource("2_h3xsp")
 
-[node name="tileMapLayer_ice" type="TileMapLayer" parent="MAP_global/MAP" unique_id=1830943247]
+[node name="tileMapLayer_ice" type="TileMapLayer" parent="MAP_global/MAP" unique_id=1685287598]
 unique_name_in_owner = true
-z_index = 2
-tile_set = SubResource("TileSet_1008p")
+z_index = 4
+tile_set = SubResource("TileSet_tnv3u")
 
-[node name="tileMapLayer_fragile" type="TileMapLayer" parent="MAP_global/MAP" unique_id=463669601]
+[node name="tileMapLayer_fragile" type="TileMapLayer" parent="MAP_global/MAP" unique_id=130828259]
 unique_name_in_owner = true
-z_index = 2
-tile_set = SubResource("TileSet_lrbi2")
+z_index = 4
+tile_set = SubResource("TileSet_5x2jj")
 
-[node name="tileMapLayer_hidden" type="TileMapLayer" parent="MAP_global/MAP" unique_id=263781582]
+[node name="tileMapLayer_hidden" type="TileMapLayer" parent="MAP_global/MAP" unique_id=1719911079]
 unique_name_in_owner = true
-z_index = 2
-tile_set = SubResource("TileSet_ok7gt")
+z_index = 4
+tile_set = SubResource("TileSet_lsw7r")
 
-[node name="tileMapLayer_deco" type="TileMapLayer" parent="MAP_global/MAP" unique_id=459263005]
+[node name="tileMapLayer_deco" type="TileMapLayer" parent="MAP_global/MAP" unique_id=2002402610]
 unique_name_in_owner = true
-z_index = 3
+z_index = 6
 tile_set = ExtResource("12_37h2u")
 
-[node name="Interactive" type="Node2D" parent="MAP_global/MAP" unique_id=2088532032]
+[node name="Interactive" type="Node2D" parent="MAP_global/MAP" unique_id=1904671943]
 
-[node name="Doors" type="Node2D" parent="MAP_global/MAP/Interactive" unique_id=1111475144]
+[node name="Doors" type="Node2D" parent="MAP_global/MAP/Interactive" unique_id=1299624596]
 unique_name_in_owner = true
 
-[node name="Platforms" type="Node2D" parent="MAP_global/MAP/Interactive" unique_id=1022484711]
+[node name="Platforms" type="Node2D" parent="MAP_global/MAP/Interactive" unique_id=390141030]
 unique_name_in_owner = true
+z_index = 2
 
-[node name="Portals" type="Node2D" parent="MAP_global/MAP/Interactive" unique_id=1459500193]
+[node name="Portals" type="Node2D" parent="MAP_global/MAP/Interactive" unique_id=725165351]
 unique_name_in_owner = true
