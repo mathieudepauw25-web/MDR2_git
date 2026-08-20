@@ -8,6 +8,9 @@ class_name TitleScreen
 @onready var node_container_trophy: HBoxContainer = $CanvasLayer / HBoxContainer_trophy
 @onready var node_ui_menu_up_down: AudioStreamPlayer = $SFX / UI_menu_up_down
 @onready var node_ui_menu_click: AudioStreamPlayer = $SFX / UI_menu_click
+@onready var menu_control: Control = $CanvasLayer/MenuControl
+@onready var start_control: Control = $CanvasLayer/StartControl
+@onready var md_rlogo: TextureRect = $CanvasLayer/MDRlogo
 
 
 @export var LeaderboardUsersScore1: PackedScene = preload("res://Interface/LaderboardLine.tscn")
@@ -24,6 +27,7 @@ func _ready() -> void :
 	#if GAMES.SteamisRunning:
 	#	GAMES.find_leaderboard("Highscore")
 	EVENTS.connect("save", update_text)
+	EVENTS.connect("change_to_main_menu", back_to_title_screen_animation)
 	Engine.time_scale = 1
 	EVENTS.emit_signal("starting")
 	get_tree().call_group("LinkedPlatforms", "force_start")
@@ -58,16 +62,13 @@ func _process(delta: float) -> void :
 		$BGM.volume_db += 0.2
 	if Input.is_action_just_pressed("escape"):
 		if $CanvasLayer/StartControl.visible == true:
-			print("susioauosoazhdf")
+			back_to_title_screen_animation()
 			$CanvasLayer/MenuControl.visible = true
 			$CanvasLayer/MDRlogo.visible = true
 			$CanvasLayer/StartControl.visible = false
 			%Start.grab_focus()
 
 func _input(event: InputEvent) -> void :
-
-
-
 	if not Input.is_joy_known(event.get_device()):
 
 		return
@@ -140,17 +141,54 @@ func update_text() -> void :
 		if GAMES.game_data.option_langue == 0: text = "friends"
 		if GAMES.game_data.option_langue == 1: text = "amis"
 	$CanvasLayer / HBoxContainer_MENU / Panel_leaderboard_arrival / Panel_world / Label_world.text = text
+	
 
-### button pressed ###
+func _on_leaderboard_scores_downloaded(_message, _handle, result):
+	var compteur: int = 0
+	for r in result:
+		var UserScore = LeaderboardUsersScore1.instantiate()
+		var rank = r.global_rank
+		var _name = Steam.getFriendPersonaName(r.steam_id)
+		var score = r.score
+		UserScore.SetUpLeaderboardScore(rank, _name, score)
+		node_v_box_container.add_child(UserScore)
+		compteur += 1
+		if compteur >= 10: return
+
+
+################## button pressed #####################
+
 @onready var start_campagne: Button = $CanvasLayer/StartControl/StartCampagne
+var tween : Tween
 
 func _on_start_pressed() -> void :
 	print("start")
-	$CanvasLayer/MenuControl.visible = false
+	if tween : tween.kill()
+	tween = create_tween()
+	$CanvasLayer/StartControl/StartCampagne.offset_transform_position = Vector2(-400, 0)
+	$CanvasLayer/StartControl/StartOnlineLevel.offset_transform_position = Vector2(400, 0)
+	$CanvasLayer/StartControl/StartLevelEditor.offset_transform_position = Vector2(400, 0)
+	main_menu_button_pressed_animation($CanvasLayer/StartControl/GrabFocusButton)
+	await tween.finished
+	if tween : tween.kill()
+	tween = create_tween()
+	
+	#bouton de la campagne 
+	
+	tween.tween_property($CanvasLayer/StartControl/StartCampagne, "offset_transform_position", Vector2(10, 0), 0.1)
+	tween.tween_property($CanvasLayer/StartControl/StartCampagne, "offset_transform_position", Vector2(0, 0), 0.1)
+	tween.tween_property($CanvasLayer/StartControl/StartOnlineLevel, "offset_transform_position", Vector2(-10, 0), 0.1)
+	tween.tween_property($CanvasLayer/StartControl/StartOnlineLevel, "offset_transform_position", Vector2(0, 0), 0.1)
+	tween.tween_property($CanvasLayer/StartControl/StartLevelEditor, "offset_transform_position", Vector2(-10, 0), 0.1)
+	tween.tween_property($CanvasLayer/StartControl/StartLevelEditor, "offset_transform_position", Vector2(0, 0), 0.1)
+	tween.tween_property($CanvasLayer/StartControl/Titre, "offset_transform_position", Vector2(-10, 0), 0.1)
+	tween.tween_property($CanvasLayer/StartControl/Titre, "offset_transform_position", Vector2(0, 0), 0.1)
+	
+	
+	
+	menu_control.visible = false
 	$CanvasLayer/MDRlogo.visible = false
 	$CanvasLayer/StartControl.visible = true
-	$CanvasLayer/StartControl/GrabFocusButton.grab_focus()
-	
 
 
 func _on_leaderboard_pressed() -> void :
@@ -206,32 +244,19 @@ func back_to_title_screen() -> void :
 func _on_quit_pressed() -> void :
 	get_tree().quit()
 
-func _on_leaderboard_scores_downloaded(_message, _handle, result):
-	var compteur: int = 0
-	for r in result:
-		var UserScore = LeaderboardUsersScore1.instantiate()
-		var rank = r.global_rank
-		var _name = Steam.getFriendPersonaName(r.steam_id)
-		var score = r.score
-		UserScore.SetUpLeaderboardScore(rank, _name, score)
-		node_v_box_container.add_child(UserScore)
-		compteur += 1
-		if compteur >= 10: return
 
-
-
-func _on_start_focus_entered() -> void :
-	pass
-
-##################### Mes fonctions #####################
 
 func _on_skins_pressed() -> void:
+	main_menu_button_pressed_animation(false)
+	await tween.finished
 	$CanvasLayer.visible = false
 	var skin = preload("res://Larchet/Menus/SkinsPage/Skins.tscn")
 	var instskin = skin.instantiate()
 	get_parent().add_child(instskin)
 
 func _on_controls_pressed() -> void:
+	main_menu_button_pressed_animation(false)
+	await tween.finished
 	$CanvasLayer.visible = false
 	var options = preload("res://Interface/options.tscn")
 	var instOptions = options.instantiate()
@@ -252,3 +277,21 @@ func _on_start_campagne_pressed() -> void:
 
 func _on_start_level_editor_pressed() -> void:
 	get_tree().change_scene_to_file("res://Larchet/Menus/LevelEditor/Menu_Level_Editor.tscn")
+
+func main_menu_button_pressed_animation(button_want_focus):
+	if tween : tween.kill()
+	tween = create_tween()
+	tween.tween_property(menu_control,"offset_transform_position", Vector2(0,-5), 0.1 ) 
+	tween.parallel().tween_property(md_rlogo,"offset_transform_position", Vector2(0,50), 0.1 ) 
+	tween.tween_property(menu_control,"offset_transform_position", Vector2(0,200), 0.1 ) 
+	tween.parallel().tween_property(md_rlogo,"offset_transform_position", Vector2(0,-1500), 0.1 ) 
+	if button_want_focus:
+		button_want_focus.grab_focus()
+
+func back_to_title_screen_animation():
+	if tween : tween.kill()
+	tween = create_tween()
+	tween.tween_property(menu_control,"offset_transform_position", Vector2(0,-5), 0.1 ) 
+	tween.parallel().tween_property(md_rlogo,"offset_transform_position", Vector2(0,50), 0.1 ) 
+	tween.tween_property(menu_control,"offset_transform_position", Vector2(0,0), 0.1 ) 
+	tween.parallel().tween_property(md_rlogo,"offset_transform_position", Vector2(0, 0), 0.1)

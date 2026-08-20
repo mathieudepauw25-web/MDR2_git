@@ -9,6 +9,7 @@ const SECURITY_KEY = "1354RHEHR465ER"
 @warning_ignore("shadowed_global_identifier")
 @export var LeaderboardUsersScore: PackedScene = preload("res://Interface/LaderboardLine.tscn")
 
+var in_main_menu = true
 var game_just_launch: = true
 var game_data = GameData.new()
 var SteamisRunning: = false

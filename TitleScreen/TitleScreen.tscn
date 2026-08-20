@@ -123,7 +123,7 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="Resource" id="Resource_0dcdk"]
+[sub_resource type="Resource" id="Resource_fmf0a"]
 resource_local_to_scene = true
 script = ExtResource("5")
 secret_index = 1
@@ -339,6 +339,7 @@ mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="MDRlogo" type="TextureRect" parent="CanvasLayer" unique_id=2070858163]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -415,7 +416,6 @@ scale_amount_max = 2.75
 color_ramp = SubResource("Gradient_g4v7s")
 
 [node name="StartControl" type="Control" parent="CanvasLayer" unique_id=650131698]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -0.04499817
@@ -430,6 +430,7 @@ offset_left = -68.0
 offset_top = -73.0
 offset_right = 85.0
 offset_bottom = -35.0
+offset_transform_position = Vector2(0, -0.275)
 theme_override_fonts/font = ExtResource("12")
 theme_override_font_sizes/font_size = 40
 text = "|Game mode|"
@@ -732,6 +733,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="MenuControl" type="Control" parent="CanvasLayer" unique_id=1590043801]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -80.045
@@ -740,7 +742,7 @@ offset_right = -80.045
 offset_bottom = 84.155
 size_flags_horizontal = 4
 size_flags_vertical = 4
-offset_transform_scale = Vector2(1.135, 1.135)
+offset_transform_enabled = true
 script = ExtResource("14_r1ysb")
 
 [node name="Panel" type="Panel" parent="CanvasLayer/MenuControl" unique_id=1391299699]
@@ -1090,7 +1092,7 @@ alignment = 1
 
 [node name="StarCount1" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1542527147 instance=ExtResource("4")]
 layout_mode = 2
-secret_data = SubResource("Resource_0dcdk")
+secret_data = SubResource("Resource_fmf0a")
 
 [node name="StarCount2" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1480194519 instance=ExtResource("4")]
 layout_mode = 2
@@ -1364,7 +1366,7 @@ textureInputEN = ExtResource("35")
 textureInputFR = ExtResource("35")
 
 [node name="Path2D" type="Path2D" parent="." unique_id=1935943812]
-position = Vector2(-752, -537)
+position = Vector2(15, -244)
 curve = SubResource("Curve2D_xa0j2")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D" unique_id=1291637332]
@@ -1422,7 +1424,7 @@ bus = &"Music"
 
 [node name="MAP_global" type="Node2D" parent="." unique_id=863691977]
 y_sort_enabled = true
-position = Vector2(-587, -446)
+position = Vector2(180, -153)
 
 [node name="Perspective" type="TileMapLayer" parent="MAP_global" unique_id=1878826796]
 y_sort_enabled = true

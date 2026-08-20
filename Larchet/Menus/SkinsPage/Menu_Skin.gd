@@ -24,6 +24,7 @@ func _ready() -> void:
 		button_UI.focus_entered.connect(_on_button_hover)
 	update_menu()
 
+var tween : Tween
 func update_menu() -> void:
 	cat_controler.visible = current_page == 0
 	for child in grid_container.get_children():
@@ -66,8 +67,16 @@ func update_menu() -> void:
 			slot_instance.focus_neighbor_right = suivant.get_path()
 		if i <= end_index/2 - 1:
 			slot_instance.focus_neighbor_top = back.get_path()
+			tween = create_tween()
+			tween.tween_property(slot_instance, "offset_transform_position", Vector2(0,-50), 0)
+			tween.tween_property(slot_instance, "offset_transform_position", Vector2(0, 5), 0.1)
+			tween.tween_property(slot_instance, "offset_transform_position", Vector2(0, 0), 0.1)
 		if i >= end_index/2:
 			slot_instance.clip_contents = true
+			tween = create_tween()
+			tween.tween_property(slot_instance, "offset_transform_position", Vector2(0,50), 0)
+			tween.tween_property(slot_instance, "offset_transform_position", Vector2(0, -5), 0.1)
+			tween.tween_property(slot_instance, "offset_transform_position", Vector2(0, 0), 0.1)
 			if i > end_index/4:
 				slot_instance.focus_neighbor_bottom = suivant.get_path()
 			elif i < end_index/4:
@@ -86,6 +95,7 @@ func _on_suivant_pressed() -> void:
 
 func _on_back_pressed() -> void:
 	$%Select.play()
+	EVENTS.emit_signal("change_to_main_menu")
 	get_parent().get_child(4).find_child("CanvasLayer").visible = true
 	get_parent().get_child(4).find_child("CanvasLayer").find_child("MenuControl").find_child("Skins").grab_focus()
 	queue_free()

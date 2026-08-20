@@ -2,6 +2,11 @@ extends Node
 
 
 @warning_ignore("unused_signal")
+signal change_to_main_menu
+
+
+
+@warning_ignore("unused_signal")
 signal starting()
 @warning_ignore("unused_signal")
 signal save()
