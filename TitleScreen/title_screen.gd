@@ -168,7 +168,7 @@ func _on_start_pressed() -> void :
 	$CanvasLayer/StartControl/StartCampagne.offset_transform_position = Vector2(-400, 0)
 	$CanvasLayer/StartControl/StartOnlineLevel.offset_transform_position = Vector2(400, 0)
 	$CanvasLayer/StartControl/StartLevelEditor.offset_transform_position = Vector2(400, 0)
-	main_menu_button_pressed_animation($CanvasLayer/StartControl/GrabFocusButton)
+	main_menu_button_pressed_animation($CanvasLayer/StartControl/StartCampagne)
 	await tween.finished
 	if tween : tween.kill()
 	tween = create_tween()
@@ -177,10 +177,13 @@ func _on_start_pressed() -> void :
 	
 	tween.tween_property($CanvasLayer/StartControl/StartCampagne, "offset_transform_position", Vector2(10, 0), 0.1)
 	tween.tween_property($CanvasLayer/StartControl/StartCampagne, "offset_transform_position", Vector2(0, 0), 0.1)
+	tween.tween_callback(Callable(%CanvasLayer, "shake_ui").bind(3 , 0.2))
 	tween.tween_property($CanvasLayer/StartControl/StartOnlineLevel, "offset_transform_position", Vector2(-10, 0), 0.1)
 	tween.tween_property($CanvasLayer/StartControl/StartOnlineLevel, "offset_transform_position", Vector2(0, 0), 0.1)
+	tween.tween_callback(Callable(%CanvasLayer, "shake_ui").bind(3 , 0.2))
 	tween.tween_property($CanvasLayer/StartControl/StartLevelEditor, "offset_transform_position", Vector2(-10, 0), 0.1)
 	tween.tween_property($CanvasLayer/StartControl/StartLevelEditor, "offset_transform_position", Vector2(0, 0), 0.1)
+	tween.tween_callback(Callable(%CanvasLayer, "shake_ui").bind(3 , 0.2))
 	tween.tween_property($CanvasLayer/StartControl/Titre, "offset_transform_position", Vector2(-10, 0), 0.1)
 	tween.tween_property($CanvasLayer/StartControl/Titre, "offset_transform_position", Vector2(0, 0), 0.1)
 	
@@ -289,9 +292,11 @@ func main_menu_button_pressed_animation(button_want_focus):
 		button_want_focus.grab_focus()
 
 func back_to_title_screen_animation():
+	print("eeee")
 	if tween : tween.kill()
 	tween = create_tween()
 	tween.tween_property(menu_control,"offset_transform_position", Vector2(0,-5), 0.1 ) 
 	tween.parallel().tween_property(md_rlogo,"offset_transform_position", Vector2(0,50), 0.1 ) 
+	%CanvasLayer.shake_ui(5, 0.5)
 	tween.tween_property(menu_control,"offset_transform_position", Vector2(0,0), 0.1 ) 
 	tween.parallel().tween_property(md_rlogo,"offset_transform_position", Vector2(0, 0), 0.1)

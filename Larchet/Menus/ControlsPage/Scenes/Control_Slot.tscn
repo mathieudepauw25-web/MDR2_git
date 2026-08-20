@@ -73,8 +73,8 @@ unique_name_in_owner = true
 stream = ExtResource("7_bhgec")
 pitch_scale = 1.1
 
-[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
 [connection signal="focus_entered" from="." to="." method="_on_hover"]
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
 [connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
 [connection signal="mouse_entered" from="." to="." method="_on_hover"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]

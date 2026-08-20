@@ -288,7 +288,7 @@ func play_map():
 	sprite_arrival.visible = false 
 	arrival_instance = ARRIVAL_SCENE.instantiate()
 	var a_grid = layer_floor.local_to_map(sprite_arrival.global_position)
-	arrival_instance.global_position = layer_floor.map_to_local(a_grid) + Vector2(0, -1.5)
+	arrival_instance.global_position = layer_floor.map_to_local(a_grid)
 	add_child(arrival_instance)
 	var arrival_grid_pos = layer_floor.local_to_map(sprite_arrival.global_position)
 	if has_node("TileManager"): $TileManager.update_smart_area(arrival_grid_pos)

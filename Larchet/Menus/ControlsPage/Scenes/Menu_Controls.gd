@@ -10,13 +10,15 @@ const CONTROL_SLOT_SCENE = preload("res://Larchet/Menus/ControlsPage/Scenes/Cont
 var is_remapping: bool = false
 var action_to_remap: String = ""
 var slot_to_update: ControlSlot = null
-
+var tween: Tween
 
 func _ready() -> void:
 	if config_remap:
 		generate_slots()
 
 func generate_slots() -> void:
+	if tween : tween.kill()
+	tween = create_tween()
 	var total_actions = config_remap.action_list.size()
 	var half_point = ceil(total_actions / 2.0)
 	for i in range(total_actions):
@@ -26,8 +28,14 @@ func generate_slots() -> void:
 		var slot_instance = CONTROL_SLOT_SCENE.instantiate() as ControlSlot
 		if i < half_point:
 			colonne_gauche.add_child(slot_instance)
+			slot_instance.offset_transform_position = Vector2(-200,0)
+			tween.parallel().tween_property(slot_instance, "offset_transform_position", Vector2(5,0), 0.1)
+			tween.chain().tween_property(slot_instance, "offset_transform_position", Vector2(0,0), 0.1)
 		else:
 			colonne_droite.add_child(slot_instance)
+			slot_instance.offset_transform_position = Vector2(200,0)
+			tween.parallel().tween_property(slot_instance, "offset_transform_position", Vector2(-5,0), 0.1)
+			tween.chain().tween_property(slot_instance, "offset_transform_position", Vector2(0,0), 0.1)
 		var current_key = get_current_key_name(action_id)
 		slot_instance.setup(action_id, display_name, current_key)
 		slot_instance.gui_input.connect(_on_slot_gui_input.bind(slot_instance))
@@ -97,9 +105,9 @@ func save_controls() -> void:
 func _on_back_pressed() -> void:
 	if visible == true:
 		visible = false
-		print(get_parent().get_children())
-		print(get_parent().get_child(5))
-		get_parent().get_child(5).visible = true
+		var options = load("res://Interface/options.tscn")
+		var instOptions = options.instantiate()
+		get_parent().add_child(instOptions)
 		queue_free()
 
 func _on_back_hover() -> void:

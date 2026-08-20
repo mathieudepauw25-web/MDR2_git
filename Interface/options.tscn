@@ -64,10 +64,6 @@ material = SubResource("ShaderMaterial_xl3qi")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 1.0
-offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
@@ -121,7 +117,7 @@ text = "Controls"
 script = ExtResource("11_q0mq6")
 TextEN = "Controls"
 TextFR = "Controls"
-augmentation = Vector2(1.2, 1.2)
+augmentation = Vector2(1.1, 1.1)
 
 [node name="HSlider_music" type="HSlider" parent="." unique_id=2049976952]
 offset_left = 67.00001
@@ -129,6 +125,7 @@ offset_top = 44.0
 offset_right = 272.0
 offset_bottom = 85.0
 scale = Vector2(0.45, 0.45)
+offset_transform_enabled = true
 focus_neighbor_left = NodePath("../Back")
 focus_neighbor_top = NodePath("../Back")
 focus_neighbor_bottom = NodePath("../HSlider_sound")
@@ -148,6 +145,7 @@ offset_left = -135.08772
 offset_top = 1.7543831
 offset_right = 210.52632
 offset_bottom = 38.59649
+mouse_filter = 2
 
 [node name="Music" type="Label" parent="HSlider_music" unique_id=1882520898]
 layout_mode = 0
@@ -168,6 +166,7 @@ offset_top = 68.00001
 offset_right = 280.8462
 offset_bottom = 97.461555
 scale = Vector2(0.4, 0.4)
+offset_transform_enabled = true
 focus_neighbor_top = NodePath("../HSlider_music")
 focus_neighbor_right = NodePath("../Controle")
 focus_neighbor_bottom = NodePath("../CheckButton")
@@ -199,6 +198,7 @@ offset_left = -115.38462
 offset_top = -7.692302
 offset_right = 238.46158
 offset_bottom = 34.61539
+mouse_filter = 2
 metadata/_edit_lock_ = true
 
 [node name="CheckButton" type="CheckButton" parent="." unique_id=581552274]
@@ -207,10 +207,12 @@ offset_top = 161.0
 offset_right = 107.0
 offset_bottom = 192.0
 scale = Vector2(0.4, 0.4)
+offset_transform_enabled = true
 focus_neighbor_top = NodePath("../HSlider_sound")
 focus_neighbor_right = NodePath("../Controle")
 theme_override_fonts/font = ExtResource("2_b5l1t")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/hover = SubResource("StyleBoxFlat_hr1ff")
 theme_override_styles/focus = SubResource("StyleBoxFlat_hr1ff")
 alignment = 1
 
@@ -235,24 +237,31 @@ offset_left = -140.0
 offset_top = -8.0
 offset_right = 48.0
 offset_bottom = 34.0
+mouse_filter = 2
 
 [node name="OptionButton_lang" type="OptionButton" parent="." unique_id=1669988680]
-offset_left = 287.0
+offset_left = 266.0
 offset_top = 5.0
-offset_right = 351.0
-offset_bottom = 33.0
+offset_right = 385.0
+offset_bottom = 36.0
 scale = Vector2(0.4, 0.4)
+offset_transform_enabled = true
 focus_neighbor_left = NodePath("../Back")
 focus_neighbor_bottom = NodePath("../Controle")
 theme = SubResource("Theme_2keol")
-theme_override_constants/h_separation = 0
+theme_override_constants/h_separation = 3
+theme_override_constants/icon_max_width = 0
+theme_override_fonts/font = ExtResource("2_b5l1t")
+theme_override_font_sizes/font_size = 21
 theme_override_styles/focus = SubResource("StyleBoxFlat_3d76f")
-button_mask = 0
 flat = true
 selected = 0
+fit_to_longest_item = false
 item_count = 2
+popup/item_0/text = "English"
 popup/item_0/icon = ExtResource("11_yqdu5")
 popup/item_0/id = 0
+popup/item_1/text = "Francais"
 popup/item_1/icon = ExtResource("12_q0mq6")
 popup/item_1/id = 1
 
@@ -261,8 +270,9 @@ z_index = -1
 layout_mode = 0
 offset_left = -3.703682
 offset_top = -3.7036858
-offset_right = 69.4815
-offset_bottom = 32.098785
+offset_right = 124.99999
+offset_bottom = 32.499996
+mouse_filter = 2
 
 [node name="Audio_test_sound" type="AudioStreamPlayer" parent="." unique_id=1530333872]
 stream = ExtResource("13_2gsww")
@@ -304,6 +314,7 @@ pitch_scale = 0.85
 bus = &"SFX"
 
 [connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
+[connection signal="button_down" from="Controle" to="Controle" method="_on_button_down"]
 [connection signal="focus_entered" from="Controle" to="Controle" method="_on_focus_entered"]
 [connection signal="focus_exited" from="Controle" to="Controle" method="_on_focus_exited"]
 [connection signal="pressed" from="Controle" to="." method="_on_controle_pressed"]

@@ -16,7 +16,7 @@ func _ready() -> void :
 	connect("visibility_changed", _on_visibility_changed)
 	EVENTS.connect("save", _on_visibility_changed)
 	_on_visibility_changed()
-
+	
 func _on_visibility_changed() -> void :
 	match GAMES.game_data.option_langue:
 		0:
@@ -59,3 +59,12 @@ func _on_focus_exited() -> void:
 
 func _on_mouse_entered() -> void:
 	grab_focus()
+
+
+func _on_button_down() -> void:
+	if tween: tween.kill()
+	
+	tween = create_tween()
+	tween.tween_property(self, "offset_transform_scale", augmentation - Vector2(0.05,0.05), 0.1)
+	
+	

@@ -24,3 +24,7 @@ func _on_focus_exited() -> void:
 	var target = self
 	tween.tween_property(target, "offset_transform_scale", Vector2(1.0,1.0), 0.2)
 	tween.parallel().tween_property(target, "offset_transform_rotation", 0.0, 0.2)
+
+
+func _on_button_down() -> void:
+	pass # Replace with function body.

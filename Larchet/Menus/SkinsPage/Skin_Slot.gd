@@ -40,19 +40,7 @@ func setup(data: SkinData, unlocked: bool, is_equipped: bool = false) -> void:
 			locked_indicator.show()
 
 func _on_mouse_entered() -> void:
-	$%Move.play()
-	if sprite.sprite_frames and sprite.sprite_frames.has_animation(skin_id):
-		sprite.play(skin_id)
-	locked_banner.text = skin_name_text
-
-func _on_mouse_exited() -> void:
-	if sprite.sprite_frames and sprite.sprite_frames.has_animation(skin_id):
-		sprite.stop()
-		sprite.frame = 0
-	if is_unlocked:
-		locked_banner.text = skin_name_text
-	else:
-		locked_banner.text = "Locked"
+	grab_focus()
 
 func _on_pressed() -> void:
 	if is_unlocked:
@@ -60,6 +48,10 @@ func _on_pressed() -> void:
 
 var tween : Tween
 func _on_focus_entered() -> void:
+	$%Move.play()
+	if sprite.sprite_frames and sprite.sprite_frames.has_animation(skin_id):
+		sprite.play(skin_id)
+	locked_banner.text = skin_name_text
 	z_index = 2
 	tween = create_tween()
 	var target = self
@@ -77,7 +69,13 @@ func _on_focus_entered() -> void:
 
 func _on_focus_exited() -> void:
 	if tween: tween.kill()
-	
+	if sprite.sprite_frames and sprite.sprite_frames.has_animation(skin_id):
+		sprite.stop()
+		sprite.frame = 0
+	if is_unlocked:
+		locked_banner.text = skin_name_text
+	else:
+		locked_banner.text = "Locked"
 	z_index = 0
 	tween = create_tween()
 	tween.set_ignore_time_scale(true)

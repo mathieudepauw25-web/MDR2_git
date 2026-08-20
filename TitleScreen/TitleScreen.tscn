@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dbilwn6vpgx6m" path="res://TitleScreen/title_screen.gd" id="1"]
 [ext_resource type="Shader" uid="uid://bqw0maxha7ge2" path="res://Interface/Shader/PauseBlur.gdshader" id="2"]
+[ext_resource type="Script" uid="uid://bc74umjmlia20" path="res://TitleScreen/canvas_layer.gd" id="2_r1ysb"]
 [ext_resource type="Texture2D" uid="uid://d3ph0osbptnvu" path="res://Logo de la bibliotheque (0-00-00-00).png" id="3"]
 [ext_resource type="PackedScene" uid="uid://cdvcj3gbbg0nq" path="res://Interface/StarCount.tscn" id="4"]
 [ext_resource type="Script" uid="uid://gl8xtqfygs1g" path="res://TitleScreen/md_rlogo.gd" id="4_fmf0a"]
@@ -79,14 +80,6 @@ colors = PackedColorArray(0.13725491, 0.5647059, 0.3882353, 1, 1, 1, 1, 1)
 offsets = PackedFloat32Array(0, 0.8397436, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0.3019608, 0.60784316, 0.9019608, 1, 0.3019608, 0.60784316, 0.9019608, 0)
 
-[sub_resource type="Theme" id="Theme_h4y7g"]
-default_font_size = 8
-Button/colors/font_hover_color = Color(1, 1, 1, 1)
-Button/font_sizes/font_size = 12
-Button/fonts/font = ExtResource("12")
-Button/styles/focus = ExtResource("13_pqi1g")
-Button/styles/normal = ExtResource("14_ye7gv")
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r1ysb"]
 bg_color = Color(0, 0, 0, 0.3372549)
 skew = Vector2(-0.115, 0)
@@ -123,7 +116,7 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="Resource" id="Resource_fmf0a"]
+[sub_resource type="Resource" id="Resource_lvbp2"]
 resource_local_to_scene = true
 script = ExtResource("5")
 secret_index = 1
@@ -312,8 +305,10 @@ position = Vector2(587, 446)
 script = ExtResource("1")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1306157962]
+unique_name_in_owner = true
 offset = Vector2(149.045, 61.845)
 transform = Transform2D(1, 0, 0, 1, 149.045, 61.845)
+script = ExtResource("2_r1ysb")
 
 [node name="Blur" type="ColorRect" parent="CanvasLayer" unique_id=423019966]
 z_index = -5
@@ -339,7 +334,6 @@ mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="MDRlogo" type="TextureRect" parent="CanvasLayer" unique_id=2070858163]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -416,6 +410,7 @@ scale_amount_max = 2.75
 color_ramp = SubResource("Gradient_g4v7s")
 
 [node name="StartControl" type="Control" parent="CanvasLayer" unique_id=650131698]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -0.04499817
@@ -462,28 +457,6 @@ scale_amount_min = 2.1
 scale_amount_max = 3.05
 color_ramp = SubResource("Gradient_r1ysb")
 
-[node name="GrabFocusButton" type="Button" parent="CanvasLayer/StartControl" unique_id=1119466159]
-layout_mode = 0
-offset_left = -339.04498
-offset_top = -30.845001
-offset_right = -181.04498
-offset_bottom = 75.155
-offset_transform_enabled = true
-focus_neighbor_left = NodePath("../StartCampagne")
-focus_neighbor_top = NodePath("../StartCampagne")
-focus_neighbor_right = NodePath("../StartCampagne")
-focus_neighbor_bottom = NodePath("../StartCampagne")
-theme = SubResource("Theme_h4y7g")
-theme_override_font_sizes/font_size = 26
-theme_override_styles/normal = ExtResource("14")
-theme_override_styles/hover = ExtResource("15_8xq3f")
-theme_override_styles/focus = ExtResource("15_8xq3f")
-button_mask = 0
-text = "GRAB FOCUS BUTON"
-icon_alignment = 1
-vertical_icon_alignment = 2
-expand_icon = true
-
 [node name="StartCampagne" type="Button" parent="CanvasLayer/StartControl" unique_id=1646396890]
 layout_mode = 0
 offset_left = -115.0
@@ -491,10 +464,7 @@ offset_top = -20.0
 offset_right = -6.0
 offset_bottom = 86.0
 offset_transform_enabled = true
-focus_neighbor_left = NodePath("../GrabFocusButton")
-focus_neighbor_top = NodePath("../GrabFocusButton")
 focus_neighbor_right = NodePath("../StartOnlineLevel")
-focus_neighbor_bottom = NodePath("../GrabFocusButton")
 theme_override_fonts/font = ExtResource("12")
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = ExtResource("14")
@@ -576,7 +546,6 @@ offset_bottom = 37.0
 offset_transform_enabled = true
 focus_neighbor_left = NodePath("../StartCampagne")
 focus_neighbor_top = NodePath("../StartLevelEditor")
-focus_neighbor_right = NodePath("../GrabFocusButton")
 focus_neighbor_bottom = NodePath("../StartLevelEditor")
 theme_override_fonts/font = ExtResource("12")
 theme_override_font_sizes/font_size = 26
@@ -652,7 +621,6 @@ offset_bottom = 85.0
 offset_transform_enabled = true
 focus_neighbor_left = NodePath("../StartCampagne")
 focus_neighbor_top = NodePath("../StartOnlineLevel")
-focus_neighbor_right = NodePath("../GrabFocusButton")
 focus_neighbor_bottom = NodePath("../StartOnlineLevel")
 theme_override_fonts/font = ExtResource("12")
 theme_override_font_sizes/font_size = 23
@@ -733,7 +701,6 @@ wait_time = 2.0
 one_shot = true
 
 [node name="MenuControl" type="Control" parent="CanvasLayer" unique_id=1590043801]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -80.045
@@ -770,7 +737,6 @@ theme_override_styles/pressed = ExtResource("15_8xq3f")
 theme_override_styles/hover = ExtResource("15_8xq3f")
 theme_override_styles/focus = ExtResource("15_8xq3f")
 text = "Start"
-clip_text = true
 expand_icon = true
 script = ExtResource("15")
 TextEN = "Start"
@@ -787,17 +753,21 @@ offset_top = 9.0
 offset_right = 53.0
 offset_bottom = 33.0
 offset_transform_enabled = true
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_constants/icon_max_width = 0
+theme_override_constants/align_to_largest_stylebox = 0
 theme_override_fonts/font = ExtResource("12")
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = ExtResource("14")
 theme_override_styles/pressed = ExtResource("15_8xq3f")
 theme_override_styles/hover = ExtResource("15_8xq3f")
 theme_override_styles/focus = ExtResource("15_8xq3f")
-text = "Skins"
 alignment = 2
+autowrap_trim_flags = 192
+icon_alignment = 2
+expand_icon = true
 script = ExtResource("15")
-TextEN = "Skins"
-TextFR = "Skins"
 augmentation = Vector2(1.2, 1.2)
 
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/MenuControl/Panel/Skins" unique_id=1061633405]
@@ -806,6 +776,16 @@ scale = Vector2(1.5, 1.4285715)
 texture = ExtResource("22_lvbp2")
 region_enabled = true
 region_rect = Rect2(50, 32, 13, 14)
+
+[node name="Label" type="Label" parent="CanvasLayer/MenuControl/Panel/Skins" unique_id=1979457693]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 3.0
+offset_right = 51.0
+offset_bottom = 26.0
+theme_override_fonts/font = ExtResource("12")
+theme_override_font_sizes/font_size = 19
+text = "Skins"
 
 [node name="Controls" type="Button" parent="CanvasLayer/MenuControl/Panel" unique_id=2014148059]
 z_index = 1
@@ -1092,7 +1072,7 @@ alignment = 1
 
 [node name="StarCount1" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1542527147 instance=ExtResource("4")]
 layout_mode = 2
-secret_data = SubResource("Resource_fmf0a")
+secret_data = SubResource("Resource_lvbp2")
 
 [node name="StarCount2" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1480194519 instance=ExtResource("4")]
 layout_mode = 2
@@ -3671,40 +3651,48 @@ position = Vector2(-296, 248)
 debug_keys_coords = Array[Vector2]([Vector2(-29, 17), Vector2(-31, 23), Vector2(-9, 31), Vector2(-18, 31), Vector2(-13, 21)])
 
 [connection signal="logoAnimationFini" from="CanvasLayer/MDRlogo" to="CanvasLayer/MenuControl" method="_on_md_rlogo_logo_animation_fini"]
+[connection signal="button_down" from="CanvasLayer/StartControl/StartCampagne" to="CanvasLayer/StartControl/StartCampagne" method="_on_button_down"]
 [connection signal="focus_entered" from="CanvasLayer/StartControl/StartCampagne" to="CanvasLayer/StartControl" method="_on_start_campagne_focus_entered"]
 [connection signal="focus_entered" from="CanvasLayer/StartControl/StartCampagne" to="CanvasLayer/StartControl/StartCampagne" method="_on_focus_entered"]
 [connection signal="focus_exited" from="CanvasLayer/StartControl/StartCampagne" to="CanvasLayer/StartControl" method="_on_start_campagne_focus_exited"]
 [connection signal="focus_exited" from="CanvasLayer/StartControl/StartCampagne" to="CanvasLayer/StartControl/StartCampagne" method="_on_focus_exited"]
 [connection signal="mouse_entered" from="CanvasLayer/StartControl/StartCampagne" to="CanvasLayer/StartControl/StartCampagne" method="_on_mouse_entered"]
 [connection signal="pressed" from="CanvasLayer/StartControl/StartCampagne" to="." method="_on_start_campagne_pressed"]
+[connection signal="button_down" from="CanvasLayer/StartControl/StartOnlineLevel" to="CanvasLayer/StartControl/StartOnlineLevel" method="_on_button_down"]
 [connection signal="focus_entered" from="CanvasLayer/StartControl/StartOnlineLevel" to="CanvasLayer/StartControl" method="_on_start_online_level_focus_entered"]
 [connection signal="focus_entered" from="CanvasLayer/StartControl/StartOnlineLevel" to="CanvasLayer/StartControl/StartOnlineLevel" method="_on_focus_entered"]
 [connection signal="focus_exited" from="CanvasLayer/StartControl/StartOnlineLevel" to="CanvasLayer/StartControl" method="_on_start_online_level_focus_exited"]
 [connection signal="focus_exited" from="CanvasLayer/StartControl/StartOnlineLevel" to="CanvasLayer/StartControl/StartOnlineLevel" method="_on_focus_exited"]
 [connection signal="mouse_entered" from="CanvasLayer/StartControl/StartOnlineLevel" to="CanvasLayer/StartControl/StartOnlineLevel" method="_on_mouse_entered"]
+[connection signal="button_down" from="CanvasLayer/StartControl/StartLevelEditor" to="CanvasLayer/StartControl/StartLevelEditor" method="_on_button_down"]
 [connection signal="focus_entered" from="CanvasLayer/StartControl/StartLevelEditor" to="CanvasLayer/StartControl" method="_on_start_level_editor_focus_entered"]
 [connection signal="focus_entered" from="CanvasLayer/StartControl/StartLevelEditor" to="CanvasLayer/StartControl/StartLevelEditor" method="_on_focus_entered"]
 [connection signal="focus_exited" from="CanvasLayer/StartControl/StartLevelEditor" to="CanvasLayer/StartControl" method="_on_start_level_editor_focus_exited"]
 [connection signal="focus_exited" from="CanvasLayer/StartControl/StartLevelEditor" to="CanvasLayer/StartControl/StartLevelEditor" method="_on_focus_exited"]
 [connection signal="mouse_entered" from="CanvasLayer/StartControl/StartLevelEditor" to="CanvasLayer/StartControl/StartLevelEditor" method="_on_mouse_entered"]
 [connection signal="pressed" from="CanvasLayer/StartControl/StartLevelEditor" to="." method="_on_start_level_editor_pressed"]
+[connection signal="button_down" from="CanvasLayer/MenuControl/Panel/Start" to="CanvasLayer/MenuControl/Panel/Start" method="_on_button_down"]
 [connection signal="focus_entered" from="CanvasLayer/MenuControl/Panel/Start" to="." method="_on_start_focus_entered"]
 [connection signal="focus_entered" from="CanvasLayer/MenuControl/Panel/Start" to="CanvasLayer/MenuControl/Panel/Start" method="_on_focus_entered"]
 [connection signal="focus_exited" from="CanvasLayer/MenuControl/Panel/Start" to="CanvasLayer/MenuControl/Panel/Start" method="_on_focus_exited"]
 [connection signal="mouse_entered" from="CanvasLayer/MenuControl/Panel/Start" to="CanvasLayer/MenuControl/Panel/Start" method="_on_mouse_entered"]
 [connection signal="pressed" from="CanvasLayer/MenuControl/Panel/Start" to="." method="_on_start_pressed"]
+[connection signal="button_down" from="CanvasLayer/MenuControl/Panel/Skins" to="CanvasLayer/MenuControl/Panel/Skins" method="_on_button_down"]
 [connection signal="focus_entered" from="CanvasLayer/MenuControl/Panel/Skins" to="CanvasLayer/MenuControl/Panel/Skins" method="_on_focus_entered"]
 [connection signal="focus_exited" from="CanvasLayer/MenuControl/Panel/Skins" to="CanvasLayer/MenuControl/Panel/Skins" method="_on_focus_exited"]
 [connection signal="mouse_entered" from="CanvasLayer/MenuControl/Panel/Skins" to="CanvasLayer/MenuControl/Panel/Skins" method="_on_mouse_entered"]
 [connection signal="pressed" from="CanvasLayer/MenuControl/Panel/Skins" to="." method="_on_skins_pressed"]
+[connection signal="button_down" from="CanvasLayer/MenuControl/Panel/Controls" to="CanvasLayer/MenuControl/Panel/Controls" method="_on_button_down"]
 [connection signal="focus_entered" from="CanvasLayer/MenuControl/Panel/Controls" to="CanvasLayer/MenuControl/Panel/Controls" method="_on_focus_entered"]
 [connection signal="focus_exited" from="CanvasLayer/MenuControl/Panel/Controls" to="CanvasLayer/MenuControl/Panel/Controls" method="_on_focus_exited"]
 [connection signal="mouse_entered" from="CanvasLayer/MenuControl/Panel/Controls" to="CanvasLayer/MenuControl/Panel/Controls" method="_on_mouse_entered"]
 [connection signal="pressed" from="CanvasLayer/MenuControl/Panel/Controls" to="." method="_on_controls_pressed"]
+[connection signal="button_down" from="CanvasLayer/MenuControl/ButOptions" to="CanvasLayer/MenuControl/ButOptions" method="_on_button_down"]
 [connection signal="focus_entered" from="CanvasLayer/MenuControl/ButOptions" to="CanvasLayer/MenuControl/ButOptions" method="_on_focus_entered"]
 [connection signal="focus_exited" from="CanvasLayer/MenuControl/ButOptions" to="CanvasLayer/MenuControl/ButOptions" method="_on_focus_exited"]
 [connection signal="pressed" from="CanvasLayer/MenuControl/ButOptions" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="CanvasLayer/MenuControl/ButOptions" to="CanvasLayer/MenuControl/ButOptions" method="_on_pressed"]
+[connection signal="button_down" from="CanvasLayer/MenuControl/Quit" to="CanvasLayer/MenuControl/Quit" method="_on_button_down"]
 [connection signal="focus_entered" from="CanvasLayer/MenuControl/Quit" to="CanvasLayer/MenuControl/Quit" method="_on_focus_entered"]
 [connection signal="focus_exited" from="CanvasLayer/MenuControl/Quit" to="CanvasLayer/MenuControl/Quit" method="_on_focus_exited"]
 [connection signal="mouse_entered" from="CanvasLayer/MenuControl/Quit" to="CanvasLayer/MenuControl/Quit" method="_on_mouse_entered"]

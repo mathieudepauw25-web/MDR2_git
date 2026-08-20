@@ -22,10 +22,10 @@ func _ready() -> void:
 	for button_UI in [back, suivant, precedent]:
 		button_UI.mouse_entered.connect(_on_button_hover)
 		button_UI.focus_entered.connect(_on_button_hover)
-	update_menu()
+	update_menu(false)
 
 var tween : Tween
-func update_menu() -> void:
+func update_menu(with_change_menu:bool) -> void:
 	cat_controler.visible = current_page == 0
 	for child in grid_container.get_children():
 		child.queue_free()
@@ -50,7 +50,8 @@ func update_menu() -> void:
 		if is_unlocked:
 			slot_instance.pressed.connect(_on_skin_slot_pressed.bind(skin_data.skin_id))
 		if i == start_index:
-			slot_instance.grab_focus.call_deferred()
+			if with_change_menu == false:
+				slot_instance.grab_focus.call_deferred()
 			slot_instance.focus_neighbor_left = precedent.get_path()
 			back.focus_neighbor_bottom = slot_instance.get_path()
 			back.focus_neighbor_right = slot_instance.get_path()
@@ -89,7 +90,7 @@ func update_menu() -> void:
 func _on_suivant_pressed() -> void:
 	$%Select.play()
 	current_page += 1
-	update_menu()
+	update_menu(true)
 	hoveredsuivant = false
 	
 
@@ -103,7 +104,7 @@ func _on_back_pressed() -> void:
 func _on_precedent_pressed() -> void:
 	$%Select.play()
 	current_page -= 1
-	update_menu()
+	update_menu(true)
 	hoveredsuivant = false
 
 func _on_skin_slot_pressed(clicked_skin_id: String) -> void:
@@ -143,16 +144,21 @@ func _input(event: InputEvent) -> void:
 				back.grab_focus()
 	if event.is_action_pressed("ui_down") and get_viewport().gui_get_focus_owner().clip_contents == true:
 		hoveredsuivant = true
+
 func next_page():
 	$%Select.play()
 	current_page += 1
-	update_menu()
+	update_menu(false)
 	hoveredsuivant = false
 
 func back_page():
 	$%Select.play()
 	current_page -= 1
-	update_menu()
+	update_menu(true)
+	print()
+	@warning_ignore("integer_division")
+	var buttonfocus = $GridContainer.get_child($GridContainer.get_child_count() /2 + 1)
+	buttonfocus.grab_focus()
 	hoveredsuivant = false
 
 
