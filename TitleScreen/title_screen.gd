@@ -292,7 +292,6 @@ func main_menu_button_pressed_animation(button_want_focus):
 		button_want_focus.grab_focus()
 
 func back_to_title_screen_animation():
-	print("eeee")
 	if tween : tween.kill()
 	tween = create_tween()
 	tween.tween_property(menu_control,"offset_transform_position", Vector2(0,-5), 0.1 ) 

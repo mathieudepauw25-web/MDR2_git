@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://cqcnk5xm25qjo"]
+
+[ext_resource type="Script" uid="uid://cdg4hdc4ky130" path="res://Interface/Scripts/quest_pack.gd" id="1_8v7ui"]
+[ext_resource type="StyleBox" uid="uid://3rxb4yawp623" path="res://Larchet/Menus/ControlSlot.tres" id="1_k4byu"]
+[ext_resource type="PackedScene" uid="uid://b1nx433bxtofc" path="res://Interface/quest_slot.tscn" id="2_vnd7d"]
+
+[node name="Quest_Pack" type="Control" unique_id=813412443]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8v7ui")
+
+[node name="Quest_pack" type="Button" parent="." unique_id=2128542570]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 51.0
+offset_bottom = 31.0
+theme_override_font_sizes/font_size = 5
+theme_override_styles/normal = ExtResource("1_k4byu")
+text = "Quqsdqsd qsdqsd"
+autowrap_mode = 3
+autowrap_trim_flags = 192
+clip_text = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1394945725]
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer" unique_id=1273595219]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+follow_focus = true
+draw_focus_border = true
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/ScrollContainer" unique_id=619255253]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/h_separation = 13
+theme_override_constants/v_separation = 5
+columns = 3
+
+[node name="Quest_slot" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=818862038 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot2" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=1557096321 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot3" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=222154473 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot4" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=580947101 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot5" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=2114469397 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot6" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=163594606 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot7" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=2039499767 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot8" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=1586569735 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot9" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=251863964 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot10" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=474040236 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot11" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=2099367395 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot12" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=1362044923 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot13" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=1563619914 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot14" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=306165833 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot15" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=1720343963 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[node name="Quest_slot16" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=1336704025 instance=ExtResource("2_vnd7d")]
+layout_mode = 2
+
+[connection signal="pressed" from="Quest_pack" to="." method="_on_quest_pack_pressed"]

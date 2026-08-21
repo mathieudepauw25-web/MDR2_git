@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://b1nx433bxtofc"]
+
+[ext_resource type="StyleBox" uid="uid://3rxb4yawp623" path="res://Larchet/Menus/ControlSlot.tres" id="1_tipu3"]
+
+[node name="Quest_slot" type="Button" unique_id=818862038]
+custom_minimum_size = Vector2(93, 43)
+offset_left = -1.0
+offset_right = 92.0
+offset_bottom = 43.0
+theme_override_styles/normal = ExtResource("1_tipu3")
+clip_text = true
+
+[node name="Label" type="Label" parent="." unique_id=1564652431]
+custom_minimum_size = Vector2(0.18, 0.205)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 7
+text = "marcher sur la lune en faisant un bakcflip tres beau"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true

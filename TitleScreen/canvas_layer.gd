@@ -7,7 +7,6 @@ var position_pricipale = offset
 
 
 func shake_ui(time_screen_shake, force_screen_shake):
-	print("shake")
 	var tween = create_tween()
 	
 	for i in range(time_screen_shake):

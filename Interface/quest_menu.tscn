@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://b5e32fifdnubt"]
+
+[ext_resource type="Shader" uid="uid://bqw0maxha7ge2" path="res://Interface/Shader/PauseBlur.gdshader" id="1_4f4kd"]
+[ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="2_dkjqb"]
+[ext_resource type="Script" uid="uid://bfio7bahqu8ax" path="res://System/TextManageLabel.gd" id="3_oa8gd"]
+[ext_resource type="PackedScene" uid="uid://cqcnk5xm25qjo" path="res://Interface/quest_pack.tscn" id="4_dkjqb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oc7nw"]
+shader = ExtResource("1_4f4kd")
+shader_parameter/amount = 1.5
+
+[node name="Quest_menu" type="CanvasLayer" unique_id=1999516944]
+
+[node name="Blur" type="ColorRect" parent="." unique_id=925714742]
+z_index = -5
+material = SubResource("ShaderMaterial_oc7nw")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 107.00001
+offset_top = -4.0
+offset_right = 107.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Titre" type="Label" parent="." unique_id=24234780]
+offset_left = 107.00001
+offset_top = -4.0
+offset_right = 220.0
+offset_bottom = 40.0
+scale = Vector2(0.925, 0.925)
+theme_override_fonts/font = ExtResource("2_dkjqb")
+theme_override_font_sizes/font_size = 49
+text = "Quest"
+horizontal_alignment = 1
+script = ExtResource("3_oa8gd")
+TextEN = "Quest"
+TextFR = "Quetes"
+
+[node name="ItemList" type="GridContainer" parent="." unique_id=1161265031]
+offset_left = 3.0
+offset_top = 38.0
+offset_right = 313.0
+offset_bottom = 175.0
+theme_override_constants/h_separation = 68
+theme_override_constants/v_separation = 39
+columns = 5
+
+[node name="Quest_Pack" parent="ItemList" unique_id=813412443 instance=ExtResource("4_dkjqb")]
+layout_mode = 2
+
+[node name="Quest_Pack2" parent="ItemList" unique_id=2028769482 instance=ExtResource("4_dkjqb")]
+layout_mode = 2
