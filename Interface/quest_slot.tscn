@@ -1,26 +1,76 @@
 [gd_scene format=3 uid="uid://b1nx433bxtofc"]
 
 [ext_resource type="StyleBox" uid="uid://3rxb4yawp623" path="res://Larchet/Menus/ControlSlot.tres" id="1_tipu3"]
+[ext_resource type="Script" uid="uid://bru2hkenf65y" path="res://Interface/Scripts/quest_slot.gd" id="2_o2l7k"]
+[ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="3_axnhw"]
+[ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="4_2xdd7"]
 
 [node name="Quest_slot" type="Button" unique_id=818862038]
 custom_minimum_size = Vector2(93, 43)
-offset_left = -1.0
-offset_right = 92.0
-offset_bottom = 43.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 94.0
+offset_bottom = 44.0
 theme_override_styles/normal = ExtResource("1_tipu3")
 clip_text = true
+script = ExtResource("2_o2l7k")
 
-[node name="Label" type="Label" parent="." unique_id=1564652431]
-custom_minimum_size = Vector2(0.18, 0.205)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 7
-text = "marcher sur la lune en faisant un bakcflip tres beau"
+[node name="Quest_name" type="Label" parent="." unique_id=799238865]
+custom_maximum_size = Vector2(92, 13)
+layout_mode = 0
+offset_right = 92.0
+offset_bottom = 13.0
+theme_override_fonts/font = ExtResource("3_axnhw")
+theme_override_font_sizes/font_size = 14
+text = "qsdqsd"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 clip_text = true
+text_overrun_behavior = 3
+uppercase = true
+script = ExtResource("4_2xdd7")
+dont_change_language = true
+watch_text_change = true
+min_font_size = 4
+max_font_size = 22
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="Description" type="Label" parent="." unique_id=1967470806]
+custom_maximum_size = Vector2(89, 21)
+layout_mode = 0
+offset_left = 2.0
+offset_top = 12.0
+offset_right = 91.0
+offset_bottom = 33.0
+theme_override_fonts/font = ExtResource("3_axnhw")
+theme_override_font_sizes/font_size = 3
+text = "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+script = ExtResource("4_2xdd7")
+dont_change_language = true
+watch_text_change = true
+min_font_size = 2
+max_font_size = 22
+metadata/_custom_type_script = "uid://d11kfgsd6jgt"
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1255065517]
+visible = false
+layout_mode = 0
+offset_right = 94.0
+offset_bottom = 43.0
+color = Color(0.15487596, 0.154876, 0.15487596, 1)
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1883051682]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 35.0
+offset_right = 92.0
+offset_bottom = 41.0
+allow_greater = true
+allow_lesser = true
+show_percentage = false

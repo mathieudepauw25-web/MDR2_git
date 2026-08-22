@@ -1,22 +1,43 @@
 extends Control
 
+@onready var Canvas_layer = $CanvasLayer
 @onready var grid_container: GridContainer = $CanvasLayer/ScrollContainer/GridContainer
 
+@export var number_of_quest : int
+@export var pack_name : String
+@export var is_finished : bool
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
-	pass # Replace with function body.
+	if pack_name:
+		$AutoSizeLabel.text = pack_name
+	verif_quest()
+	
+	if verif_quest() == grid_container.get_child_count():
+		is_finished = true
+		$ColorRect.visible = true
+		
+func verif_quest():
+	var count = 0
+	print("le grid container contient: " + str(grid_container.get_child_count()))
+	for i in range(grid_container.get_child_count()):
+		var quest_slot = grid_container.get_child(i)
+		if quest_slot.quest_finish == false:
+			print("range break")
+			break
+		count += 1
+		print(count)
+	return count
+		
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("escape"):
-		if grid_container.visible == true:
-			grid_container.visible = false
+		if Canvas_layer.visible == true:
+			Canvas_layer.visible = false
 
-
-func _on_quest_pack_pressed() -> void:
-	if grid_container.visible == true:
-		grid_container.visible = false
+func _on_pressed() -> void:
+	if Canvas_layer.visible == true:
+		Canvas_layer.visible = false
 	else :
-		grid_container.visible = true
+		Canvas_layer.visible = true

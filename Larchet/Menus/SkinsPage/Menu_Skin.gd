@@ -97,8 +97,8 @@ func _on_suivant_pressed() -> void:
 func _on_back_pressed() -> void:
 	$%Select.play()
 	EVENTS.emit_signal("change_to_main_menu")
-	get_parent().get_child(4).find_child("CanvasLayer").visible = true
-	get_parent().get_child(4).find_child("CanvasLayer").find_child("MenuControl").find_child("Skins").grab_focus()
+	get_parent().get_child(5).find_child("CanvasLayer").visible = true
+	get_parent().get_child(5).find_child("CanvasLayer").find_child("MenuControl").find_child("Skins").grab_focus()
 	queue_free()
 
 func _on_precedent_pressed() -> void:

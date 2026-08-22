@@ -1,4 +1,4 @@
-extends Resource
+extends Node
 class_name GameData
 
 const defaut_highscore: = 1342.0
@@ -13,9 +13,19 @@ var previous_best_time: = 0.0
 
 @export var version: float = 1.1
 
+# ACTION DU JOUEURS
+
+@export var nbr_dash : int
+@export var nbr_move : int
+
+
+# BEST TIME
+
 @export var best_global_time: float = defaut_highscore
 @export var best_global_time_superdash: float = defaut_highscore
 @export var best_moves_count: int = 1000
+
+# STARS
 
 @export var star1: bool = false
 @export var star2: bool = false
@@ -24,12 +34,16 @@ var previous_best_time: = 0.0
 @export var star5: bool = false
 @export var star6: bool = false
 
+# CHALLENGE
+
 @export var challenge1: bool = false
 @export var challenge2: bool = false
 @export var challenge3: bool = false
 @export var challenge4: bool = false
 @export var challenge5: bool = false
 @export var challenge6: bool = false
+
+# OPTIONS
 
 @export var option1: bool = true
 @export var option2: bool = true

@@ -1,15 +1,18 @@
 [gd_scene format=3 uid="uid://b5e32fifdnubt"]
 
 [ext_resource type="Shader" uid="uid://bqw0maxha7ge2" path="res://Interface/Shader/PauseBlur.gdshader" id="1_4f4kd"]
+[ext_resource type="Script" uid="uid://bjeq2wu6qrq1b" path="res://Interface/Scripts/quest_menu.gd" id="1_oa8gd"]
 [ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="2_dkjqb"]
 [ext_resource type="Script" uid="uid://bfio7bahqu8ax" path="res://System/TextManageLabel.gd" id="3_oa8gd"]
-[ext_resource type="PackedScene" uid="uid://cqcnk5xm25qjo" path="res://Interface/quest_pack.tscn" id="4_dkjqb"]
+[ext_resource type="PackedScene" uid="uid://cdoitm2ai0s2b" path="res://Interface/quest_pack.tscn" id="4_dkjqb"]
+[ext_resource type="PackedScene" uid="uid://b1nx433bxtofc" path="res://Interface/quest_slot.tscn" id="6_oc7nw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oc7nw"]
 shader = ExtResource("1_4f4kd")
 shader_parameter/amount = 1.5
 
 [node name="Quest_menu" type="CanvasLayer" unique_id=1999516944]
+script = ExtResource("1_oa8gd")
 
 [node name="Blur" type="ColorRect" parent="." unique_id=925714742]
 z_index = -5
@@ -17,13 +20,8 @@ material = SubResource("ShaderMaterial_oc7nw")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 107.00001
-offset_top = -4.0
-offset_right = 107.0
-offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_lock_ = true
 
 [node name="Titre" type="Label" parent="." unique_id=24234780]
 offset_left = 107.00001
@@ -39,17 +37,49 @@ script = ExtResource("3_oa8gd")
 TextEN = "Quest"
 TextFR = "Quetes"
 
-[node name="ItemList" type="GridContainer" parent="." unique_id=1161265031]
-offset_left = 3.0
-offset_top = 38.0
-offset_right = 313.0
-offset_bottom = 175.0
-theme_override_constants/h_separation = 68
-theme_override_constants/v_separation = 39
-columns = 5
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=238178445]
+offset_left = 11.0
+offset_top = 36.0
+offset_right = 314.0
+offset_bottom = 180.0
 
-[node name="Quest_Pack" parent="ItemList" unique_id=813412443 instance=ExtResource("4_dkjqb")]
+[node name="ItemList" type="GridContainer" parent="ScrollContainer" unique_id=1161265031]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 18
+theme_override_constants/v_separation = 10
+columns = 3
 
-[node name="Quest_Pack2" parent="ItemList" unique_id=2028769482 instance=ExtResource("4_dkjqb")]
+[node name="Quest_pack" parent="ScrollContainer/ItemList" unique_id=235501148 instance=ExtResource("4_dkjqb")]
 layout_mode = 2
+number_of_quest = 2
+pack_name = "Pack1"
+
+[node name="Quest_slot" parent="ScrollContainer/ItemList/Quest_pack/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(235501148, 8590591) index="0" unique_id=818862038]
+has_slider = true
+quest_name = "Move"
+descrition = "Move 5 fois"
+in_pack = "Pack1"
+what_to_look = "nbr_move"
+objectif = 5
+
+[node name="Quest_slot2" parent="ScrollContainer/ItemList/Quest_pack/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(235501148, 8590591) index="1" unique_id=724010229 instance=ExtResource("6_oc7nw")]
+layout_mode = 2
+has_slider = true
+quest_name = "Dash"
+descrition = "Dash 5 fois"
+in_pack = "Pack1"
+what_to_look = "nbr_dash"
+objectif = 5
+
+[node name="Quest_slot3" parent="ScrollContainer/ItemList/Quest_pack/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(235501148, 8590591) index="2" unique_id=2053178218 instance=ExtResource("6_oc7nw")]
+layout_mode = 2
+has_slider = true
+quest_name = "Dash"
+descrition = "Dash 20 fois (c'est beaucoup !)"
+in_pack = "Pack1"
+what_to_look = "nbr_dash"
+objectif = 20
+
+[editable path="ScrollContainer/ItemList/Quest_pack"]

@@ -33,6 +33,7 @@ EVENTS="*res://System/Autoload/EVENTS.gd"
 GAMES="*res://System/Autoload/GAMES.gd"
 AUDIOMANAGER="*res://System/Autoload/audio_manager.gd"
 GESTIONNAIRESKIN="*uid://bauf0wrsurhr3"
+GAMEDATA="*uid://cyop4hm0yxg3o"
 
 [display]
 

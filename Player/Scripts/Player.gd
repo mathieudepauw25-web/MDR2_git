@@ -75,7 +75,7 @@ func _process(_delta: float) -> void :
 	if Input.is_action_just_pressed("move_up"): add_buffer_move("move_up")
 	if Input.is_action_just_pressed("move_left"): add_buffer_move("move_left")
 	if Input.is_action_just_pressed("move_down"): add_buffer_move("move_down")
-	if Input.is_action_just_pressed("dash_right"): add_buffer_dash("dash_right")
+	if Input.is_action_just_pressed("dash_right"): add_buffer_dash("dash_right") 
 	if Input.is_action_just_pressed("dash_up"): add_buffer_dash("dash_up")
 	if Input.is_action_just_pressed("dash_left"): add_buffer_dash("dash_left")
 	if Input.is_action_just_pressed("dash_down"): add_buffer_dash("dash_down")
@@ -101,6 +101,7 @@ func _process(_delta: float) -> void :
 				node_state_machine.set_state("Idle")
 
 func add_buffer_move(input: String) -> void :
+	GAMEDATA.nbr_move += 1
 	if buffer_dash != "": return
 	if Engine.time_scale == 0: return
 	launch_starting_signal()
@@ -108,6 +109,7 @@ func add_buffer_move(input: String) -> void :
 	$buffer_move.start(buffer_timing)
 
 func add_buffer_dash(input: String) -> void :
+	GAMEDATA.nbr_dash += 1
 	if Engine.time_scale == 0: return
 	launch_starting_signal()
 	buffer_move = ""

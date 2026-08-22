@@ -116,7 +116,7 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="Resource" id="Resource_lvbp2"]
+[sub_resource type="Resource" id="Resource_r1ysb"]
 resource_local_to_scene = true
 script = ExtResource("5")
 secret_index = 1
@@ -745,6 +745,30 @@ asFontSize = true
 FrScale = 16
 augmentation = Vector2(1.1, 1.1)
 
+[node name="Quest" type="Button" parent="CanvasLayer/MenuControl/Panel" unique_id=254577530]
+z_index = 1
+layout_mode = 0
+offset_left = 173.0
+offset_top = -127.0
+offset_right = 242.0
+offset_bottom = -98.0
+offset_transform_enabled = true
+focus_neighbor_top = NodePath("../../Quit")
+theme_override_fonts/font = ExtResource("12")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = ExtResource("14")
+theme_override_styles/pressed = ExtResource("15_8xq3f")
+theme_override_styles/hover = ExtResource("15_8xq3f")
+theme_override_styles/focus = ExtResource("15_8xq3f")
+text = "Quest"
+expand_icon = true
+script = ExtResource("15")
+TextEN = "Quest"
+TextFR = "Quete"
+asFontSize = true
+FrScale = 16
+augmentation = Vector2(1.1, 1.1)
+
 [node name="Skins" type="Button" parent="CanvasLayer/MenuControl/Panel" unique_id=1755859042]
 z_index = 1
 layout_mode = 0
@@ -778,11 +802,12 @@ region_enabled = true
 region_rect = Rect2(50, 32, 13, 14)
 
 [node name="Label" type="Label" parent="CanvasLayer/MenuControl/Panel/Skins" unique_id=1979457693]
+custom_maximum_size = Vector2(31, 23)
 layout_mode = 0
 offset_left = 20.0
 offset_top = 3.0
-offset_right = 51.0
-offset_bottom = 26.0
+offset_right = 50.0
+offset_bottom = 22.0
 theme_override_fonts/font = ExtResource("12")
 theme_override_font_sizes/font_size = 19
 text = "Skins"
@@ -1072,7 +1097,7 @@ alignment = 1
 
 [node name="StarCount1" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1542527147 instance=ExtResource("4")]
 layout_mode = 2
-secret_data = SubResource("Resource_lvbp2")
+secret_data = SubResource("Resource_r1ysb")
 
 [node name="StarCount2" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1480194519 instance=ExtResource("4")]
 layout_mode = 2
@@ -3677,6 +3702,12 @@ debug_keys_coords = Array[Vector2]([Vector2(-29, 17), Vector2(-31, 23), Vector2(
 [connection signal="focus_exited" from="CanvasLayer/MenuControl/Panel/Start" to="CanvasLayer/MenuControl/Panel/Start" method="_on_focus_exited"]
 [connection signal="mouse_entered" from="CanvasLayer/MenuControl/Panel/Start" to="CanvasLayer/MenuControl/Panel/Start" method="_on_mouse_entered"]
 [connection signal="pressed" from="CanvasLayer/MenuControl/Panel/Start" to="." method="_on_start_pressed"]
+[connection signal="button_down" from="CanvasLayer/MenuControl/Panel/Quest" to="CanvasLayer/MenuControl/Panel/Quest" method="_on_button_down"]
+[connection signal="focus_entered" from="CanvasLayer/MenuControl/Panel/Quest" to="." method="_on_start_focus_entered"]
+[connection signal="focus_entered" from="CanvasLayer/MenuControl/Panel/Quest" to="CanvasLayer/MenuControl/Panel/Quest" method="_on_focus_entered"]
+[connection signal="focus_exited" from="CanvasLayer/MenuControl/Panel/Quest" to="CanvasLayer/MenuControl/Panel/Quest" method="_on_focus_exited"]
+[connection signal="mouse_entered" from="CanvasLayer/MenuControl/Panel/Quest" to="CanvasLayer/MenuControl/Panel/Quest" method="_on_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/MenuControl/Panel/Quest" to="." method="_on_quest_pressed"]
 [connection signal="button_down" from="CanvasLayer/MenuControl/Panel/Skins" to="CanvasLayer/MenuControl/Panel/Skins" method="_on_button_down"]
 [connection signal="focus_entered" from="CanvasLayer/MenuControl/Panel/Skins" to="CanvasLayer/MenuControl/Panel/Skins" method="_on_focus_entered"]
 [connection signal="focus_exited" from="CanvasLayer/MenuControl/Panel/Skins" to="CanvasLayer/MenuControl/Panel/Skins" method="_on_focus_exited"]

@@ -43,8 +43,8 @@ func _input(event: InputEvent) -> void:
 func _on_back_pressed() -> void:
 	if viewControle == false:
 		EVENTS.emit_signal("change_to_main_menu")
-		get_parent().get_child(4).find_child("CanvasLayer").visible = true
-		get_parent().get_child(4).find_child("CanvasLayer").find_child("MenuControl").find_child("Controls").grab_focus()
+		get_parent().get_child(5).find_child("CanvasLayer").visible = true
+		get_parent().get_child(5).find_child("CanvasLayer").find_child("MenuControl").find_child("Controls").grab_focus()
 		queue_free()
 	else :
 		$Controle.grab_focus()
