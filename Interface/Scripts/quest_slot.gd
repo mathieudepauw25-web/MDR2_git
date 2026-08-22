@@ -10,6 +10,8 @@ extends Button
 @export var what_to_look : String
 @export var objectif : int
 
+@export var Vposition : Vector2
+
 func _ready() -> void:
 	
 	if has_slider == true:

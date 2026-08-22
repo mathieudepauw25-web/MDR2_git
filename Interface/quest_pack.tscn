@@ -3,27 +3,33 @@
 [ext_resource type="Script" uid="uid://dblgmsac148yr" path="res://Interface/Scripts/quest_pack.gd" id="1_8v7ui"]
 [ext_resource type="StyleBox" uid="uid://3rxb4yawp623" path="res://Larchet/Menus/ControlSlot.tres" id="1_k4byu"]
 [ext_resource type="PackedScene" uid="uid://b1nx433bxtofc" path="res://Interface/quest_slot.tscn" id="2_vnd7d"]
+[ext_resource type="StyleBox" uid="uid://d2wb0x7bmm82g" path="res://Larchet/Menus/Gold.tres" id="2_yfiqk"]
 [ext_resource type="Script" uid="uid://d11kfgsd6jgt" path="res://addons/AutoSizeText/ui/AutoSizeLabel.gd" id="3_8nyei"]
 [ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="3_caqee"]
 
 [node name="Quest_pack" type="Button" unique_id=235501148]
+z_index = 1
 custom_minimum_size = Vector2(81, 47)
 offset_left = 4.0
 offset_top = 2.0
-offset_right = 85.0
+offset_right = 98.895
 offset_bottom = 49.0
+offset_transform_enabled = true
 theme_override_font_sizes/font_size = 5
 theme_override_styles/normal = ExtResource("1_k4byu")
+theme_override_styles/pressed = ExtResource("2_yfiqk")
+theme_override_styles/hover = ExtResource("2_yfiqk")
 autowrap_mode = 3
 autowrap_trim_flags = 192
 clip_text = true
 script = ExtResource("1_8v7ui")
 
 [node name="AutoSizeLabel" type="Label" parent="." unique_id=1824382224]
-custom_maximum_size = Vector2(81, 47)
+custom_minimum_size = Vector2(94.275, 47)
+custom_maximum_size = Vector2(94.275, 47)
 layout_mode = 0
-offset_right = 81.0
-offset_bottom = 47.0
+offset_right = 36.0
+offset_bottom = 21.0
 theme_override_fonts/font = ExtResource("3_caqee")
 theme_override_font_sizes/font_size = 22
 text = "vcccc"
@@ -49,10 +55,10 @@ mouse_filter = 2
 color = Color(0, 0, 0, 0.84313726)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1187879130]
-layer = 3
-visible = false
+layer = -1
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1834386384]
+visible = false
 offset_left = -52.0
 offset_top = -21.0
 offset_right = 372.0
@@ -80,5 +86,10 @@ columns = 3
 
 [node name="Quest_slot" parent="CanvasLayer/ScrollContainer/GridContainer" unique_id=818862038 instance=ExtResource("2_vnd7d")]
 layout_mode = 2
+offset_transform_enabled = true
 
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]

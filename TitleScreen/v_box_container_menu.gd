@@ -17,4 +17,5 @@ func _on_md_rlogo_logo_animation_fini() -> void:
 	visible = true
 	tween.tween_property($Panel, "offset_transform_position_ratio", Vector2(0,2), 0.2)
 	tween.tween_property($Panel, "offset_transform_position_ratio", Vector2(0,0), 0.1)
-	%Start.grab_focus()
+	tween.tween_callback(%Start.grab_focus)
+	

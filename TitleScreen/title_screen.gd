@@ -278,6 +278,15 @@ func _on_start_campagne_pressed() -> void:
 	get_tree().change_scene_to_file("res://World/World.tscn")
 	Engine.time_scale = 1
 
+func _on_quest_pressed() -> void:
+	main_menu_button_pressed_animation(false)
+	await tween.finished
+	$CanvasLayer.visible = false
+	var options = preload("res://Interface/quest_menu.tscn")
+	var instOptions = options.instantiate()
+	get_parent().add_child(instOptions)
+
+
 func _on_start_level_editor_pressed() -> void:
 	get_tree().change_scene_to_file("res://Larchet/Menus/LevelEditor/Menu_Level_Editor.tscn")
 
@@ -299,12 +308,3 @@ func back_to_title_screen_animation():
 	%CanvasLayer.shake_ui(5, 0.5)
 	tween.tween_property(menu_control,"offset_transform_position", Vector2(0,0), 0.1 ) 
 	tween.parallel().tween_property(md_rlogo,"offset_transform_position", Vector2(0, 0), 0.1)
-
-
-func _on_quest_pressed() -> void:
-	main_menu_button_pressed_animation(false)
-	await tween.finished
-	$CanvasLayer.visible = false
-	var options = preload("res://Interface/quest_menu.tscn")
-	var instOptions = options.instantiate()
-	get_parent().add_child(instOptions)

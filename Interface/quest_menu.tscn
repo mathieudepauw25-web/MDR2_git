@@ -15,7 +15,7 @@ shader_parameter/amount = 1.5
 script = ExtResource("1_oa8gd")
 
 [node name="Blur" type="ColorRect" parent="." unique_id=925714742]
-z_index = -5
+visible = false
 material = SubResource("ShaderMaterial_oc7nw")
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,6 +38,7 @@ TextEN = "Quest"
 TextFR = "Quetes"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=238178445]
+clip_contents = false
 offset_left = 11.0
 offset_top = 36.0
 offset_right = 314.0
@@ -47,14 +48,24 @@ offset_bottom = 180.0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/h_separation = 18
+theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 10
 columns = 3
 
 [node name="Quest_pack" parent="ScrollContainer/ItemList" unique_id=235501148 instance=ExtResource("4_dkjqb")]
+custom_minimum_size = Vector2(94.895, 47)
 layout_mode = 2
 number_of_quest = 2
 pack_name = "Pack1"
+
+[node name="AutoSizeLabel" parent="ScrollContainer/ItemList/Quest_pack" index="0" unique_id=1824382224]
+offset_right = 81.0
+
+[node name="CanvasLayer" parent="ScrollContainer/ItemList/Quest_pack" index="2" unique_id=1187879130]
+layer = 0
+
+[node name="ColorRect" parent="ScrollContainer/ItemList/Quest_pack/CanvasLayer" index="0" unique_id=1834386384]
+visible = true
 
 [node name="Quest_slot" parent="ScrollContainer/ItemList/Quest_pack/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(235501148, 8590591) index="0" unique_id=818862038]
 has_slider = true
@@ -66,20 +77,24 @@ objectif = 5
 
 [node name="Quest_slot2" parent="ScrollContainer/ItemList/Quest_pack/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(235501148, 8590591) index="1" unique_id=724010229 instance=ExtResource("6_oc7nw")]
 layout_mode = 2
+offset_transform_enabled = true
 has_slider = true
 quest_name = "Dash"
 descrition = "Dash 5 fois"
 in_pack = "Pack1"
 what_to_look = "nbr_dash"
 objectif = 5
+Vposition = Vector2(106, 0)
 
 [node name="Quest_slot3" parent="ScrollContainer/ItemList/Quest_pack/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(235501148, 8590591) index="2" unique_id=2053178218 instance=ExtResource("6_oc7nw")]
 layout_mode = 2
+offset_transform_enabled = true
 has_slider = true
 quest_name = "Dash"
 descrition = "Dash 20 fois (c'est beaucoup !)"
 in_pack = "Pack1"
 what_to_look = "nbr_dash"
 objectif = 20
+Vposition = Vector2(212, 0)
 
 [editable path="ScrollContainer/ItemList/Quest_pack"]

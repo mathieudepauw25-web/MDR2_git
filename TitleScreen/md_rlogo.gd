@@ -55,6 +55,7 @@ func _input(_event: InputEvent) -> void:
 
 func Stop_Animation():
 		print("stooop")
+		logoAnimationFini.emit()
 		AnimationStoped = true
 		tween.kill()
 		tween = create_tween()
@@ -63,4 +64,4 @@ func Stop_Animation():
 		tween.tween_property(rush, "position", Brushpos, 0)
 		tween.tween_property(self, "position", mdrLogoPos, 0)
 		tween.parallel().tween_property(self, "scale", Vector2(0.165,0.165), 0)
-		tween.tween_callback(logoAnimationFini.emit)
+		
