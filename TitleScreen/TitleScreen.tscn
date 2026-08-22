@@ -1371,7 +1371,7 @@ textureInputEN = ExtResource("35")
 textureInputFR = ExtResource("35")
 
 [node name="Path2D" type="Path2D" parent="." unique_id=1935943812]
-position = Vector2(15, -244)
+position = Vector2(-752, -537)
 curve = SubResource("Curve2D_xa0j2")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D" unique_id=1291637332]
@@ -1428,8 +1428,9 @@ stream = ExtResource("60")
 bus = &"Music"
 
 [node name="MAP_global" type="Node2D" parent="." unique_id=863691977]
+visible = false
 y_sort_enabled = true
-position = Vector2(180, -153)
+position = Vector2(-587, -446)
 
 [node name="Perspective" type="TileMapLayer" parent="MAP_global" unique_id=1878826796]
 y_sort_enabled = true
