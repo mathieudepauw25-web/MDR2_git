@@ -49,7 +49,7 @@ font_size = 8
 font_color = Color(0, 0, 0.141176, 1)
 outline_size = 3
 
-[sub_resource type="Resource" id="Resource_5ruiw"]
+[sub_resource type="Resource" id="Resource_mug7b"]
 resource_local_to_scene = true
 script = ExtResource("17")
 secret_index = 1
@@ -229,7 +229,7 @@ outline_color = Color(0.976471, 0.658824, 0, 1)
 shadow_size = 9
 shadow_color = Color(0, 0, 0, 0.415686)
 
-[sub_resource type="Resource" id="Resource_a747u"]
+[sub_resource type="Resource" id="Resource_phlbn"]
 resource_local_to_scene = true
 script = ExtResource("17")
 secret_index = 1
@@ -277,7 +277,7 @@ script = ExtResource("27")
 [node name="StarCount1" parent="CanvasLayer/VBoxContainer/StarsCount" unique_id=575711974 instance=ExtResource("28")]
 unique_name_in_owner = true
 layout_mode = 2
-secret_data = SubResource("Resource_5ruiw")
+secret_data = SubResource("Resource_mug7b")
 
 [node name="StarCount2" parent="CanvasLayer/VBoxContainer/StarsCount" unique_id=2032248389 instance=ExtResource("28")]
 unique_name_in_owner = true
@@ -355,7 +355,6 @@ superdash = true
 y_sort_enabled = true
 
 [node name="Player" parent="MAP_global" unique_id=76718737 instance=ExtResource("35")]
-z_index = 10
 position = Vector2(8, 8)
 buffer_timing = 0.5
 
@@ -2595,7 +2594,7 @@ position = Vector2(-912, -592)
 [node name="Secret1" parent="MAP_global/MAP/Secret" unique_id=756049766 instance=ExtResource("16")]
 position = Vector2(856, 647)
 index_star = 1
-secret_data = SubResource("Resource_a747u")
+secret_data = SubResource("Resource_phlbn")
 
 [node name="Secret2" parent="MAP_global/MAP/Secret" unique_id=1222424861 instance=ExtResource("16")]
 position = Vector2(1239.89, 520.554)
