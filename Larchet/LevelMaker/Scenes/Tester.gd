@@ -144,7 +144,7 @@ func generer_niveau(map_data: Dictionary) -> void:
 			var cat_name = cat_names[cat_idx]
 			var atlas_coords = Vector3i(-1, -1, -1)
 			if cat_name == "arrow":
-				var theme = cell_themes.get(pos, "_light")
+				var theme = get_grass_theme(pos)
 				var sub_cat = "arrow_dark" if theme == "_dark" else "arrow_light"
 				if deco_dict.has("arrow") and deco_dict["arrow"].has(sub_cat):
 					if deco_dict["arrow"][sub_cat].size() > sub_idx:
@@ -245,8 +245,20 @@ func rafraichir_autotiling_global() -> void:
 			apply_bitmask_to_single_cell(pos, layer_wall, TileSkinData.wall_bitmask_repo, TileSkinData.WALL_SOURCE_ID)
 		if get_source_id(layer_floor, pos) == TileSkinData.GRASS_SOURCE_ID:
 			apply_bitmask_to_single_cell(pos, layer_floor, TileSkinData.grass_bitmask_repo, TileSkinData.GRASS_SOURCE_ID)
+			var current_theme = get_grass_theme(pos)
+			_update_arrow_color(pos, current_theme)
 		if get_source_id(layer_ice, pos) == TileSkinData.ICE_SOURCE_ID:
 			apply_bitmask_to_single_cell(pos, layer_ice, TileSkinData.grass_bitmask_repo, TileSkinData.ICE_SOURCE_ID)
+
+func _update_arrow_color(grid_pos: Vector2i, new_theme: String) -> void:
+	if layer_deco == null: return
+	var current_coords = layer_deco.get_cell_atlas_coords(grid_pos)
+	if current_coords == Vector2i(-1, -1): return
+	var source_id = layer_deco.get_cell_source_id(grid_pos)
+	if current_coords.y == 3 and new_theme == "_light":
+		layer_deco.set_cell(grid_pos, source_id, Vector2i(current_coords.x, 4))
+	elif current_coords.y == 4 and new_theme == "_dark":
+		layer_deco.set_cell(grid_pos, source_id, Vector2i(current_coords.x, 3))
 
 func _nettoyer_niveau() -> void:
 	cell_themes.clear()
@@ -673,43 +685,28 @@ func _get_platform_at_tester(grid_pos: Vector2i) -> Node2D:
 				return plat_area
 	return null
 
-'''
+
 # ==============================================================================
 # --- EXPORTATION EN SCÈNE AUTONOME (.tscn) ---
 # ==============================================================================
 
-var _chemins_originaux: Dictionary = {}
-
 func exporter_en_tscn(nom_fichier: String = "Niveau_Exporte") -> void:
 	print("Préparation de l'exportation...")
-	
-	# On mémorise les chemins pour les restaurer après l'export
 	var chemins_restaures = {}
-	
-	# 1. On "aplatit" la MAP pour sauver les TileMapLayers (évite l'erreur Fragile)
 	var sous_map = map_node.get_node_or_null("MAP")
 	if sous_map and sous_map.scene_file_path != "":
 		chemins_restaures[sous_map] = sous_map.scene_file_path
 		sous_map.scene_file_path = ""
-		
-	# 2. On "aplatit" LES PLATEFORMES pour forcer Godot à sauver les rails dessinés !
 	if node_platforms:
 		for plat in node_platforms.get_children():
 			if plat.scene_file_path != "":
 				chemins_restaures[plat] = plat.scene_file_path
 				plat.scene_file_path = ""
-				
-	# 3. On traverse l'arbre pour tout sécuriser
 	_assigner_owner_recursive(self, self)
-	
-	# 4. Retrait temporaire du script du testeur
 	var script_actuel = self.get_script()
 	self.set_script(null)
-	
-	# 5. Création et sauvegarde de la scène finale
 	var packed_scene = PackedScene.new()
 	var resultat = packed_scene.pack(self)
-	
 	if resultat == OK:
 		var chemin_sauvegarde = "res://Larchet/LevelMaker/Level_temp/" + nom_fichier + ".tscn"
 		var err = ResourceSaver.save(packed_scene, chemin_sauvegarde)
@@ -719,8 +716,6 @@ func exporter_en_tscn(nom_fichier: String = "Niveau_Exporte") -> void:
 			print("❌ Erreur lors de l'écriture du fichier : ", err)
 	else:
 		print("❌ Erreur lors du packing de la scène : ", resultat)
-		
-	# 6. Restauration de l'état du testeur pour continuer de jouer sans bugs
 	self.set_script(script_actuel)
 	for noeud in chemins_restaures:
 		if is_instance_valid(noeud):
@@ -729,9 +724,6 @@ func exporter_en_tscn(nom_fichier: String = "Niveau_Exporte") -> void:
 func _assigner_owner_recursive(noeud: Node, nouveau_proprio: Node) -> void:
 	if noeud != nouveau_proprio:
 		noeud.owner = nouveau_proprio
-		
-	# La fonction va désormais rentrer dans la MAP et les Plateformes car on a vidé 
-	# leur scene_file_path, mais elle s'arrêtera sagement devant le Joueur, les Portes, etc.
 	if noeud.scene_file_path == "" or noeud == nouveau_proprio:
 		for enfant in noeud.get_children():
 			_assigner_owner_recursive(enfant, nouveau_proprio)
@@ -743,4 +735,3 @@ func _unhandled_input(event: InputEvent) -> void:
 			if editeur_parent != null and editeur_parent.current_level_name != "":
 				nom_propre = editeur_parent.current_level_name.replace(" ", "_")
 			exporter_en_tscn(nom_propre)
-'''

@@ -571,3 +571,4 @@ func _update_deco_ui() -> void:
 	if has_node("TileManager") and ui_layer.has_method("update_deco_icon"):
 		var coords = $TileManager.get_deco_atlas_coords(current_deco_category, current_deco_index)
 		ui_layer.update_deco_icon(coords)
+ 
