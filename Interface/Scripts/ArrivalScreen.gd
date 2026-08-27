@@ -29,6 +29,7 @@ var showing_leaderboard: = false
 var top10_world: = false
 
 func _ready() -> void :
+	
 	node_color_rect_up.position.y -= 100.0
 	node_color_rect_down.position.y += 100.0
 	node_timer_arrival.scale = Vector2.ZERO
@@ -119,18 +120,18 @@ func start_timer_button() -> void :
 
 
 func _on_timer_button_timeout() -> void :
-	var restart_global_initial_position = node_restart.global_position
-	var title_screen_global_initial_position = node_title_screen.global_position
-	var top_10_global_initial_position = node_top_10.global_position
-	node_restart.global_position += Vector2(300.0, 0.0)
-	node_top_10.global_position += Vector2(600.0, 0.0)
-	node_title_screen.global_position += Vector2(900.0, 0.0)
+	node_restart.offset_transform_position += Vector2(150, 0.0)
+	node_top_10.offset_transform_position += Vector2(150.0, 0.0)
+	node_title_screen.offset_transform_position += Vector2(150.0, 0.0)
 	node_buttons.visible = true
 
-	var tween = create_tween().set_parallel()
-	tween.tween_property(node_restart, "global_position", restart_global_initial_position, 0.8).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	tween.tween_property(node_title_screen, "global_position", title_screen_global_initial_position, 0.85).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	tween.tween_property(node_top_10, "global_position", top_10_global_initial_position, 0.9).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	var tween = create_tween()
+	tween.tween_property(node_restart, "offset_transform_position", Vector2(-5, 0), 0.1)
+	tween.tween_property(node_restart, "offset_transform_position", Vector2(0, 0), 0.1)
+	tween.tween_property(node_top_10, "offset_transform_position", Vector2(-5, 0), 0.1)
+	tween.tween_property(node_top_10, "offset_transform_position", Vector2(0, 0), 0.1)
+	tween.tween_property(node_title_screen, "offset_transform_position", Vector2(-5, 0), 0.1)
+	tween.tween_property(node_title_screen, "offset_transform_position", Vector2(0, 0), 0.1)
 	tween.connect("finished", _on_tween_finished)
 
 

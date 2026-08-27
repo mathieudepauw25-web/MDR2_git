@@ -1,6 +1,6 @@
-[gd_scene load_steps=31 format=3 uid="uid://dtsrsquom3t2j"]
+[gd_scene format=3 uid="uid://dtsrsquom3t2j"]
 
-[ext_resource type="Script" path="res://Interface/Scripts/ArrivalScreen.gd" id="1"]
+[ext_resource type="Script" uid="uid://co3yj2dvnsgof" path="res://Interface/Scripts/ArrivalScreen.gd" id="1"]
 [ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="2"]
 [ext_resource type="Texture2D" uid="uid://dgspu27t0djae" path="res://Interface/Sprites/tile_0570.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://83abci11tpmg" path="res://World/Sprites/tileset_ASSETS.png" id="4"]
@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://op00a3qvecoo" path="res://Interface/TimerBest.tscn" id="6"]
 [ext_resource type="StyleBox" uid="uid://cvb0ef4cnwbsy" path="res://Interface/Themes/ButtonHover.tres" id="7"]
 [ext_resource type="StyleBox" uid="uid://cgd7kvdxm5jsn" path="res://Interface/Themes/ButtonNormal.tres" id="8"]
-[ext_resource type="Script" path="res://System/TextManageCheckbox.gd" id="9"]
+[ext_resource type="Script" uid="uid://q7861pw32leb" path="res://System/TextManageCheckbox.gd" id="9"]
 [ext_resource type="Texture2D" uid="uid://ccnu3p7xf38jn" path="res://Interface/Sprites/tile_0034.png" id="10"]
 [ext_resource type="Texture2D" uid="uid://dtcnghvh3viuw" path="res://Interface/Sprites/icon_dash.png" id="11"]
 [ext_resource type="Texture2D" uid="uid://cmfbm6disftm1" path="res://Interface/Sprites/icon_wall.png" id="12"]
@@ -33,6 +33,10 @@ font = ExtResource("2")
 font_size = 12
 outline_size = 2
 outline_color = Color(0.132981, 1.01797e-05, 0.127194, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yt5nl"]
+atlas = ExtResource("4")
+region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="Curve" id="Curve_1h8b5"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.991667, 0), 0.0, 0.0, 0, 0]
@@ -62,10 +66,6 @@ scale_max = 0.9
 color_ramp = SubResource("GradientTexture1D_mraqj")
 alpha_curve = SubResource("CurveTexture_fsa3a")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yt5nl"]
-atlas = ExtResource("4")
-region = Rect2(48, 0, 16, 16)
-
 [sub_resource type="Theme" id="Theme_1k85u"]
 default_font = ExtResource("2")
 default_font_size = 12
@@ -79,7 +79,7 @@ Button/styles/normal = ExtResource("8")
 default_base_scale = 8.0
 default_font = ExtResource("2")
 
-[node name="ArrivalScreen" type="Control"]
+[node name="ArrivalScreen" type="Control" unique_id=1765419722]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -88,29 +88,29 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1822474836]
 
-[node name="ColorRect_UP" type="ColorRect" parent="CanvasLayer"]
+[node name="ColorRect_UP" type="ColorRect" parent="CanvasLayer" unique_id=55830803]
 unique_name_in_owner = true
 offset_top = -22.0
 offset_right = 333.0
 offset_bottom = 29.0
 color = Color(0, 0, 0, 1)
 
-[node name="ColorRect_Down" type="ColorRect" parent="CanvasLayer"]
+[node name="ColorRect_Down" type="ColorRect" parent="CanvasLayer" unique_id=1589061770]
 unique_name_in_owner = true
 offset_top = 151.0
 offset_right = 333.0
 offset_bottom = 202.0
 color = Color(0, 0, 0, 1)
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1655970220]
 visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 color = Color(1, 0.721569, 0.0117647, 1)
 
-[node name="Panel_leaderboard_arrival" type="Panel" parent="CanvasLayer"]
+[node name="Panel_leaderboard_arrival" type="Panel" parent="CanvasLayer" unique_id=1142119568]
 unique_name_in_owner = true
 visible = false
 z_index = 1
@@ -118,7 +118,7 @@ offset_top = 29.0
 offset_right = 173.0
 offset_bottom = 151.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel_leaderboard_arrival"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel_leaderboard_arrival" unique_id=1249251612]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -128,7 +128,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="Panel_world" type="Panel" parent="CanvasLayer/Panel_leaderboard_arrival"]
+[node name="Panel_world" type="Panel" parent="CanvasLayer/Panel_leaderboard_arrival" unique_id=218211811]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -143,7 +143,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_tcfpe")
 
-[node name="Label_world" type="Label" parent="CanvasLayer/Panel_leaderboard_arrival/Panel_world"]
+[node name="Label_world" type="Label" parent="CanvasLayer/Panel_leaderboard_arrival/Panel_world" unique_id=648892786]
 layout_mode = 0
 offset_top = -2.0
 offset_right = 49.0
@@ -155,7 +155,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="icon_arrow_R" type="TextureRect" parent="CanvasLayer/Panel_leaderboard_arrival/Panel_world"]
+[node name="icon_arrow_R" type="TextureRect" parent="CanvasLayer/Panel_leaderboard_arrival/Panel_world" unique_id=1407440880]
 layout_mode = 0
 offset_left = 49.0
 offset_top = -2.0
@@ -165,7 +165,7 @@ rotation = 1.5708
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("3")
 
-[node name="icon_arrow_L" type="TextureRect" parent="CanvasLayer/Panel_leaderboard_arrival/Panel_world"]
+[node name="icon_arrow_L" type="TextureRect" parent="CanvasLayer/Panel_leaderboard_arrival/Panel_world" unique_id=590870381]
 layout_mode = 0
 offset_left = 11.0
 offset_top = -2.0
@@ -176,13 +176,13 @@ scale = Vector2(0.7, 0.7)
 texture = ExtResource("3")
 flip_v = true
 
-[node name="Timer" type="Control" parent="CanvasLayer"]
+[node name="Timer" type="Control" parent="CanvasLayer" unique_id=92035419]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Label_new_record" type="Label" parent="CanvasLayer/Timer"]
+[node name="Label_new_record" type="Label" parent="CanvasLayer/Timer" unique_id=1627891024]
 visible = false
 self_modulate = Color(1, 0.815686, 0.415686, 1)
 layout_mode = 0
@@ -196,16 +196,16 @@ text = "New record"
 label_settings = SubResource("LabelSettings_frun7")
 metadata/_edit_lock_ = true
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="CanvasLayer/Timer/Label_new_record"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="CanvasLayer/Timer/Label_new_record" unique_id=506265005]
 show_behind_parent = true
 position = Vector2(20, 8)
 amount = 50
-process_material = SubResource("ParticleProcessMaterial_me3p8")
 texture = SubResource("AtlasTexture_yt5nl")
 lifetime = 2.0
 visibility_rect = Rect2(-100, -100, 1000, 500)
+process_material = SubResource("ParticleProcessMaterial_me3p8")
 
-[node name="TimerArrival" parent="CanvasLayer/Timer" instance=ExtResource("5")]
+[node name="TimerArrival" parent="CanvasLayer/Timer" unique_id=1154324101 instance=ExtResource("5")]
 unique_name_in_owner = true
 layout_mode = 1
 offset_left = 230.0
@@ -215,9 +215,9 @@ offset_bottom = 31.0
 scale = Vector2(2, 2)
 pivot_offset = Vector2(0, 13)
 
-[node name="TimerBest" parent="CanvasLayer/Timer" instance=ExtResource("6")]
+[node name="TimerBest" parent="CanvasLayer/Timer" unique_id=2046749336 instance=ExtResource("6")]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -226,16 +226,17 @@ offset_top = 52.0
 offset_right = 306.0
 offset_bottom = 52.0
 
-[node name="Buttons" type="Node2D" parent="CanvasLayer"]
+[node name="Buttons" type="Node2D" parent="CanvasLayer" unique_id=514334895]
 visible = false
 position = Vector2(9, 4)
 
-[node name="Restart" type="Button" parent="CanvasLayer/Buttons"]
+[node name="Restart" type="Button" parent="CanvasLayer/Buttons" unique_id=171412308]
 unique_name_in_owner = true
 offset_left = 186.0
-offset_top = 95.0
+offset_top = 88.0
 offset_right = 289.0
-offset_bottom = 108.0
+offset_bottom = 106.0
+offset_transform_enabled = true
 focus_neighbor_top = NodePath("../Title screen")
 focus_neighbor_bottom = NodePath("../Top10")
 theme = SubResource("Theme_1k85u")
@@ -245,19 +246,20 @@ script = ExtResource("9")
 TextEN = "Restart"
 TextFR = "Recommencer"
 
-[node name="Top10" type="Button" parent="CanvasLayer/Buttons"]
+[node name="Top10" type="Button" parent="CanvasLayer/Buttons" unique_id=1845213155]
 unique_name_in_owner = true
 offset_left = 186.0
-offset_top = 112.0
+offset_top = 108.0
 offset_right = 289.0
-offset_bottom = 125.0
+offset_bottom = 126.0
+offset_transform_enabled = true
 focus_neighbor_top = NodePath("../Restart")
 focus_neighbor_bottom = NodePath("../Title screen")
 theme = SubResource("Theme_1k85u")
 button_mask = 0
 text = "Top 10"
 
-[node name="texture_deploy_top10" type="TextureRect" parent="CanvasLayer/Buttons/Top10"]
+[node name="texture_deploy_top10" type="TextureRect" parent="CanvasLayer/Buttons/Top10" unique_id=703772235]
 visible = false
 modulate = Color(1, 0.329412, 0.278431, 1)
 layout_mode = 0
@@ -270,12 +272,13 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("3")
 flip_v = true
 
-[node name="Title screen" type="Button" parent="CanvasLayer/Buttons"]
+[node name="Title screen" type="Button" parent="CanvasLayer/Buttons" unique_id=1607513812]
 unique_name_in_owner = true
 offset_left = 186.0
-offset_top = 129.0
+offset_top = 128.0
 offset_right = 289.0
-offset_bottom = 142.0
+offset_bottom = 146.0
+offset_transform_enabled = true
 focus_neighbor_top = NodePath("../Top10")
 focus_neighbor_bottom = NodePath("../Restart")
 theme = SubResource("Theme_1k85u")
@@ -285,44 +288,44 @@ script = ExtResource("9")
 TextEN = "Title screen"
 TextFR = "Ecran titre"
 
-[node name="Stats_mineur" type="Control" parent="CanvasLayer"]
+[node name="Stats_mineur" type="Control" parent="CanvasLayer" unique_id=1910558078]
 unique_name_in_owner = true
 visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_top = 73.0
+offset_top = 70.0
 offset_right = 320.0
-offset_bottom = 99.0
+offset_bottom = 96.0
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Stats_mineur"]
-layout_mode = 2
-offset_left = 194.0
+[node name="Panel" type="Panel" parent="CanvasLayer/Stats_mineur" unique_id=1898795730]
+layout_mode = 0
+offset_left = 189.0
 offset_top = -2.0
-offset_right = 297.0
+offset_right = 305.0
 offset_bottom = 20.0
 
-[node name="HBoxContainer_statM" type="HBoxContainer" parent="CanvasLayer/Stats_mineur"]
+[node name="HBoxContainer_statM" type="HBoxContainer" parent="CanvasLayer/Stats_mineur" unique_id=1533554964]
 layout_mode = 0
 offset_left = 172.0
 offset_right = 319.0
 offset_bottom = 28.0
 scale = Vector2(0.7, 0.7)
 pivot_offset = Vector2(73.6735, 0)
-theme_override_constants/separation = 15
+theme_override_constants/separation = 20
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM" unique_id=2022258517]
 layout_mode = 2
 theme_override_constants/separation = -2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer" unique_id=598993452]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("10")
 stretch_mode = 2
 
-[node name="NbMove" type="Label" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer"]
+[node name="NbMove" type="Label" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer" unique_id=659879809]
 unique_name_in_owner = true
 layout_mode = 2
 theme = SubResource("Theme_nti13")
@@ -331,19 +334,19 @@ theme_override_constants/outline_size = 4
 text = "???"
 horizontal_alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM" unique_id=557307179]
 layout_mode = 2
 theme_override_constants/separation = -2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer2" unique_id=1697798559]
 modulate = Color(0.741176, 0.439216, 0.988235, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("11")
 stretch_mode = 2
 
-[node name="NbDash" type="Label" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer2"]
+[node name="NbDash" type="Label" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer2" unique_id=191319298]
 unique_name_in_owner = true
 layout_mode = 2
 theme = SubResource("Theme_nti13")
@@ -352,18 +355,18 @@ theme_override_constants/outline_size = 4
 text = "???"
 horizontal_alignment = 1
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM"]
+[node name="VBoxContainer3" type="VBoxContainer" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM" unique_id=1615128848]
 layout_mode = 2
 theme_override_constants/separation = -2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer3"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer3" unique_id=1570613579]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("12")
 stretch_mode = 2
 
-[node name="NbPok" type="Label" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer3"]
+[node name="NbPok" type="Label" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer3" unique_id=1156040232]
 unique_name_in_owner = true
 layout_mode = 2
 theme = SubResource("Theme_nti13")
@@ -372,18 +375,18 @@ theme_override_constants/outline_size = 4
 text = "???"
 horizontal_alignment = 1
 
-[node name="VBoxContainer4" type="VBoxContainer" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM"]
+[node name="VBoxContainer4" type="VBoxContainer" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM" unique_id=791210694]
 layout_mode = 2
 theme_override_constants/separation = -2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer4"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer4" unique_id=1177684917]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("13")
 stretch_mode = 2
 
-[node name="NbFall" type="Label" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer4"]
+[node name="NbFall" type="Label" parent="CanvasLayer/Stats_mineur/HBoxContainer_statM/VBoxContainer4" unique_id=1566586358]
 unique_name_in_owner = true
 layout_mode = 2
 theme = SubResource("Theme_nti13")
@@ -392,48 +395,48 @@ theme_override_constants/outline_size = 4
 text = "???"
 horizontal_alignment = 1
 
-[node name="Timer_Best" type="Timer" parent="."]
+[node name="Timer_Best" type="Timer" parent="." unique_id=544626916]
 wait_time = 4.5
 one_shot = true
 autostart = true
 
-[node name="Timer_Button" type="Timer" parent="."]
+[node name="Timer_Button" type="Timer" parent="." unique_id=179499045]
 wait_time = 0.75
 one_shot = true
 
-[node name="Suspence" type="AudioStreamPlayer" parent="."]
+[node name="Suspence" type="AudioStreamPlayer" parent="." unique_id=1603769796]
 stream = ExtResource("14")
 pitch_scale = 0.9
 bus = &"SFX"
 
-[node name="Suspence2" type="AudioStreamPlayer" parent="."]
+[node name="Suspence2" type="AudioStreamPlayer" parent="." unique_id=160428175]
 stream = ExtResource("15")
 pitch_scale = 1.2
 bus = &"SFX"
 
-[node name="Final_time" type="AudioStreamPlayer" parent="."]
+[node name="Final_time" type="AudioStreamPlayer" parent="." unique_id=1957809992]
 stream = ExtResource("16")
 pitch_scale = 1.4
 bus = &"SFX"
 
-[node name="SFX" type="Node" parent="."]
+[node name="SFX" type="Node" parent="." unique_id=204476776]
 
-[node name="UI_menu_up_down" type="AudioStreamPlayer" parent="SFX"]
+[node name="UI_menu_up_down" type="AudioStreamPlayer" parent="SFX" unique_id=97769557]
 stream = ExtResource("17")
 pitch_scale = 1.1
 bus = &"SFX"
 
-[node name="UI_menu_click" type="AudioStreamPlayer" parent="SFX"]
+[node name="UI_menu_click" type="AudioStreamPlayer" parent="SFX" unique_id=163281844]
 stream = ExtResource("18")
 pitch_scale = 2.0
 bus = &"SFX"
 
-[node name="UI_page_turn" type="AudioStreamPlayer" parent="SFX"]
+[node name="UI_page_turn" type="AudioStreamPlayer" parent="SFX" unique_id=203502629]
 stream = ExtResource("19")
 pitch_scale = 1.5
 bus = &"SFX"
 
-[node name="UI_cancel" type="AudioStreamPlayer" parent="SFX"]
+[node name="UI_cancel" type="AudioStreamPlayer" parent="SFX" unique_id=470292141]
 stream = ExtResource("20")
 volume_db = -9.0
 pitch_scale = 0.85

@@ -80,12 +80,6 @@ colors = PackedColorArray(0.13725491, 0.5647059, 0.3882353, 1, 1, 1, 1, 1)
 offsets = PackedFloat32Array(0, 0.8397436, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0.3019608, 0.60784316, 0.9019608, 1, 0.3019608, 0.60784316, 0.9019608, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r1ysb"]
-bg_color = Color(0, 0, 0, 0.3372549)
-skew = Vector2(-0.115, 0)
-corner_detail = 20
-shadow_size = 1
-
 [sub_resource type="Gradient" id="Gradient_lvbp2"]
 offsets = PackedFloat32Array(0, 0.57051283, 0.96794873)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
@@ -320,6 +314,7 @@ mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="MDRlogo" type="TextureRect" parent="CanvasLayer" unique_id=2070858163]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -396,7 +391,6 @@ scale_amount_max = 2.75
 color_ramp = SubResource("Gradient_g4v7s")
 
 [node name="StartControl" type="Control" parent="CanvasLayer" unique_id=650131698]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -0.04499817
@@ -468,31 +462,6 @@ TextFR = "Campagne"
 augmentation = Vector2(1.1, 1.1)
 move = false
 
-[node name="CampagnePanel" type="Panel" parent="CanvasLayer/StartControl/StartCampagne" unique_id=763311136]
-layout_mode = 0
-offset_left = 7.0
-offset_top = 1.0
-offset_right = 117.0
-offset_bottom = 106.0
-offset_transform_enabled = true
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_r1ysb")
-
-[node name="Label" type="Label" parent="CanvasLayer/StartControl/StartCampagne/CampagnePanel" unique_id=887651149]
-layout_mode = 0
-offset_left = 7.0
-offset_top = 4.0
-offset_right = 109.0
-offset_bottom = 101.0
-offset_transform_enabled = true
-theme_override_fonts/font = ExtResource("12")
-theme_override_font_sizes/font_size = 12
-text = "Relevez des defis et sauvez le monde de la corruptions "
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-clip_text = true
-
 [node name="CPUParticles2D" type="CPUParticles2D" parent="CanvasLayer/StartControl/StartCampagne" unique_id=462086142]
 z_index = -2
 z_as_relative = false
@@ -546,29 +515,6 @@ TextEN = "Online level"
 TextFR = "Niveau en ligne "
 augmentation = Vector2(1.1, 1.1)
 move = false
-
-[node name="PanelOnlineLevel" type="Panel" parent="CanvasLayer/StartControl/StartOnlineLevel" unique_id=1478525442]
-layout_mode = 0
-offset_right = 109.0
-offset_bottom = 57.0
-offset_transform_enabled = true
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_r1ysb")
-
-[node name="Label" type="Label" parent="CanvasLayer/StartControl/StartOnlineLevel/PanelOnlineLevel" unique_id=1901151685]
-layout_mode = 0
-offset_left = 2.0
-offset_top = 2.0
-offset_right = 99.0
-offset_bottom = 53.0
-offset_transform_enabled = true
-theme_override_fonts/font = ExtResource("12")
-theme_override_font_sizes/font_size = 10
-text = "affrontez vous sur des map créé par la communauté pour la communauté"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-clip_text = true
 
 [node name="CPUParticles2D3" type="CPUParticles2D" parent="CanvasLayer/StartControl/StartOnlineLevel" unique_id=1915932289]
 z_index = -2
@@ -624,30 +570,7 @@ FrScale = 23
 augmentation = Vector2(1.1, 1.1)
 move = false
 
-[node name="PanelLevelEditor" type="Panel" parent="CanvasLayer/StartControl/StartLevelEditor" unique_id=791809055]
-layout_mode = 0
-offset_right = 107.0
-offset_bottom = 44.0
-offset_transform_enabled = true
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_r1ysb")
-
-[node name="Label" type="Label" parent="CanvasLayer/StartControl/StartLevelEditor/PanelLevelEditor" unique_id=744335162]
-layout_mode = 0
-offset_left = 3.0
-offset_top = 4.0
-offset_right = 92.0
-offset_bottom = 40.0
-offset_transform_enabled = true
-theme_override_fonts/font = ExtResource("12")
-theme_override_font_sizes/font_size = 10
-text = "Creez votre propre niveau et publiez le en ligne "
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-clip_text = true
-
-[node name="CPUParticles2D5" type="CPUParticles2D" parent="CanvasLayer/StartControl/StartLevelEditor/PanelLevelEditor" unique_id=35146302]
+[node name="CPUParticles2D5" type="CPUParticles2D" parent="CanvasLayer/StartControl/StartLevelEditor" unique_id=35146302]
 z_index = -2
 position = Vector2(-3, 23)
 emitting = false
@@ -661,7 +584,7 @@ scale_amount_max = 4.1
 color = Color(1, 0.7490196, 0.21176471, 1)
 color_ramp = SubResource("Gradient_lvbp2")
 
-[node name="CPUParticles2D6" type="CPUParticles2D" parent="CanvasLayer/StartControl/StartLevelEditor/PanelLevelEditor" unique_id=1483774782]
+[node name="CPUParticles2D6" type="CPUParticles2D" parent="CanvasLayer/StartControl/StartLevelEditor" unique_id=1483774782]
 z_index = -2
 position = Vector2(110, 23)
 emitting = false
@@ -687,6 +610,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="MenuControl" type="Control" parent="CanvasLayer" unique_id=1590043801]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -80.045

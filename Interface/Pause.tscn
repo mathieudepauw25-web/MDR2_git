@@ -168,6 +168,7 @@ offset_left = 16.0
 offset_top = 39.0
 offset_right = 122.0
 offset_bottom = 147.0
+offset_transform_enabled = true
 
 [node name="VBoxContainer_Buttons" type="VBoxContainer" parent="Panel_buttons" unique_id=1571537336]
 layout_mode = 0
@@ -261,6 +262,7 @@ offset_left = 126.0
 offset_top = 39.0
 offset_right = 189.0
 offset_bottom = 147.0
+offset_transform_enabled = true
 
 [node name="VBoxContainer_CheckBoxs" type="VBoxContainer" parent="Panel_options" unique_id=836218599]
 unique_name_in_owner = true
@@ -405,6 +407,7 @@ offset_left = 193.0
 offset_top = 108.0
 offset_right = 299.0
 offset_bottom = 148.0
+offset_transform_enabled = true
 
 [node name="Music" type="Label" parent="Panel_slider" unique_id=818851338]
 layout_mode = 0
@@ -477,6 +480,7 @@ offset_left = 192.0
 offset_top = 87.0
 offset_right = 250.0
 offset_bottom = 103.0
+offset_transform_enabled = true
 
 [node name="CheckButton" type="CheckButton" parent="Panel_fullscreen" unique_id=138624798]
 layout_mode = 0
@@ -501,10 +505,11 @@ metadata/_edit_lock_ = true
 [node name="Panel_superdash" type="Panel" parent="." unique_id=1453761941]
 visible = false
 layout_mode = 0
-offset_left = 193.0
-offset_top = 112.0
-offset_right = 251.0
-offset_bottom = 128.0
+offset_left = 192.0
+offset_top = 67.0
+offset_right = 250.0
+offset_bottom = 83.0
+offset_transform_enabled = true
 
 [node name="CheckButton" type="CheckButton" parent="Panel_superdash" unique_id=1695138529]
 layout_mode = 0

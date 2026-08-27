@@ -21,11 +21,22 @@ class_name PauseMenu
 @onready var ui_menu_click: AudioStreamPlayer = $SFX / UI_menu_click
 @onready var ui_paused: AudioStreamPlayer = $SFX / UI_paused
 
+@onready var panel_buttons: Panel = $Panel_buttons
+@onready var panel_options: Panel = $Panel_options
+@onready var panel_slider: Panel = $Panel_slider
+@onready var panel_fullscreen: Panel = $Panel_fullscreen
+@onready var panel_superdash: Panel = $Panel_superdash
+
 
 var arrival = false
 var paused: bool = false
 
 func _ready() -> void :
+	panel_buttons.offset_transform_position = Vector2(-150, 0)
+	panel_options.offset_transform_position = Vector2(0, 150)
+	panel_slider.offset_transform_position = Vector2(150, 0)
+	panel_fullscreen.offset_transform_position = Vector2(150, 0)
+	panel_superdash.offset_transform_position = Vector2(150, 0)
 	EVENTS.connect("arrival", _on_EVENTS_arrival)
 	EVENTS.connect("paused", _on_paused)
 	node_check_box_timer.button_pressed = GAMES.game_data.option1
@@ -62,11 +73,31 @@ func _input(event: InputEvent) -> void :
 func pauseMenu() -> void :
 	if paused:
 		hide()
+		panel_buttons.offset_transform_position = Vector2(-150, 0)
+		panel_options.offset_transform_position = Vector2(0, 150)
+		panel_slider.offset_transform_position = Vector2(150, 0)
+		panel_fullscreen.offset_transform_position = Vector2(150, 0)
+		panel_superdash.offset_transform_position = Vector2(150, 0)
 		Engine.time_scale = 1
 		ui_paused.pitch_scale = 1.4
 		ui_paused.play()
 	else:
 		show()
+		var tween = create_tween().set_ignore_time_scale(true)
+		tween.tween_property(panel_buttons, "offset_transform_position", Vector2(5, 0), 0.1)
+		tween.tween_property(panel_buttons, "offset_transform_position", Vector2(0, 0), 0.1)
+		var tween2 = create_tween().set_ignore_time_scale(true)
+		tween2.tween_property(panel_options, "offset_transform_position", Vector2(0, -5), 0.1)
+		tween2.tween_property(panel_options, "offset_transform_position", Vector2(0, 0), 0.1)
+		var tween3 = create_tween().set_ignore_time_scale(true)
+		tween3.tween_property(panel_slider, "offset_transform_position", Vector2(-5, 0), 0.1)
+		tween3.tween_property(panel_slider, "offset_transform_position", Vector2(0, 0), 0.1)
+		var tween4 = create_tween().set_ignore_time_scale(true)
+		tween4.tween_property(panel_fullscreen, "offset_transform_position", Vector2(-5, 0), 0.1)
+		tween4.tween_property(panel_fullscreen, "offset_transform_position", Vector2(0, 0), 0.1)
+		var tween5 = create_tween().set_ignore_time_scale(true)
+		tween5.tween_property(panel_superdash, "offset_transform_position", Vector2(-5, 0), 0.1)
+		tween5.tween_property(panel_superdash, "offset_transform_position", Vector2(0, 0), 0.1)
 		Engine.time_scale = 0
 		button_focus.grab_focus()
 		ui_paused.pitch_scale = 0.8
