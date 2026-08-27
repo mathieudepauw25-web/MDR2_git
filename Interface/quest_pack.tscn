@@ -29,8 +29,8 @@ script = ExtResource("1_8v7ui")
 custom_minimum_size = Vector2(94.275, 47)
 custom_maximum_size = Vector2(94.275, 47)
 layout_mode = 0
-offset_right = 36.0
-offset_bottom = 21.0
+offset_right = 94.275
+offset_bottom = 47.0
 theme_override_fonts/font = ExtResource("3_caqee")
 theme_override_font_sizes/font_size = 22
 text = "vcccc"
@@ -49,11 +49,23 @@ metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 [node name="ColorRect" type="ColorRect" parent="." unique_id=2034801474]
 visible = false
 layout_mode = 0
-offset_left = -2.0
-offset_right = 83.0
-offset_bottom = 49.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 96.0
+offset_bottom = 48.0
 mouse_filter = 2
 color = Color(0, 0, 0, 0.84313726)
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=553124777]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 39.0
+offset_right = 92.0
+offset_bottom = 45.0
+mouse_filter = 2
+allow_greater = true
+allow_lesser = true
+show_percentage = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1187879130]
 layer = -1
