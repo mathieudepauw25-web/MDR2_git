@@ -101,16 +101,16 @@ func _process(_delta: float) -> void :
 				node_state_machine.set_state("Idle")
 
 func add_buffer_move(input: String) -> void :
-	GAMEDATA.nbr_move += 1
 	if buffer_dash != "": return
 	if Engine.time_scale == 0: return
+	GAMEDATA.nbr_move += 1
 	launch_starting_signal()
 	buffer_move = input
 	$buffer_move.start(buffer_timing)
 
 func add_buffer_dash(input: String) -> void :
-	GAMEDATA.nbr_dash += 1
 	if Engine.time_scale == 0: return
+	GAMEDATA.nbr_dash += 1
 	launch_starting_signal()
 	buffer_move = ""
 	buffer_dash = input

@@ -11,5 +11,5 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("escape") and $ScrollContainer/ItemList/Quest_pack/CanvasLayer/ColorRect.visible == false:
 		EVENTS.emit_signal("change_to_main_menu")
 		get_parent().get_child(5).find_child("CanvasLayer").visible = true
-		get_parent().get_child(5).find_child("CanvasLayer").find_child("MenuControl").find_child("Controls").grab_focus()
+		get_parent().get_child(5).find_child("CanvasLayer").find_child("MenuControl").find_child("Quest").grab_focus()
 		queue_free()
