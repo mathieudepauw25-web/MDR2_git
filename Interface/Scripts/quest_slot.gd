@@ -13,7 +13,14 @@ extends Button
 @export var Vposition : Vector2
 
 func _ready() -> void:
-	
+	if GAMEDATA.get(what_to_look) >= objectif:
+		print(GAMEDATA.get(what_to_look))
+		quest_finish = true
+	else:
+		print(what_to_look)
+		print(quest_finish)
+		
+
 	if has_slider == true:
 		progress_bar.visible = true
 		progress_bar.max_value = objectif
@@ -25,12 +32,7 @@ func _ready() -> void:
 		$Quest_name.text = quest_name
 		$Description.text = descrition
 	
-	if GAMEDATA.get(what_to_look) :
-		if GAMEDATA.get(what_to_look) >= objectif:
-			print(GAMEDATA.get(what_to_look))
-			quest_finish = true
-	else :
-		print("erreur: la valeur what to look ne correspond pas")
-	
+
+		
 	if quest_finish == true:
 		$ColorRect.visible = true

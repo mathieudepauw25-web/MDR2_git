@@ -6,7 +6,7 @@ extends Button
 @export var EnScale = 26
 @export var FrScale = 26
 @export var Basescale: = Vector2(1,1)
-@export var augmentation: = Vector2(1.5, 1.5)
+@export var augmentation: = Vector2(1.2, 1.2)
 @export var move = true
 
 
@@ -28,22 +28,26 @@ func _on_visibility_changed() -> void :
 			if asFontSize == true:
 				add_theme_font_size_override("font_size", FrScale)
 
+
 var tween: Tween
 func _on_focus_entered() -> void:
+	var random =  [-1.0, 1.0].pick_random()
+	print(random)
 	z_index = 2
-	tween = create_tween()
+	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	var target = self
 	tween.set_ignore_time_scale(true)
-	tween.set_trans(Tween.TRANS_QUINT)
-	tween.set_ease(Tween.EASE_OUT)
+	#tween.set_trans(Tween.TRANS_QUINT)
+	#tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(target, "offset_transform_scale", Basescale * augmentation, 0.2)
+	tween.parallel().tween_property(target, "offset_transform_rotation", 0.3 * random, 0.1)
+	tween.parallel().tween_property(target, "offset_transform_rotation", 0.0, 0.1).set_delay(0.1)
+	await tween.finished
 	if move == true:
-		tween.parallel().tween_property(target, "offset_transform_rotation", 0.1, 0.2)
+		tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 		tween.set_loops()
-		tween.set_trans(Tween.TRANS_SINE)
-		tween.set_ease(Tween.EASE_OUT)
-		tween.tween_property(target, "offset_transform_rotation", -0.1, 2)
-		tween.tween_property(target, "offset_transform_rotation", 0.1, 2)
+		tween.tween_property(target, "offset_transform_rotation",0.1 * -random, 2)
+		tween.tween_property(target, "offset_transform_rotation", 0.1 * random, 2)
 
 
 func _on_focus_exited() -> void:
