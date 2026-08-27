@@ -1341,6 +1341,7 @@ stream = ExtResource("60")
 bus = &"Music"
 
 [node name="MAP_global" type="Node2D" parent="." unique_id=184267759]
+visible = false
 y_sort_enabled = true
 position = Vector2(-587, -446)
 
