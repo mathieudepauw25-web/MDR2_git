@@ -61,7 +61,7 @@ animation = "up"
 [node name="AutoSizeLabel" parent="ScrollContainer/ItemList/Quest_pack" index="0" unique_id=1824382224]
 offset_right = 81.0
 
-[node name="CanvasLayer" parent="ScrollContainer/ItemList/Quest_pack" index="2" unique_id=1187879130]
+[node name="CanvasLayer" parent="ScrollContainer/ItemList/Quest_pack" index="3" unique_id=1187879130]
 layer = 0
 
 [node name="ColorRect" parent="ScrollContainer/ItemList/Quest_pack/CanvasLayer" index="0" unique_id=1834386384]
@@ -84,7 +84,6 @@ descrition = "Dash 5 fois"
 in_pack = "Pack1"
 what_to_look = "nbr_dash"
 objectif = 5
-Vposition = Vector2(106, 0)
 
 [node name="Quest_slot3" parent="ScrollContainer/ItemList/Quest_pack/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(235501148, 8590591) index="2" unique_id=2053178218 instance=ExtResource("6_oc7nw")]
 layout_mode = 2
@@ -95,7 +94,6 @@ descrition = "Dash 20 fois (c'est beaucoup !)"
 in_pack = "Pack1"
 what_to_look = "nbr_dash"
 objectif = 20
-Vposition = Vector2(212, 0)
 
 [node name="Quest_slot4" parent="ScrollContainer/ItemList/Quest_pack/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(235501148, 8590591) index="3" unique_id=1999344870 instance=ExtResource("6_oc7nw")]
 layout_mode = 2
@@ -106,7 +104,6 @@ descrition = "Dash 20 fois (c'est beaucoup !)"
 in_pack = "Pack1"
 what_to_look = "nbr_dash"
 objectif = 20
-Vposition = Vector2(0, 48)
 
 [node name="Quest_slot5" parent="ScrollContainer/ItemList/Quest_pack/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(235501148, 8590591) index="4" unique_id=2099463937 instance=ExtResource("6_oc7nw")]
 layout_mode = 2
@@ -117,7 +114,6 @@ descrition = "Dash 20 fois (c'est beaucoup !)"
 in_pack = "Pack1"
 what_to_look = "nbr_dash"
 objectif = 20
-Vposition = Vector2(106, 48)
 
 [node name="Quest_slot6" parent="ScrollContainer/ItemList/Quest_pack/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(235501148, 8590591) index="5" unique_id=1340306665 instance=ExtResource("6_oc7nw")]
 layout_mode = 2
@@ -128,7 +124,6 @@ descrition = "Dash 20 fois (c'est beaucoup !)"
 in_pack = "Pack1"
 what_to_look = "nbr_dash"
 objectif = 20
-Vposition = Vector2(212, 48)
 
 [node name="Quest_slot7" parent="ScrollContainer/ItemList/Quest_pack/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(235501148, 8590591) index="6" unique_id=1949952840 instance=ExtResource("6_oc7nw")]
 layout_mode = 2
@@ -139,7 +134,6 @@ descrition = "Dash 20 fois (c'est beaucoup !)"
 in_pack = "Pack1"
 what_to_look = "nbr_dash"
 objectif = 20
-Vposition = Vector2(0, 96)
 
 [node name="Quest_slot8" parent="ScrollContainer/ItemList/Quest_pack/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(235501148, 8590591) index="7" unique_id=663388969 instance=ExtResource("6_oc7nw")]
 layout_mode = 2
@@ -150,6 +144,100 @@ descrition = "Dash 20 fois (c'est beaucoup !)"
 in_pack = "Pack1"
 what_to_look = "nbr_dash"
 objectif = 20
-Vposition = Vector2(106, 96)
+
+[node name="Quest_pack2" parent="ScrollContainer/ItemList" unique_id=1348562666 instance=ExtResource("4_dkjqb")]
+custom_minimum_size = Vector2(94.895, 47)
+layout_mode = 2
+number_of_quest = 2
+pack_name = "Pack1"
+animation = "up"
+
+[node name="AutoSizeLabel" parent="ScrollContainer/ItemList/Quest_pack2" index="0" unique_id=1824382224]
+offset_right = 81.0
+
+[node name="CanvasLayer" parent="ScrollContainer/ItemList/Quest_pack2" index="3" unique_id=1187879130]
+layer = 0
+
+[node name="ColorRect" parent="ScrollContainer/ItemList/Quest_pack2/CanvasLayer" index="0" unique_id=1834386384]
+visible = true
+
+[node name="Quest_slot" parent="ScrollContainer/ItemList/Quest_pack2/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(1348562666, 8590591) index="0" unique_id=818862038]
+has_slider = true
+quest_name = "Move"
+descrition = "Move 5 fois"
+in_pack = "Pack1"
+what_to_look = "nbr_move"
+objectif = 5
+
+[node name="Quest_slot2" parent="ScrollContainer/ItemList/Quest_pack2/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(1348562666, 8590591) index="1" unique_id=1424111694 instance=ExtResource("6_oc7nw")]
+layout_mode = 2
+offset_transform_enabled = true
+has_slider = true
+quest_name = "Dash"
+descrition = "Dash 5 fois"
+in_pack = "Pack1"
+what_to_look = "nbr_dash"
+objectif = 5
+
+[node name="Quest_slot3" parent="ScrollContainer/ItemList/Quest_pack2/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(1348562666, 8590591) index="2" unique_id=1558425558 instance=ExtResource("6_oc7nw")]
+layout_mode = 2
+offset_transform_enabled = true
+has_slider = true
+quest_name = "Dash"
+descrition = "Dash 20 fois (c'est beaucoup !)"
+in_pack = "Pack1"
+what_to_look = "nbr_dash"
+objectif = 20
+
+[node name="Quest_slot4" parent="ScrollContainer/ItemList/Quest_pack2/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(1348562666, 8590591) index="3" unique_id=336315196 instance=ExtResource("6_oc7nw")]
+layout_mode = 2
+offset_transform_enabled = true
+has_slider = true
+quest_name = "Dash"
+descrition = "Dash 20 fois (c'est beaucoup !)"
+in_pack = "Pack1"
+what_to_look = "nbr_dash"
+objectif = 20
+
+[node name="Quest_slot5" parent="ScrollContainer/ItemList/Quest_pack2/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(1348562666, 8590591) index="4" unique_id=1189378665 instance=ExtResource("6_oc7nw")]
+layout_mode = 2
+offset_transform_enabled = true
+has_slider = true
+quest_name = "Dash"
+descrition = "Dash 20 fois (c'est beaucoup !)"
+in_pack = "Pack1"
+what_to_look = "nbr_dash"
+objectif = 20
+
+[node name="Quest_slot6" parent="ScrollContainer/ItemList/Quest_pack2/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(1348562666, 8590591) index="5" unique_id=1842786298 instance=ExtResource("6_oc7nw")]
+layout_mode = 2
+offset_transform_enabled = true
+has_slider = true
+quest_name = "Dash"
+descrition = "Dash 20 fois (c'est beaucoup !)"
+in_pack = "Pack1"
+what_to_look = "nbr_dash"
+objectif = 20
+
+[node name="Quest_slot7" parent="ScrollContainer/ItemList/Quest_pack2/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(1348562666, 8590591) index="6" unique_id=1236893529 instance=ExtResource("6_oc7nw")]
+layout_mode = 2
+offset_transform_enabled = true
+has_slider = true
+quest_name = "Dash"
+descrition = "Dash 20 fois (c'est beaucoup !)"
+in_pack = "Pack1"
+what_to_look = "nbr_dash"
+objectif = 20
+
+[node name="Quest_slot8" parent="ScrollContainer/ItemList/Quest_pack2/CanvasLayer/ScrollContainer/GridContainer" parent_id_path=PackedInt32Array(1348562666, 8590591) index="7" unique_id=1460913249 instance=ExtResource("6_oc7nw")]
+layout_mode = 2
+offset_transform_enabled = true
+has_slider = true
+quest_name = "Dash"
+descrition = "Dash 20 fois (c'est beaucoup !)"
+in_pack = "Pack1"
+what_to_look = "nbr_dash"
+objectif = 20
 
 [editable path="ScrollContainer/ItemList/Quest_pack"]
+[editable path="ScrollContainer/ItemList/Quest_pack2"]

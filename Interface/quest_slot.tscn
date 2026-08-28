@@ -61,11 +61,33 @@ max_font_size = 22
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1255065517]
-visible = false
 layout_mode = 0
-offset_right = 94.0
+offset_right = 93.0
 offset_bottom = 43.0
-color = Color(0.15487596, 0.154876, 0.15487596, 1)
+color = Color(0.078431375, 0.078431375, 0, 0.5529412)
+
+[node name="Panel" type="Panel" parent="ColorRect" unique_id=1252896464]
+modulate = Color(1, 1, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 3.0
+offset_top = 26.0
+offset_right = 90.0
+offset_bottom = 39.0
+rotation = -0.2565634
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ColorRect/Panel" unique_id=552695822]
+layout_mode = 0
+offset_left = 5.090096
+offset_top = 0.30152118
+offset_right = 83.53573
+offset_bottom = 12.301521
+theme_override_fonts/normal_font = ExtResource("3_axnhw")
+theme_override_font_sizes/normal_font_size = 13
+bbcode_enabled = true
+text = "[wave amp=10 freq=2]Finish"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=1883051682]
 layout_mode = 0

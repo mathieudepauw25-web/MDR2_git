@@ -9,14 +9,14 @@ extends Control
 @export var pack_name : String
 @export var is_finished : bool
 @export var animation : String
+var quest_show := false
 
-@export var Vposition : Vector2
 var tween : Tween
 var in_animation = false
 
 func _ready() -> void:
 	
-	Canvas_layer.visible = true
+	Canvas_layer.visible = false
 	$CanvasLayer/ColorRect.visible = false
 	Canvas_layer.layer = 1
 	
@@ -42,8 +42,8 @@ func reposition():
 	if tween : tween.kill()
 	for i in range(grid_container.get_child_count()):
 		var quest_slot = grid_container.get_child(i)
-		quest_slot.offset_transform_position = -quest_slot.Vposition + $"../..".position + Vector2(-3,-2.5) + Vposition
-
+		#quest_slot.offset_transform_position = -quest_slot.position + $"../..".position + Vector2(-3,-2.5) + position
+		quest_slot.offset_transform_position = Vector2(11, 34.5)
 
 func verif_quest():
 	progress_bar.max_value = grid_container.get_child_count()
@@ -51,78 +51,71 @@ func verif_quest():
 	var count = 0
 	print("le grid container contient: " + str(grid_container.get_child_count()))
 	for i in range(grid_container.get_child_count()):
-		progress_bar.value = count
 		var quest_slot = grid_container.get_child(i)
-		if quest_slot.quest_finish == false:
-			break
-		count += 1
-		print("nbr de quetes fini: " + str(count))
-	return count
-	
+		if quest_slot.quest_finish == true:
+			count += 1
+	progress_bar.value = count
+	print("nbr de quetes fini: " + str(count))
 
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("escape"):
-		if color_rect.visible == true:
+		if quest_show == true:
+			if tween : tween.kill()
+			quest_show = false
+			Canvas_layer.visible = false
 			in_animation = false
 			color_rect.visible = false
+			self.grab_focus()
 			reposition()
 
 func _on_pressed() -> void:
+	grid_container.get_child(0).grab_focus()
+	quest_show = true
 	in_animation = true
 	color_rect.visible = true
+	Canvas_layer.visible = true
 	Canvas_layer.layer = 2
 	for i in range(grid_container.get_child_count()):
 		var quest_slot = grid_container.get_child(i)
 		quest_slot.visible = false
+		quest_slot.offset_transform_scale = Vector2(0,0)
+		quest_slot.offset_transform_position = Vector2(0,0)
 	for i in range(grid_container.get_child_count()):
 		var quest_slot = grid_container.get_child(i)
-		var actual_offset_position = quest_slot.offset_transform_position
+		#var actual_offset_position = quest_slot.offset_transform_position
 		quest_slot.visible = true
-		if tween : tween.kill()
-		tween = create_tween()
-		tween.parallel().tween_property(quest_slot,"offset_transform_rotation" , 0, 0)
-		tween.tween_property(quest_slot,"offset_transform_position" , -actual_offset_position / 10 , 0.1)
-		tween.tween_property(quest_slot,"offset_transform_position" , Vector2(0,0), 0.05)
-		await tween.finished
+		tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		#tween.tween_property(quest_slot,"offset_transform_position" , -actual_offset_position / 10 , 0.1)
+		#tween.tween_property(quest_slot,"offset_transform_position" , Vector2(0,0), 0.05)
+		tween.tween_property(quest_slot,"offset_transform_scale" , Vector2(1.1,1.1) , 0.1)
+		tween.parallel().tween_property(quest_slot,"offset_transform_rotation" , 0.1 * [1 , -1].pick_random() , 0.1)
+		tween.tween_property(quest_slot,"offset_transform_rotation" , 0 , 0.1)
+		tween.parallel().tween_property(quest_slot,"offset_transform_scale" , Vector2(1,1) , 0.1)
+		
+		
+		await get_tree().create_timer(0.05).timeout
 		quest_slot.z_index = 0
 		
 	
 var tween2 : Tween
-func _on_mouse_entered() -> void:
+
+
+func _on_focus_entered() -> void:
 	var random =  [-1.0, 1.0].pick_random()
-	print(random)
 	z_index = 2
 	tween2 = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	var target = self
 	tween2.set_ignore_time_scale(true)
-	#tween.set_trans(Tween.TRANS_QUINT)
-	#tween.set_ease(Tween.EASE_OUT)
 	tween2.tween_property(target, "offset_transform_scale", Vector2(1.1, 1.1), 0.2)
 	tween2.parallel().tween_property(target, "offset_transform_rotation", 0.3 * random, 0.1)
 	tween2.parallel().tween_property(target, "offset_transform_rotation", 0.0, 0.1).set_delay(0.1)
-	print("er")
-	for i in range(3):
-		if in_animation == false:
-			var quest_slot = grid_container.get_child(i)
-			var current_pos = quest_slot.offset_transform_position
-			if tween : tween.kill()
-			tween = create_tween().set_parallel(true)
-			tween.tween_property(quest_slot,"offset_transform_position" ,current_pos + Vector2(0,-5 * i - 5), 0.1)
-			quest_slot.z_index = -i
-			await tween.finished
 
 
-func _on_mouse_exited() -> void:
+func _on_focus_exited() -> void:
 	tween2 = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	tween2.tween_property(self, "offset_transform_scale", Vector2(1, 1), 0.2)
-	if in_animation == false:
-		for i in range(3):
-			in_animation = true
-			var quest_slot = grid_container.get_child(i)
-			if tween : tween.kill()
-			tween = create_tween()
-			tween.tween_property(quest_slot,"offset_transform_position" ,-quest_slot.Vposition + $"../..".position + Vector2(-3,-2.5) + Vposition, 0.1)
-			await tween.finished
-			if i == 2:
-				in_animation = false
+
+
+func _on_mouse_entered() -> void:
+	grab_focus()

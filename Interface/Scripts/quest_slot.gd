@@ -10,15 +10,10 @@ extends Button
 @export var what_to_look : String
 @export var objectif : int
 
-@export var Vposition : Vector2
 
 func _ready() -> void:
 	if GAMEDATA.get(what_to_look) >= objectif:
-		print(GAMEDATA.get(what_to_look))
 		quest_finish = true
-	else:
-		print(what_to_look)
-		print(quest_finish)
 		
 
 	if has_slider == true:

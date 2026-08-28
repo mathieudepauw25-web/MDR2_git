@@ -271,10 +271,10 @@ func _on_controls_pressed() -> void:
 func _on_start_campagne_pressed() -> void:
 	$CanvasLayer.visible = false
 	var target = $Path2D/PathFollow2D/Camera2D 
-	var tween = create_tween()
-	tween.set_trans(Tween.TRANS_EXPO)
-	tween.tween_property(target, "zoom", Vector2(0.1, 0.1), 02)
-	tween.tween_property(target, "zoom", Vector2(50,50), 25)
+	var tween2 = create_tween()
+	tween2.set_trans(Tween.TRANS_EXPO)
+	tween2.tween_property(target, "zoom", Vector2(0.1, 0.1), 02)
+	tween2.tween_property(target, "zoom", Vector2(50,50), 25)
 	await get_tree().create_timer(2).timeout
 	get_tree().change_scene_to_file("res://World/World.tscn")
 	Engine.time_scale = 1

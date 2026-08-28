@@ -32,7 +32,6 @@ func _on_visibility_changed() -> void :
 var tween: Tween
 func _on_focus_entered() -> void:
 	var random =  [-1.0, 1.0].pick_random()
-	print(random)
 	z_index = 2
 	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	var target = self

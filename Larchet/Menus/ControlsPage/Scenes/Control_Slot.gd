@@ -45,3 +45,7 @@ func _on_focus_entered() -> void:
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(target, "offset_transform_position_ratio", Vector2(0.02,0), 2)
 	tween.tween_property(target, "offset_transform_position_ratio",Vector2(-0.02,0), 2)
+
+
+func _on_mouse_entered() -> void:
+	grab_focus()
