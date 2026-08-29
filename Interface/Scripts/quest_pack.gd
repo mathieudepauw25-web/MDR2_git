@@ -59,6 +59,7 @@ func verif_quest():
 
 
 func _process(_delta: float) -> void:
+	$ProgressBar/RichTextLabel.text = str(int(progress_bar.value)) + "/" + str(int(progress_bar.max_value))
 	if Input.is_action_just_pressed("escape"):
 		if quest_show == true:
 			if tween : tween.kill()

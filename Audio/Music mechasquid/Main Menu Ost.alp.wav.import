@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bh63yuxepn0is"
+path="res://.godot/imported/Main Menu Ost.alp.wav-1ed100f59a5e1693b0723501165ca698.sample"
+
+[deps]
+
+source_file="res://Audio/Music mechasquid/Main Menu Ost.alp.wav"
+dest_files=["res://.godot/imported/Main Menu Ost.alp.wav-1ed100f59a5e1693b0723501165ca698.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

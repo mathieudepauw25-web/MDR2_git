@@ -60,12 +60,24 @@ color = Color(0, 0, 0, 0.84313726)
 layout_mode = 0
 offset_left = 1.0
 offset_top = 39.0
-offset_right = 92.0
+offset_right = 94.0
 offset_bottom = 45.0
 mouse_filter = 2
 allow_greater = true
 allow_lesser = true
 show_percentage = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ProgressBar" unique_id=158598614]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -3.0
+offset_right = 94.0
+offset_bottom = 8.0
+theme_override_fonts/normal_font = ExtResource("3_caqee")
+theme_override_font_sizes/normal_font_size = 9
+text = "90%"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1187879130]
 layer = -1

@@ -61,6 +61,7 @@ max_font_size = 22
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1255065517]
+visible = false
 layout_mode = 0
 offset_right = 93.0
 offset_bottom = 43.0
@@ -70,11 +71,13 @@ color = Color(0.078431375, 0.078431375, 0, 0.5529412)
 modulate = Color(1, 1, 0, 1)
 self_modulate = Color(0, 0, 0, 1)
 layout_mode = 0
-offset_left = 3.0
-offset_top = 26.0
+offset_left = 2.9999995
+offset_top = 15.0
 offset_right = 90.0
-offset_bottom = 39.0
+offset_bottom = 28.0
 rotation = -0.2565634
+pivot_offset = Vector2(43.56, 6.095)
+offset_transform_enabled = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="ColorRect/Panel" unique_id=552695822]
 layout_mode = 0
