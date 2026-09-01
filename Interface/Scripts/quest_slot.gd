@@ -27,9 +27,19 @@ func _ready() -> void:
 		
 	if quest_finish == true:
 		$ColorRect.visible = true
-	
-	panel.offset_transform_scale = Vector2(1.5,1.5)
-	
+
+
+
+func finish_anim():
+	print("anim")
+	panel.visible = false
+	await get_tree().create_timer(0.2).timeout
+	panel.offset_transform_scale = Vector2(2,2)
+	panel.visible = true
 	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	tween.tween_property(panel, "offset_transform_scale", Vector2(0.9,0.9), 0.1)
 	tween.tween_property(panel, "offset_transform_scale", Vector2(1,1), 0.1)
+
+func _input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed("escape"):
+		panel.visible = false

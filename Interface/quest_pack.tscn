@@ -46,15 +46,39 @@ min_font_size = 4
 max_font_size = 22
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=2034801474]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=983965948]
 visible = false
 layout_mode = 0
-offset_left = -1.0
-offset_top = -1.0
-offset_right = 96.0
-offset_bottom = 48.0
+offset_right = 95.0
+offset_bottom = 47.0
 mouse_filter = 2
-color = Color(0, 0, 0, 0.84313726)
+color = Color(0.078431375, 0.078431375, 0, 0.5529412)
+
+[node name="Panel" type="Panel" parent="ColorRect" unique_id=467583201]
+modulate = Color(1, 1, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 3.0
+offset_top = 18.0
+offset_right = 90.0
+offset_bottom = 31.0
+rotation = -0.2565634
+pivot_offset = Vector2(43.56, 6.095)
+offset_transform_enabled = true
+offset_transform_rotation = -0.09599311
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ColorRect/Panel" unique_id=750565933]
+layout_mode = 0
+offset_left = 5.090096
+offset_top = 0.30152118
+offset_right = 83.53573
+offset_bottom = 12.301521
+theme_override_fonts/normal_font = ExtResource("3_caqee")
+theme_override_font_sizes/normal_font_size = 13
+bbcode_enabled = true
+text = "[wave amp=10 freq=2]Finish"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=553124777]
 layout_mode = 0

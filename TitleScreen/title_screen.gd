@@ -19,7 +19,7 @@ var showing_leaderboard: = false
 var camera_speed: = 0.01
 var top10_world: = false
 
-const MAIN_THEME = preload("res://Audio/Music mechasquid/Main Menu Ost.alp.wav")
+const MAIN_THEME = preload("res://Audio/Music/Sketchbook 2024-10-14.ogg")
 
 func _ready() -> void :
 	$MAP_global.visible = true
@@ -51,7 +51,7 @@ func _ready() -> void :
 	Steam.leaderboard_scores_downloaded.connect(_on_leaderboard_scores_downloaded)
 
 	AUDIOMANAGER.play_music(MAIN_THEME)
-	AUDIOMANAGER.music_player.volume_db = -10
+	AUDIOMANAGER.music_player.volume_db = -30
 	AudioServer.set_bus_effect_enabled(1, 0, false)
 
 	$CanvasLayer/StartControl.visible = false

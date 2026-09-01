@@ -93,9 +93,8 @@ func _on_pressed() -> void:
 		tween.parallel().tween_property(quest_slot,"offset_transform_rotation" , 0.1 * [1 , -1].pick_random() , 0.1)
 		tween.tween_property(quest_slot,"offset_transform_rotation" , 0 , 0.1)
 		tween.parallel().tween_property(quest_slot,"offset_transform_scale" , Vector2(1,1) , 0.1)
-		
-		
 		await get_tree().create_timer(0.05).timeout
+		quest_slot.finish_anim()
 		quest_slot.z_index = 0
 		
 	

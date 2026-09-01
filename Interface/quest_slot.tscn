@@ -65,9 +65,11 @@ visible = false
 layout_mode = 0
 offset_right = 93.0
 offset_bottom = 43.0
+mouse_filter = 2
 color = Color(0.078431375, 0.078431375, 0, 0.5529412)
 
 [node name="Panel" type="Panel" parent="ColorRect" unique_id=1252896464]
+visible = false
 modulate = Color(1, 1, 0, 1)
 self_modulate = Color(0, 0, 0, 1)
 layout_mode = 0
