@@ -23,7 +23,7 @@ func _ready() -> void:
 	if pack_name:
 		$AutoSizeLabel.text = pack_name
 	verif_quest()
-	if verif_quest() == grid_container.get_child_count():
+	if progress_bar.value >= grid_container.get_child_count():
 		is_finished = true
 		$ColorRect.visible = true
 	
