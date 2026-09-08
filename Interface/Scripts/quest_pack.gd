@@ -86,7 +86,7 @@ func _on_pressed() -> void:
 		var quest_slot = grid_container.get_child(i)
 		#var actual_offset_position = quest_slot.offset_transform_position
 		quest_slot.visible = true
-		tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_ignore_time_scale(true)
 		#tween.tween_property(quest_slot,"offset_transform_position" , -actual_offset_position / 10 , 0.1)
 		#tween.tween_property(quest_slot,"offset_transform_position" , Vector2(0,0), 0.05)
 		tween.tween_property(quest_slot,"offset_transform_scale" , Vector2(1.1,1.1) , 0.1)
@@ -113,7 +113,7 @@ func _on_focus_entered() -> void:
 
 
 func _on_focus_exited() -> void:
-	tween2 = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween2 = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_ignore_time_scale(true)
 	tween2.tween_property(self, "offset_transform_scale", Vector2(1, 1), 0.2)
 
 

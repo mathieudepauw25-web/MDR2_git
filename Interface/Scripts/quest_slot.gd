@@ -13,6 +13,8 @@ extends Button
 
 var tween : Tween
 func _ready() -> void:
+
+	
 	if GAMEDATA.get(what_to_look) >= objectif:
 		quest_finish = true
 
@@ -36,7 +38,7 @@ func finish_anim():
 	await get_tree().create_timer(0.2).timeout
 	panel.offset_transform_scale = Vector2(2,2)
 	panel.visible = true
-	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_ignore_time_scale(true)
 	tween.tween_property(panel, "offset_transform_scale", Vector2(0.9,0.9), 0.1)
 	tween.tween_property(panel, "offset_transform_scale", Vector2(1,1), 0.1)
 

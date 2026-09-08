@@ -51,6 +51,8 @@ func _ready() -> void :
 	if GAMES.all_star_unlock:
 		$Panel_superdash.visible = true
 
+var is_paused = false
+
 func _process(_delta: float) -> void :
 	if arrival == false:
 		if Input.is_action_just_pressed("pause"):
@@ -71,6 +73,7 @@ func _input(event: InputEvent) -> void :
 		if event.is_action_released("dash_right"): _on_resume_pressed()
 
 func pauseMenu() -> void :
+	print("pause menu")
 	if paused:
 		hide()
 		panel_buttons.offset_transform_position = Vector2(-150, 0)
@@ -195,3 +198,12 @@ func _on_check_buttonSD_toggled(toggled_on: bool) -> void :
 	GAMES.game_data.option_superdash = toggled_on
 	$SFX / UI_toggle.play()
 	EVENTS.emit_signal("save")
+
+
+func _on_quest_pressed() -> void:
+	visible = false
+	var quest = load("res://Interface/quest_menu.tscn")
+	var instquest = quest.instantiate()
+	get_parent().add_child(instquest)
+	instquest.in_title_screen = false
+	queue_free()
