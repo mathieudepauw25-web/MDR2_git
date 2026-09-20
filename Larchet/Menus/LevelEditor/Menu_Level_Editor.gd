@@ -64,7 +64,8 @@ func _on_level_button_pressed(chemin_json: String) -> void:
 
 				
 		ActionMode.PUBLISH:
-			print("Simulation de publication pour le niveau : ", chemin_json)
+			PublishManager.publish_level(chemin_json)
+			print("Publication du niveau : ", chemin_json)
 			
 		ActionMode.SELECT:
 			_lancer_editeur(chemin_json)
