@@ -36,6 +36,7 @@ GESTIONNAIRESKIN="*uid://bauf0wrsurhr3"
 GAMEDATA="*uid://cyop4hm0yxg3o"
 ApiManager="*uid://qs21ttm0gphi"
 PublishManager="*uid://bma4cx10hrbn5"
+NotificationManager="*uid://jhn58dlh3ukb"
 
 [display]
 

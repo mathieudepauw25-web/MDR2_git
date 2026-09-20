@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://jhn58dlh3ukb"]
+
+[ext_resource type="Script" uid="uid://b27ogrhk0658l" path="res://Cubers/NotificationManager/notification_manager.gd" id="1_e2e0h"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7ih08"]
+line_spacing = 0.0
+font_size = 7
+
+[node name="NotificationManager" type="Control" unique_id=771171943]
+z_index = 100
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e2e0h")
+
+[node name="FondGris" type="Panel" parent="." unique_id=1592126294]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 42.0
+offset_top = 3.0
+offset_right = 263.0
+offset_bottom = 46.0
+
+[node name="TexteMessage" type="Label" parent="FondGris" unique_id=1241639767]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 8.0
+offset_top = 3.0
+offset_right = 213.0
+offset_bottom = 39.0
+label_settings = SubResource("LabelSettings_7ih08")
+vertical_alignment = 1
+autowrap_mode = 2
+max_lines_visible = 2
