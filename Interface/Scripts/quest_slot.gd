@@ -35,7 +35,7 @@ func _ready() -> void:
 func finish_anim():
 	print("anim")
 	panel.visible = false
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.2, true, false, true).timeout
 	panel.offset_transform_scale = Vector2(2,2)
 	panel.visible = true
 	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_ignore_time_scale(true)

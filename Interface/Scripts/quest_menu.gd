@@ -14,7 +14,7 @@ func _ready() -> void:
 		tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_ignore_time_scale(true)
 		tween.tween_property(node, "offset_transform_scale", Vector2(1.1,1.1), 0.1)
 		tween.tween_property(node, "offset_transform_scale", Vector2(1,1), 0.1)
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(0.1, true, false, true).timeout
 
 
 func _process(_delta: float) -> void:
@@ -25,13 +25,14 @@ func _process(_delta: float) -> void:
 			if i == item_list.get_child_count() - 1:
 				if in_title_screen == true:
 					EVENTS.emit_signal("change_to_main_menu")
-					get_parent().get_child(5).find_child("CanvasLayer").visible = true
-					get_parent().get_child(5).find_child("CanvasLayer").find_child("MenuControl").find_child("Quest").grab_focus()
+					get_parent().get_child(10).find_child("CanvasLayer").visible = true
+					get_parent().get_child(10).find_child("CanvasLayer").find_child("MenuControl").find_child("Quest").grab_focus()
 					queue_free()
 				else :
+					EVENTS.emit_signal("change_to_main_menu")
 					get_parent().visible = true
-					var pause = preload("res://Interface/Pause.tscn")
-					var instPause = pause.instantiate()
-					get_parent().add_child(instPause)
-					instPause.pauseMenu()
+					#var pause = preload("res://Interface/Pause.tscn")
+					#var instPause = pause.instantiate()
+					#get_parent().add_child(instPause)
+					#instPause.pauseMenu()
 					queue_free()

@@ -30,6 +30,7 @@ class_name PauseMenu
 
 var arrival = false
 var paused: bool = false
+var in_quest_menu = false
 
 func _ready() -> void :
 	panel_buttons.offset_transform_position = Vector2(-150, 0)
@@ -39,6 +40,7 @@ func _ready() -> void :
 	panel_superdash.offset_transform_position = Vector2(150, 0)
 	EVENTS.connect("arrival", _on_EVENTS_arrival)
 	EVENTS.connect("paused", _on_paused)
+	EVENTS.connect("change_to_main_menu", sortie_quest_menu)
 	node_check_box_timer.button_pressed = GAMES.game_data.option1
 	node_check_box_best_timer.button_pressed = GAMES.game_data.option2
 	node_check_box_nb_actions.button_pressed = GAMES.game_data.option3
@@ -74,40 +76,41 @@ func _input(event: InputEvent) -> void :
 
 func pauseMenu() -> void :
 	print("pause menu")
-	if paused:
-		hide()
-		panel_buttons.offset_transform_position = Vector2(-150, 0)
-		panel_options.offset_transform_position = Vector2(0, 150)
-		panel_slider.offset_transform_position = Vector2(150, 0)
-		panel_fullscreen.offset_transform_position = Vector2(150, 0)
-		panel_superdash.offset_transform_position = Vector2(150, 0)
-		Engine.time_scale = 1
-		ui_paused.pitch_scale = 1.4
-		ui_paused.play()
-	else:
-		show()
-		var tween = create_tween().set_ignore_time_scale(true)
-		tween.tween_property(panel_buttons, "offset_transform_position", Vector2(5, 0), 0.1)
-		tween.tween_property(panel_buttons, "offset_transform_position", Vector2(0, 0), 0.1)
-		var tween2 = create_tween().set_ignore_time_scale(true)
-		tween2.tween_property(panel_options, "offset_transform_position", Vector2(0, -5), 0.1)
-		tween2.tween_property(panel_options, "offset_transform_position", Vector2(0, 0), 0.1)
-		var tween3 = create_tween().set_ignore_time_scale(true)
-		tween3.tween_property(panel_slider, "offset_transform_position", Vector2(-5, 0), 0.1)
-		tween3.tween_property(panel_slider, "offset_transform_position", Vector2(0, 0), 0.1)
-		var tween4 = create_tween().set_ignore_time_scale(true)
-		tween4.tween_property(panel_fullscreen, "offset_transform_position", Vector2(-5, 0), 0.1)
-		tween4.tween_property(panel_fullscreen, "offset_transform_position", Vector2(0, 0), 0.1)
-		var tween5 = create_tween().set_ignore_time_scale(true)
-		tween5.tween_property(panel_superdash, "offset_transform_position", Vector2(-5, 0), 0.1)
-		tween5.tween_property(panel_superdash, "offset_transform_position", Vector2(0, 0), 0.1)
-		Engine.time_scale = 0
-		button_focus.grab_focus()
-		ui_paused.pitch_scale = 0.8
-		ui_paused.play()
-		$Panel_fullscreen / CheckButton.button_pressed = GAMES.game_data.option_fullscreen
-		$Panel_superdash / CheckButton.button_pressed = GAMES.game_data.option_superdash
-	paused = !paused
+	if !in_quest_menu:
+		if paused:
+			hide()
+			panel_buttons.offset_transform_position = Vector2(-150, 0)
+			panel_options.offset_transform_position = Vector2(0, 150)
+			panel_slider.offset_transform_position = Vector2(150, 0)
+			panel_fullscreen.offset_transform_position = Vector2(150, 0)
+			panel_superdash.offset_transform_position = Vector2(150, 0)
+			Engine.time_scale = 1
+			ui_paused.pitch_scale = 1.4
+			ui_paused.play()
+		else:
+			show()
+			var tween = create_tween().set_ignore_time_scale(true)
+			tween.tween_property(panel_buttons, "offset_transform_position", Vector2(5, 0), 0.1)
+			tween.tween_property(panel_buttons, "offset_transform_position", Vector2(0, 0), 0.1)
+			var tween2 = create_tween().set_ignore_time_scale(true)
+			tween2.tween_property(panel_options, "offset_transform_position", Vector2(0, -5), 0.1)
+			tween2.tween_property(panel_options, "offset_transform_position", Vector2(0, 0), 0.1)
+			var tween3 = create_tween().set_ignore_time_scale(true)
+			tween3.tween_property(panel_slider, "offset_transform_position", Vector2(-5, 0), 0.1)
+			tween3.tween_property(panel_slider, "offset_transform_position", Vector2(0, 0), 0.1)
+			var tween4 = create_tween().set_ignore_time_scale(true)
+			tween4.tween_property(panel_fullscreen, "offset_transform_position", Vector2(-5, 0), 0.1)
+			tween4.tween_property(panel_fullscreen, "offset_transform_position", Vector2(0, 0), 0.1)
+			var tween5 = create_tween().set_ignore_time_scale(true)
+			tween5.tween_property(panel_superdash, "offset_transform_position", Vector2(-5, 0), 0.1)
+			tween5.tween_property(panel_superdash, "offset_transform_position", Vector2(0, 0), 0.1)
+			Engine.time_scale = 0
+			button_focus.grab_focus()
+			ui_paused.pitch_scale = 0.8
+			ui_paused.play()
+			$Panel_fullscreen / CheckButton.button_pressed = GAMES.game_data.option_fullscreen
+			$Panel_superdash / CheckButton.button_pressed = GAMES.game_data.option_superdash
+		paused = !paused
 
 func _on_quit_pressed() -> void :
 	get_tree().quit()
@@ -201,9 +204,14 @@ func _on_check_buttonSD_toggled(toggled_on: bool) -> void :
 
 
 func _on_quest_pressed() -> void:
-	visible = false
+	#visible = false
 	var quest = load("res://Interface/quest_menu.tscn")
 	var instquest = quest.instantiate()
 	get_parent().add_child(instquest)
 	instquest.in_title_screen = false
-	queue_free()
+	in_quest_menu = true
+	#queue_free()
+
+func sortie_quest_menu():
+	in_quest_menu = false
+	$Panel_buttons/VBoxContainer_Buttons/Quest.grab_focus()

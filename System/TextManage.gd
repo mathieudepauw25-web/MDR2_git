@@ -33,7 +33,7 @@ var tween: Tween
 func _on_focus_entered() -> void:
 	var random =  [-1.0, 1.0].pick_random()
 	z_index = 2
-	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_ignore_time_scale(true)
 	var target = self
 	tween.set_ignore_time_scale(true)
 	#tween.set_trans(Tween.TRANS_QUINT)
@@ -43,7 +43,7 @@ func _on_focus_entered() -> void:
 	tween.parallel().tween_property(target, "offset_transform_rotation", 0.0, 0.1).set_delay(0.1)
 	await tween.finished
 	if move == true:
-		tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_ignore_time_scale(true)
 		tween.set_loops()
 		tween.tween_property(target, "offset_transform_rotation",0.1 * -random, 2)
 		tween.tween_property(target, "offset_transform_rotation", 0.1 * random, 2)
@@ -67,7 +67,7 @@ func _on_mouse_entered() -> void:
 func _on_button_down() -> void:
 	if tween: tween.kill()
 	
-	tween = create_tween()
+	tween = create_tween().set_ignore_time_scale(true)
 	tween.tween_property(self, "offset_transform_scale", augmentation - Vector2(0.05,0.05), 0.1)
 	
 	
