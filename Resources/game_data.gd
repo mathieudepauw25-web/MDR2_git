@@ -3,6 +3,7 @@ class_name GameData
 
 const defaut_highscore: = 1342.0
 
+var new_launch = true
 var first_launch = true
 var nb_wall_hit = 0
 var nb_fall = 0

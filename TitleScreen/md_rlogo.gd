@@ -8,6 +8,7 @@ var tween: Tween
 var mdrLogoPos = Vector2(-631.045, -342.8)
 var AnimationStoped = false
 
+
 signal logoAnimationFini
 
 var Bdashpos
@@ -17,6 +18,9 @@ func _ready() -> void:
 	Bmovepos = move.position
 	Bdashpos = dash.position
 	Brushpos= rush.position
+	if GAMEDATA.new_launch == false:
+		Stop_Animation()
+
 	if AnimationStoped == false:
 		tween = create_tween()
 		tween.tween_property(move, "position", Bmovepos * Vector2(30,0), 0)
@@ -48,6 +52,7 @@ func _ready() -> void:
 		tween.tween_property(self, "position", mdrLogoPos, 0.1)
 		tween.parallel().tween_property(self, "scale", Vector2(0.165,0.165), 0.1)
 		tween.tween_callback(logoAnimationFini.emit)
+		GAMEDATA.new_launch = false
 		
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("CancelAnimation") and AnimationStoped == false:
@@ -55,13 +60,15 @@ func _input(_event: InputEvent) -> void:
 
 func Stop_Animation():
 		print("stooop")
-		logoAnimationFini.emit()
 		AnimationStoped = true
-		tween.kill()
+		GAMEDATA.new_launch = false
+		if tween:
+			tween.kill()
 		tween = create_tween()
 		tween.tween_property(move, "position", Bmovepos, 0)
 		tween.tween_property(dash, "position", Bdashpos, 0)
 		tween.tween_property(rush, "position", Brushpos, 0)
 		tween.tween_property(self, "position", mdrLogoPos, 0)
 		tween.parallel().tween_property(self, "scale", Vector2(0.165,0.165), 0)
+		logoAnimationFini.emit()
 		

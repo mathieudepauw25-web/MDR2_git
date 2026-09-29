@@ -1,9 +1,9 @@
 extends Control
 
 func _ready() -> void:
-	visible = false
-	tween = create_tween()
-	tween.tween_property($Panel, "offset_transform_position_ratio", Vector2(0,20), 0)
+	if GAMEDATA.new_launch == true:
+		visible = false
+	$Panel.offset_transform_position_ratio = Vector2(0,20)
 
 
 

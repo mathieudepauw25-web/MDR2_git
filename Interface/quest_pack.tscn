@@ -107,12 +107,11 @@ vertical_alignment = 1
 layer = -1
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1834386384]
-visible = false
 offset_left = -52.0
 offset_top = -21.0
 offset_right = 372.0
 offset_bottom = 218.0
-color = Color(0, 0, 0, 0.31764707)
+color = Color(0, 0, 0, 0.7294118)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer" unique_id=1983617081]
 anchors_preset = 15

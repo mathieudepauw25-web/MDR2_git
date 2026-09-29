@@ -979,6 +979,7 @@ metadata/_edit_lock_ = true
 script = ExtResource("41_7w4lt")
 
 [node name="Glitchs" type="Control" parent="UI_Glitchs" unique_id=1784952515]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
