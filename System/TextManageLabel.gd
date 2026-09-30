@@ -14,3 +14,11 @@ func _on_visibility_changed() -> void :
 			text = TextEN
 		1:
 			text = TextFR
+
+
+func _on_h_slider_sound_mouse_entered() -> void:
+	grab_focus()
+
+
+func _on_h_slider_music_mouse_entered() -> void:
+	grab_focus()

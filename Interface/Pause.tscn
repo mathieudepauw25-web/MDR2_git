@@ -70,7 +70,6 @@ outline_size = 2
 outline_color = Color(0.132981, 1.01797e-05, 0.127194, 1)
 
 [node name="PauseMenu" type="Control" unique_id=2129157747]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -196,7 +195,6 @@ text = "Restart"
 script = ExtResource("6")
 TextEN = "Restart"
 TextFR = "Recommencer"
-augmentation = Vector2(1.3, 1.3)
 
 [node name="Espacement" type="Control" parent="Panel_buttons/VBoxContainer_Buttons" unique_id=1994579357]
 visible = false
@@ -219,7 +217,6 @@ text = "Resume"
 script = ExtResource("6")
 TextEN = "Resume"
 TextFR = "Retour"
-augmentation = Vector2(1.3, 1.3)
 
 [node name="Control" type="Button" parent="Panel_buttons/VBoxContainer_Buttons" unique_id=265590641]
 visible = false
@@ -244,7 +241,6 @@ text = "Quest"
 script = ExtResource("6")
 TextEN = "Quest"
 TextFR = "Quetes"
-augmentation = Vector2(1.3, 1.3)
 
 [node name="Title screen" type="Button" parent="Panel_buttons/VBoxContainer_Buttons" unique_id=1442842038]
 layout_mode = 2
@@ -260,7 +256,6 @@ text = "Title screen"
 script = ExtResource("6")
 TextEN = "Title screen"
 TextFR = "Ecran titre"
-augmentation = Vector2(1.3, 1.3)
 
 [node name="Quit" type="Button" parent="Panel_buttons/VBoxContainer_Buttons" unique_id=693072544]
 visible = false
@@ -605,28 +600,38 @@ bus = &"SFX"
 [connection signal="pressed" from="Panel_buttons/VBoxContainer_Buttons/Quit" to="." method="_on_quit_pressed"]
 [connection signal="focus_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer" method="_on_focus_entered"]
 [connection signal="focus_exited" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer" method="_on_focus_exited"]
+[connection signal="mouse_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer" method="_on_mouse_entered"]
 [connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Timer" to="." method="_on_check_box_timer_toggled"]
 [connection signal="focus_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_BestTimer" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_BestTimer" method="_on_focus_entered"]
 [connection signal="focus_exited" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_BestTimer" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_BestTimer" method="_on_focus_exited"]
+[connection signal="mouse_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_BestTimer" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_BestTimer" method="_on_mouse_entered"]
 [connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_BestTimer" to="." method="_on_check_box_best_timer_toggled"]
 [connection signal="focus_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions" method="_on_focus_entered"]
 [connection signal="focus_exited" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions" method="_on_focus_exited"]
+[connection signal="mouse_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions" method="_on_mouse_entered"]
 [connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbActions" to="." method="_on_check_box_nb_actions_toggled"]
 [connection signal="focus_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok" method="_on_focus_entered"]
 [connection signal="focus_exited" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok" method="_on_focus_exited"]
+[connection signal="mouse_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok" method="_on_mouse_entered"]
 [connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbPok" to="." method="_on_check_box_nb_pok_toggled"]
 [connection signal="focus_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbFall" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbFall" method="_on_focus_entered"]
 [connection signal="focus_exited" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbFall" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbFall" method="_on_focus_exited"]
+[connection signal="mouse_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbFall" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbFall" method="_on_mouse_entered"]
 [connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_NbFall" to="." method="_on_check_box_nb_fall_toggled"]
 [connection signal="focus_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Inputs" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Inputs" method="_on_focus_entered"]
 [connection signal="focus_exited" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Inputs" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Inputs" method="_on_focus_exited"]
+[connection signal="mouse_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Inputs" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Inputs" method="_on_mouse_entered"]
 [connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Inputs" to="." method="_on_check_box_inputs_toggled"]
 [connection signal="focus_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Stars" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Stars" method="_on_focus_entered"]
 [connection signal="focus_exited" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Stars" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Stars" method="_on_focus_exited"]
+[connection signal="mouse_entered" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Stars" to="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Stars" method="_on_mouse_entered"]
 [connection signal="toggled" from="Panel_options/VBoxContainer_CheckBoxs/CheckBox_Stars" to="." method="_on_check_box_stars_toggled"]
+[connection signal="mouse_entered" from="Panel_slider/Music/HSlider_music" to="Panel_slider/Music" method="_on_h_slider_music_mouse_entered"]
 [connection signal="value_changed" from="Panel_slider/Music/HSlider_music" to="." method="_on_slider_music_value_changed"]
+[connection signal="mouse_entered" from="Panel_slider/Sound/HSlider_sound" to="Panel_slider/Sound" method="_on_h_slider_sound_mouse_entered"]
 [connection signal="value_changed" from="Panel_slider/Sound/HSlider_sound" to="." method="_on_slider_sound_value_changed"]
 [connection signal="focus_entered" from="Panel_fullscreen/CheckButton" to="Panel_fullscreen/CheckButton" method="_on_focus_entered"]
 [connection signal="focus_exited" from="Panel_fullscreen/CheckButton" to="Panel_fullscreen/CheckButton" method="_on_focus_exited"]
+[connection signal="mouse_entered" from="Panel_fullscreen/CheckButton" to="Panel_fullscreen/CheckButton" method="_on_mouse_entered"]
 [connection signal="toggled" from="Panel_fullscreen/CheckButton" to="." method="_on_check_button_toggled"]
 [connection signal="toggled" from="Panel_superdash/CheckButton" to="." method="_on_check_buttonSD_toggled"]

@@ -35,3 +35,7 @@ func _on_focus_exited() -> void:
 	tween.set_ignore_time_scale(true)
 	tween.tween_property(self, "offset_transform_scale", Vector2(1, 1) , 0.1)
 	tween.parallel().tween_property(self, "offset_transform_position_ratio", Vector2(0, 0) , 0.5)
+
+
+func _on_mouse_entered() -> void:
+	grab_focus()
