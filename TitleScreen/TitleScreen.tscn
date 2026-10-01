@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://dgspu27t0djae" path="res://Interface/Sprites/tile_0570.png" id="16"]
 [ext_resource type="PackedScene" uid="uid://cf56qyr5ye807" path="res://Interface/Trophy.tscn" id="18"]
 [ext_resource type="Script" uid="uid://bfio7bahqu8ax" path="res://System/TextManageLabel.gd" id="19"]
+[ext_resource type="StyleBox" uid="uid://dc7hb27xjwwo7" path="res://Larchet/Menus/Exit_focus.tres" id="19_lvbp2"]
 [ext_resource type="Script" uid="uid://mg3cgnfkk28r" path="res://TitleScreen/boutonoptions.gd" id="19_v0fyl"]
 [ext_resource type="Texture2D" uid="uid://8nehy076slkd" path="res://Interface/Sprites/tile_0344.png" id="20"]
 [ext_resource type="Texture2D" uid="uid://ccnu3p7xf38jn" path="res://Interface/Sprites/tile_0034.png" id="21"]
@@ -93,16 +94,6 @@ Button/fonts/font = ExtResource("12")
 Button/styles/focus = ExtResource("13_pqi1g")
 Button/styles/normal = ExtResource("14_ye7gv")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0fyl"]
-bg_color = Color(1, 0.56078434, 0.21176471, 1)
-border_color = Color(1, 0.74902, 0.211765, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-shadow_color = Color(1, 1, 1, 1)
-anti_aliasing = false
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qjbn"]
 bg_color = Color(0.216, 0.2776, 0.3, 1)
 corner_radius_top_left = 2
@@ -110,7 +101,7 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="Resource" id="Resource_r1ysb"]
+[sub_resource type="Resource" id="Resource_v663j"]
 resource_local_to_scene = true
 script = ExtResource("5")
 secret_index = 1
@@ -786,7 +777,7 @@ theme_override_fonts/font = ExtResource("12")
 theme_override_styles/normal = ExtResource("14")
 theme_override_styles/pressed = ExtResource("15_8xq3f")
 theme_override_styles/hover = ExtResource("15_8xq3f")
-theme_override_styles/focus = SubResource("StyleBoxFlat_v0fyl")
+theme_override_styles/focus = ExtResource("19_lvbp2")
 text = "Quit"
 script = ExtResource("15")
 TextEN = "Quit"
@@ -1006,7 +997,7 @@ alignment = 1
 
 [node name="StarCount1" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1542527147 instance=ExtResource("4")]
 layout_mode = 2
-secret_data = SubResource("Resource_r1ysb")
+secret_data = SubResource("Resource_v663j")
 
 [node name="StarCount2" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1480194519 instance=ExtResource("4")]
 layout_mode = 2

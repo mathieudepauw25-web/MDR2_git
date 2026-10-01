@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://jhn58dlh3ukb"]
 
-[ext_resource type="Script" uid="uid://b27ogrhk0658l" path="res://Cubers/NotificationManager/notification_manager.gd" id="1_e2e0h"]
+[ext_resource type="Script" uid="uid://b27ogrhk0658l" path="res://Cubers/NotificationManager/NOTIFICATION_MANAGER.gd" id="1_e2e0h"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7ih08"]
 line_spacing = 0.0
