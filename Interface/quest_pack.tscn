@@ -47,6 +47,7 @@ max_font_size = 22
 metadata/_custom_type_script = "uid://d11kfgsd6jgt"
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=983965948]
+visible = false
 layout_mode = 0
 offset_right = 95.0
 offset_bottom = 47.0

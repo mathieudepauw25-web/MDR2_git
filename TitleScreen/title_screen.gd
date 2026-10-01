@@ -40,7 +40,7 @@ func _ready() -> void :
 
 	if (GAMES.game_data.best_global_time >= GAMES.game_data.defaut_highscore
 	and GAMES.game_just_launch == true):
-		_on_start_pressed()
+		pass
 
 	if GAMES.game_data.best_global_time_superdash < GAMES.game_data.defaut_highscore:
 		$CanvasLayer / TimerBest_superdash.visible = true
@@ -55,8 +55,6 @@ func _ready() -> void :
 	AUDIOMANAGER.music_player.volume_db = -30
 	AudioServer.set_bus_effect_enabled(1, 0, false)
 
-	$CanvasLayer/StartControl.visible = false
-	$CanvasLayer/MDRlogo.visible = true
 	
 func _process(delta: float) -> void :
 	node_path_follow_2d.progress_ratio += delta * camera_speed
@@ -78,7 +76,6 @@ func _input(event: InputEvent) -> void :
 		if event.axis_value < 0 && event.axis_value > -1: return
 		if event.axis_value > 0 && event.axis_value < 1: return
 	if $CanvasLayer.visible == true:
-		if event.is_action_pressed("escape"): button_focus.grab_focus()
 		if event.is_action_pressed("move_down"): node_ui_menu_up_down.play(0.02)
 		if event.is_action_pressed("move_up"): node_ui_menu_up_down.play(0.02)
 		if event.is_action_pressed("ui_accept"): node_ui_menu_click.play()
@@ -91,8 +88,6 @@ func _input(event: InputEvent) -> void :
 			if event.is_action_pressed("escape"):
 				_on_leaderboard_pressed()
 				$SFX / UI_cancel.play()
-	if $CanvasLayer.visible == false:
-		if event.is_action_pressed("escape"): button_focus.grab_focus()
 	if $MapViewControl.visible == true:
 		if event.is_action_pressed("move_down"): pass
 		if event.is_action_pressed("move_up"): pass

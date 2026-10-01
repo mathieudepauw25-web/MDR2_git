@@ -15,6 +15,7 @@ var Bdashpos
 var Brushpos 
 var Bmovepos
 func _ready() -> void:
+	visible = true
 	Bmovepos = move.position
 	Bdashpos = dash.position
 	Brushpos= rush.position

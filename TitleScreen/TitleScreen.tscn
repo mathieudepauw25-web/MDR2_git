@@ -101,7 +101,7 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="Resource" id="Resource_v663j"]
+[sub_resource type="Resource" id="Resource_lvbp2"]
 resource_local_to_scene = true
 script = ExtResource("5")
 secret_index = 1
@@ -773,6 +773,7 @@ offset_bottom = 31.0
 offset_transform_enabled = true
 focus_neighbor_bottom = NodePath("../Panel/Start")
 theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
 theme_override_fonts/font = ExtResource("12")
 theme_override_styles/normal = ExtResource("14")
 theme_override_styles/pressed = ExtResource("15_8xq3f")
@@ -997,7 +998,7 @@ alignment = 1
 
 [node name="StarCount1" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1542527147 instance=ExtResource("4")]
 layout_mode = 2
-secret_data = SubResource("Resource_v663j")
+secret_data = SubResource("Resource_lvbp2")
 
 [node name="StarCount2" parent="CanvasLayer/Panel_star/HBoxContainer_star" unique_id=1480194519 instance=ExtResource("4")]
 layout_mode = 2
