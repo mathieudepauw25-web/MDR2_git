@@ -7,9 +7,8 @@
 [ext_resource type="Script" uid="uid://ej50tywcc4ki" path="res://Interface/Scripts/button.gd" id="4_gjtj6"]
 [ext_resource type="Texture2D" uid="uid://dj1eq3ctkgj53" path="res://Interface/Sprites/tile_0017.png" id="5_frqnb"]
 [ext_resource type="Script" uid="uid://bfio7bahqu8ax" path="res://System/TextManageLabel.gd" id="5_yrkro"]
-[ext_resource type="AudioStream" uid="uid://mveooa4f7pg4" path="res://Audio/SFX/ui_click_rollover_misc_05.mp3" id="6_frqnb"]
-[ext_resource type="AudioStream" uid="uid://d3dxycfae6tnq" path="res://Audio/SFX/ui_click_rollover_misc_01.mp3" id="7_cbmfm"]
 [ext_resource type="AudioStream" uid="uid://dmr7iw0k51lo" path="res://Audio/SFX/ui_click_rollover_misc_11.mp3" id="8_cbmfm"]
+[ext_resource type="AudioStream" uid="uid://dq4ppusluxce4" path="res://Audio/SFX/popup_01.wav" id="9_yrkro"]
 [ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="10_6vj2y"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_82lil"]
@@ -83,13 +82,13 @@ texture = ExtResource("5_frqnb")
 
 [node name="Move" type="AudioStreamPlayer" parent="Node" unique_id=874539059]
 unique_name_in_owner = true
-stream = ExtResource("6_frqnb")
+stream = ExtResource("9_yrkro")
 volume_db = -8.0
 pitch_scale = 1.1
 
 [node name="Select" type="AudioStreamPlayer" parent="Node" unique_id=1312313838]
 unique_name_in_owner = true
-stream = ExtResource("7_cbmfm")
+stream = ExtResource("9_yrkro")
 pitch_scale = 1.1
 
 [node name="Validation" type="AudioStreamPlayer" parent="Node" unique_id=331982142]

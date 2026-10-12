@@ -708,6 +708,7 @@ offset_left = 288.0
 offset_top = 20.0
 offset_right = 320.0
 offset_bottom = 128.0
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_13qdw")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI_Layer/Interactive" unique_id=672686466]
@@ -763,6 +764,7 @@ mouse_filter = 2
 [node name="Doors" type="PanelContainer" parent="UI_Layer/Property" unique_id=1585367742]
 visible = false
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_b1lj4")
 
 [node name="Title" type="Label" parent="UI_Layer/Property/Doors" unique_id=1492201205]
@@ -824,6 +826,7 @@ horizontal_alignment = 1
 [node name="Portals" type="PanelContainer" parent="UI_Layer/Property" unique_id=523639303]
 visible = false
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_b1lj4")
 
 [node name="Title" type="Label" parent="UI_Layer/Property/Portals" unique_id=780671232]

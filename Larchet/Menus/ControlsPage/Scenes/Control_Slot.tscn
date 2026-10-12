@@ -5,7 +5,8 @@
 [ext_resource type="StyleBox" uid="uid://d2wb0x7bmm82g" path="res://Larchet/Menus/Gold.tres" id="2_gu2qy"]
 [ext_resource type="LabelSettings" uid="uid://ct1olda2r36v8" path="res://Larchet/Menus/LabelFont.tres" id="2_irbyj"]
 [ext_resource type="FontFile" uid="uid://d2g5rha7piycd" path="res://System/Font/bitcell_memesbruh03.ttf" id="3_d4w1s"]
-[ext_resource type="AudioStream" uid="uid://mveooa4f7pg4" path="res://Audio/SFX/ui_click_rollover_misc_05.mp3" id="6_tgvoy"]
+[ext_resource type="StyleBox" uid="uid://cgd7kvdxm5jsn" path="res://Interface/Themes/ButtonNormal.tres" id="3_iprui"]
+[ext_resource type="AudioStream" uid="uid://dq4ppusluxce4" path="res://Audio/SFX/popup_01.wav" id="6_l2cew"]
 [ext_resource type="AudioStream" uid="uid://d3dxycfae6tnq" path="res://Audio/SFX/ui_click_rollover_misc_01.mp3" id="7_bhgec"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gu2qy"]
@@ -23,7 +24,7 @@ size_flags_horizontal = 0
 offset_transform_enabled = true
 theme_override_styles/normal = ExtResource("1_r5q2s")
 theme_override_styles/pressed = ExtResource("2_gu2qy")
-theme_override_styles/hover = ExtResource("2_gu2qy")
+theme_override_styles/hover = ExtResource("3_iprui")
 theme_override_styles/focus = ExtResource("2_gu2qy")
 script = ExtResource("2_d4w1s")
 
@@ -64,9 +65,9 @@ vertical_alignment = 1
 
 [node name="Move" type="AudioStreamPlayer" parent="Node" unique_id=1735271433]
 unique_name_in_owner = true
-stream = ExtResource("6_tgvoy")
+stream = ExtResource("6_l2cew")
 volume_db = -8.0
-pitch_scale = 1.1
+pitch_scale = 0.65
 
 [node name="Select" type="AudioStreamPlayer" parent="Node" unique_id=454825193]
 unique_name_in_owner = true
