@@ -32,7 +32,7 @@ z_index = 6
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_45bdn")
-position_show = Vector2(-11, -17)
+position_show = Vector2(-18, -20)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=147478891]
 texture = SubResource("AtlasTexture_xe8jc")
