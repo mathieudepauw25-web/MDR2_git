@@ -16,5 +16,5 @@ func make_request(endpoint: String, method: int, data: String, callback: Callabl
 	
 	var error = http_request.request(url, req_headers, method, data)
 	if error != OK:
-		printerr("ApiManager Error: Failed to initiate request to ", url, " (Code: ", error, ")")
+		printerr("API_MANAGER Error: Failed to initiate request to ", url, " (Code: ", error, ")")
 		http_request.queue_free()

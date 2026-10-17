@@ -64,7 +64,7 @@ func _on_level_button_pressed(chemin_json: String) -> void:
 
 				
 		ActionMode.PUBLISH:
-			PublishManager.publish_level(chemin_json)
+			PUBLISH_MANAGER.publish_level(chemin_json)
 			
 		ActionMode.SELECT:
 			_lancer_editeur(chemin_json)
