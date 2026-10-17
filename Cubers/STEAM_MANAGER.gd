@@ -1,39 +1,64 @@
 extends Node
 
-func _ready() -> void:
-	# Initialisation de l'API Steam
-	var init_response: Dictionary = Steam.steamInitEx()
-	
-	if init_response["status"] > 0:
-		printerr("GodotSteam Erreur: ", init_response["verbal"])
-		return
-		
-	print("GodotSteam Succès ! Connecté en tant que : ", Steam.getPersonaName())
-	print("SteamID du joueur : ", Steam.getSteamID())
-
-func _process(_delta: float) -> void:
-	# Contrairement aux autres Autoloads, Steam DOIT tourner en boucle 
-	# pour écouter les réponses du serveur Steam (les callbacks).
-	Steam.run_callbacks()
-
-
-# On garde une trace de l'ID du ticket pour pouvoir l'annuler plus tard si besoin
+var steam_initialized: bool = false
 var current_ticket_id: int = 0
 
-func generer_ticket() -> String:
-	print("STEAM_MANAGER: Demande de ticket en cours...")
-	return ''
-	# 1. On demande le ticket à Steam (retourne un dictionnaire avec "id" et "buffer")
+
+func _ready() -> void:
+	initialize_steam()
+
+
+func _process(_delta: float) -> void:
+	if steam_initialized:
+		Steam.run_callbacks()
+
+
+func initialize_steam() -> bool:
+	if steam_initialized:
+		return true
+
+	if not Steam.isSteamRunning():
+		steam_initialized = false
+		print("STEAM_MANAGER: Steam unavailable. Offline mode.")
+		return false
+
+	var init_response: Dictionary = Steam.steamInitEx()
+
+	if init_response.get("status", 1) != 0:
+		steam_initialized = false
+		print("STEAM_MANAGER: Initialization failed. Offline mode.")
+		return false
+
+	steam_initialized = true
+
+	print("STEAM_MANAGER: Steam initialized successfully.")
+	print("Player: ", Steam.getPersonaName())
+	print("SteamID: ", Steam.getSteamID())
+
+	return true
+
+
+func generate_ticket() -> String:
+	if not steam_initialized:
+		print("STEAM_MANAGER: Cannot generate a ticket while offline.")
+		return ""
+
+	print("STEAM_MANAGER: Requesting authentication ticket...")
+
 	var ticket_response: Dictionary = Steam.getAuthSessionTicket()
-	
-	current_ticket_id = ticket_response["id"]
+
+	if not ticket_response.has("id") or not ticket_response.has("buffer"):
+		print("STEAM_MANAGER: Invalid ticket response.")
+		return ""
+
 	var ticket_buffer: PackedByteArray = ticket_response["buffer"]
-	
-	# 2. On convertit les données brutes en texte hexadécimal
+
+	if ticket_buffer.is_empty():
+		print("STEAM_MANAGER: Empty authentication ticket.")
+		return ""
+
+	current_ticket_id = ticket_response["id"]
 	var ticket_hex: String = ticket_buffer.hex_encode()
-	
-	print("STEAM_MANAGER: Ticket généré avec succès !")
-	print("Taille du ticket : ", ticket_hex.length(), " caractères.")
-	
-	# On retourne le ticket prêt à être envoyé par le réseau
+
+	print("STEAM_MANAGER: Authentication ticket generated.")
 	return ticket_hex
